@@ -136,10 +136,10 @@ public class GenericBagMain {
 				new Bag2("8책", Impo.Low, 1, Freq.Sometimes), new Bag2("껌7", Impo.Low, 2, Freq.Always),
 				new Bag2("호신7용 칼", Impo.Low, 1, Freq.Often), new Bag2("물티5슈", Impo.Low, 2, Freq.Always), };
 
-		System.out.println("main for문 [전] : " + System.identityHashCode(map));
+//		System.out.println("main for문 [전] : " + System.identityHashCode(map));
 		for (Bag2 Bag2 : arr)
 			Bag2.add(map);
-		System.out.println("main for문 [후] : " + System.identityHashCode(map));
+//		System.out.println("main for문 [후] : " + System.identityHashCode(map));
 
 		for (Entry<Integer, TreeMap<Integer, TreeMap<Integer, TreeSet<Bag2>>>> en : map.entrySet()) {
 			System.out.println(Impo.values()[en.getKey()]);
