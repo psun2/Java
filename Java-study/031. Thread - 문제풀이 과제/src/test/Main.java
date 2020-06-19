@@ -1,143 +1,100 @@
 package test;
 
-class Test extends Thread {
+import javax.swing.JOptionPane;
 
-	String name;
-	String current;
-	String current1;
-	String current2;
-	String current3;
+class MyThread extends Thread {
 
-	public Test(String name) {
+	int second = 0;
+	boolean timerChk = true;
+
+	public MyThread(String name) {
 		super(name);
-		this.name = name;
-		this.setName(name);
-
 	}
 
 	@Override
 	public void run() {
 
-//		System.out.println("1 : " + this.getName());
-//		System.out.println("10 : " + getName());
-//		System.out.println("100 : " + currentThread().getName());
+//		for (int i = 20; i > 0; i--) {
+//			System.out.print(i + "\t[" + getName() + "]");
+////			System.out.print(i);
 //
-//		if (getName().equals(currentThread().getName()))
-//			System.out.println("틀립");
-
-//		for (int i = 0; i < 100; i++) {
-//
-////			System.out.println(this.getId() != currentThread().getId());
-//			if (this.getId() == getId())
-//				System.out.println("가틈\t" + i);
-//
-////			System.out.println("겟 아이디 : " + getId());
 //			try {
-//				sleep(1000); // 딜레이
-//				System.out.println();
+//				sleep(1000);
 //			} catch (Exception e) {
-//				e.getMessage();
+//				// TODO: handle exception
 //			}
-//			System.out.println();
-////			System.out.println("\t" + this.getId());
 //		}
-		String buf;
-		String curr = getName();
-		for (int i = 0; i < 10; i++) {
-			System.out.print(getName());
-			if (getName().equals(current1))
-				System.out.println("t1");
-			if (getName().equals(current2))
-				System.out.println("t2");
-			if (getName().equals(current3))
-				System.out.println("t3");
-		}
-		System.out.println(current);
 
+		System.out.println(timerChk);
 
-	}
-
-	void temp(Test t1, Test t2, Test t3, String current) {
-		this.current = current;
-		this.current1 = t1.getName();
-		this.current2 = t2.getName();
-		this.current3 = t3.getName();
-
-		t1.start();
-		t2.start();
-		t3.start();
-	}
-
-	void test(int a) {
-
-//		start();
-
-		System.out.println(currentThread() + "\t" + name);
-
-		for (int i = 0; i < 100; i++) {
-
-			System.out.println(this.getId());
-
-//			System.out.println(a);
-//			System.out.println();
-//			System.out.println("\t" + Integer.parseInt(name));
-//			System.out.println();
-			if (a == Integer.parseInt(this.name))
-				System.out.println("hi");
-
-//			if (this.currentThread() != Thread.currentThread())
-//				System.out.println("씨이발");
-
-//			Object aa = (Object) Thread.currentThread();
-//			System.out.println(aa.equals(this.getName()));
-//			String aa2 = (String) aa;
-//			System.out.println(aa);
-//			System.out.println(Test.currentThread());
-
-//			System.out.println(currentThread());
-
-//			System.out.println("QKdQKd" + Thread.activeCount() + "\t");
-
-//			System.out.println(Thread.currentThread());
-//			System.out.println(this.getThreadGroup());
-//			System.out.print(getName());
+		while (timerChk) {
 
 			try {
-				sleep(100); // 딜레이
-//				if (!getName().equals(this.name))
-//					System.out.println("씨발");
+				second++;
 			} catch (Exception e) {
-				e.getMessage();
+				// TODO: handle exception
 			}
 
 		}
 
+		System.out.println(timerChk);
 	}
 
 }
 
-public class Main {
+class AAA {
 
-	public static void main(String[] args) {
+	MyThread th;
 
-		Test t1 = new Test("1");
-		Test t2 = new Test("2");
-		Test t3 = new Test("3");
+	String subject;
 
-//		System.out.println(t1.getName());
+	public AAA(String subject) {
+		this.subject = subject;
 
-//		t1.start((int) Thread.currentThread().getId());
-//		t2.start((int) Thread.currentThread().getId());
-//		t3.start((int) Thread.currentThread().getId());
-		String current = Thread.currentThread().getName();
+//		java.lang.IllegalThreadStateException
+//		이미 시작되어 있는 쓰레드를 다시 시작할때 나오는 에러
 
-		t1.temp(t1, t2, t3, current);
-//		t1.start();
-//		t2.start();
-//		t3.start();
-
-//		System.out.println("하 : " + Thread.currentThread().getId());
+		test();
 
 	}
 
+	void test() {
+
+		th = new MyThread(this.subject);
+
+		th.start();
+
+		for (int i = 0; i < 5; i++) {
+			String res = JOptionPane.showInputDialog(this.subject);
+			System.out.println(i + "\t" + res );
+		}
+
+		th.timerChk = false;
+
+		System.out.println(subject + th.second + " 초");
+
+//		try {
+//			th.start();
+//		} catch (Exception e) {
+//			System.out.println("뭐가 에러야 도대체?");
+//		}
+	}
+
+}
+
+class Main {
+	public static void main(String[] args) {
+
+//		java.lang.IllegalThreadStateException
+//		이미 시작되어 있는 쓰레드를 다시 시작할때 나오는 에러
+
+		AAA t1 = new AAA("국");
+		AAA t2 = new AAA("영");
+		AAA t3 = new AAA("수");
+
+		t1.test();
+		t2.test();
+		t3.test();
+
+	}
 }
