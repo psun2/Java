@@ -25,9 +25,6 @@ class Timer extends Thread {
 			if (timeRequired != 0)
 				System.out.println(timeRequired + " 초 경과");
 
-			if (!chk)
-				break;
-
 			try {
 				Thread.sleep(1000);
 				timeRequired++;

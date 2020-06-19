@@ -1,7 +1,5 @@
 package test;
 
-import org.omg.CORBA.Current;
-
 class Test extends Thread {
 
 	String name;
