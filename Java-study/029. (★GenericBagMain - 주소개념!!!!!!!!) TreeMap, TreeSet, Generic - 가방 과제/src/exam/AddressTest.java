@@ -4,103 +4,73 @@ class AAA {
 
 	String name;
 
-	public AAA() {
-		System.out.println("AAA 생성");
+	AAA(String name) {
+		this.name = name;
 	}
 
-	void ppp() {
-		System.out.println("AAA 의 ppp 메소드 실행");
-	}
 }
 
-class BBB extends AAA {
-	public BBB() {
-		System.out.println("BBB 생성");
+class BBB {
+
+	void Address(AAA aaa) {
+
+		aaa.name = "이름변경";
+		// 하지만 내부에서 이름 변경을 가능 합니다.
+
+		AAA aaa2 = new AAA("새로운 AAA");
+		System.out.println(aaa2.name); // 새로운 AAA
+
+		aaa = aaa2;
+		System.out.println(aaa.name); // 새로운 AAA
+		// return 을 하지 않기 때문에 주소가 바뀌지 않습니다.
+		// 내부에서 바꾸는 주소는 외부에서 파라미터로 받아오는
+		// 원본 객체의 주소까진 바꾸지 않습니다.
+		// 블록스코프를 완전 활용 100%
+		
+//		‼‼ 총 정리 => GenericBagMain
+//		메소드 내부에서 바꾸는 주소는 외부에 영향을 주지 않습니다.
+//		why ? return 을 시키지 않기 때문에 메소드 내부에서만 사용 합니다.
+//		main for문 [전] : 366712642
+//		메소드 내부에서의 map의 주소 : 366712642
+//		main for문 [후] : 366712642
+//		map 에 put 을 하고, 
+//		map 을 sub 으로 바꾸는 이유는
+//		원본 map 의 안에 있는 또다른 sub 이라는 주소로 접근을 하기 위해서 입니다.
+//		그럼 이때 map 가르키는건 원본 map 안에 있는 또다른 map 이 됩니다.
+
 	}
 
-	void ppp() {
-		System.out.println("BBB 의 ppp 메소드 실행");
+	AAA Address2(AAA aaa) {
+
+		AAA aaa2 = new AAA("더 새로운 AAA");
+
+		aaa = aaa2;
+
+		return aaa;
 	}
 
-	void mb() {
-		System.out.println("BBB 의 mb 메소드 실행");
-	}
 }
 
-public class AddressTest {
-
-	static void 주소확인(AAA a) {
-
-		System.out.println(a.name);
-
-		a.name = "park"; // 주소 교체 전
-
-//		((BBB) a).mb(); // Casting 즉 형변환 할 수 없음
-
-		System.out.println(a.name);
-
-		BBB b = new BBB();
-
-		b.mb();
-
-		System.out.println("메소드 내부에서의 주소 a : " + a);
-		System.out.println("메소드 내부에서의 주소 b : " + b);
-
-		a = b;
-
-		a.name = "asdkjalksdjklasjd"; // 주소 교체후 바꾼 name 은 main 에 있는 name 을 건드리지 않습니다.
-
-//		a.mb(); // Error
-		((BBB) a).mb();
-
-		System.out.println("메소드 내부에서 주소 변경후 주소 a : " + a);
-
-	}
-
-	static AAA returnAddress(AAA a) {
-
-		return a;
-
-	}
-
-	static AAA returnAddress2(AAA a) {
-
-		BBB b = new BBB();
-
-		a = b;
-
-		return a;
-
-	}
+class AddressTest {
 
 	public static void main(String[] args) {
 
-		AAA a = new AAA();
+		AAA aaa = new AAA("AAA");
 
-		System.out.println("생성시 주소 확인 a : " + a);
+		System.out.println(aaa.name); // AAA
 
-		a.ppp();
+		BBB bbb = new BBB();
 
-		주소확인(a);
+		bbb.Address(aaa);
+		System.out.println(aaa.name); // 새로운 AAA
 
-		System.out.println("메소드 반환 후 a : " + a);
+		bbb.Address2(aaa);
 
-		System.out.println(a.name);
+		System.out.println(aaa.name); // 새로운 AAA
 
-		AAA b = returnAddress(a);
+		aaa = bbb.Address2(aaa);
 
-		System.out.println();
-		System.out.println("------------------------------------");
-		System.out.println();
-		System.out.println(a);
-		System.out.println(b);
+		System.out.println(aaa.name); // 더 새로운 AAA
 
-		System.out.println();
-		System.out.println("------------------------------------");
-		AAA c = returnAddress2(a);
-		System.out.println();
-		System.out.println(a);
-		System.out.println(c);
 	}
-
 }
