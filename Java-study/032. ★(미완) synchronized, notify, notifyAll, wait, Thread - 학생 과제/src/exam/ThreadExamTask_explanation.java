@@ -192,6 +192,7 @@ class ThStud implements Comparable<ThStud> {
 	}
 
 	void go() {
+
 		for (ThExam exam : map.values()) {
 			// System.out.println(exam.hashCode());
 			exam.start();
@@ -307,7 +308,7 @@ class ThStud implements Comparable<ThStud> {
 public class ThreadExamTask_explanation {
 
 	public static void main(String[] args) {
-		
+
 //		★ 6월 19일
 //		※※※※※!!!!!주말과제!!!!!※※※※※
 //		- 국어문제 영어문제화면 왔다갔다하면서 풀 수 있게
