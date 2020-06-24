@@ -168,7 +168,7 @@ class Calculator extends JFrame {
 		nums.setBackground(new Color(241, 243, 242));
 		nums.setLayout(new GridLayout(6, 5));
 
-		String numsTitle = "a,<<,>>,c,X,B,(,),%,÷,C,7,8,9,X,D,4,5,6,-,E,1,2,3,+,F,±,0,.,=";
+		String numsTitle = "A,<<,>>,c,X,B,(,),%,÷,C,7,8,9,X,D,4,5,6,-,E,1,2,3,+,F,±,0,.,=";
 
 		for (String title : numsTitle.split(",")) {
 			nums.add(new JButton(title));
