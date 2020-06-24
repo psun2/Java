@@ -94,7 +94,7 @@ public class ContainerMain {
 		f3.setVisible(true);
 		f3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JFrame f4 = new JFrame("JDialog");
+		JFrame f4 = new JFrame("FileDialog");
 		f4.setBounds(100, 500, 300, 200);
 
 		FileDialog fd = new FileDialog(f4, "파일열기", FileDialog.LOAD);
