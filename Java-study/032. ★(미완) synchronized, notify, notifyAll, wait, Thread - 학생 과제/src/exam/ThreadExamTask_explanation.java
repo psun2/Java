@@ -135,7 +135,7 @@ class ThExam extends Thread {
 	}
 
 	class Timer extends Thread { // 타이머
-		int i = 5; // 5초까지 돌릴 것...
+		int i = 20; // 5초까지 돌릴 것...
 
 		@Override
 		public void run() {

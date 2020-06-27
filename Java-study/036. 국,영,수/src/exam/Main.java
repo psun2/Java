@@ -23,16 +23,19 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-class Fram extends JFrame {
+class Frame extends JFrame {
 
-	Shcool.Subject subject;
+	Shcool shcool;
 	JPanel testMain__testExam;
+	JLabel timeLb = new JLabel("asdasdasdasd");
+	boolean chk;
 
-	public Fram(String title, Shcool.Subject subject) {
+	public Frame(String title, Shcool shcool) {
 
 		super(title);
 
-		this.subject = subject;
+		this.shcool = shcool;
+		this.chk = false;
 
 		int width, height, x, y;
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -84,6 +87,18 @@ class Fram extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(e);
 
+					String key = e.getActionCommand();
+					shcool.subjects.get(key).chk = true;
+//					while (true) {
+
+					if (shcool.subjects.get(key).chk) {
+						System.out.println(key);
+						shcool.subjects.get(key).chk = false;
+					}
+
+//					}
+
+//					Frame.this.chk = true;
 				}
 			});
 		}
@@ -93,41 +108,41 @@ class Fram extends JFrame {
 		main__testMain.add(testMain__testExam, "Center");
 
 		// 여기 손 봐야함
-		for (Shcool.Subject.Question exam : subject.questions) {
-
-			JLabel questionLb = new JLabel(exam.question);
-			testMain__testExam.add(questionLb);
-
-			if (exam.view != null) {
-
-				ButtonGroup bg = new ButtonGroup();
-
-				ArrayList<JRadioButton> viewBtns = new ArrayList<JRadioButton>();
-
-				for (String view : exam.view.split(",")) {
-
-					JRadioButton viewRb = new JRadioButton(view);
-					testMain__testExam.add(viewRb);
-					viewBtns.add(viewRb);
-					bg.add(viewRb);
-				}
-
-				int index = Integer.parseInt(exam.answer) - 1;
-
-				if (viewBtns.get(index).isSelected())
-					exam.jum = 1;
-
-				System.out.println(getState());
-
-			}
-
-			JTextField answerTf = new JTextField();
-			testMain__testExam.add(answerTf);
-
-			if (answerTf.getText().equals(exam.answer))
-				exam.jum = 1;
-
-		}
+//		for (Shcool.Subject.Question exam : shcool.subject.questions) {
+//
+//			JLabel questionLb = new JLabel(exam.question);
+//			testMain__testExam.add(questionLb);
+//
+//			if (exam.view != null) {
+//
+//				ButtonGroup bg = new ButtonGroup();
+//
+//				ArrayList<JRadioButton> viewBtns = new ArrayList<JRadioButton>();
+//
+//				for (String view : exam.view.split(",")) {
+//
+//					JRadioButton viewRb = new JRadioButton(view);
+//					testMain__testExam.add(viewRb);
+//					viewBtns.add(viewRb);
+//					bg.add(viewRb);
+//				}
+//
+//				int index = Integer.parseInt(exam.answer) - 1;
+//
+//				if (viewBtns.get(index).isSelected())
+//					exam.jum = 1;
+//
+//				System.out.println(getState());
+//
+//			}
+//
+//			JTextField answerTf = new JTextField();
+//			testMain__testExam.add(answerTf);
+//
+//			if (answerTf.getText().equals(exam.answer))
+//				exam.jum = 1;
+//
+//		}
 
 		JPanel testMain__testResult = new JPanel(); // 제출버튼과 결과를 보여줌
 		testMain__testResult.setLayout(new GridLayout(2, 1));
@@ -148,9 +163,12 @@ class Fram extends JFrame {
 class Shcool {
 
 	LinkedHashMap<String, Subject> subjects;
+	ArrayList<Student> students;
+	Frame frame;
 
 	public Shcool() {
 		this.subjects = new LinkedHashMap<String, Shcool.Subject>();
+		this.students = new ArrayList<Shcool.Student>();
 	}
 
 	class Subject {
@@ -168,29 +186,12 @@ class Shcool {
 			this.timer = new Timer();
 		}
 
-		void add(String question, String answer) {
-			questions.add(new Question(question, answer));
-		}
-
 		void add(String question, String view, String answer) {
-			questions.add(new Question(question, view, answer));
-		}
 
-		void goTest() {
-
-//			Fram frame1 = new Fram("시험", this);
-//			Fram frame2 = new Fram("시험", this);
-//			Fram frame3 = new Fram("시험", this);
-
-			while (true) {
-				if (!chk) {
-					Fram frame = new Fram("시험", this);
-
-				}
-				this.chk = true;
-				System.out.println(chk);
-				System.out.println("프레임끝 리턴");
-			}
+			if (view == null)
+				questions.add(new Question(question, answer));
+			else
+				questions.add(new Question(question, view, answer));
 		}
 
 		class Question {
@@ -215,13 +216,72 @@ class Shcool {
 
 		class Timer extends Thread {
 
+			boolean chk;
+
+			public Timer() {
+				this.chk = false;
+			}
+
+			@Override
+			public void run() {
+
+				while (true) {
+
+					if (chk) {
+
+						for (int i = 20; i <= 0; i--) {
+							Shcool.this.frame.timeLb.setText("d");
+							try {
+								sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
+					}
+
+				}
+
+			}
+
 		}
 
 	}
 
-	class Student {
+	class Student extends Thread {
 
-		void test() {
+		String name;
+		boolean chk;
+
+		public Student(String name) {
+			super(name);
+			this.name = name;
+			this.chk = false;
+			Shcool.this.students.add(this);
+		}
+
+		@Override
+		public void run() {
+
+			int index = 0;
+			while (true) {
+
+//					여기서 조건에 맞는 학생만 run ...
+
+				if (chk) {
+					Shcool.this.frame = new Frame(getName(), Shcool.this);
+					this.chk = false;
+				}
+
+				// 시험이 다끝날때, 버튼으로 창을 종료 시킨뒤, action 이 실행됬을때
+				if (!Shcool.this.students.get(index).chk && frame.chk) {
+					// 다음학생의 chk 을 true 로 ....
+					index++;
+					Shcool.this.students.get(index).chk = true;
+				}
+
+			}
 
 		}
 
@@ -238,29 +298,32 @@ public class Main {
 		Shcool shcool = new Shcool();
 
 		Shcool.Subject korea = shcool.new Subject("국어");
-		Shcool.Subject eng = shcool.new Subject("영어");
-//		shcool.new Subject("수학");
+		Shcool.Subject english = shcool.new Subject("영어");
+		Shcool.Subject math = shcool.new Subject("수학");
 
-//		korea.add("질문", "답변");
-		korea.add("질문", "싫어요,조아요,글쎄요", "3");
+		korea.add("가 다음은 ?", null, "나");
+		korea.add("나 다음은 ?", "다,라,마,바", "1");
+		korea.add("다 다음은 ?", null, "라");
 
-		System.out.println(korea.questions);
-		korea.goTest();
-//		eng.goTest();
+		english.add("banana ?", null, "바나나");
+		english.add("orange ?", "귤,오렌지,배,사과", "2");
+		english.add("다 다음은 ?", null, "라");
 
-		System.out.println("고테스트 끝남ㄴ");
+		math.add("1 + 1 ?", null, "2");
+		math.add("2 + 2 ?", "1,2,3,4", "4");
+		math.add("3 + 3 ?", null, "6");
 
-		while (true) {
-			try {
-				Thread.sleep(1000);
-				System.out.println("t1");
-				System.out.println(korea.chk);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		// 문제 끝
+
+		// 학생 생성
+		Shcool.Student[] students = { shcool.new Student("한가인"), shcool.new Student("두가인"), shcool.new Student("삼가인"),
+				shcool.new Student("사가인"), shcool.new Student("오가인") };
+
+		students[0].chk = true;
+		for (Shcool.Student student : students) {
+			student.start();
 		}
-//		korea.questions.get(1).goTest();
+		// JFrame 가 다 가져가야함.....
 
 	}
 
