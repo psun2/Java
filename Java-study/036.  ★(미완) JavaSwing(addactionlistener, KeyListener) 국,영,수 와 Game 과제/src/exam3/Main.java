@@ -1,4 +1,4 @@
-package exam2;
+package exam3;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

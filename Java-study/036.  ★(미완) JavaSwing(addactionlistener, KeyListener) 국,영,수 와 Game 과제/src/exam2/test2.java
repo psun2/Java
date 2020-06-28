@@ -1,4 +1,4 @@
-package exam;
+package exam2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
