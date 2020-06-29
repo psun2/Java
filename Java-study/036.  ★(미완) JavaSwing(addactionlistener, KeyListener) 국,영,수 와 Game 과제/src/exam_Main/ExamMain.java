@@ -367,8 +367,10 @@ public class ExamMain extends JFrame { // 결과 만을 가짐
 
 		TreeSet<Stud> cloneStuds = new TreeSet<Stud>(studs);
 		for (Stud st : cloneStuds) {
-			rowData.add(st.result());
+			rowData.add(st.result()); // 백터 안에 반환된 백터가 들어갑니다....
 		}
+
+		// 즉 이차원 배열과 비슷한 원리 ?
 
 		Vector<String> columnNames = new Vector<String>();
 		columnNames.add("이름");
