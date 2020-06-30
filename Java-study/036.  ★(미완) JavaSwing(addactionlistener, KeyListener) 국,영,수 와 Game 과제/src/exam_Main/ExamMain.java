@@ -77,7 +77,7 @@ class Quiz {
 	int result() { // 맞춘갯수 반환
 
 		int res = 0;
-		if (type.equals("주관식") && strAns.equals(strDab))
+		if (type.equals("주관식") && strAns.getText().equals(strDab))
 			res = 1;
 		else if (type.equals("객관식") && bogi.get(intDab).isSelected()) {
 			res = 1;
