@@ -186,12 +186,12 @@ class Subject extends JPanel { // 메인 프레임에 넣을 Panel을 상속 받
 
 class Stud extends JFrame implements Comparable<Stud> { // 사실상 student 는 각종 문제를 추가 시킵니다... 이게 맞나 싶습니다..?
 
-	ExamMain exam;
+	ExamMain_me_Rank exam;
 	ArrayList<Subject> subjects;
 	int num, avg, rank;
 	JTabbedPane tab = new JTabbedPane();
 
-	public Stud(int num, ExamMain exam, String name) {
+	public Stud(int num, ExamMain_me_Rank exam, String name) {
 		this.exam = exam;
 		this.num = num;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -342,11 +342,11 @@ class Stud extends JFrame implements Comparable<Stud> { // 사실상 student 는
 	}
 }
 
-public class ExamMain extends JFrame { // 결과 만을 가짐
+public class ExamMain_me_Rank extends JFrame { // 결과 만을 가짐
 
 	ArrayList<Stud> studs;
 
-	public ExamMain() { // 내 코드로 보자면 Exam 은 School 이 되겠습니다.
+	public ExamMain_me_Rank() { // 내 코드로 보자면 Exam 은 School 이 되겠습니다.
 
 		studs = new ArrayList<Stud>();
 		studs.add(new Stud(0, this, "지민이너"));
@@ -394,7 +394,7 @@ public class ExamMain extends JFrame { // 결과 만을 가짐
 
 	public static void main(String[] args) {
 
-		new ExamMain();
+		new ExamMain_me_Rank();
 
 	}
 
