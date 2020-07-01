@@ -276,9 +276,11 @@ class Toolbar extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			Toolbar.this.currentColor = Color.black;
-			Toolbar.this.board.dispose();
-			new Board();
+
+			Toolbar.this.board.x = -100;
+			Toolbar.this.board.y = -100;
+			Toolbar.this.board.first = true;
+			Toolbar.this.board.repaint();
 		}
 
 	}
