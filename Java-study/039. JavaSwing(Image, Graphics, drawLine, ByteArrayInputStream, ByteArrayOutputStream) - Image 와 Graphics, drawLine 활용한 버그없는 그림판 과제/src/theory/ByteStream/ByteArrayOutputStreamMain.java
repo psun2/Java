@@ -8,6 +8,11 @@ public class ByteArrayOutputStreamMain {
 
 	public static void main(String[] args) {
 
+		// 스트림 : 빨대
+		// 크게 두 종류로 나눌 수 있습니다.
+		// input : 읽을때 => 데이터를 읽는다 => 즉 빨대에 데이터가 들어온다 => 저장된 원래 위치 에서 빼내 옵니다.
+		// output : 저장 할때 => 인풋과 반대로 데이터를 저장소에 저장합니다.
+
 		try {
 
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
