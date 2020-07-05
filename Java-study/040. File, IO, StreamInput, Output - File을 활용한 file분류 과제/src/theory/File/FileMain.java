@@ -125,6 +125,22 @@ public class FileMain {
 
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------");
+		System.out.println("File이동");
+		File testFile = new File("./예제폴더/moveTest.txt");
+		try {
+
+			testFile.createNewFile();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		File move = new File(testFile.getPath());
+		move.renameTo(new File("./다중폴더(outer)/moveSecces"));
+
+		System.out.println();
+		System.out.println("-----------------------------------------------------------------");
 		System.out.println("File들을 배열화 => listFiles");
 		System.out.println();
 
