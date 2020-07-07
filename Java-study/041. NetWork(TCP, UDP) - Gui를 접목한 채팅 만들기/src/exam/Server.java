@@ -1,20 +1,20 @@
 package exam;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Server {
+class ChatServer {
 
-	// 클라이언트 명단
 	ArrayList<ObjectOutputStream> clients;
 
-	public Server() {
+	public ChatServer() {
 		// TODO Auto-generated constructor stub
 
-		clients = new ArrayList<ObjectOutputStream>();
 		ServerSocket server = null;
 
 		try {
@@ -22,63 +22,45 @@ public class Server {
 			server = new ServerSocket(7777);
 			System.out.println("서버 시작");
 
+			// 서버가 실행되면 클라이언트들을 담을 수 있는 ArrayList 초기화
+			clients = new ArrayList<ObjectOutputStream>();
+			Collections.synchronizedList(clients);
+
 			while (true) {
-				Socket client = server.accept();
-				new Reciever(client).start();
+
+				Socket client = server.accept(); // 서버에 접근 하는 자를 받아옴...
+
+				new Receiver(client).start();
+
 			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
-			try {
-				server.close();
-				System.out.println("서버 종료");
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
-
-	void sendToAll(String msg) {
-
-		for (ObjectOutputStream obj : clients) { // 모두가 볼 수 있게 말을 전달 해야 함
-			try {
-				obj.writeUTF(msg);
-				obj.flush();
-				obj.reset();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 	}
 
-	class Reciever extends Thread {
+	class Receiver extends Thread { // 서버는 리시버를 가지고 있다.
 
 		String name;
 		ObjectOutputStream oos;
 		ObjectInputStream ois;
 
-		public Reciever(Socket socket) {
+		public Receiver(Socket client) {
 			// TODO Auto-generated constructor stub
-			name = "[" + socket.getLocalSocketAddress() + "]";
-			System.out.println(name); // [/192.168.0.9:7777]
-			name = "[" + socket.getInetAddress() + "]";
-			System.out.println(name); // [/192.168.0.9]
+
+			this.name = "[" + client.getLocalAddress() + "]";
 
 			try {
-				
-				oos = new ObjectOutputStream(socket.getOutputStream());
-				ois = new ObjectInputStream(socket.getInputStream());
+
+				oos = new ObjectOutputStream(client.getOutputStream());
+				ois = new ObjectInputStream(client.getInputStream());
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 
 		@Override
@@ -93,8 +75,9 @@ public class Server {
 				sendToAll("접속자 수 : " + clients.size());
 
 				while (ois != null) {
+					// 서버에 접근하는 자가 생길시 여기에 멈춰서 반복합니다.
 
-					// sendToAll(name + ois.readUTF());
+					System.out.println("asdasd" + ois.readUTF());
 					sendToAll(ois.readUTF());
 
 				}
@@ -103,19 +86,40 @@ public class Server {
 				// TODO: handle exception
 			} finally {
 
-				clients.remove(oos); // 입장과 퇴장시 add 와 remove의 위치가 중요
+				clients.remove(oos);
 
 				sendToAll(name + " 퇴장");
 
 				sendToAll("접속자 수 : " + clients.size());
+
+			}
+
+		}
+
+		void sendToAll(String msg) {
+
+			for (ObjectOutputStream client : clients) {
+				try {
+					client.writeUTF(msg);
+					client.flush();
+					client.reset();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		}
 
 	}
 
+}
+
+public class Server {
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Server();
+		new ChatServer();
 	}
+
 }

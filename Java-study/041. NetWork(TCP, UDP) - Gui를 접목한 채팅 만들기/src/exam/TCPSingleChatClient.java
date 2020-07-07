@@ -1,4 +1,4 @@
-package Teacher;
+package exam;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,6 +30,7 @@ class TCPSingleSender extends Thread {
 		System.out.println(dos.toString().toString());
 
 		while (dos != null) {
+			System.out.println("asd");
 			try {
 				dos.writeUTF(name + sc.nextLine());
 			} catch (IOException e) {
