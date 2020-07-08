@@ -57,15 +57,10 @@ class ClientSocket {
 
 			try {
 				System.out.println(ois != null);
-				
+
 				while (ois != null) {
-					
-					System.out.println("sadsadsad");
 
-					System.out.println("여기두 : " + ui.msg);
-
-					System.out.println("여기요 : " + ois.readUTF());
-
+					ois.readUTF();
 
 				}
 			} catch (Exception e) {
@@ -117,10 +112,8 @@ class ClientSocket {
 					System.out.println(sc.nextLine());
 
 					if (ui.chk) {
-						System.out.println("sadsaddddddddddddddddddddddddddddd");
-						oos.writeUTF(name + ui.msg);
 
-//					System.out.println("여기 오나 ? " + ui.msg);
+						oos.writeUTF(name + ui.msg);
 
 						oos.flush(); // 자신의 메모리 갱신
 						oos.reset();
