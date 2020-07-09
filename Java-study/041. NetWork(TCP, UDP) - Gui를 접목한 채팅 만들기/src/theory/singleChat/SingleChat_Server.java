@@ -6,7 +6,7 @@ import java.net.Socket;
 
 class Server {
 
-	private ServerSocket serverScoket;
+	private ServerSocket serverSocket;
 	private int port;
 	Socket client;
 
@@ -15,25 +15,25 @@ class Server {
 		try {
 
 			this.port = 7777;
-			this.serverScoket = new ServerSocket(port);
+			this.serverSocket = new ServerSocket(port);
 			System.out.println("[서버 가동 - 클라이언트 대기중]");
 
 			while (true) {
 
-				client = serverScoket.accept();
+				client = serverSocket.accept();
 				System.out.println(
 						client.getLocalAddress() + " => [클라이언트 접속]" + " : " + Thread.currentThread().getName());
 
-				new Receive(client).start(); // ㅄ 문법
-				new Send(client).start(); // ㅄ 문법
+				new Receive(client).start();
+				new Send(client).start();
 
 			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			try {
-				if (serverScoket != null && !serverScoket.isClosed()) {
-					serverScoket.close();
+				if (serverSocket != null && !serverSocket.isClosed()) {
+					serverSocket.close();
 					System.out.println("서버를 종료 합니다.");
 				}
 
@@ -48,8 +48,8 @@ class Server {
 
 			try {
 
-				if (serverScoket != null && !serverScoket.isClosed()) {
-					serverScoket.close();
+				if (serverSocket != null && !serverSocket.isClosed()) {
+					serverSocket.close();
 					System.out.println("서버를 종료 합니다.");
 				}
 
