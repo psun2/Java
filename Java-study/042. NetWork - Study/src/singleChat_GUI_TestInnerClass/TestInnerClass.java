@@ -1,4 +1,4 @@
-package theory.singleChat_GUI_TestInnerClass;
+package singleChat_GUI_TestInnerClass;
 
 class Outer {
 

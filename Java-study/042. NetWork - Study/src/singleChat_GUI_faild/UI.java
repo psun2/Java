@@ -1,4 +1,4 @@
-package theory.singleChat_GUI;
+package singleChat_GUI_faild;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
