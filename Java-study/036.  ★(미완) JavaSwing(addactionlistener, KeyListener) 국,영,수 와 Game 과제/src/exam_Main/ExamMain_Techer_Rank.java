@@ -25,7 +25,7 @@ class Quiz2 {
 	String type, strDab;
 	int intAns, intDab;
 	JTextField strAns;
-	Subject subject;
+	Subject2 subject;
 
 	void end() {
 		if (type.equals("주관식"))
@@ -37,7 +37,7 @@ class Quiz2 {
 		}
 	}
 
-	public Quiz2(Subject subject, String qq, int intDab, String... bogi) {
+	public Quiz2(Subject2 subject, String qq, int intDab, String... bogi) {
 		super();
 		this.subject = subject;
 		this.qq = new JLabel(qq);
@@ -54,7 +54,7 @@ class Quiz2 {
 		type = "객관식";
 	}
 
-	public Quiz2(Subject subject, String qq, String strDab) {
+	public Quiz2(Subject2 subject, String qq, String strDab) {
 		super();
 		this.subject = subject;
 		this.qq = new JLabel(qq);
@@ -89,9 +89,9 @@ class Quiz2 {
 
 }
 
-class Subject extends JPanel {
+class Subject2 extends JPanel {
 
-	Stud st;
+	Stud2 st;
 	ArrayList<Quiz2> quizs;
 
 	JLabel res, timerLb;
@@ -140,7 +140,7 @@ class Subject extends JPanel {
 		st.finalGo();
 	}
 
-	public Subject(Stud st, String name) {
+	public Subject2(Stud2 st, String name) {
 		setName(name);
 		this.st = st;
 		quizs = new ArrayList<Quiz2>();
@@ -175,26 +175,28 @@ class Subject extends JPanel {
 
 }
 
-class Stud extends JFrame {
+class Stud2 extends JFrame {
+
 	ExamMain_Techer_Rank exam;
-	ArrayList<Subject> subjects;
+	ArrayList<Subject2> subjects;
 	int num, rank, tot, avg;
 
-	public Stud(int num, ExamMain_Techer_Rank exam, String name) {
+	public Stud2(int num, ExamMain_Techer_Rank exam, String name) {
+
 		this.exam = exam;
 		this.num = num;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(exam.ox + 100, 50, 500, 600);
+		setBounds(100, 50, 500, 600);
 		setName(name);
 		setTitle(name);
 
-		subjects = new ArrayList<Subject>();
+		subjects = new ArrayList<Subject2>();
 		JTabbedPane tab = new JTabbedPane();
 
-		subjects.add(new Subject(this, "국어"));
-		subjects.add(new Subject(this, "영어"));
-		subjects.add(new Subject(this, "수학"));
+		subjects.add(new Subject2(this, "국어"));
+		subjects.add(new Subject2(this, "영어"));
+		subjects.add(new Subject2(this, "수학"));
 
 		subjects.get(0).quizs.add(new Quiz2(subjects.get(0), "1.가 다음은?", "나"));
 		subjects.get(0).quizs.add(new Quiz2(subjects.get(0), "2.나 다음은?", "다"));
@@ -215,7 +217,7 @@ class Stud extends JFrame {
 		subjects.get(2).quizs.add(new Quiz2(subjects.get(2), "3. 2+1=?", "3"));
 		subjects.get(2).quizs.add(new Quiz2(subjects.get(2), "4. 5+5= ?", 0, "10", "20", "30", "40"));
 
-		for (Subject sub : subjects) {
+		for (Subject2 sub : subjects) {
 			tab.addTab(sub.getName(), sub);
 			sub.starttt();
 		}
@@ -227,7 +229,7 @@ class Stud extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
-				for (Subject subject : subjects) {
+				for (Subject2 subject : subjects) {
 					subject.go = false;
 				}
 
@@ -241,7 +243,7 @@ class Stud extends JFrame {
 	void rankCalc() {
 		rank = 1;
 
-		for (Stud you : exam.studs) {
+		for (Stud2 you : exam.studs) {
 			if (avg < you.avg) {
 				rank++;
 			}
@@ -259,7 +261,7 @@ class Stud extends JFrame {
 
 		tot = 0;
 
-		for (Subject sub : subjects) {
+		for (Subject2 sub : subjects) {
 			if (!sub.chk)
 				return;
 			str += sub.getName() + "(" + sub.jumsu + ")";
@@ -283,7 +285,7 @@ class Stud extends JFrame {
 
 		res.add(getName());
 
-		for (Subject sub : subjects) {
+		for (Subject2 sub : subjects) {
 			res.add(sub.jumsu);
 
 		}
@@ -296,14 +298,14 @@ class Stud extends JFrame {
 }
 
 public class ExamMain_Techer_Rank extends JFrame {
-	int ox = -1200;
-	ArrayList<Stud> studs;
+
+	ArrayList<Stud2> studs;
 
 	public ExamMain_Techer_Rank() {
-		studs = new ArrayList<Stud>();
-		studs.add(new Stud(0, this, "지민이너"));
-		studs.add(new Stud(1, this, "홍성혁이"));
-		studs.add(new Stud(2, this, "핸준아"));
+		studs = new ArrayList<Stud2>();
+		studs.add(new Stud2(0, this, "지민이너"));
+		studs.add(new Stud2(1, this, "홍성혁이"));
+		studs.add(new Stud2(2, this, "핸준아"));
 
 		studs.get(0).starttt();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -311,12 +313,12 @@ public class ExamMain_Techer_Rank extends JFrame {
 
 	void end() {
 
-		setBounds(ox + 100, 50, 500, 600);
+		setBounds(100, 50, 500, 600);
 		setName("결과");
 
 		Vector<Vector> rowData = new Vector<Vector>();
 
-		for (Stud st : studs) {
+		for (Stud2 st : studs) {
 			st.rankCalc();
 			rowData.add(st.result());
 		}
