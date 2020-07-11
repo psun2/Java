@@ -1,4 +1,4 @@
-package theory;
+package theory.bus;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

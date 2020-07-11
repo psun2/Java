@@ -1,4 +1,4 @@
-package theory;
+package theory.bus;
 
 public class BusDTO { // 데이타(DB) 생김새를 보기 위한 객체
 

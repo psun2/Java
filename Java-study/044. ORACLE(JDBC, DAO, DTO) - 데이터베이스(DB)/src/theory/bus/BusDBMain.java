@@ -1,4 +1,4 @@
-package theory;
+package theory.bus;
 
 public class BusDBMain {
 
