@@ -29,14 +29,18 @@ public class Client {
 						// buffer => 내용이 담긴 크기
 						byte[] buffer = new byte[1024];
 						int length = in.read(buffer);
+
 						// 메세지를 읽어드림에 있어서 오류가 발생했을때
 						while (length == -1)
 							throw new Exception();
+
 						System.out.println("[메시지 수신 성공]" + socket.getRemoteSocketAddress() + ": "
 								+ Thread.currentThread().getName());
 						String message = new String(buffer, 0, length, "UTF-8");
+
+						// 전달 받은 메세지를 다른 클라이언트 들에게도 보낼 수 있도록 해 줍니다.
 						for (Client client : Main.clients) {
-							// 전달 받은 메세지를 다른 클라이언트 들에게도 보낼 수 있도록 해 줍니다.
+
 							client.send(message);
 						}
 					}
@@ -53,7 +57,8 @@ public class Client {
 		};
 
 		// 쓰레드 풀에 등록하는 과정입니다.
-		Main.threadPool.submit(thread);
+		Main.threadPool.submit(thread); // 바로접근 할 수 있게 static 으로 생성 했습니다.
+		System.out.println("client - receive => threadPool" + Main.threadPool);
 	}
 
 	// 클라이언트에게 메시지를 전송하는 메소드 입니다.
@@ -78,7 +83,7 @@ public class Client {
 						// 오류가 난다면 쓰레드가 등록되어 있는 쓰레드 풀에서
 						// 현재 등록 되어 있는 쓰레드를 지워 줍니다.
 						Main.clients.remove(Client.this);
-						socket.close(); // 오류가 생긴 소켓을 닫아줍니다.
+						socket.close(); // 오류가 생긴 클라이언트의 소켓을 닫아줍니다.
 					} catch (Exception e2) {
 						// TODO: handle exception
 					}
@@ -87,7 +92,8 @@ public class Client {
 		};
 
 		// 쓰레드 풀에 등록하는 과정입니다.
-		Main.threadPool.submit(thread);
+		Main.threadPool.submit(thread); // 바로접근 할 수 있게 static 으로 생성 했습니다.
+		System.out.println("client - send => threadPool" + Main.threadPool);
 	}
 
 }

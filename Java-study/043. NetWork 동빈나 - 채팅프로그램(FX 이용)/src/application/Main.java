@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	// ExecutorService => 여러개의 쓰레드를 효율적으로 관리하는 라이브러리
-	// 쓰레드의 수를 제한할 수 있어 갑작스러운 사용자 증가에도 서버의 성능유지에 좋습니다.
+	// 쓰레드의 수를 제한할 수 있어 갑작스러운 사용자(클라이언트) 증가에도 서버의 성능유지에 좋습니다.
 	public static ExecutorService threadPool; // 쓰레드 들을 관리
 
 	// Vector => 쉽게 사용할 수 있는 배열
@@ -27,10 +27,15 @@ public class Main extends Application {
 
 		try {
 
-			server = new ServerSocket();
+			server = new ServerSocket(); // 내가 알던 서버소켓 => new ServerSocket(port);
 
 			// 자신의 아이피 주소와 포트번호로 특정한 클라이언트의 접속을 기다리게 할 수 있습니다.
 			server.bind(new InetSocketAddress(IP, port));
+			// binding => 값이 확정되어 더 이상 변경할 수 없는 구속 상태가 됩니다.
+			/*
+			 * int a = 2; Data Type 이 int라는 것으로 바인딩 되고, a 라는 변수명이 바인딩 되고, 1이라는 값이 바인딩 되는
+			 * 겁니다.
+			 */
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -38,6 +43,7 @@ public class Main extends Application {
 				// 에러 발생시 서버가 닫혀 있는 상태가 아니라면
 				stopServer(); // 에러시 서버 종료
 			}
+			return; // 서버가 오류로 인해 종료시 함수를 끝내기 위햐여 return 합니다.
 		}
 
 		// 클라이언트가 접속할 때까지 계속 기다리는 쓰레드 입니다.
@@ -46,7 +52,7 @@ public class Main extends Application {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				while (true) {
+				while (true) { // 계속해서 새로운 클라이언트가 접속할 수 있게 기다립니다.
 					try {
 						Socket socket = server.accept(); // 클라이언트의 접속을 기다립니다.
 
@@ -66,7 +72,12 @@ public class Main extends Application {
 			}
 		};
 
+		// 만약 일 없이 60초 동안 아무일을 하지 않으면 쓰레드를 종료시키고 스레드 풀에서 제거 한다.
+		// 서버는 계속 돌아야 하기 때문에 쓰레드이고, 서버는 하나 밖에 들어 오지 않는 다는 가정하에 만들어 져있습니다.
+		// 즉 서버가 리스타트 될때를 생각해 기존의 찌꺼기 서버를 버림 쓰레드풀 초기화
+		// 그리고 초기화된 쓰레드 풀에 새로운 서버의 쓰레드를 추가합니다.
 		threadPool = Executors.newCachedThreadPool(); // 쓰레드 풀 초기화
+
 		threadPool.submit(thread); // 현재 접속 을 한 쓰레드를 submit 합니다.
 	}
 

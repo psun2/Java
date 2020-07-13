@@ -31,7 +31,7 @@ public class TCPGUIClient extends JFrame {
 			JPanel jp = new JPanel();
 			jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
 
-			serverJF = new JTextField("192.168.0.157");
+			serverJF = new JTextField("192.168.0.111");
 			portJF = new JTextField("7777");
 			final JButton btn = new JButton("서버연결");
 

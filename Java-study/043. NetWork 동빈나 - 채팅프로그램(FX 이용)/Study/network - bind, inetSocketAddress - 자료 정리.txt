@@ -1,0 +1,5 @@
+동빈나 chat - bind, new InetSocketAddress(ip, post)
+
+
+InetSocketAddress(InetAddress addr, int port)
+InetSocketAddressHolder(String hostname, InetAddress addr, int port)
