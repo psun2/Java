@@ -9,6 +9,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -112,6 +119,49 @@ public class Main extends Application {
 	// UI를 생성하고, 실질적으로 프로그램을 동작시키는 메소드입니다.
 	@Override
 	public void start(Stage primaryStage) {
+		BorderPane root = new BorderPane(); // swing 으로 쳤을때 JFrame 의 역할을 합니다.
+		root.setPadding(new Insets(5));
+
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setFont(new Font("나눔고딕", 15));
+		root.setCenter(textArea);
+
+		Button toggleButton = new Button("시작하기"); // 서버 시작 버튼
+		toggleButton.setMaxWidth(Double.MAX_VALUE);
+		BorderPane.setMargin(toggleButton, new Insets(1, 0, 0, 0));
+		root.setBottom(toggleButton);
+
+		String IP = "127.0.0.1"; // 이미 약속된 주소
+		int port = 7777;
+
+		toggleButton.setOnAction(event -> {
+			if (toggleButton.getText().equals("시작하기")) {
+				startServer(IP, port);
+				Platform.runLater(() -> {
+					// 자바fx 같은 경우 버튼을 눌렀을때 TextArea 에 바로 어떤 정보를 쓰도록 하면 안됩니다.
+					// 항상 이렇게 runLater 함수를 이용하여 GUI 요소를 출력 할 수 있도록 만들어 주어야 합니다.
+					String message = String.format("[서버 시작]\n", IP, port);
+					textArea.appendText(message);
+					toggleButton.setText("종료하기");
+				});
+			} else {
+				stopServer();
+				Platform.runLater(() -> {
+					String message = String.format("[서버 종료]\n", IP, port);
+					textArea.appendText(message);
+					toggleButton.setText("종료하기");
+				});
+			}
+		});
+
+		Scene scene = new Scene(root, 400, 400);
+		primaryStage.setTitle("[채팅 서버]");
+		primaryStage.setOnCloseRequest(event -> {
+			stopServer(); // x 버튼을 눌럿다면 서버를 정지하고 꺼질수 있도록 합니다.
+		});
+		primaryStage.setScene(scene);
+		primaryStage.show();
 
 	}
 
