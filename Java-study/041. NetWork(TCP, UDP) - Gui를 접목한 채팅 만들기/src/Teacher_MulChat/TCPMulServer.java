@@ -1,4 +1,4 @@
-package exam;
+package Teacher_MulChat;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

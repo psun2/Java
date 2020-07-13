@@ -1,8 +1,9 @@
-package Teacher;
+package Teacher_MulChatGUI;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class TCPMulServer {
 
 		try {
 			ServerSocket server = new ServerSocket(7777);
+
+			System.out.println(InetAddress.getLocalHost());
+
 			System.out.println("서버시작");
 
 			while (true) {
@@ -53,7 +57,7 @@ public class TCPMulServer {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-		
+
 			try {
 				sendToAll(name + " 입장");
 				list.add(dos);

@@ -1,4 +1,4 @@
-package exam;
+package exam_다시_될_때_까지_멀티_유아이_UDT_다시;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

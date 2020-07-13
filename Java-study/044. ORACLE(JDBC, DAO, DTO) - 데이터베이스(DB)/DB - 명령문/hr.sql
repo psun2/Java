@@ -1,9 +1,9 @@
 -- 실행 단축키 => ctrl + enter
 
-    insert into student -- 삽입 명령문
-    (id, name, no, height, regdate, birth, hobby) -- 삽입 할 column 목록 
-    -- ex) 만약 name 이 필요없으면 name만 빼주면 됩니다.
-    values -- 값을 입력하겠다는 명령문
+insert into student -- 삽입 명령문
+(id, name, no, height, regdate, birth, hobby) -- 삽입 할 column 목록 
+-- ex) 만약 name 이 필요없으면 name만 빼주면 됩니다.
+values -- 값을 입력하겠다는 명령문
 ('aaa', '한가인', 10, 182.7, '2015-05-12 13:22:54', '2020-7-13', 'Tv시청');
 -- TIMESTAMP 는 DATE 와 차이점으로 시간까지 작성 가능 합니다.
 
@@ -58,5 +58,5 @@ select * from student where id != 'ddd';
 update student set name = '호이호이', no = 1, height = 1.0, regdate = '2015-05-05', birth = '1988-08-08', hobby = '파리리'
 where id = 'eee';
 
-update student set name = '', no = 1, height = 1.0, regdate = '', birth = '', hobby = ''
+update member set name = '', no = 1, height = 1.0, regdate = '', birth = '', hobby = ''
 where id = '';
