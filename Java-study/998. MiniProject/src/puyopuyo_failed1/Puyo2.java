@@ -1,4 +1,4 @@
-package puyopuyo;
+package puyopuyo_failed1;
 
 import java.awt.Color;
 

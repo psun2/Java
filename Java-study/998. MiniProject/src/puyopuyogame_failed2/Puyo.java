@@ -1,4 +1,4 @@
-package puyopuyogame;
+package puyopuyogame_failed2;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

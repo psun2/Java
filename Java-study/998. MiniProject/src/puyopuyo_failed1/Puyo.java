@@ -1,4 +1,4 @@
-package puyopuyo;
+package puyopuyo_failed1;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

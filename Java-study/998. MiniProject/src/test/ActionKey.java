@@ -1,4 +1,4 @@
-package puyopuyogame;
+package test;
 
 import java.awt.event.KeyListener;
 

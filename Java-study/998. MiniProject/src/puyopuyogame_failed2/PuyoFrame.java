@@ -1,4 +1,4 @@
-package puyopuyogame;
+package puyopuyogame_failed2;
 
 import java.awt.Color;
 
@@ -63,7 +63,7 @@ public class PuyoFrame extends JFrame {
 
 						PuyoFrame.this.add(youPuyo);
 						PuyoFrame.this.add(mePuyo);
-						move();
+						// move();
 
 					}
 
