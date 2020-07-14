@@ -1,4 +1,4 @@
-package puyopuyo;
+package puyopuyo.baekjoon;
 
 public class Clone_URL {
 
