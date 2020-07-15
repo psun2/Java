@@ -46,6 +46,8 @@ public class Puyo2 extends JPanel { // 뿌요 라벨 2개씩 한 쌍을 가지�
 			public void run() {
 				// TODO Auto-generated method stub
 
+				
+				
 			}
 		};
 

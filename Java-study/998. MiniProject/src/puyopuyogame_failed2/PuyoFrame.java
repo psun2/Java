@@ -46,6 +46,8 @@ public class PuyoFrame extends JFrame {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				
+				
 
 				while (true) {
 

@@ -1,4 +1,4 @@
-package puyopuyo;
+package puyopuyo_failed3;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,7 +13,7 @@ public class ActionKey implements KeyListener {
 	int youX;
 	int youY;
 
-	public ActionKey(PuyoFrame frame) {
+	public ActionKey(PuyoFrame frame) { // 생성시 메인 프레임을 가져옴
 		// TODO Auto-generated constructor stub
 		this.frame = frame;
 	}
@@ -25,10 +25,10 @@ public class ActionKey implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) { // 키 이벤트
 		// TODO Auto-generated method stub
 
-		meX = frame.me.getX();
+		meX = frame.me.getX(); // 프레임을 통해 x값과 y값을 설정
 		meY = frame.me.getY();
 
 		youX = frame.you.getX();
