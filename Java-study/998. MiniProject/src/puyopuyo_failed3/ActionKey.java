@@ -45,11 +45,19 @@ public class ActionKey implements KeyListener {
 			System.out.println("왼쪽");
 			meX -= frame.puyoSize;
 			youX -= frame.puyoSize;
+			if (inspect(frame.me, frame.you)) {
+				meX = frame.me.getX();
+				youX = frame.you.getX();
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("오른쪽");
 			meX += frame.puyoSize;
 			youX += frame.puyoSize;
+			if (inspect(frame.me, frame.you)) {
+				meX = frame.me.getX();
+				youX = frame.you.getX();
+			}
 			break;
 		case KeyEvent.VK_DOWN:
 			downKey();
@@ -71,6 +79,107 @@ public class ActionKey implements KeyListener {
 		frame.me.setLocation(meX, meY);
 
 		System.out.println(youY + ", " + meY);
+
+	}
+
+	방향키 오른쪽 왼쪽 다시 잡아야 함
+	
+	int leftMax() {
+
+		int result = 0;
+
+		int temp = 0;
+
+		for (Puyo puyo : frame.puyos) {
+
+			if (frame.me.getX() <= puyo.getX() + frame.puyoSize) {
+				if (puyo.getX() + frame.puyoSize > temp) {
+					temp = puyo.getX() + frame.puyoSize;
+					result = temp;
+				}
+			}
+//			System.out.println("temp : " + temp);
+//			System.out.println("result : " + result);
+		}
+
+//		System.out.println("leftMax : " + result);
+
+		return result;
+
+	}
+
+	int rightMin() {
+
+		int result = 0;
+
+		int temp = frame.getSize().width;
+
+		for (Puyo puyo : frame.puyos) {
+
+			if (frame.me.getX() + frame.puyoSize >= puyo.getX()) {
+				if (puyo.getX() < temp) {
+					temp = puyo.getX();
+					result = temp;
+				}
+			}
+
+		}
+
+//		System.out.println("rightMin : " + result);
+
+		return result;
+
+	}
+
+	boolean inspect(Puyo me, Puyo you) {
+		// 왼쪽 방향으로 이동할때
+		// 이동 방향에 요소가 존재하고 밑에뿌요는 못움직이는 상황에 위쪽 뿌요만 움직이는 현상 발생을 잡아주기 위한 매소드
+
+		boolean result = false; // 초기값 => 옆에 요소가 없는 경우
+
+		for (Puyo puyo : frame.puyos) {
+
+			if (!me.equals(puyo) && !you.equals(puyo)) { // me 와 you 는 키보드로 움직여야 하기때문에 제외 합니다.
+
+				if (me.getY() + frame.puyoSize >= puyo.getY() || you.getY() + frame.puyoSize >= puyo.getY()) {
+
+					if (me.getX() <= leftMax() || me.getX() + frame.puyoSize >= rightMin()) {
+						result = true;
+					}
+
+				}
+			}
+		}
+
+		System.out.println(result);
+
+		return result;
+
+	}
+
+	boolean inspectRight(Puyo me, Puyo you) {
+		// 오른쪽 방향으로 이동할때
+		// 이동 방향에 요소가 존재하고 밑에뿌요는 못움직이는 상황에 위쪽 뿌요만 움직이는 현상 발생을 잡아주기 위한 매소드
+
+		boolean result = false; // 초기값 => 옆에 요소가 없는 경우
+
+		for (Puyo puyo : frame.puyos) {
+			if (!me.equals(puyo) && !you.equals(puyo)) { // me 와 you 는 키보드로 움직여야 하기때문에 제외 합니다.
+
+				if (me.getY() + frame.puyoSize >= puyo.getY() || you.getY() + frame.puyoSize >= puyo.getY()) {
+					if (me.getX() >= puyo.getX() + frame.puyoSize || you.getX() >= puyo.getX() + frame.puyoSize) {
+						if (me.getX() + frame.puyoSize >= puyo.getX() || you.getX() + frame.puyoSize >= puyo.getX()) {
+
+							// 옆에 요소가 존재 할때 옆으로 가지 못하고 현재의 위치를 설정 할 수 있게 합니다.
+							// 즉 me의X 와 you의 X에 한번이라도 걸리면 옆에 다른 요소가 존재 함
+							result = true;
+						}
+					}
+				}
+			}
+		}
+
+		return result;
 
 	}
 
