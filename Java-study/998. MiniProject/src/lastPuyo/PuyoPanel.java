@@ -139,7 +139,8 @@ public class PuyoPanel extends JPanel {
 			if (inspectY(puyo)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
 				y -= step;
 				puyo.stopChk = false; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
-
+				// bomb(puyo);
+				System.out.println(puyo.Lb.getName());
 				if (puyo.Lb.getY() <= 0) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
 					end = true;
 
@@ -147,7 +148,8 @@ public class PuyoPanel extends JPanel {
 			puyo.Lb.setLocation(puyo.Lb.getX(), y);
 		} else {
 			puyo.stopChk = false; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
-
+			// bomb(puyo);
+			System.out.println(puyo.Lb.getName());
 		}
 
 	} // endMove 끝
@@ -179,5 +181,47 @@ public class PuyoPanel extends JPanel {
 		return result;
 
 	} // inspectY 함수 끝
+
+	void bomb(Puyo puyo) { // 폭발!!!!!!!!!!
+
+		System.out.println("폭발 : 한번 떨어질때 두번 나와야 하는데 ?");
+
+		// 현재 안착한 뿌요를 기준으로 동서남북으로 같은 요소가 있는지 검색
+		int x = puyo.Lb.getX();
+		int y = puyo.Lb.getY();
+		String name = puyo.Lb.getName();
+
+//		x의 시작점 : x - Puyo.puyoSize
+		int startX = x - Puyo.puyoSize;
+
+//		x의 끝점 : x 의 시작점 + (Puyo.puyoSize * 2)
+		int endX = startX + (Puyo.puyoSize * 2);
+//		
+//		y의 시작점 : y - Puyo.puyoSize
+		int startY = y - Puyo.puyoSize;
+//		y의 끝점 : y 의 시작점 + (Puyo.puyoSize * 2)
+		int endY = startY + (Puyo.puyoSize * 2);
+//		
+//		Arraylist 를 순회 하면서 x가 x의 시작점 부터 x의 끝점과 같고, 
+//							y가 y의 시작점 부터 y의 끝점과 같으면서
+//							이름이 현재의 뿌요랑 같은게 있니 ?
+
+		System.out.println(name);
+		int cnt = 0;
+		for (Puyo pu : puyos) {
+
+			if (pu.Lb.getX() >= startX || pu.Lb.getX() <= endX && pu.Lb.getY() >= startY || pu.Lb.getY() <= endY) {
+				if (pu.Lb.getName().equals(name)) {
+					cnt++;
+
+					System.out.println(cnt);
+					System.out.println("같아요");
+					System.out.println("제대로 돌아요");
+				}
+			}
+
+		}
+
+	} // 폭발 끝!
 
 }

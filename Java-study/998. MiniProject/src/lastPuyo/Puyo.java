@@ -29,8 +29,8 @@ public class Puyo extends Thread {
 
 	JLabel label() {
 
-		String[] colors = { "blue", "green", "red", "yellow" };
-		int i = (int) (Math.random() * 4);
+		String[] colors = { "blue", "green", "red", "yellow", "nuisance_fall" };
+		int i = (int) (Math.random() * 5);
 
 		// randomTest();
 
@@ -60,7 +60,7 @@ public class Puyo extends Thread {
 			if (Lb.getX() != x || Lb.getY() != y) {
 				this.x = Lb.getX();
 				this.y = Lb.getY();
-				System.out.println("좌표 업데이트 완료");
+				// System.out.println("좌표 업데이트 완료");
 			}
 
 		}
