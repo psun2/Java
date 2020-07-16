@@ -140,7 +140,7 @@ public class PuyoPanel extends JPanel {
 				y -= step;
 				puyo.stopChk = false; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
 				// bomb(puyo);
-				System.out.println(puyo.Lb.getName());
+				// System.out.println(puyo.Lb.getName());
 				if (puyo.Lb.getY() <= 0) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
 					end = true;
 
@@ -149,7 +149,7 @@ public class PuyoPanel extends JPanel {
 		} else {
 			puyo.stopChk = false; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
 			// bomb(puyo);
-			System.out.println(puyo.Lb.getName());
+			// System.out.println(puyo.Lb.getName());
 		}
 
 	} // endMove 끝
