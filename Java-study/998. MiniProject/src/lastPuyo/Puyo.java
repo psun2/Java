@@ -9,7 +9,7 @@ public class Puyo extends Thread {
 
 	int x, y;
 
-	boolean chk; // 뿌요가 더이상 갈 곳이 없을때 false 초기값 true
+	boolean stopChk; // 뿌요가 더이상 갈 곳이 없을때 false 초기값 true
 
 	JLabel Lb;
 	PuyoPanel panel;
@@ -23,7 +23,7 @@ public class Puyo extends Thread {
 	}
 
 	void init() {
-		this.chk = true;
+		this.stopChk = true;
 		this.Lb = label();
 	}
 
