@@ -1,4 +1,4 @@
-package lastPuyo;
+package lastPuyo.copy;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -20,7 +20,7 @@ public class PuyoPanel extends JPanel {
 
 	int step; // 뿌요가 떨어질때의 칸수
 
-	boolean end;
+	boolean endGame;
 
 	public ExecutorService threadPool;
 
@@ -55,7 +55,7 @@ public class PuyoPanel extends JPanel {
 		this.puyos = new ArrayList<Puyo>(); // 배열 초기화
 		this.threadPool = Executors.newCachedThreadPool(); // 쓰레드 풀 초기화
 		this.step = 3; // 뿌요가 떨어질때의 칸수
-		this.end = false;
+		this.endGame = false;
 
 	}
 
@@ -72,7 +72,7 @@ public class PuyoPanel extends JPanel {
 
 				while (true) { // 게임이 끝날때까지 무한 반복한다.
 
-					if (end) { // end 게임끝을 chk
+					if (endGame) { // end 게임끝을 chk
 						System.out.println("게임종료");
 						JOptionPane.showMessageDialog(PuyoPanel.this, "게임 종료!");
 
@@ -84,51 +84,72 @@ public class PuyoPanel extends JPanel {
 						return; // 게임 종료
 					} // 게임종료
 
-					// 기준이 되는 me 생성
-					me = new Puyo(PuyoPanel.this);
-					JLabel meLb = me.Lb;
-					meLb.setBounds(LocationX, LocationY, Puyo.puyoSize, Puyo.puyoSize);
-					add(meLb);
-					puyos.add(me);
+					if (me.stopChk && you.stopChk) {
+						// 기준이 되는 me 생성
+						me = new Puyo(PuyoPanel.this);
+						JLabel meLb = me.Lb;
+						meLb.setBounds(LocationX, LocationY, Puyo.puyoSize, Puyo.puyoSize);
+						add(meLb);
+						puyos.add(me);
+						me.stopChk = false;
 
-					// you 생성
-					you = new Puyo(PuyoPanel.this);
-					JLabel youLb = you.Lb;
-					youLb.setBounds(LocationX, LocationY - Puyo.puyoSize, Puyo.puyoSize, Puyo.puyoSize);
-					add(youLb);
-					puyos.add(you);
+						// you 생성
+						you = new Puyo(PuyoPanel.this);
+						JLabel youLb = you.Lb;
+						youLb.setBounds(LocationX, LocationY - Puyo.puyoSize, Puyo.puyoSize, Puyo.puyoSize);
+						add(youLb);
+						puyos.add(you);
+						you.stopChk = false;
 
-					move(); // 뿌요들이 생성 되었으면 뿌요들을 y축으로 떨어 뜨리는 함수 시작
+						///////////////////////////////////////////////////////////////////
+
+						try {
+							Thread.sleep(33);
+
+//							me.Lb.setLocation(me.Lb.getX(), me.Lb.getY());
+//							you.Lb.setLocation(you.Lb.getX(), you.Lb.getY());
+
+							move(me);
+							move(you);
+//							flood();
+
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
 
 				}
 
 			}
 		};
+
 		threadPool.submit(thread); // 쓰레드를 사용하기 위해 쓰레드 풀에 등록
 	}
 
-	void move() { // 자동적인 움직임은 y축만 업데이트 하면 됩니다.
-					// 뿌요가 생성 되면 x 축은 key보드로 조종하고, y축으론 자동으로 흐른다.
-		while (true) {
+//	void move() { // 자동적인 움직임은 y축만 업데이트 하면 됩니다.
+//					// 뿌요가 생성 되면 x 축은 key보드로 조종하고, y축으론 자동으로 흐른다.
+//		while (true) {
+//
+//			try {
+//
+//				if (!me.stopChk && !you.stopChk)// 뿌요 한쌍이 둘이 자리를 잡았다.
+//					return; // 다음 뿌요 생성을 위해 반복문 종료
+//
+//				Thread.sleep(33); // 33초의 딜레이
+//				endMove(me); // 뿌요가 밑으로 흘러내려 갑니다.
+//				endMove(you); // 뿌요가 밑으로 흘러내려 갑니다.
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//	} // move 함수 끝
 
-			try {
-
-				if (!me.stopChk && !you.stopChk)// 뿌요 한쌍이 둘이 자리를 잡았다.
-					return; // 다음 뿌요 생성을 위해 반복문 종료
-
-				Thread.sleep(33); // 33초의 딜레이
-				endMove(me); // 뿌요가 밑으로 흘러내려 갑니다.
-				endMove(you); // 뿌요가 밑으로 흘러내려 갑니다.
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-	} // move 함수 끝
-
-	void endMove(Puyo puyo) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
+	void move(Puyo puyo) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
 
 		int y = nodeY(puyo); // y값은 뿌요가 셋팅될 y축의 값
 
@@ -139,19 +160,20 @@ public class PuyoPanel extends JPanel {
 			// 그 전에 다른 요소가 있다면 stop
 			if (inspectY(puyo)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
 				y -= step;
-				puyo.stopChk = false; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
+				puyo.stopChk = true; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
 				// bomb(puyo);
-				// System.out.println(puyo.Lb.getName());
+				System.out.println(puyo.Lb.getName());
 				if (puyo.Lb.getY() <= 0) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
-					end = true;
+					endGame = true;
 
 			}
 			puyo.Lb.setLocation(puyo.Lb.getX(), y);
-			flood();
-		} else {
-			puyo.stopChk = false; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
+			// flood();
+		}
+		else {
+			puyo.stopChk = true; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
 			// bomb(puyo);
-			// System.out.println(puyo.Lb.getName());
+			System.out.println(puyo.Lb.getName());
 		}
 
 	} // endMove 끝
@@ -200,6 +222,9 @@ public class PuyoPanel extends JPanel {
 //
 //	}
 	void flood() { // 미완
+		// 한개라도 땅에 닿았을때 이 함수를 실행하고, 여기서 작업들을 끝내고,
+		// 빈공간을 메꾸는 메소드 실행후
+		// 다음 뿌요가 생성 될 수 있게 true 로 바꾸어줌
 
 		if (me.Lb.getX() == you.Lb.getX()) { // 세로 모드 일때 위의 뿌요가 아래 뿌요를 잡아 먹는 현상 발생 오류 잡이
 
@@ -223,6 +248,9 @@ public class PuyoPanel extends JPanel {
 		} else { // 가로 일때
 
 		}
+
+		me.stopChk = true;
+		you.stopChk = true;
 
 	}
 
@@ -267,5 +295,9 @@ public class PuyoPanel extends JPanel {
 		}
 
 	} // 폭발 끝!
+
+	void empty() { // 터진 뿌요가 있으면 빈공간을 메꾸는 메소드 실행
+
+	}
 
 }

@@ -1,11 +1,11 @@
-package lastPuyo;
+package lastPuyo.copy;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Puyo extends Thread {
 
-	public static final int puyoSize = 48;
+	public static final int puyoSize = 50;
 
 	int x, y;
 

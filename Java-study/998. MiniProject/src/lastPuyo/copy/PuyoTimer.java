@@ -1,4 +1,4 @@
-package lastPuyo;
+package lastPuyo.copy;
 
 public class PuyoTimer extends Thread { // 타이머 쓰레드
 
