@@ -1,5 +1,6 @@
-package lastPuyo.copy;
+package lastPuyo2;
 
+import java.awt.Event;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -60,7 +61,7 @@ public class ActionKey implements KeyListener {
 			}
 			break;
 		case KeyEvent.VK_UP:
-			downKey();
+			rotate();
 			break;
 		case KeyEvent.VK_DOWN:
 			int speed = 10;
@@ -155,14 +156,14 @@ public class ActionKey implements KeyListener {
 
 	}
 
-	void downKey() {
+	void rotate() {
 
 		// 버그 잡는 로직
 		// 가로상태 일때 너무 밑에서 방향키로 회전 시키면 이상하게 쌓이는 현상 해결
-		if (youY + Puyo.puyoSize >= Puyo.puyoSize * 11) {
-			if (youY == meY)
-				return;
-		}
+//		if (youY + Puyo.puyoSize >= Puyo.puyoSize * 11) {
+//			if (youY == meY)
+//				return;
+//		}
 
 		if (youX == meX) { // me 와 you가 y툭으로 일직선 즉 세로 방향 일때
 			// System.out.println("youX : " + youX); // 통과
@@ -232,6 +233,9 @@ public class ActionKey implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+
+		int key = e.getKeyCode();
+		System.out.println(key == KeyEvent.VK_DOWN);
 
 	}
 

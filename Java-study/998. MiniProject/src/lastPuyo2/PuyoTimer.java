@@ -1,4 +1,4 @@
-package lastPuyo.copy;
+package lastPuyo2;
 
 public class PuyoTimer extends Thread { // 타이머 쓰레드
 
@@ -19,7 +19,7 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드
 
 			try {
 
-				if (frame.main.end) // 게임이 끝날때까지 계속 돈다
+				if (frame.main.endGame) // 게임이 끝날때까지 계속 돈다
 					return;
 
 				if (second % 30 == 0) { // 30초마다 속도가 2씩 증가

@@ -1,17 +1,17 @@
-package lastPuyo.copy;
+package lastPuyo2;
 
 import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PuyoInfo extends JPanel {
+public class PuyoGameInfo extends JPanel {
 
 	JLabel score; // 점수 라벨
 	JLabel combo; // 콤보 라벨
 	JLabel time; // 시간 라벨
 
-	public PuyoInfo() {
+	public PuyoGameInfo() {
 		// TODO Auto-generated constructor stub
 
 		setLayout(null);

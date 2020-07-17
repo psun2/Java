@@ -1,9 +1,10 @@
-package lastPuyo.copy;
+package lastPuyo2;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class Puyo extends Thread {
+//public class Puyo extends Thread {
+public class Puyo {
 
 	public static final int puyoSize = 50;
 
@@ -13,6 +14,8 @@ public class Puyo extends Thread {
 
 	JLabel Lb;
 	PuyoPanel panel;
+
+	String name;
 
 	public Puyo(PuyoPanel panel) {
 		// TODO Auto-generated constructor stub
@@ -25,6 +28,7 @@ public class Puyo extends Thread {
 	void init() {
 		this.stopChk = true;
 		this.Lb = label();
+		this.name = Lb.getName();
 	}
 
 	JLabel label() {
@@ -45,26 +49,31 @@ public class Puyo extends Thread {
 		return result;
 	}
 
+//	@Override
+//	public void run() {
+//		// TODO Auto-generated method stub
+//
+//		while (true) {
+//
+//			// System.out.println("Lb.getY() : " + Lb.getY());
+//			// System.out.println("y : " + y);
+//
+//			if (panel.endGame) // 게임이 끝나서 더이상 업데이트를 할 필요 없음
+//				return;
+//
+//			if (Lb.getX() != x || Lb.getY() != y) {
+//				this.x = Lb.getX();
+//				this.y = Lb.getY();
+//				// System.out.println("좌표 업데이트 완료");
+//			}
+//
+//		}
+//
+//	}
+
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-
-		while (true) {
-
-			// System.out.println("Lb.getY() : " + Lb.getY());
-			// System.out.println("y : " + y);
-
-			if (panel.end) // 게임이 끝나서 더이상 업데이트를 할 필요 없음
-				return;
-
-			if (Lb.getX() != x || Lb.getY() != y) {
-				this.x = Lb.getX();
-				this.y = Lb.getY();
-				// System.out.println("좌표 업데이트 완료");
-			}
-
-		}
-
+	public String toString() {
+		return "Puyo [name=" + name + "]";
 	}
 
 	void randomTest() { // 골고루 잘 돌아가는거 확인

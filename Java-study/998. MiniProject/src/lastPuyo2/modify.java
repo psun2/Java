@@ -1,4 +1,4 @@
-package lastPuyo.copy;
+package lastPuyo2;
 
 public class modify {
 
