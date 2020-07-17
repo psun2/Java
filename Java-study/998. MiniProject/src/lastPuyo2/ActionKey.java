@@ -64,7 +64,7 @@ public class ActionKey implements KeyListener {
 			rotate();
 			break;
 		case KeyEvent.VK_DOWN:
-			int speed = 10;
+			int speed = 3;
 			// 너무 짧게 잡으면 바닥을 뚫고 들어가는 버그 로 인해 넉넉하게 한뿌요의 크기 정도를 잡아 리턴
 			// 가로 모양 일때
 			if (meY == youY) {

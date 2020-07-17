@@ -33,7 +33,7 @@ public class Puyo {
 
 	JLabel label() {
 
-		String[] colors = { "blue", "green", "red", "yellow", "nuisance_fall" };
+		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
 		int i = (int) (Math.random() * 5);
 
 		// randomTest();

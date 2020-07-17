@@ -24,7 +24,7 @@ public class PuyoPanel extends JPanel {
 	HashMap<String, HashSet<Puyo>> map;
 	// HashMap<String, Puyo> map;
 
-	int step; // 뿌요가 떨어질때의 칸수z
+	int step, cutLine; // 뿌요가 떨어질때의 칸수z
 
 	boolean endGame, meChk, youChk;
 
@@ -138,39 +138,11 @@ public class PuyoPanel extends JPanel {
 
 				if (!me.stopChk && !you.stopChk) { // 뿌요 한쌍이 둘이 자리를 잡았다.
 					System.out.println("asdjalksjfkajfljasklfj");
-//					for (Puyo puyo : puyos) {
-//						bomb = new HashSet<Puyo>(); // 초기화
-//						bomb = bombSearch(puyo);
-//						bomb = bombDeepSearch(bomb);
-//						System.out.println("반환된거 가지고 못 터트리냐 ?");
-//						if (bomb.size() >= 4)
-//							testEmpty(bomb);
-//						bomb = new HashSet<Puyo>(); // 할일이 끝났으니 초기화
+
+//					if (bomb.size() == 0) {
+					System.out.println("너 되냐 ?");
+					return; // 다음 뿌요 생성을 위해 반복문 종료
 //					}
-
-					for (Entry<String, HashSet<Puyo>> puyo : map.entrySet()) {
-						bomb = new HashSet<Puyo>(); // 초기화
-						// bomb = bombSearch(puyo);
-						bomb = bombDeepSearch(puyo.getValue());
-					}
-					System.out.println("여기가 포문 마지막 : " + bomb);
-					if (bomb.size() >= 4)
-						testEmpty(bomb);
-
-					for (Entry<String, HashSet<Puyo>> puyo : map.entrySet()) {
-						bomb = new HashSet<Puyo>(); // 할일이 끝났으니 초기화
-						// bomb = bombSearch(puyo);
-						bomb = bombDeepSearch(puyo.getValue());
-					}
-
-					if (bomb.size() >= 4)
-						testEmpty(bomb);
-					bomb = new HashSet<Puyo>(); // 할일이 끝났으니 초기화
-
-					if (bomb.size() == 0) {
-						System.out.println("너 되냐 ?");
-						return; // 다음 뿌요 생성을 위해 반복문 종료
-					}
 				}
 
 				Thread.sleep(33); // 33초의 딜레이
@@ -196,15 +168,19 @@ public class PuyoPanel extends JPanel {
 			// 여기서 바닥까지 갈껀데....
 			// 그 전에 다른 요소가 있다면 stop
 			if (search(puyo)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
-				y -= step;
-				System.out.println("렉이야 뭐야 ?");
+				y = cutLine;
+//				y -= step;
 				puyo.stopChk = false; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
-				System.out.println("렉이야 뭐야 ?");
+
 				// System.out.println(puyo.Lb.getName() + " : " + puyo.stopChk);
 				if (puyo.Lb.getY() <= 0) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
 					endGame = true;
 
 			}
+
+			if (y >= getSize().height - Puyo.puyoSize)
+				y = getSize().height - Puyo.puyoSize;
+
 			puyo.Lb.setLocation(puyo.Lb.getX(), y);
 		} else {
 			puyo.stopChk = false; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
@@ -230,6 +206,9 @@ public class PuyoPanel extends JPanel {
 			if (puyo.Lb.getY() < pu.Lb.getY()) { // 생성되는 뿌요의 y 축 값을 먼저 비교해 나의 y보다 큰 애들만 본다. => 나보다 밑에 있는 애들
 				if (puyo.Lb.getX() == pu.Lb.getX()) { // x축이 같아야 동일 선상입니다.
 					if (puyo.Lb.getY() + Puyo.puyoSize >= pu.Lb.getY()) { // 나의 y가 밑에있는 뿌요의 y보다 같거나 커지려고 할때
+
+						this.cutLine = pu.Lb.getY() - Puyo.puyoSize;
+
 						result = true;
 					}
 				}
@@ -240,211 +219,6 @@ public class PuyoPanel extends JPanel {
 		return result;
 
 	} // inspectY 함수 끝
-
-	void flood() { // 미완
-		// 한개라도 땅에 닿았을때 이 함수를 실행하고, 여기서 작업들을 끝내고,
-		// 빈공간을 메꾸는 메소드 실행후
-		// 다음 뿌요가 생성 될 수 있게 true 로 바꾸어줌
-
-		if (me.Lb.getX() == you.Lb.getX()) { // 세로 모드 일때 위의 뿌요가 아래 뿌요를 잡아 먹는 현상 발생 오류 잡이
-
-			if (me.Lb.getY() > you.Lb.getY()) { // me 가 아래 있을때
-				you.Lb.setLocation(me.Lb.getX(), me.Lb.getY() - Puyo.puyoSize);
-
-				for (Puyo puyo : puyos) {
-
-					if (me.Lb.getY() + Puyo.puyoSize >= puyo.Lb.getY() && me.Lb.getX() == puyo.Lb.getX())
-						me.Lb.setLocation(me.Lb.getX(), puyo.Lb.getY());
-
-				}
-
-				if (me.Lb.getY() + Puyo.puyoSize >= this.getSize().height) // me가 혹시라도 바닥을 뚤고 나갈경우
-					me.Lb.setLocation(me.Lb.getX(), this.getSize().height - Puyo.puyoSize);
-
-			} else { // you가 아래 있을떄
-				me.Lb.setLocation(you.Lb.getX(), you.Lb.getY() - Puyo.puyoSize);
-			}
-
-		} else { // 가로 일때
-
-		}
-
-		me.stopChk = true;
-		you.stopChk = true;
-
-	}
-
-//	void allSearch() {
-//
-//		ArrayList<Puyo> 임시 = new ArrayList<Puyo>();
-//
-//		for (Puyo me : puyos) {
-//
-//			for (Puyo you : puyos) {
-//				if (me.Lb.getY() <= you.Lb.getY())
-//					임시.add(you);
-//			}
-//		} // 맨 윗 줄을 탐색
-//		
-//		if(임시 == null)
-//			임시
-//
-//		boomb();
-//		
-//	}
-
-	HashSet<Puyo> bombSearch(Puyo puyo) { // 폭발!!!!!!!!!! // 미완
-
-		HashSet<Puyo> result = new HashSet<Puyo>();
-
-		// bomb = new HashSet<Puyo>();
-		// ArrayList<Puyo> equals = new ArrayList<Puyo>();
-		// equals.add(puyo);
-
-		// 현재 안착한 뿌요를 기준으로 동서남북으로 같은 요소가 있는지 검색
-		int x = puyo.Lb.getX();
-		int y = puyo.Lb.getY();
-		String name = puyo.Lb.getName();
-
-//		x의 시작점 : x - Puyo.puyoSize
-		int startX = x - Puyo.puyoSize;
-
-//		x의 끝점 : x 의 시작점 + (Puyo.puyoSize * 2)
-		int endX = startX + (Puyo.puyoSize * 2);
-//		
-//		y의 시작점 : y - Puyo.puyoSize
-		int startY = y - Puyo.puyoSize;
-//		y의 끝점 : y 의 시작점 + (Puyo.puyoSize * 2)
-		int endY = startY + (Puyo.puyoSize * 2);
-
-		System.out.println("x : " + x + ", " + "startX : " + startX + ", " + "endX : " + endX);
-		System.out.println("y : " + y + ", " + "startY : " + startY + ", " + "endY : " + endY);
-//		
-//		Arraylist 를 순회 하면서 x가 x의 시작점 부터 x의 끝점과 같고, 
-//							y가 y의 시작점 부터 y의 끝점과 같으면서
-//							이름이 현재의 뿌요랑 같은게 있니 ?
-
-		// 대각선이 안되게 하기 십자가
-		for (Puyo pu : puyos) {
-
-			if (x == pu.Lb.getX() && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) { // 가로가 같고 위아래로 한칸씩이 같을때
-				if (puyo.name.equals(pu.name)) {
-					result.add(pu);
-				}
-			}
-
-			if (y == pu.Lb.getY() && pu.Lb.getX() >= startX && pu.Lb.getX() <= endX) { // 세로가 같고 양옆으로 한칸씩이 같을때
-				if (puyo.name.equals(pu.name)) {
-					result.add(pu);
-				}
-			}
-		}
-
-		return result;
-//		System.out.println(result);
-//		System.out.println(result.size());
-//
-//		System.out.println("---------------------------------------------------");
-//
-//		if (result.size() == 4)
-//			testEmpty(result);
-
-	} // 폭발 끝!
-
-	HashSet<Puyo> bombDeepSearch(HashSet<Puyo> bomb) {
-
-		System.out.println("오냐?");
-
-		HashSet<Puyo> result = new HashSet<Puyo>(); // 처음 찾았을때를 받아옴
-		// 2. 처음 찾은놈에서 인접한 놈을 걸러내야 함
-
-		int x;
-		int y;
-		String name;
-
-//		x의 시작점 : x - Puyo.puyoSize
-		int startX;
-
-//		x의 끝점 : x 의 시작점 + (Puyo.puyoSize * 2)
-		int endX;
-//		
-//		y의 시작점 : y - Puyo.puyoSize
-		int startY;
-//		y의 끝점 : y 의 시작점 + (Puyo.puyoSize * 2)
-		int endY;
-
-//		for (Puyo puyo : result) {
-//
-//			x = puyo.Lb.getX();
-//			y = puyo.Lb.getY();
-//			name = puyo.Lb.getName();
-//			startX = x - Puyo.puyoSize;
-//			endX = startX + (Puyo.puyoSize * 2);
-//			startY = y - Puyo.puyoSize;
-//			endY = startY + (Puyo.puyoSize * 2);
-
-		for (Puyo puyo : bomb) {
-
-			System.out.println("오냐 반복문 집입 ?");
-
-			x = puyo.Lb.getX();
-			y = puyo.Lb.getY();
-			name = puyo.Lb.getName();
-			startX = x - Puyo.puyoSize;
-			endX = startX + (Puyo.puyoSize * 2);
-			startY = y - Puyo.puyoSize;
-			endY = startY + (Puyo.puyoSize * 2);
-
-			for (Puyo pu : puyos) {
-
-				if (x == pu.Lb.getX() && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
-					// 가로가 같고 위아래로 한칸씩이 같을때 (십자가)
-
-					if (puyo.name.equals(pu.name)) {
-
-						result.add(pu);
-					}
-				}
-
-				if (y == pu.Lb.getY() && pu.Lb.getX() >= startX && pu.Lb.getX() <= endX) { // 세로가 같고 양옆으로 한칸씩이 같을때 (십자가)
-
-					if (puyo.name.equals(pu.name)) {
-
-						result.add(pu);
-					}
-				}
-			}
-		}
-
-//		}
-		if (bomb.size() != result.size()) {
-
-			System.out.println("asdasd");
-			result = bombDeepSearch(result);
-
-		}
-
-		System.out.println(result);
-
-		return result;
-
-	}
-
-	void testEmpty(HashSet<Puyo> bomb) {
-
-		System.out.println("test 진입");
-
-//		for (Puyo puyo : equals) {
-//			
-//		}
-
-		for (Puyo puyo : bomb) {
-			this.remove(puyo.Lb);
-			this.setVisible(false);
-			this.setVisible(true);
-		}
-
-	}
 
 	void empty() { // 터진 뿌요가 있으면 빈공간을 메꾸는 메소드 실행
 
