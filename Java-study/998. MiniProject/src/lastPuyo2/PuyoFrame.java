@@ -22,11 +22,11 @@ public class PuyoFrame extends JFrame {
 		getContentPane().setBackground(Color.blue);
 
 		info = new PuyoGameInfo();
-		info.setBounds(0, 0, Puyo.puyoSize * 6, 50);
+		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		add(info);
 
 		main = new PuyoPanel();
-		main.setBounds(0, 50, Puyo.puyoSize * 6, Puyo.puyoSize * 12);
+		main.setBounds(0, 50, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 12);
 		add(main);
 
 		addKeyListener(new ActionKey(main));

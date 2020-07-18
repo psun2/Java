@@ -25,9 +25,9 @@ public class PuyoPanel extends JPanel {
 	HashMap<String, HashSet<Puyo>> map;
 	// HashMap<String, Puyo> map;
 
-	int step, cutLine; // 뿌요가 떨어질때의 칸수z
+	int step, cutLine, score, jum, combo, comboCnt; // 뿌요가 떨어질때의 칸수z
 
-	boolean endGame, meChk, youChk, bombChk, removeChk;
+	boolean endGame, meChk, youChk, bombChk;
 
 	public ExecutorService threadPool;
 
@@ -48,7 +48,7 @@ public class PuyoPanel extends JPanel {
 
 		// 먼저 추가 되는것이 위에 뜬다...
 //		JLabel aa = new Puyo().label();
-//		aa.setBounds(0, 0, Puyo.puyoSize, Puyo.puyoSize);
+//		aa.setBounds(0, 0, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 //		add(aa);
 
 		createPuyo(); // 뿌요생산 스타트
@@ -67,14 +67,17 @@ public class PuyoPanel extends JPanel {
 		this.map = new HashMap<String, HashSet<Puyo>>();
 		this.bombArr = new HashSet<Puyo>();
 		this.bombChk = false;
-		this.removeChk = false;
+		this.score = 0;
+		this.jum = 0;
+		this.combo = 10;
+		this.comboCnt = 0;
 
 	}
 
 	void createPuyo() { // 뿌요의 계속적인 생산을 위하여 쓰레드 사용
 
-		int LocationX = (Puyo.puyoSize * 6) / 2; // 뿌요들의 생성 위치를 잡아기위한 x
-		int LocationY = -Puyo.puyoSize; // 뿌요들의 생성 위치를 잡아기위한 y
+		int LocationX = (Puyo.PUYOSIZE * 6) / 2; // 뿌요들의 생성 위치를 잡아기위한 x
+		int LocationY = -Puyo.PUYOSIZE; // 뿌요들의 생성 위치를 잡아기위한 y
 
 		Runnable thread = new Runnable() { // 뿌요 생성 쓰레드
 
@@ -94,14 +97,15 @@ public class PuyoPanel extends JPanel {
 						// System.out.println(Thread.currentThread().getName()); // pool-1-thread-1 => ?
 
 						return; // 게임 종료
-					} // 게임종료
+					}
 
 					// 기준이 되는 me 생성
 
 					if (!bombChk) {
+
 						me = new Puyo(PuyoPanel.this);
 						JLabel meLb = me.Lb;
-						meLb.setBounds(LocationX, LocationY, Puyo.puyoSize, Puyo.puyoSize);
+						meLb.setBounds(LocationX, LocationY, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						add(meLb);
 						puyos.add(me);
 						addMap(me);
@@ -109,15 +113,17 @@ public class PuyoPanel extends JPanel {
 						// you 생성
 						you = new Puyo(PuyoPanel.this);
 						JLabel youLb = you.Lb;
-						youLb.setBounds(LocationX, LocationY - Puyo.puyoSize, Puyo.puyoSize, Puyo.puyoSize);
+						youLb.setBounds(LocationX, LocationY - Puyo.PUYOSIZE, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						add(youLb);
 						puyos.add(you);
 						addMap(you);
 
 						move(); // 무브
 					} else {
-						bomb(); // 쓰레드여서 계속 실행시키는 문제 발생
-						// 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
+						if (bombChk()) // 쓰레드여서 계속 실행시키는 문제 발생
+							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
+						else
+							bombChk = false;
 					}
 
 				}
@@ -138,13 +144,13 @@ public class PuyoPanel extends JPanel {
 				if (!me.stopChk && !you.stopChk) { // 뿌요 한쌍이 둘이 자리를 잡았다.
 					this.bombChk = true; // 생산을 잠시 중단하고 터질 요소가 있는지 검색
 					// if (bombArr.size() == 0) // 터졋다면 다음 뿌요를 생성
+					modifyNode();
 					return; // 다음 뿌요 생성을 위해 반복문 종료
 				}
 
 				Thread.sleep(33); // 33초의 딜레이
 				endMove(me); // 뿌요가 밑으로 흘러내려 갑니다.
 				endMove(you); // 뿌요가 밑으로 흘러내려 갑니다
-
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -160,7 +166,7 @@ public class PuyoPanel extends JPanel {
 
 		// System.out.println(getSize());
 
-		if (y <= getSize().height - Puyo.puyoSize) { // 뿌요의 y축의 값이 바닥과 닿으려 할때 까지만 조건에 충족
+		if (y <= getSize().height - Puyo.PUYOSIZE) { // 뿌요의 y축의 값이 바닥과 닿으려 할때 까지만 조건에 충족
 			// 여기서 바닥까지 갈껀데....
 			// 그 전에 다른 요소가 있다면 stop
 			if (search(puyo)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
@@ -174,11 +180,12 @@ public class PuyoPanel extends JPanel {
 
 			}
 
-			if (y >= getSize().height - Puyo.puyoSize)
-				y = getSize().height - Puyo.puyoSize;
+			if (y >= getSize().height - Puyo.PUYOSIZE)
+				y = getSize().height - Puyo.PUYOSIZE;
 
 			puyo.Lb.setLocation(puyo.Lb.getX(), y);
 		} else {
+			System.out.println(puyo.name);
 			puyo.stopChk = false; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
 			// System.out.println(puyo.Lb.getName() + " : " + puyo.stopChk);
 		}
@@ -201,9 +208,9 @@ public class PuyoPanel extends JPanel {
 		for (Puyo pu : puyos) {
 			if (puyo.Lb.getY() < pu.Lb.getY()) { // 생성되는 뿌요의 y 축 값을 먼저 비교해 나의 y보다 큰 애들만 본다. => 나보다 밑에 있는 애들
 				if (puyo.Lb.getX() == pu.Lb.getX()) { // x축이 같아야 동일 선상입니다.
-					if (puyo.Lb.getY() + Puyo.puyoSize >= pu.Lb.getY()) { // 나의 y가 밑에있는 뿌요의 y보다 같거나 커지려고 할때
+					if (puyo.Lb.getY() + Puyo.PUYOSIZE >= pu.Lb.getY()) { // 나의 y가 밑에있는 뿌요의 y보다 같거나 커지려고 할때
 
-						this.cutLine = pu.Lb.getY() - Puyo.puyoSize;
+						this.cutLine = pu.Lb.getY() - Puyo.PUYOSIZE;
 
 						result = true;
 					}
@@ -230,51 +237,79 @@ public class PuyoPanel extends JPanel {
 
 	}
 
-	////////////// 폭발 로직
+	void modifyNode() {
 
-	void bomb() {
+		System.out.println("modifyNode 진입");
 
-		int num = 1;
+		for (Puyo puyo : puyos) {
+
+			// y 좌표가 자꾸 먹는 현상 발생!!!!
+			// y 좌표를 50으로 나누어 0이 안되는 것 찾기
+
+			if (puyo.Lb.getY() % Puyo.PUYOSIZE != 0) {
+				// modifyArr.add(puyo);
+				double y = puyo.Lb.getY();
+				double remainder = Puyo.PUYOSIZE - (puyo.Lb.getY() % 50);
+				System.out.println("y : " + y);
+				System.out.println("Puyo.PUYOSIZE : " + Puyo.PUYOSIZE);
+				System.out.println("remainder : " + remainder);
+				int result = (int) (y + remainder);
+				System.out.println("result : " + result);
+
+//				if ((y + remainder) % Puyo.PUYOSIZE == 0)
+//					result = (int) (y + remainder);
+//				else
+//					result = (int) (y - remainder);
+
+				puyo.Lb.setLocation(puyo.Lb.getX(), result);
+
+			}
+
+		}
+
+		System.out.println("피려 없쪙");
+
+	}
+
+	////////////// TODO 폭발 로직
+
+	boolean bombChk() {
+
+		boolean result = false;
 
 		for (HashSet<Puyo> puyo : map.values()) {
+
+			if (puyo.size() >= Puyo.PANG)
+				result = true;
+
+		}
+
+		return result;
+
+	}
+
+	synchronized void bomb() { // 배열을 돌아야 하는데 쓰레드로 부르기 때문에 비동기 사용
+
+		modifyNode();
+
+		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
+		HashMap<String, HashSet<Puyo>> cloneMap = new HashMap<String, HashSet<Puyo>>(this.map);
+
+		for (HashSet<Puyo> puyo : cloneMap.values()) {
 
 			// 맵에서 해당 색깔의 해쉬셋의 길이가 4미만이면 볼 필요도 없다.
 			System.out.println("puyo.size() : " + puyo.size());
 
-			if (puyo.size() >= 4) {
+			if (puyo.size() >= Puyo.PANG) {
 
 				deepBomb(puyo);
 				System.out.println("deepBomb2 를 끝내고 다음 작업 gogo");
 				System.out.println(bombArr);
 				System.out.println(bombArr.size());
-				if (bombArr.size() >= 4) {
-					removeChk = true;
-				}
-				if (removeChk) {
-					remove();
-					System.out.println("remove 끝");
-					empty();
-					System.out.println("empty 끝");
-				}
 
-				if (num == map.size()) {
-					this.bombChk = false;
-					return;
-				} // 모든 작업이 끝나면 다시 뿌요 생성
-
-				num++;
-				// System.out.println("num++" + num);
-				// System.out.println("설마 해당 맵에 변동이 있어서 그래 ?");
-			} else {
-				// System.out.println("else 를 타야지 ");
-
-				if (num == map.size()) {
-					this.bombChk = false;
-					return;
-				} // 모든 작업이 끝나면 다시 뿌요 생성
-
-				num++;
 			}
+
+			modifyNode();
 
 		}
 
@@ -298,17 +333,19 @@ public class PuyoPanel extends JPanel {
 			int y = puyo.Lb.getY();
 
 			// 기준이 되는 puyo의 십자가 시작점
-			int startX = x - Puyo.puyoSize - step;
-			int startY = y - Puyo.puyoSize - step;
+			int startX = x - Puyo.PUYOSIZE;
+			int startY = y - Puyo.PUYOSIZE;
 
 			// 기준이 되는 puyo의 십자가 끝점
-			int endX = startX + (Puyo.puyoSize * 2) + +(step * 2);
-			int endY = startY + (Puyo.puyoSize * 2) + +(step * 2);
+			int endX = startX + (Puyo.PUYOSIZE * 2);
+			int endY = startY + (Puyo.PUYOSIZE * 2);
 
 			for (Puyo pu : colors) {
 
 				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
+
 					equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
+					// equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
 					// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
 				}
 
@@ -324,18 +361,31 @@ public class PuyoPanel extends JPanel {
 			System.out.println("colors : " + colors);
 			System.out.println("equals : " + equals);
 		}
-		deepDeepBomb(colors, equals);
+
+		equals = deepDeepBomb(colors, equals);
+		System.out.println(equals);
 		System.out.println("deepBomb2 끝");
 
+		if (equals.size() >= 4) {
+			bombArr = equals;
+			jum = 10;
+			this.score += bombArr.size() * jum;
+			remove();
+			empty();
+			// return;
+		}
+		bombChk = false; // 삭제 할게 없을시 생산 해야함
 	}
 
-	void deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
+	// FIXME 가로로 만 배치시 멈춤현상 발생 -- 수정 필요 2020-07-18
+	// FIXME - 버그 내용 대각 선도 터짐 아마도 setp으로 오차를 준 범위에 걸려 터지는것 같음 -- 수정 필요 2020-07-18
+	HashSet<Puyo> deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
 		System.out.println("deepDeepBomb 진입");
 		System.out.println(equals);
 		System.out.println(equals.size());
 
 		if (equals.size() <= 1)
-			return;
+			return equals;
 
 		System.out.println("deepDeepBomb2 실행");
 
@@ -345,64 +395,60 @@ public class PuyoPanel extends JPanel {
 		HashSet<Puyo> result = new HashSet<Puyo>(equals);
 		removeColor.removeAll(result);
 
+		HashSet<Puyo> cloneResult = new HashSet<Puyo>(result);
+
 		System.out.println("removeColor : " + removeColor);
 		System.out.println("result : " + result);
 
-		for (Puyo puyo : result) {
+		for (Puyo puyo : cloneResult) {
 
 			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.Lb.getX();
 			int y = puyo.Lb.getY();
 
 			// 기준이 되는 puyo의 십자가 시작점
-			int startX = x - Puyo.puyoSize - step;
-			int startY = y - Puyo.puyoSize - step;
+			int startX = x - Puyo.PUYOSIZE; // setp 만큼의 오차가 생길 수 있음 // 대각 선 터지는 버그로 인하여 오차범위 지움
+			int startY = y - Puyo.PUYOSIZE; // setp 만큼의 오차가 생길 수 있음 // 대각 선 터지는 버그로 인하여 오차범위 지움
 
 			// 기준이 되는 puyo의 십자가 끝점
-			int endX = startX + (Puyo.puyoSize * 2) + (step * 2);
-			int endY = startY + (Puyo.puyoSize * 2) + (step * 2);
+			int endX = startX + (Puyo.PUYOSIZE * 2); // setp 만큼의 오차가 생길 수 있음 // 대각 선 터지는 버그로 인하여 오차범위 지움
+			int endY = startY + (Puyo.PUYOSIZE * 2); // setp 만큼의 오차가 생길 수 있음 // 대각 선 터지는 버그로 인하여 오차범위 지움
 
 			for (Puyo pu : removeColor) {
 
-				System.out.println("startX : " + startX);
-				System.out.println("x : " + x);
-				System.out.println(pu.Lb.getX());
-				System.out.println("endX : " + endX);
-
-				System.out.println();
-
-				System.out.println("startY : " + startY);
-				System.out.println("y : " + y);
-				System.out.println(pu.Lb.getY());
-				System.out.println("endY : " + endY);
+//				System.out.println("startX : " + startX);
+//				System.out.println("x : " + x);
+//				System.out.println(pu.Lb.getX());
+//				System.out.println("endX : " + endX);
+//
+//				System.out.println();
+//
+//				System.out.println("startY : " + startY);
+//				System.out.println("y : " + y);
+//				System.out.println(pu.Lb.getY());
+//				System.out.println("endY : " + endY);
 
 				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
 					result.add(pu); // 범위 안에 존재 한다면 set에 추가
-					// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
-					System.out.println("result : " + result);
-					System.out.println("에드함");
+									// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
+//					System.out.println("왜멈춰 result : " + result);
+//					System.out.println("에드함");
 				}
 
 			}
+			System.out.println("에드함 밖 for 문");
 
-			System.out.println("result : " + result);
-			System.out.println("equals : " + equals);
-			if (result.size() > equals.size()) {
-				deepDeepBomb(colors, result);
-			} else {
-				if (result.size() >= 4) {
-					bombArr = result;
-					remove();
-					empty();
-					return;
-				} else {
-					return;
-				}
-			}
+			System.out.println(result);
+
 		}
+		System.out.println("result : " + result);
+		System.out.println("equals : " + equals);
+		if (result.size() > equals.size())
+			result = deepDeepBomb(colors, result);
 
 		System.out.println("deepDeepBomb2 끝");
 		// return; // 맨 처음이 못 빠져 나와 return
+		return result;
 
 	}
 
@@ -411,8 +457,7 @@ public class PuyoPanel extends JPanel {
 		System.out.println("리무브");
 
 		for (Puyo puyo : bombArr) {
-			// 푸요 배열에서 삭제해주고
-			// 패널에서도 삭제해줘야함
+			// 터지는 뿌요 패널에서 삭제 작업
 			remove(puyo.Lb); // 패널에서 지움
 			setVisible(false); // update
 			setVisible(true); // update
@@ -425,13 +470,10 @@ public class PuyoPanel extends JPanel {
 		System.out.println("empty 진입");
 
 		for (Puyo puyo : bombArr) {
-			// 푸요 배열에서 삭제해주고
-			// 패널에서도 삭제해줘야함
+			// 터진 뿌요를 맵 과 어레이에서 삭제
 			puyos.remove(puyo); // 푸요들이 담긴 배열에서 삭제
 			map.get(puyo.name).remove(puyo);
 		}
-
-		bombArr = new HashSet<Puyo>();
 
 		emptyMove();
 		System.out.println("empty 끝");
@@ -443,90 +485,90 @@ public class PuyoPanel extends JPanel {
 
 		System.out.println("emptyMove 진입");
 
-		int startY = 0, endY = 0, yPos = 0;
+		// 바닥에 있는 아이들음 움직임이 필요 없으므로 제외
 
-		for (Puyo puyo : puyos) {
+		TreeSet<Puyo> sortPuyo = new TreeSet<Puyo>();
+
+		// 아에 처음부터 업데이트 될 녀석만 가져오자
+
+		for (Puyo puyo : bombArr) {
 
 			for (Puyo pu : puyos) {
 
-				if (puyo.Lb.getY() < pu.Lb.getY())
-					startY = puyo.Lb.getY();
-				else
-					endY = pu.Lb.getY();
+				if (puyo.Lb.getX() == pu.Lb.getX()) {
+					pu.stopChk = true;
+					sortPuyo.add(pu);
+					System.out.println(sortPuyo);
+					System.out.println("업데이트가 필요한 뿌요 목록");
+				}
 
 			}
 
 		}
 
-		yPos = endY - Puyo.puyoSize;
-
-		TreeSet<Puyo> set = new TreeSet<Puyo>(puyos);
-
-		for (Puyo puyo : set) {
-			if (puyo.Lb.getY() >= yPos && puyo.Lb.getY() < endY)
-				emptyEndMove(puyo);
-			else {
-				endY = puyo.Lb.getY() + Puyo.puyoSize;
-				yPos = endY - Puyo.puyoSize;
-				emptyEndMove(puyo);
-			}
-
+		if (sortPuyo.size() == 0) {
+			bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+			bombChk = false;
+			return;
 		}
+
+		bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+
+		emptyEndMove(sortPuyo);
+		if (bombChk()) {
+			bomb();
+			modifyNode();
+			// 재귀 적으로 구성된 곳으로서...
+			// 여기서 다시한번 터질때 콤보점수가 시작
+			this.comboCnt++;
+		} else
+			bombChk = false;
+
+		// 모든게 끝나고 메소드를 빠져 나가려 할때 콤보점수 업데이트
+
+		combo = comboCnt * (jum * 2);
+		modifyNode();
 
 	} // move 함수 끝
 
-	void emptyEndMove(Puyo puyo) {
+	void emptyEndMove(TreeSet<Puyo> sortPuyo) {
 
-		System.out.println("emptyEndMove");
+		System.out.println("emptyEndMove 진입"); // 진입 완료
 
-		int y = puyo.Lb.getY();
-		int yPos = y + Puyo.puyoSize;
+		while (true) {
 
-		puyo.Lb.setLocation(puyo.Lb.getX(), yPos);
+			for (Puyo puyo : sortPuyo) {
 
-//		while (yPos >= y) {
-//
-//			System.out.println("puyo.Lb.getY() : " + puyo.Lb.getY());
-//			System.out.println("yPos : " + yPos);
-//
-//			System.out.println("돌아요");
-//
-//			int result = y + 3;
-//			puyo.Lb.setLocation(puyo.Lb.getX(), result);
-//			y = result;
-//
-//		}
+				int index = 0;
+				for (Puyo puyo2 : sortPuyo) {
 
-		removeChk = false;
+					// System.out.println("puyo.stopChk : " + puyo.stopChk); // flase
+					if (!puyo2.stopChk)
+						index++;
+
+				}
+
+				if (sortPuyo.size() == index) // 여기서 폭발요소를 또 검색해야 함
+					return;
+
+				// System.out.println("puyo.stopChk : " + puyo.stopChk); // flase
+				if (puyo.stopChk) {
+
+					// System.out.println("puyo.stopChk 너 진입은 하니 ?"); // 진입 거부
+					try {
+
+						Thread.sleep(33); // 33초의 딜레이
+						endMove(puyo); // 뿌요가 밑으로 흘러내려 갑니다.
+
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
 
 	}
-
-//	void searchElement() {
-//
-//		ArrayList<Puyo> newPuyo = new ArrayList<Puyo>();
-//		ArrayList<Puyo> badak = new ArrayList<Puyo>();
-//
-//		// 제일 아랫 줄에 있는 애들 먼저 탐색 을 해서 재구성을 해야 하네 ?
-//		// y가 클수록 아래있다.
-//
-//		for (Puyo puyo : puyos) {
-//
-//			if (puyo.Lb.getY() >= getSize().height - Puyo.puyoSize) {
-//				badak.add(puyo);
-//			} else {
-//				for (Puyo pu : puyos) {
-//					if (puyo.Lb.getY() < pu.Lb.getY()) {
-//						if (newPuyo.size() == 0)
-//							newPuyo.add(puyo);
-//						else {
-//
-//						}
-//					}
-//				}
-//			}
-//
-//		}
-//
-//	}
 
 }

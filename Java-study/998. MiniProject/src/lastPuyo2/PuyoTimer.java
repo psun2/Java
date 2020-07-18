@@ -1,6 +1,6 @@
 package lastPuyo2;
 
-public class PuyoTimer extends Thread { // 타이머 쓰레드
+public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같이 관리
 
 	PuyoFrame frame; // 프레임에 있는 정보를 업데이트 하기 위해 받아옴
 	int second; // 초
@@ -27,6 +27,8 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드
 				}
 
 				frame.info.time.setText("경과 시간 : " + second + "s");
+				frame.info.score.setText("점수 : " + (frame.main.score + frame.main.combo) + "점");
+				frame.info.combo.setText("콤보 : " + frame.main.comboCnt + "콤보");
 				sleep(1000);
 				second++;
 			} catch (InterruptedException e) {

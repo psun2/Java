@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 //public class Puyo extends Thread {
 public class Puyo implements Comparable<Puyo> {
 
-	public static final int puyoSize = 50;
+	public static final int PUYOSIZE = 50; // 뿌요 사이즈
+	public static final int PANG = 4; // 터질때 필요한 갯수
+	// public static final int JUM = 10; // 터질때 필요한 갯수
 
 	int x, y;
 
@@ -34,8 +36,8 @@ public class Puyo implements Comparable<Puyo> {
 	JLabel label() {
 
 		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
-//		int i = (int) (Math.random() * 5);
-		int i = 3;
+		int i = (int) (Math.random() * 5);
+//		int i = 3;
 
 		// randomTest();
 

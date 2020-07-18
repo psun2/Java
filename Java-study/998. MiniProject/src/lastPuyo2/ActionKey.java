@@ -44,8 +44,8 @@ public class ActionKey implements KeyListener {
 
 		case KeyEvent.VK_LEFT:
 			System.out.println("왼쪽");
-			meX -= Puyo.puyoSize;
-			youX -= Puyo.puyoSize;
+			meX -= Puyo.PUYOSIZE;
+			youX -= Puyo.PUYOSIZE;
 			if (inspectLeft()) {
 				meX = panel.me.Lb.getX();
 				youX = panel.you.Lb.getX();
@@ -53,8 +53,8 @@ public class ActionKey implements KeyListener {
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("오른쪽");
-			meX += Puyo.puyoSize;
-			youX += Puyo.puyoSize;
+			meX += Puyo.PUYOSIZE;
+			youX += Puyo.PUYOSIZE;
 			if (inspectRight()) {
 				meX = panel.me.Lb.getX();
 				youX = panel.you.Lb.getX();
@@ -68,13 +68,13 @@ public class ActionKey implements KeyListener {
 			// 너무 짧게 잡으면 바닥을 뚫고 들어가는 버그 로 인해 넉넉하게 한뿌요의 크기 정도를 잡아 리턴
 			// 가로 모양 일때
 			if (meY == youY) {
-				if (meY >= panel.getSize().height - Puyo.puyoSize || youY >= panel.getSize().height - Puyo.puyoSize)
+				if (meY >= panel.getSize().height - Puyo.PUYOSIZE || youY >= panel.getSize().height - Puyo.PUYOSIZE)
 					return;
 			}
 			// 세로 모양 일떄
 			if (meX == youX) {
-				if (meY >= panel.getSize().height - Puyo.puyoSize
-						|| youY >= (panel.getSize().height - Puyo.puyoSize * 2))
+				if (meY >= panel.getSize().height - Puyo.PUYOSIZE
+						|| youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
 					return;
 			}
 			meY += speed;
@@ -90,12 +90,12 @@ public class ActionKey implements KeyListener {
 
 		if (meX <= 0)
 			meX = 0;
-		if (meX + Puyo.puyoSize >= panel.getSize().width)
-			meX = panel.getSize().width - Puyo.puyoSize;
+		if (meX + Puyo.PUYOSIZE >= panel.getSize().width)
+			meX = panel.getSize().width - Puyo.PUYOSIZE;
 		if (youX <= 0)
 			youX = 0;
-		if (youX + Puyo.puyoSize >= panel.getSize().width)
-			youX = panel.getSize().width - Puyo.puyoSize;
+		if (youX + Puyo.PUYOSIZE >= panel.getSize().width)
+			youX = panel.getSize().width - Puyo.PUYOSIZE;
 
 		panel.you.Lb.setLocation(youX, youY);
 		panel.me.Lb.setLocation(meX, meY);
@@ -115,8 +115,8 @@ public class ActionKey implements KeyListener {
 				if (panel.me.Lb.getX() > puyo.Lb.getX() || panel.you.Lb.getX() > puyo.Lb.getX()) {
 					if (panel.me.Lb.getY() >= puyo.Lb.getY() || panel.you.Lb.getY() >= puyo.Lb.getY()) {
 						// 나 또는 너의 y 값이 옆의 요소의 y값에 포함될때 옆에 요소가 있음을 알 수 있음
-						if (panel.me.Lb.getX() <= puyo.Lb.getX() + Puyo.puyoSize
-								|| panel.you.Lb.getX() <= puyo.Lb.getX() + Puyo.puyoSize) {
+						if (panel.me.Lb.getX() <= puyo.Lb.getX() + Puyo.PUYOSIZE
+								|| panel.you.Lb.getX() <= puyo.Lb.getX() + Puyo.PUYOSIZE) {
 							// me 또는 you의 x값이 옆 요소의 x 값을 침범 하려 할때....
 							result = true; // true가 되면 옆으로 가지 못하게 함
 						}
@@ -141,8 +141,8 @@ public class ActionKey implements KeyListener {
 				if (panel.me.Lb.getX() < puyo.Lb.getX() || panel.you.Lb.getX() < puyo.Lb.getX()) {
 					if (panel.me.Lb.getY() >= puyo.Lb.getY() || panel.you.Lb.getY() >= puyo.Lb.getY()) {
 						// 나 또는 너의 y 값이 옆의 요소의 y값에 포함될때 옆에 요소가 있음을 알 수 있음
-						if (panel.me.Lb.getX() + Puyo.puyoSize >= puyo.Lb.getX()
-								|| panel.you.Lb.getX() + Puyo.puyoSize >= puyo.Lb.getX()) {
+						if (panel.me.Lb.getX() + Puyo.PUYOSIZE >= puyo.Lb.getX()
+								|| panel.you.Lb.getX() + Puyo.PUYOSIZE >= puyo.Lb.getX()) {
 							// me 또는 you의 x값이 옆 요소의 x 값을 침범 하려 할때....
 							result = true; // true가 되면 옆으로 가지 못하게 함
 						}
@@ -160,7 +160,7 @@ public class ActionKey implements KeyListener {
 
 		// 버그 잡는 로직
 		// 가로상태 일때 너무 밑에서 방향키로 회전 시키면 이상하게 쌓이는 현상 해결
-//		if (youY + Puyo.puyoSize >= Puyo.puyoSize * 11) {
+//		if (youY + Puyo.PUYOSIZE >= Puyo.PUYOSIZE * 11) {
 //			if (youY == meY)
 //				return;
 //		}
@@ -172,7 +172,7 @@ public class ActionKey implements KeyListener {
 			if (youY < meY) { // you가 me 보다 위에 존재 할때
 				// you의 x 가 me의 오른쪽으로...
 				// you의 y 가 me와 같음...
-				youX = meX + Puyo.puyoSize;
+				youX = meX + Puyo.PUYOSIZE;
 				// System.out.println("youX : " + youX); // 통과
 				// System.out.println("meX : " + meX); // 통과
 				youY = meY;
@@ -182,7 +182,7 @@ public class ActionKey implements KeyListener {
 			} else { // you가 me 보다 아래 존재 할때
 				// you의 x 가 me의 왼쪽으로...
 				// you의 y 가 me와 같음...
-				youX = meX - Puyo.puyoSize;
+				youX = meX - Puyo.PUYOSIZE;
 				youY = meY;
 				changeShapeLeft(); // 오른쪽으로 회전시 => 즉 you가 me의 아래 있을때
 			}
@@ -193,12 +193,12 @@ public class ActionKey implements KeyListener {
 				// you의 x가 me 와 같고
 				// you의 y가 me의 위에 있음
 				youX = meX;
-				youY = meY - Puyo.puyoSize;
+				youY = meY - Puyo.PUYOSIZE;
 			} else { // you가 me 의 오른쪽에 존재 할때
 				// you의 x가 me 와 같고
 				// you의 y가 me의 아래에 있음
 				youX = meX;
-				youY = meY + Puyo.puyoSize;
+				youY = meY + Puyo.PUYOSIZE;
 			}
 
 		}
@@ -211,9 +211,9 @@ public class ActionKey implements KeyListener {
 		// System.out.println(panel.getSize().width); // 288 즉 패널의 끝선이 된다
 
 		// 현재상태 : 세로 상태 => me만 고려해줘도 됨
-		if (panel.you.Lb.getX() + Puyo.puyoSize == panel.getSize().width) { // 회전시 벽이라면 ?
+		if (panel.you.Lb.getX() + Puyo.PUYOSIZE == panel.getSize().width) { // 회전시 벽이라면 ?
 			// System.out.println("걸립니까 ?"); // 벽에 걸리는 거 확인 가능
-			youY = meY - Puyo.puyoSize;
+			youY = meY - Puyo.PUYOSIZE;
 			// youX = meX;
 		}
 	}
@@ -225,7 +225,7 @@ public class ActionKey implements KeyListener {
 
 		if (panel.you.Lb.getX() == 0) { // 회전시 벽이라면 ?
 			// System.out.println("걸립니까 ?"); // 벽에 걸리는 거 확인 가능 // 걸립니까 ?
-			youY = meY + Puyo.puyoSize;
+			youY = meY + Puyo.PUYOSIZE;
 			// youX = meX;
 		}
 	}

@@ -12,6 +12,11 @@ public class MapTest {
 		ArrayList test = new ArrayList();
 		
 		System.out.println(test);
+		
+		
+		System.out.println(548 % 50);
+		System.out.println((548 % 50) % 50);
+		
 	}
 
 }
