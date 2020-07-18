@@ -315,7 +315,7 @@ public class PuyoPanel extends JPanel {
 
 	}
 
-	void deepBomb(HashSet<Puyo> colors) { // jhkhijhjh clolors 가 업데이트가 안됨
+	void deepBomb(HashSet<Puyo> colors) { // clolors 가 업데이트가 안됨
 
 		System.out.println("deepBomb2 실행");
 
@@ -342,13 +342,19 @@ public class PuyoPanel extends JPanel {
 
 			for (Puyo pu : colors) {
 
-				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
+//				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
+//
+//					equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
+//					// equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
+//					// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
+//				}
 
-					equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
-					// equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
-					// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
-				}
-
+				if (x == pu.Lb.getX() && y == pu.Lb.getY() + Puyo.PUYOSIZE
+						|| x == pu.Lb.getX() && y == pu.Lb.getY() - Puyo.PUYOSIZE)
+					equalsTemp.add(pu);
+				if (y == pu.Lb.getY() && x == pu.Lb.getX() + Puyo.PUYOSIZE
+						|| y == pu.Lb.getY() && x == pu.Lb.getX() - Puyo.PUYOSIZE)
+					equalsTemp.add(pu);
 			}
 
 			System.out.println(equalsTemp);
@@ -395,10 +401,13 @@ public class PuyoPanel extends JPanel {
 		HashSet<Puyo> result = new HashSet<Puyo>(equals);
 		removeColor.removeAll(result);
 
+		if (result.size() == 0)
+			return equals;
+
 		HashSet<Puyo> cloneResult = new HashSet<Puyo>(result);
 
 		System.out.println("removeColor : " + removeColor);
-		System.out.println("result : " + result);
+		System.out.println("cloneResult : " + result);
 
 		for (Puyo puyo : cloneResult) {
 
@@ -428,12 +437,19 @@ public class PuyoPanel extends JPanel {
 //				System.out.println(pu.Lb.getY());
 //				System.out.println("endY : " + endY);
 
-				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
-					result.add(pu); // 범위 안에 존재 한다면 set에 추가
-									// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
+//				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
+//					result.add(pu); // 범위 안에 존재 한다면 set에 추가
+//									 set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
 //					System.out.println("왜멈춰 result : " + result);
 //					System.out.println("에드함");
-				}
+//				}
+
+				if (x == pu.Lb.getX() && y == pu.Lb.getY() + Puyo.PUYOSIZE
+						|| x == pu.Lb.getX() && y == pu.Lb.getY() - Puyo.PUYOSIZE)
+					result.add(pu);
+				if (y == pu.Lb.getY() && x == pu.Lb.getX() + Puyo.PUYOSIZE
+						|| y == pu.Lb.getY() && x == pu.Lb.getX() - Puyo.PUYOSIZE)
+					result.add(pu);
 
 			}
 			System.out.println("에드함 밖 for 문");
