@@ -245,11 +245,14 @@ public class PuyoPanel extends JPanel {
 
 				deepBomb(puyo);
 				System.out.println("deepBomb2 를 끝내고 다음 작업 gogo");
-				remove();
-				System.out.println("remove 끝");
-				if (removeChk)
+				if (bombArr.size() >= 4)
+					removeChk = true;
+				if (removeChk) {
+					remove();
+					System.out.println("remove 끝");
 					empty();
-				System.out.println("empty 끝");
+					System.out.println("empty 끝");
+				}
 
 				if (num == map.size()) {
 					this.bombChk = false;
@@ -257,10 +260,10 @@ public class PuyoPanel extends JPanel {
 				} // 모든 작업이 끝나면 다시 뿌요 생성
 
 				num++;
-				System.out.println("num++" + num);
-				System.out.println("설마 해당 맵에 변동이 있어서 그래 ?");
+				// System.out.println("num++" + num);
+				// System.out.println("설마 해당 맵에 변동이 있어서 그래 ?");
 			} else {
-				System.out.println("else 를 타야지 ");
+				// System.out.println("else 를 타야지 ");
 
 				if (num == map.size()) {
 					this.bombChk = false;
@@ -387,8 +390,6 @@ public class PuyoPanel extends JPanel {
 			setVisible(true); // update
 		}
 
-		removeChk = true;
-
 	}
 
 	void empty() { // 터진 뿌요가 있으면 빈공간을 메꾸는 메소드 실행
@@ -422,25 +423,25 @@ public class PuyoPanel extends JPanel {
 		System.out.println("tree : " + tree);
 
 		for (Puyo puyo : tree) {
-			
+
 			System.out.println("puyo.Lb.getY() : " + puyo.Lb.getY());
 
 			System.out.println("Puyo.puyoSize : " + Puyo.puyoSize);
-			
+
 			System.out.println("puyo.Lb.getY() + Puyo.puyoSize : " + (puyo.Lb.getY() + Puyo.puyoSize));
 
 			for (Puyo pu : tree) {
 
 				System.out.println("pu.Lb.getY() : " + pu.Lb.getY());
 
-				if (puyo.Lb.getX() == pu.Lb.getX() && puyo.Lb.getY() < pu.Lb.getY()) { // 내밑에 요소가 있다면
-					System.out.println("무브, ㄱㄱ");
-					System.out.println();
-					yPos = pu.Lb.getY();
-					emptyEndMove(puyo, yPos);
-					break;
-				}
+				if (puyo.Lb.getY() < getSize().height + Puyo.puyoSize) { // 맨 마지막줄 제외
 
+					if (puyo.Lb.getX() == pu.Lb.getX() && puyo.Lb.getY() < pu.Lb.getY()) { // 내밑에 요소가 있다면
+						yPos = pu.Lb.getY();
+						emptyEndMove(puyo, yPos);
+						break;
+					}
+				}
 			}
 
 		}
@@ -455,7 +456,7 @@ public class PuyoPanel extends JPanel {
 
 		int y = puyo.Lb.getY();
 
-		while (yPos > puyo.Lb.getY()) {
+		while (yPos > y) {
 
 			System.out.println("puyo.Lb.getY() : " + puyo.Lb.getY());
 			System.out.println("yPos : " + yPos);
