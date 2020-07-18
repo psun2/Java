@@ -34,7 +34,8 @@ public class Puyo implements Comparable<Puyo> {
 	JLabel label() {
 
 		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
-		int i = (int) (Math.random() * 5);
+//		int i = (int) (Math.random() * 5);
+		int i = 3;
 
 		// randomTest();
 
