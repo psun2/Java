@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 //public class Puyo extends Thread {
-public class Puyo {
+public class Puyo implements Comparable<Puyo> {
 
 	public static final int puyoSize = 50;
 
@@ -88,6 +88,18 @@ public class Puyo {
 
 		}
 
+	}
+
+	@Override
+	public int compareTo(Puyo o) {
+		// TODO Auto-generated method stub
+
+		int res = o.Lb.getY() - Lb.getY();
+
+		if (res == 0)
+			res = Lb.getX() - o.Lb.getX();
+
+		return res;
 	}
 
 }
