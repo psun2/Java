@@ -1,0 +1,22 @@
+--▶ 조인
+-- 사원번호가 110인 사원의 부서명을 알고 싶다면
+-- select * from employees where employee_id=110;
+-- 먼저 사원 테이블에서 사원 번호를 검색한 후
+-- select * from departments where department_id=100;
+-- 부서 테이블에서 부서번호를 검색해야 한다.
+
+--▷ equi join
+-- 두 테이블에서 공통적으로 존재하는 컬럼의 값이 일치되는 행을 연결해서 결과를 생성
+-- select * from employees, departments where employees.department_id = departments.department_id;
+-- 조건을 주지 않을 경우 두 테이블의 모든 레코드가 결합한 곱집합이 발생한다.
+-- 조건은 조인한 테이블 개수에서 ?1 한 만큼 주어야 한다.
+-- 
+-- 동일한 컬럼명 앞에는 테이블명으로 소속을 밝혀야 한다. 
+-- 테이블 명이 길 경우 별칭을 부여한다.
+-- select * from employees e, departments d where e.department_id = d.department_id;
+-- 
+-- select * from employees e, departments d 
+-- where e.department_id = d.department_id and last_name='King';
+
+--▷ non-equi join
+-- where 절의 조인 조건을 = 연산자 이외의 비교 연산자를 사용한다.
