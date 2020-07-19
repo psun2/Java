@@ -46,8 +46,13 @@ public class ActionKey implements KeyListener {
 
 		case KeyEvent.VK_LEFT:
 			System.out.println("왼쪽");
+
+			if (meX == 0 || youX == 0)
+				return;
+
 			meX -= Puyo.PUYOSIZE;
 			youX -= Puyo.PUYOSIZE;
+
 			if (inspectLeft()) {
 				meX = panel.me.Lb.getX();
 				youX = panel.you.Lb.getX();
@@ -56,6 +61,9 @@ public class ActionKey implements KeyListener {
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("오른쪽");
+
+			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
+				return;
 			meX += Puyo.PUYOSIZE;
 			youX += Puyo.PUYOSIZE;
 			if (inspectRight()) {
@@ -93,15 +101,6 @@ public class ActionKey implements KeyListener {
 		// 왼쪽 벽 : x 좌표가 더 작음
 
 		// 세로방향일땐 누가 누군지 상관없음
-
-		if (meX <= 0)
-			meX = 0;
-		if (meX + Puyo.PUYOSIZE >= panel.getSize().width)
-			meX = panel.getSize().width - Puyo.PUYOSIZE;
-		if (youX <= 0)
-			youX = 0;
-		if (youX + Puyo.PUYOSIZE >= panel.getSize().width)
-			youX = panel.getSize().width - Puyo.PUYOSIZE;
 
 		panel.you.Lb.setLocation(youX, youY);
 		panel.me.Lb.setLocation(meX, meY);
