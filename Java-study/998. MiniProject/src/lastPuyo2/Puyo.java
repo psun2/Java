@@ -37,13 +37,13 @@ public class Puyo implements Comparable<Puyo> {
 
 		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
 		int i = (int) (Math.random() * 5);
-//		int i = 3;
+//		int i = 0;
 
 		// randomTest();
 
 		JLabel result = new JLabel(new ImageIcon("./img/" + colors[i] + "-48.png"));
 
-		// System.out.println("./img/" + colors[i] + "-48.png"); // ./img/blue-48.png
+		// JLabel result = new JLabel(new ImageIcon("./img/" + colors[i] + ".png"));
 
 		result.setName(colors[i]);
 
