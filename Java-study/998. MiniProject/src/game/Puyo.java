@@ -1,4 +1,4 @@
-package lastPuyo2;
+package game;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

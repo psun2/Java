@@ -1,4 +1,4 @@
-package lastPuyo2;
+package game;
 
 public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같이 관리
 

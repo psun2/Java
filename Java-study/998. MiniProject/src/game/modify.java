@@ -1,4 +1,4 @@
-package lastPuyo2;
+package game;
 
 // FIXME 뿌요 터지는 로직 다시 생각 => 대각선도 터져 버림
 // FIXME KeyEvent 수정
