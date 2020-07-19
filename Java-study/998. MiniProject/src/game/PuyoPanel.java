@@ -24,7 +24,7 @@ public class PuyoPanel extends JPanel {
 	HashSet<Puyo> bombArr;
 	HashMap<String, HashSet<Puyo>> map;
 
-	int step, cutLine, score, jum, combo, comboCnt; // 뿌요가 떨어질때의 칸수z
+	int step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수z
 
 	boolean endGame, meChk, youChk, bombChk;
 
@@ -36,8 +36,6 @@ public class PuyoPanel extends JPanel {
 
 		// TODO Auto-generated constructor stub
 		this.background = new ImageIcon("./img/background.png");
-		// System.out.println(background.getIconWidth()); // 512
-		// System.out.println(background.getIconHeight()); // 1024
 		setLayout(null);
 
 		// 배경 라벨 맨 마지막에 추가 해야 보임 - 추후에 수정
@@ -69,8 +67,9 @@ public class PuyoPanel extends JPanel {
 		this.bombChk = false;
 		this.score = 0;
 		this.jum = 0;
-		this.combo = 10;
+		this.combo = 0;
 		this.comboCnt = 0;
+		// this.comboChk = -1;
 
 	}
 
@@ -104,12 +103,18 @@ public class PuyoPanel extends JPanel {
 
 					if (!bombChk) {
 
+						try {
+							Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 						me = new Puyo(PuyoPanel.this);
 						JLabel meLb = me.Lb;
 						meLb.setBounds(LocationX, LocationY, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						add(meLb);
 						puyos.add(me);
-						// member.add(me);
 						addMap(me);
 
 						// you 생성
@@ -118,15 +123,22 @@ public class PuyoPanel extends JPanel {
 						youLb.setBounds(LocationX, LocationY - Puyo.PUYOSIZE, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						add(youLb);
 						puyos.add(you);
-						// member.add(you);
 						addMap(you);
 
 						move(); // 무브
 
 					} else {
-						if (bombChk()) // 쓰레드여서 계속 실행시키는 문제 발생
+
+						try {
+							Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						if (bombChk()) { // 쓰레드여서 계속 실행시키는 문제 발생
 							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
-						else
+						} else
 							bombChk = false;
 					}
 
@@ -140,6 +152,22 @@ public class PuyoPanel extends JPanel {
 		System.out.println("createPuyo => 뿌요생성 끝 게임 종료");
 	}
 
+	void addMap(Puyo puyo) { // 생성될때 깔별로 맵으로 한번더 구분
+
+		System.out.println("addMap 진입");
+		if (this.map.containsKey(puyo.name)) {
+
+			map.get(puyo.name).add(puyo);
+
+		} else {
+			HashSet<Puyo> set = new HashSet<Puyo>();
+			set.add(puyo);
+			this.map.put(puyo.name, set);
+		}
+
+		System.out.println("addMap 끝");
+	}
+
 	void move() { // 자동적인 움직임은 y축만 업데이트 하면 됩니다.
 		// 뿌요가 생성 되면 x 축은 key보드로 조종하고, y축으론 자동으로 흐른다.
 		while (true) {
@@ -148,8 +176,17 @@ public class PuyoPanel extends JPanel {
 
 				if (!me.stopChk && !you.stopChk) { // 뿌요 한쌍이 둘이 자리를 잡았다.
 					this.bombChk = true; // 생산을 잠시 중단하고 터질 요소가 있는지 검색
-					// if (bombArr.size() == 0) // 터졋다면 다음 뿌요를 생성
+					comboChk = -1; // 콤보 chk 초기화
+					System.out.println(comboChk);
+					fixBug(you); // 가끔식 생기는 잡버그 수정
+					fixBug(me); // 가끔식 생기는 잡버그 수정
 					modifyNode();
+					try {
+						Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					return; // 다음 뿌요 생성을 위해 반복문 종료
 				}
 
@@ -232,20 +269,6 @@ public class PuyoPanel extends JPanel {
 
 	} // inspectY 함수 끝
 
-	void addMap(Puyo puyo) { // 생성될때 깔별로 맵으로 한번더 구분
-
-		if (this.map.containsKey(puyo.name)) {
-
-			map.get(puyo.name).add(puyo);
-
-		} else {
-			HashSet<Puyo> set = new HashSet<Puyo>();
-			set.add(puyo);
-			this.map.put(puyo.name, set);
-		}
-
-	}
-
 	void modifyNode() {
 
 		System.out.println("modifyNode 진입");
@@ -270,6 +293,31 @@ public class PuyoPanel extends JPanel {
 
 	}
 
+	void fixBug(Puyo puyo) { // 가끔식 생기는 잡버그 수정 (중간에 걸리는 현상)
+
+		System.out.println("★★★★★★★★fixBug 진입★★★★★★★★");
+
+		int chk = 0;
+		if (!puyo.stopChk && puyo.Lb.getY() != getSize().height - Puyo.PUYOSIZE) {
+
+			for (Puyo pu : puyos) {
+
+				if (puyo.Lb.getY() + Puyo.PUYOSIZE == pu.Lb.getY())
+					chk++;
+			}
+
+		}
+
+		System.out.println(chk);
+
+		if (chk == 0) {
+			puyo.stopChk = true;
+			endMove(puyo);
+		}
+
+		System.out.println("★★★★★★★★fixBug 종료★★★★★★★★");
+	}
+
 	////////////// TODO 폭발 로직
 
 	boolean bombChk() {
@@ -287,9 +335,20 @@ public class PuyoPanel extends JPanel {
 
 	}
 
-	synchronized void bomb() { // 배열을 돌아야 하는데 쓰레드로 부르기 때문에 비동기 사용
+	void bomb() { // 배열을 돌아야 하는데 쓰레드로 부르기 때문에 비동기 사용
+
+		System.out.println("bomb 진입");
 
 		modifyNode();
+
+		try {
+
+			Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
 		HashMap<String, HashSet<Puyo>> cloneMap = new HashMap<String, HashSet<Puyo>>(this.map);
@@ -302,21 +361,34 @@ public class PuyoPanel extends JPanel {
 			if (puyo.size() >= Puyo.PANG) {
 
 				deepBomb(puyo);
-				System.out.println("deepBomb2 를 끝내고 다음 작업 gogo");
 				System.out.println(bombArr);
 				System.out.println(bombArr.size());
 
 			}
 
 			modifyNode();
-
 		}
+
+		bombChk = false; // 삭제 할것이 없고, 삭제가 되어 모든 로직이
+		// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
+		// 다른 요소가 나올소 있도록 boolean 값을변경
+
+		System.out.println("bomb 끝");
 
 	}
 
 	void deepBomb(HashSet<Puyo> colors) { // clolors 가 업데이트가 안됨
 
-		System.out.println("deepBomb2 실행");
+		System.out.println("deepBomb 실행");
+
+		modifyNode();
+
+		try {
+			Thread.sleep(33);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		HashSet<Puyo> equals = new HashSet<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
@@ -331,22 +403,7 @@ public class PuyoPanel extends JPanel {
 			int x = puyo.Lb.getX();
 			int y = puyo.Lb.getY();
 
-			// 기준이 되는 puyo의 십자가 시작점
-			int startX = x - Puyo.PUYOSIZE;
-			int startY = y - Puyo.PUYOSIZE;
-
-			// 기준이 되는 puyo의 십자가 끝점
-//			int endX = startX + (Puyo.PUYOSIZE * 2);
-			int endY = startY + (Puyo.PUYOSIZE * 2);
-
 			for (Puyo pu : colors) {
-
-//				if (pu.Lb.getX() >= startX && pu.Lb.getX() <= endX && pu.Lb.getY() >= startY && pu.Lb.getY() <= endY) {
-//
-//					equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
-//					// equalsTemp.add(pu); // 범위 안에 존재 한다면 set에 추가
-//					// set 사용 이유 set은 중복되는 것 은 안들어 가기 때문에 너무 펴연난
-//				}
 
 				if (x == pu.Lb.getX() && y == pu.Lb.getY() + Puyo.PUYOSIZE
 						|| x == pu.Lb.getX() && y == pu.Lb.getY() - Puyo.PUYOSIZE)
@@ -369,7 +426,6 @@ public class PuyoPanel extends JPanel {
 
 		equals = deepDeepBomb(colors, equals);
 		System.out.println(equals);
-		System.out.println("deepBomb2 끝");
 
 		if (equals.size() >= 4) {
 			bombArr = equals;
@@ -377,15 +433,26 @@ public class PuyoPanel extends JPanel {
 			this.score += bombArr.size() * jum;
 			remove();
 			empty();
-			// return;
 		}
-		bombChk = false; // 삭제 할게 없을시 생산 해야함
+
+		modifyNode();
+
+		System.out.println("deepBomb 끝");
 	}
 
 	// FIXME 가로로 만 배치시 멈춤현상 발생 -- 수정 필요 2020-07-18
 	// FIXME - 버그 내용 대각 선도 터짐 아마도 setp으로 오차를 준 범위에 걸려 터지는것 같음 -- 수정 필요 2020-07-18
 	HashSet<Puyo> deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
 		System.out.println("deepDeepBomb 진입");
+
+		try {
+
+			Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (equals.size() <= 1)
 			return equals;
@@ -464,6 +531,8 @@ public class PuyoPanel extends JPanel {
 
 		System.out.println("emptyMove 진입");
 
+		modifyNode();
+
 		// 바닥에 있는 아이들음 움직임이 필요 없으므로 제외
 
 		TreeSet<Puyo> sortPuyo = new TreeSet<Puyo>();
@@ -474,11 +543,13 @@ public class PuyoPanel extends JPanel {
 
 			for (Puyo pu : puyos) {
 
-				if (puyo.Lb.getX() == pu.Lb.getX()) {
-					pu.stopChk = true;
-					sortPuyo.add(pu);
-					System.out.println(sortPuyo);
-					System.out.println("업데이트가 필요한 뿌요 목록");
+				if (puyo.Lb.getX() == pu.Lb.getX()) { // 삭제된 뿌요와 x가 같고
+					if (puyo.Lb.getY() > pu.Lb.getY()) { // 삭제된 뿌요보다 위에 있다면...
+						pu.stopChk = true;
+						sortPuyo.add(pu);
+						System.out.println("업데이트가 필요한 뿌요 목록");
+						System.out.println(sortPuyo);
+					}
 				}
 
 			}
@@ -493,15 +564,16 @@ public class PuyoPanel extends JPanel {
 
 		bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 
-		emptyEndMove(sortPuyo);
-		if (bombChk()) {
+		emptyEndMove(sortPuyo); // 요소들이 터져서 이동이 끝난뒤
+
+		comboChk++;
+
+		if (bombChk()) { // 재귀적으로 터질 곳이 있나 검색합니다.
 			bomb();
 			modifyNode();
-			// 재귀 적으로 구성된 곳으로서...
-			// 여기서 다시한번 터질때 콤보점수가 시작
-			this.comboCnt++;
-		} else
-			bombChk = false;
+			if (comboChk > 0)
+				this.comboCnt++;
+		}
 
 		// 모든게 끝나고 메소드를 빠져 나가려 할때 콤보점수 업데이트
 

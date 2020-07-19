@@ -45,6 +45,7 @@ public class ActionKey implements KeyListener {
 		switch (key) {
 
 		case KeyEvent.VK_LEFT:
+
 			System.out.println("왼쪽");
 
 			if (meX == 0 || youX == 0)
@@ -59,7 +60,9 @@ public class ActionKey implements KeyListener {
 			}
 			printNode();
 			break;
+
 		case KeyEvent.VK_RIGHT:
+
 			System.out.println("오른쪽");
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
@@ -72,24 +75,25 @@ public class ActionKey implements KeyListener {
 			}
 			printNode();
 			break;
+
 		case KeyEvent.VK_UP:
+
+			if (fix()) {
+				// System.out.println("키버그 진입");
+				return;
+			}
+
 			rotate();
 			break;
+
 		case KeyEvent.VK_DOWN:
 			int speed = 10;
 			// 너무 짧게 잡으면 바닥을 뚫고 들어가는 버그 로 인해 넉넉하게 한뿌요의 크기 정도를 잡아 리턴
 			// 가로 모양 일때
-			if (meY == youY) {
-				if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2)
-						|| youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
-					return;
-			}
-			// 세로 모양 일떄
-			if (meX == youX) {
-				if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2)
-						|| youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
-					return;
-			}
+
+			if (fix())
+				return;
+
 			meY += speed;
 			youY += speed;
 			printNode();
@@ -104,6 +108,17 @@ public class ActionKey implements KeyListener {
 
 		panel.you.Lb.setLocation(youX, youY);
 		panel.me.Lb.setLocation(meX, meY);
+
+	}
+
+	boolean fix() {
+
+		boolean result = false;
+
+		if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2) || youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
+			result = true;
+
+		return result;
 
 	}
 

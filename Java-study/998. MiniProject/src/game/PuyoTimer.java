@@ -28,7 +28,7 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 
 				frame.info.time.setText("경과 시간 : " + second + "s");
 				frame.info.score.setText("점수 : " + (frame.main.score + frame.main.combo) + "점");
-				frame.info.combo.setText("콤보 : " + frame.main.comboCnt + "콤보");
+				frame.info.combo.setText("연쇄 : " + frame.main.comboCnt + "연쇄");
 				sleep(1000);
 				second++;
 			} catch (InterruptedException e) {
