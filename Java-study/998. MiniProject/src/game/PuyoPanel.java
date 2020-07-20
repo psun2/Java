@@ -20,8 +20,8 @@ public class PuyoPanel extends JPanel {
 	Puyo you;
 
 	ArrayList<Puyo> puyos;
-	HashSet<Puyo> bombArr;
-	HashMap<String, HashSet<Puyo>> map;
+	ArrayList<Puyo> bombArr;
+	HashMap<String, ArrayList<Puyo>> map;
 
 	int step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수z
 
@@ -60,8 +60,8 @@ public class PuyoPanel extends JPanel {
 		this.endGame = false;
 		this.meChk = false;
 		this.youChk = false;
-		this.map = new HashMap<String, HashSet<Puyo>>();
-		this.bombArr = new HashSet<Puyo>();
+		this.map = new HashMap<String, ArrayList<Puyo>>();
+		this.bombArr = new ArrayList<Puyo>();
 		this.bombChk = false;
 		this.score = 0;
 		this.jum = 0;
@@ -148,7 +148,7 @@ public class PuyoPanel extends JPanel {
 			map.get(puyo.name).add(puyo);
 
 		} else {
-			HashSet<Puyo> set = new HashSet<Puyo>();
+			ArrayList<Puyo> set = new ArrayList<Puyo>();
 			set.add(puyo);
 			this.map.put(puyo.name, set);
 		}
@@ -192,6 +192,8 @@ public class PuyoPanel extends JPanel {
 	} // move 함수 끝
 
 	void endMove(Puyo puyo) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
+
+		fixBug(puyo);
 
 		if (!puyo.stopChk) {
 			System.out.println("정지되어 움직이지 않음");
@@ -286,6 +288,9 @@ public class PuyoPanel extends JPanel {
 
 		System.out.println("★★★★★★★★fixBug 진입★★★★★★★★");
 
+		if (puyo.stopChk)
+			return;
+
 		int chk = 0;
 		if (!puyo.stopChk && puyo.Lb.getY() != getSize().height - Puyo.PUYOSIZE) {
 
@@ -315,7 +320,7 @@ public class PuyoPanel extends JPanel {
 
 		boolean result = false;
 
-		for (HashSet<Puyo> puyo : map.values()) {
+		for (ArrayList<Puyo> puyo : map.values()) {
 
 			if (puyo.size() >= Puyo.PANG)
 				result = true;
@@ -341,9 +346,9 @@ public class PuyoPanel extends JPanel {
 		}
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
-		HashMap<String, HashSet<Puyo>> cloneMap = new HashMap<String, HashSet<Puyo>>(this.map);
+		HashMap<String, ArrayList<Puyo>> cloneMap = new HashMap<String, ArrayList<Puyo>>(this.map);
 
-		for (HashSet<Puyo> puyo : cloneMap.values()) {
+		for (ArrayList<Puyo> puyo : cloneMap.values()) {
 
 			// 맵에서 해당 색깔의 해쉬셋의 길이가 4미만이면 볼 필요도 없다.
 			System.out.println("puyo.size() : " + puyo.size());
@@ -361,16 +366,16 @@ public class PuyoPanel extends JPanel {
 
 	}
 
-	void deepBomb(HashSet<Puyo> colors) { // clolors 가 업데이트가 안됨
+	void deepBomb(ArrayList<Puyo> colors) { // clolors 가 업데이트가 안됨
 
 		System.out.println("deepBomb 실행");
 
-		HashSet<Puyo> equals = new HashSet<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
+		ArrayList<Puyo> equals = new ArrayList<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
 
 		for (Puyo puyo : colors) {
 
-			HashSet<Puyo> equalsTemp = new HashSet<Puyo>();
+			ArrayList<Puyo> equalsTemp = new ArrayList<Puyo>();
 
 			equalsTemp.add(puyo);
 
@@ -416,28 +421,28 @@ public class PuyoPanel extends JPanel {
 		System.out.println("deepBomb 끝");
 	}
 
-	HashSet<Puyo> deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
+	ArrayList<Puyo> deepDeepBomb(ArrayList<Puyo> colors, ArrayList<Puyo> equals) {
 		System.out.println("deepDeepBomb 진입");
 
 		if (equals.size() <= 1)
 			return equals;
 
-		HashSet<Puyo> removeColor = new HashSet<Puyo>(colors);
+		ArrayList<Puyo> removeColor = new ArrayList<Puyo>(colors);
 		// 이제부턴 내가 가지고 있어야 할 것이기 때문에 bombArr에 해야 하나 ?
 		// result 를 이용하다가 마지막에만 추가 ?
-		HashSet<Puyo> result = new HashSet<Puyo>();
+		ArrayList<Puyo> result = new ArrayList<Puyo>();
 
-		HashSet<Puyo> cloneResult = new HashSet<Puyo>(equals);
+		ArrayList<Puyo> cloneResult = new ArrayList<Puyo>(equals);
 		removeColor.removeAll(equals);
 
 		for (Puyo puyo : cloneResult) {
 
-			modifyNode();
 			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.Lb.getX();
 			int y = puyo.Lb.getY();
 
 			result.add(puyo);
+			modifyNode();
 
 			for (Puyo pu : removeColor) {
 
@@ -457,7 +462,7 @@ public class PuyoPanel extends JPanel {
 		System.out.println("**  원본 colors 에서 같은 애들을 제외한 배열 : " + removeColor);
 		System.out.println("** result 배열 : " + result);
 
-		if (result.size() > equals.size())
+		if (result.size() != equals.size())
 			result = deepDeepBomb(colors, result);
 
 		System.out.println("deepDeepBomb 끝");
@@ -503,8 +508,6 @@ public class PuyoPanel extends JPanel {
 
 		System.out.println("emptyMove 진입");
 
-		modifyNode();
-
 		// 바닥에 있는 아이들음 움직임이 필요 없으므로 제외
 
 		TreeSet<Puyo> sortPuyo = new TreeSet<Puyo>();
@@ -529,16 +532,17 @@ public class PuyoPanel extends JPanel {
 		}
 
 		if (sortPuyo.size() == 0) { // 업데이트 될 요소가 없다면 리턴
-			bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+			bombArr = new ArrayList<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 			bombChk = false;
 			return;
 		}
 
 		// 있다면 아래와 같이 진행
 
-		bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+		bombArr = new ArrayList<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 
 		emptyEndMove(sortPuyo); // 요소들이 터져서 이동이 끝난뒤
+		modifyNode();
 
 		comboChk++; // 처음 터졌을시 0 이되고
 		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
@@ -553,7 +557,6 @@ public class PuyoPanel extends JPanel {
 		// 모든게 끝나고 메소드를 빠져 나가려 할때 콤보점수 업데이트
 
 		combo = comboCnt * (jum * 2);
-		modifyNode();
 
 	} // move 함수 끝
 
