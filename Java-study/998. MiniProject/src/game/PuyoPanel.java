@@ -119,8 +119,15 @@ public class PuyoPanel extends JPanel {
 
 						if (bombChk()) { // 쓰레드여서 계속 실행시키는 문제 발생
 							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
-						} else
-							bombChk = false;
+							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이
+							// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
+							// 다른 요소가 나올소 있도록 boolean 값을변경
+						} else {
+							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이
+							// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
+							// 다른 요소가 나올소 있도록 boolean 값을변경
+						}
+
 					}
 
 				}
@@ -156,12 +163,12 @@ public class PuyoPanel extends JPanel {
 			try {
 
 				if (!me.stopChk && !you.stopChk) { // 뿌요 한쌍이 둘이 자리를 잡았다.
-					this.bombChk = true; // 생산을 잠시 중단하고 터질 요소가 있는지 검색
-					comboChk = -1; // 콤보 chk 초기화
-					System.out.println(comboChk);
 					fixBug(you); // 가끔식 생기는 잡버그 수정
 					fixBug(me); // 가끔식 생기는 잡버그 수정
 					modifyNode();
+					comboChk = -1; // 콤보 chk 초기화
+					// System.out.println(comboChk);
+					this.bombChk = true; // 생산을 잠시 중단하고 터질 요소가 있는지 검색
 					try {
 						Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
 					} catch (InterruptedException e) {
@@ -271,6 +278,8 @@ public class PuyoPanel extends JPanel {
 
 		}
 
+		System.out.println("modifyNode 끝");
+
 	}
 
 	void fixBug(Puyo puyo) { // 가끔식 생기는 잡버그 수정 (중간에 걸리는 현상)
@@ -302,6 +311,8 @@ public class PuyoPanel extends JPanel {
 
 	boolean bombChk() {
 
+		System.out.println("bombChk 진입");
+
 		boolean result = false;
 
 		for (HashSet<Puyo> puyo : map.values()) {
@@ -311,6 +322,7 @@ public class PuyoPanel extends JPanel {
 
 		}
 
+		System.out.println("끝");
 		return result;
 
 	}
@@ -344,10 +356,6 @@ public class PuyoPanel extends JPanel {
 
 			}
 		}
-
-		bombChk = false; // 삭제 할것이 없고, 삭제가 되어 모든 로직이
-		// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
-		// 다른 요소가 나올소 있도록 boolean 값을변경
 
 		System.out.println("bomb 끝");
 
