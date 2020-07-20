@@ -7,9 +7,11 @@ import javax.swing.JFrame;
 
 public class PuyoFrame extends JFrame {
 
-	PuyoGameInfo info;
-	PuyoPanel main;
-	final int width = 306;
+	// PuyoGameInfo info;
+	PuyoPanel me;
+	YouPuyoPanel you;
+//	final int width = 306; // 싱글 
+	final int width = 605; // 멀티
 	final int height = 680;
 
 	public PuyoFrame() {
@@ -23,48 +25,23 @@ public class PuyoFrame extends JFrame {
 		setIconImage(new ImageIcon("./img/logo.png").getImage()); // 타이틀바 로고 설정
 		getContentPane().setBackground(Color.blue);
 
-		info = new PuyoGameInfo();
-		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
-		add(info);
+		me = new PuyoPanel();
+		me.setBounds(Puyo.PUYOSIZE * 6, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
+		add(me);
 
-		main = new PuyoPanel();
-		main.setBounds(0, 50, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 12);
-		add(main);
+		addKeyListener(new ActionKey(me));
 
-		addKeyListener(new ActionKey(main));
+//		you = new YouPuyoPanel();
+//		you.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
+//		add(you);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
 		setVisible(true); // 프레임을 보여줌
-
-		new PuyoTimer(this).start();
-		// new getSiz().start();
 
 	}
 
 	public static void main(String[] args) {
 		new PuyoFrame();
-	}
-
-	class getSiz extends Thread {
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-
-			while (true) {
-
-				try {
-					sleep(1000);
-					System.out.println(getSize());
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-
-		}
-
 	}
 
 }

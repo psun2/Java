@@ -3,8 +3,10 @@ package game;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-//public class Puyo extends Thread {
 public class Puyo implements Comparable<Puyo> {
+//public class Puyo  {
+
+	private final static long serialVersionUID = 1L;
 
 	public static final int PUYOSIZE = 50; // 뿌요 사이즈
 	public static final int PANG = 4; // 터질때 필요한 갯수
@@ -23,7 +25,6 @@ public class Puyo implements Comparable<Puyo> {
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
 		init();
-//		start();
 
 	}
 
@@ -51,28 +52,6 @@ public class Puyo implements Comparable<Puyo> {
 
 		return result;
 	}
-
-//	@Override
-//	public void run() {
-//		// TODO Auto-generated method stub
-//
-//		while (true) {
-//
-//			// System.out.println("Lb.getY() : " + Lb.getY());
-//			// System.out.println("y : " + y);
-//
-//			if (panel.endGame) // 게임이 끝나서 더이상 업데이트를 할 필요 없음
-//				return;
-//
-//			if (Lb.getX() != x || Lb.getY() != y) {
-//				this.x = Lb.getX();
-//				this.y = Lb.getY();
-//				// System.out.println("좌표 업데이트 완료");
-//			}
-//
-//		}
-//
-//	}
 
 	@Override
 	public String toString() {

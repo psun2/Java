@@ -1,5 +1,9 @@
 package game;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,18 +20,24 @@ public class PuyoPanel extends JPanel {
 
 	ImageIcon background;
 
+	PuyoGameInfo info;
+
 	Puyo me;
 	Puyo you;
 
 	ArrayList<Puyo> puyos;
-	ArrayList<Puyo> bombArr;
-	HashMap<String, ArrayList<Puyo>> map;
+	HashSet<Puyo> bombArr;
+	HashMap<String, HashSet<Puyo>> map;
 
-	int step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수z
+	int step, cutLine, score, jum, combo, comboCnt, comboChk, port; // 뿌요가 떨어질때의 칸수
+	String host;
 
 	boolean endGame, meChk, youChk, bombChk;
 
-	public ExecutorService threadPool;
+	ExecutorService threadPool;
+
+	Socket socket;
+	ObjectOutputStream ois;
 
 	public PuyoPanel() { // 생성자
 
@@ -47,7 +57,13 @@ public class PuyoPanel extends JPanel {
 //		aa.setBounds(0, 0, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 //		add(aa);
 
+		info = new PuyoGameInfo();
+		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
+		add(info);
+
 		createPuyo(); // 뿌요생산 스타트
+		new PuyoTimer(this).start();
+
 	} // 생성자 끝
 
 	void init() {
@@ -60,13 +76,54 @@ public class PuyoPanel extends JPanel {
 		this.endGame = false;
 		this.meChk = false;
 		this.youChk = false;
-		this.map = new HashMap<String, ArrayList<Puyo>>();
-		this.bombArr = new ArrayList<Puyo>();
+		this.map = new HashMap<String, HashSet<Puyo>>();
+		this.bombArr = new HashSet<Puyo>();
 		this.bombChk = false;
 		this.score = 0;
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
+		this.port = 7777;
+
+		try {
+//			this.host = InetAddress.getLocalHost().getHostAddress();
+			System.out.println(InetAddress.getLocalHost());
+			this.host = "127.0.0.1";
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		try {
+			socket = new Socket(host, port);
+			System.out.println(socket);
+			System.out.println("클라이언트 접속 완료");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			ois = new ObjectOutputStream(socket.getOutputStream());
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			try {
+				if (ois != null)
+					ois.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+
+			try {
+				if (ois != null)
+					ois.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 
 	}
 
@@ -93,6 +150,8 @@ public class PuyoPanel extends JPanel {
 
 						return; // 게임 종료
 					}
+
+					updateNode(); // 서버에 보내주기전 뿌요의 좌표 업데이트 => 업데이트후 서버로 보냄
 
 					// 기준이 되는 me 생성
 
@@ -148,7 +207,7 @@ public class PuyoPanel extends JPanel {
 			map.get(puyo.name).add(puyo);
 
 		} else {
-			ArrayList<Puyo> set = new ArrayList<Puyo>();
+			HashSet<Puyo> set = new HashSet<Puyo>();
 			set.add(puyo);
 			this.map.put(puyo.name, set);
 		}
@@ -286,7 +345,7 @@ public class PuyoPanel extends JPanel {
 
 	void fixBug(Puyo puyo) { // 가끔식 생기는 잡버그 수정 (중간에 걸리는 현상)
 
-		System.out.println("★★★★★★★★fixBug 진입★★★★★★★★");
+		// System.out.println("★★★★★★★★fixBug 진입★★★★★★★★");
 
 		if (puyo.stopChk)
 			return;
@@ -309,7 +368,7 @@ public class PuyoPanel extends JPanel {
 			endMove(puyo);
 		}
 
-		System.out.println("★★★★★★★★fixBug 종료★★★★★★★★");
+		// System.out.println("★★★★★★★★fixBug 종료★★★★★★★★");
 	}
 
 	////////////// TODO 폭발 로직
@@ -320,7 +379,7 @@ public class PuyoPanel extends JPanel {
 
 		boolean result = false;
 
-		for (ArrayList<Puyo> puyo : map.values()) {
+		for (HashSet<Puyo> puyo : map.values()) {
 
 			if (puyo.size() >= Puyo.PANG)
 				result = true;
@@ -346,9 +405,9 @@ public class PuyoPanel extends JPanel {
 		}
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
-		HashMap<String, ArrayList<Puyo>> cloneMap = new HashMap<String, ArrayList<Puyo>>(this.map);
+		HashMap<String, HashSet<Puyo>> cloneMap = new HashMap<String, HashSet<Puyo>>(this.map);
 
-		for (ArrayList<Puyo> puyo : cloneMap.values()) {
+		for (HashSet<Puyo> puyo : cloneMap.values()) {
 
 			// 맵에서 해당 색깔의 해쉬셋의 길이가 4미만이면 볼 필요도 없다.
 			System.out.println("puyo.size() : " + puyo.size());
@@ -366,16 +425,16 @@ public class PuyoPanel extends JPanel {
 
 	}
 
-	void deepBomb(ArrayList<Puyo> colors) { // clolors 가 업데이트가 안됨
+	void deepBomb(HashSet<Puyo> colors) { // clolors 가 업데이트가 안됨
 
 		System.out.println("deepBomb 실행");
 
-		ArrayList<Puyo> equals = new ArrayList<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
+		HashSet<Puyo> equals = new HashSet<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
 
 		for (Puyo puyo : colors) {
 
-			ArrayList<Puyo> equalsTemp = new ArrayList<Puyo>();
+			HashSet<Puyo> equalsTemp = new HashSet<Puyo>();
 
 			equalsTemp.add(puyo);
 
@@ -421,18 +480,18 @@ public class PuyoPanel extends JPanel {
 		System.out.println("deepBomb 끝");
 	}
 
-	ArrayList<Puyo> deepDeepBomb(ArrayList<Puyo> colors, ArrayList<Puyo> equals) {
+	HashSet<Puyo> deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
 		System.out.println("deepDeepBomb 진입");
 
 		if (equals.size() <= 1)
 			return equals;
 
-		ArrayList<Puyo> removeColor = new ArrayList<Puyo>(colors);
+		HashSet<Puyo> removeColor = new HashSet<Puyo>(colors);
 		// 이제부턴 내가 가지고 있어야 할 것이기 때문에 bombArr에 해야 하나 ?
 		// result 를 이용하다가 마지막에만 추가 ?
-		ArrayList<Puyo> result = new ArrayList<Puyo>();
+		HashSet<Puyo> result = new HashSet<Puyo>();
 
-		ArrayList<Puyo> cloneResult = new ArrayList<Puyo>(equals);
+		HashSet<Puyo> cloneResult = new HashSet<Puyo>(equals);
 		removeColor.removeAll(equals);
 
 		for (Puyo puyo : cloneResult) {
@@ -462,7 +521,7 @@ public class PuyoPanel extends JPanel {
 		System.out.println("**  원본 colors 에서 같은 애들을 제외한 배열 : " + removeColor);
 		System.out.println("** result 배열 : " + result);
 
-		if (result.size() != equals.size())
+		if (result.size() > equals.size())
 			result = deepDeepBomb(colors, result);
 
 		System.out.println("deepDeepBomb 끝");
@@ -483,6 +542,12 @@ public class PuyoPanel extends JPanel {
 		}
 
 		modifyNode();
+
+		comboChk++; // 처음 터졌을시 0 이되고
+		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
+		if (comboChk > 0)
+			this.comboCnt++;
+		combo = comboCnt * (jum * 2);
 
 		System.out.println("remove 끝");
 
@@ -532,31 +597,25 @@ public class PuyoPanel extends JPanel {
 		}
 
 		if (sortPuyo.size() == 0) { // 업데이트 될 요소가 없다면 리턴
-			bombArr = new ArrayList<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+			bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 			bombChk = false;
 			return;
 		}
 
 		// 있다면 아래와 같이 진행
 
-		bombArr = new ArrayList<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
+		bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 
 		emptyEndMove(sortPuyo); // 요소들이 터져서 이동이 끝난뒤
 		modifyNode();
 
-		comboChk++; // 처음 터졌을시 0 이되고
-		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
-
 		if (bombChk()) { // 재귀적으로 터질 곳이 있나 검색합니다.
 			bomb();
 			modifyNode();
-			if (comboChk > 0)
-				this.comboCnt++;
+
 		}
 
 		// 모든게 끝나고 메소드를 빠져 나가려 할때 콤보점수 업데이트
-
-		combo = comboCnt * (jum * 2);
 
 	} // move 함수 끝
 
@@ -596,6 +655,28 @@ public class PuyoPanel extends JPanel {
 				}
 
 			}
+		}
+
+	}
+
+	void updateNode() {
+
+		for (Puyo puyo : puyos) {
+			puyo.x = puyo.Lb.getX();
+			puyo.y = puyo.Lb.getY();
+		}
+
+		send(puyos); // send 로 서버에 보내줌
+
+	}
+
+	void send(ArrayList<Puyo> puyos) {
+
+		try {
+			ois.writeObject(puyos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
