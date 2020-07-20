@@ -9,9 +9,8 @@ public class PuyoFrame extends JFrame {
 
 	// PuyoGameInfo info;
 	PuyoPanel me;
-	YouPuyoPanel you;
-//	final int width = 306; // 싱글 
-	final int width = 605; // 멀티
+//	final int width = 306;
+	final int width = 612;
 	final int height = 680;
 
 	public PuyoFrame() {
@@ -26,14 +25,10 @@ public class PuyoFrame extends JFrame {
 		getContentPane().setBackground(Color.blue);
 
 		me = new PuyoPanel();
-		me.setBounds(Puyo.PUYOSIZE * 6, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
+		me.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 		add(me);
 
 		addKeyListener(new ActionKey(me));
-
-//		you = new YouPuyoPanel();
-//		you.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
-//		add(you);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
 		setVisible(true); // 프레임을 보여줌

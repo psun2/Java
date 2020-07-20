@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 public class Puyo implements Comparable<Puyo> {
 //public class Puyo  {
 
-	private final static long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	public static final int PUYOSIZE = 50; // 뿌요 사이즈
 	public static final int PANG = 4; // 터질때 필요한 갯수
@@ -25,6 +25,7 @@ public class Puyo implements Comparable<Puyo> {
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
 		init();
+//		start();
 
 	}
 

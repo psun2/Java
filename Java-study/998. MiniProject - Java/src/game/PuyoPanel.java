@@ -36,9 +36,6 @@ public class PuyoPanel extends JPanel {
 
 	ExecutorService threadPool;
 
-	Socket socket;
-	ObjectOutputStream ois;
-
 	public PuyoPanel() { // 생성자
 
 		init();
@@ -83,47 +80,6 @@ public class PuyoPanel extends JPanel {
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
-		this.port = 7777;
-
-		try {
-//			this.host = InetAddress.getLocalHost().getHostAddress();
-			System.out.println(InetAddress.getLocalHost());
-			this.host = "127.0.0.1";
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		try {
-			socket = new Socket(host, port);
-			System.out.println(socket);
-			System.out.println("클라이언트 접속 완료");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			ois = new ObjectOutputStream(socket.getOutputStream());
-		} catch (Exception e) {
-			// TODO: handle exception
-
-			try {
-				if (ois != null)
-					ois.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		} finally {
-
-			try {
-				if (ois != null)
-					ois.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 
 	}
 
@@ -147,11 +103,8 @@ public class PuyoPanel extends JPanel {
 
 						if (threadPool != null && !threadPool.isShutdown()) // 게임이 끝나고 쓰레드 풀이 열려 있다면
 							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
-
 						return; // 게임 종료
 					}
-
-					updateNode(); // 서버에 보내주기전 뿌요의 좌표 업데이트 => 업데이트후 서버로 보냄
 
 					// 기준이 되는 me 생성
 
@@ -655,28 +608,6 @@ public class PuyoPanel extends JPanel {
 				}
 
 			}
-		}
-
-	}
-
-	void updateNode() {
-
-		for (Puyo puyo : puyos) {
-			puyo.x = puyo.Lb.getX();
-			puyo.y = puyo.Lb.getY();
-		}
-
-		send(puyos); // send 로 서버에 보내줌
-
-	}
-
-	void send(ArrayList<Puyo> puyos) {
-
-		try {
-			ois.writeObject(puyos);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
