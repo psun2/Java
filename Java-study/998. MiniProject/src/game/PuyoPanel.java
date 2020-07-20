@@ -20,7 +20,6 @@ public class PuyoPanel extends JPanel {
 	Puyo you;
 
 	ArrayList<Puyo> puyos;
-	// ArrayList<Puyo> member;
 	HashSet<Puyo> bombArr;
 	HashMap<String, HashSet<Puyo>> map;
 
@@ -61,7 +60,6 @@ public class PuyoPanel extends JPanel {
 		this.endGame = false;
 		this.meChk = false;
 		this.youChk = false;
-		// this.member = new ArrayList<Puyo>();
 		this.map = new HashMap<String, HashSet<Puyo>>();
 		this.bombArr = new HashSet<Puyo>();
 		this.bombChk = false;
@@ -69,7 +67,6 @@ public class PuyoPanel extends JPanel {
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
-		// this.comboChk = -1;
 
 	}
 
@@ -79,7 +76,7 @@ public class PuyoPanel extends JPanel {
 		int LocationX = (Puyo.PUYOSIZE * 6) / 2; // 뿌요들의 생성 위치를 잡아기위한 x
 		int LocationY = -Puyo.PUYOSIZE; // 뿌요들의 생성 위치를 잡아기위한 y
 
-		Runnable thread = new Runnable() { // 뿌요 생성 쓰레드
+		Runnable thread = new Runnable() { // 뿌요 생성 쓰레드 => 프레임과 같이 돌아야 하므로 쓰레드를 줌
 
 			@Override
 			public void run() {
@@ -94,21 +91,12 @@ public class PuyoPanel extends JPanel {
 						if (threadPool != null && !threadPool.isShutdown()) // 게임이 끝나고 쓰레드 풀이 열려 있다면
 							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
 
-						// System.out.println(Thread.currentThread().getName()); // pool-1-thread-1 => ?
-
 						return; // 게임 종료
 					}
 
 					// 기준이 되는 me 생성
 
 					if (!bombChk) {
-
-						try {
-							Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 
 						me = new Puyo(PuyoPanel.this);
 						JLabel meLb = me.Lb;
@@ -128,13 +116,6 @@ public class PuyoPanel extends JPanel {
 						move(); // 무브
 
 					} else {
-
-						try {
-							Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 
 						if (bombChk()) { // 쓰레드여서 계속 실행시키는 문제 발생
 							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
@@ -193,6 +174,7 @@ public class PuyoPanel extends JPanel {
 				Thread.sleep(33); // 33초의 딜레이
 				endMove(me); // 뿌요가 밑으로 흘러내려 갑니다.
 				endMove(you); // 뿌요가 밑으로 흘러내려 갑니다
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -210,8 +192,6 @@ public class PuyoPanel extends JPanel {
 		}
 
 		int y = nodeY(puyo); // y값은 뿌요가 셋팅될 y축의 값
-
-		// System.out.println(getSize());
 
 		if (y <= getSize().height - Puyo.PUYOSIZE) { // 뿌요의 y축의 값이 바닥과 닿으려 할때 까지만 조건에 충족
 			// 여기서 바닥까지 갈껀데....
@@ -339,8 +319,6 @@ public class PuyoPanel extends JPanel {
 
 		System.out.println("bomb 진입");
 
-		modifyNode();
-
 		try {
 
 			Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
@@ -365,8 +343,6 @@ public class PuyoPanel extends JPanel {
 				System.out.println(bombArr.size());
 
 			}
-
-			modifyNode();
 		}
 
 		bombChk = false; // 삭제 할것이 없고, 삭제가 되어 모든 로직이
@@ -380,15 +356,6 @@ public class PuyoPanel extends JPanel {
 	void deepBomb(HashSet<Puyo> colors) { // clolors 가 업데이트가 안됨
 
 		System.out.println("deepBomb 실행");
-
-		modifyNode();
-
-		try {
-			Thread.sleep(33);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		HashSet<Puyo> equals = new HashSet<Puyo>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
@@ -413,19 +380,22 @@ public class PuyoPanel extends JPanel {
 					equalsTemp.add(pu);
 			}
 
-			System.out.println(equalsTemp);
+			System.out.println("** equalsTemp: " + equalsTemp);
 
 			if (size < equalsTemp.size()) { // 최고 많이 붙어 있는 덩어리를 가림
 				size = equalsTemp.size();
 				equals = equalsTemp;
 			}
 
-			System.out.println("colors : " + colors);
-			System.out.println("equals : " + equals);
+			if (equalsTemp.size() == 3)
+				break;
+
+			// System.out.println("colors : " + colors);
+			// System.out.println("equals : " + equals);
 		}
 
 		equals = deepDeepBomb(colors, equals);
-		System.out.println(equals);
+		// System.out.println(equals);
 
 		if (equals.size() >= 4) {
 			bombArr = equals;
@@ -435,24 +405,11 @@ public class PuyoPanel extends JPanel {
 			empty();
 		}
 
-		modifyNode();
-
 		System.out.println("deepBomb 끝");
 	}
 
-	// FIXME 가로로 만 배치시 멈춤현상 발생 -- 수정 필요 2020-07-18
-	// FIXME - 버그 내용 대각 선도 터짐 아마도 setp으로 오차를 준 범위에 걸려 터지는것 같음 -- 수정 필요 2020-07-18
 	HashSet<Puyo> deepDeepBomb(HashSet<Puyo> colors, HashSet<Puyo> equals) {
 		System.out.println("deepDeepBomb 진입");
-
-		try {
-
-			Thread.sleep(33); // 가끔식 생기는 버그로 인하여 쓰레드로 잠시 슬립 했다가 감
-
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		if (equals.size() <= 1)
 			return equals;
@@ -460,19 +417,19 @@ public class PuyoPanel extends JPanel {
 		HashSet<Puyo> removeColor = new HashSet<Puyo>(colors);
 		// 이제부턴 내가 가지고 있어야 할 것이기 때문에 bombArr에 해야 하나 ?
 		// result 를 이용하다가 마지막에만 추가 ?
-		HashSet<Puyo> result = new HashSet<Puyo>(equals);
-		removeColor.removeAll(result);
+		HashSet<Puyo> result = new HashSet<Puyo>();
 
-		if (result.size() == 0)
-			return equals;
-
-		HashSet<Puyo> cloneResult = new HashSet<Puyo>(result);
+		HashSet<Puyo> cloneResult = new HashSet<Puyo>(equals);
+		removeColor.removeAll(equals);
 
 		for (Puyo puyo : cloneResult) {
 
+			modifyNode();
 			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.Lb.getX();
 			int y = puyo.Lb.getY();
+
+			result.add(puyo);
 
 			for (Puyo pu : removeColor) {
 
@@ -486,6 +443,11 @@ public class PuyoPanel extends JPanel {
 			}
 
 		}
+
+		System.out.println("** 원본 colors : " + colors);
+		System.out.println("** 같은 애들만 담아온 배열 : " + equals);
+		System.out.println("**  원본 colors 에서 같은 애들을 제외한 배열 : " + removeColor);
+		System.out.println("** result 배열 : " + result);
 
 		if (result.size() > equals.size())
 			result = deepDeepBomb(colors, result);
@@ -506,6 +468,8 @@ public class PuyoPanel extends JPanel {
 			setVisible(false); // update
 			setVisible(true); // update
 		}
+
+		modifyNode();
 
 		System.out.println("remove 끝");
 
@@ -556,17 +520,20 @@ public class PuyoPanel extends JPanel {
 
 		}
 
-		if (sortPuyo.size() == 0) {
+		if (sortPuyo.size() == 0) { // 업데이트 될 요소가 없다면 리턴
 			bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 			bombChk = false;
 			return;
 		}
 
+		// 있다면 아래와 같이 진행
+
 		bombArr = new HashSet<Puyo>(); // 터질 목록은 이제 필요 없으므로 초기화
 
 		emptyEndMove(sortPuyo); // 요소들이 터져서 이동이 끝난뒤
 
-		comboChk++;
+		comboChk++; // 처음 터졌을시 0 이되고
+		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
 
 		if (bombChk()) { // 재귀적으로 터질 곳이 있나 검색합니다.
 			bomb();

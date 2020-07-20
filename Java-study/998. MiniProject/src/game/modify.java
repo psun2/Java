@@ -1,13 +1,8 @@
 package game;
 
-// FIXME 뿌요 터지는 로직 다시 생각 => 대각선도 터져 버림
-// FIXME KeyEvent 수정
-// FIXME 자꾸 병신이 되어버림 좌표 수정을 어떻게 하지 ?
+// FIXME 2020-07-20 가끔씩 안터지는 버그
+// TODO 2020-07-20  fix 완료 => 또 그런 현상 일어 날 수 있음
 
-//벽쪽에 있는 애를 찾을꺼야 그럼 y가 더큰애가 오른쪽
+// FIXME 2020-07-20 PuyoFrame JLabel 중앙 정렬 안됨
 
-//왼쪽 벽
-//if(meY==youY){if(meX==0||youX==0){if(meX<youX){meX=0;youX=meX+Puyo.puyoSize;}else{youX=0;meX=youX+Puyo.puyoSize;}}}
-
-//오른쪽 벽
-//if(meY==youY){if(meX+Puyo.puyoSize==panel.getSize().width||youX+Puyo.puyoSize==panel.getSize().width){if(meX>youX){meX=panel.getSize().width-Puyo.puyoSize;youX=meX+Puyo.puyoSize;}}}
+// TODO 2020-07-20 PuyoTimer에서 최대속도를 15로 안잡아줌... 나름 괜찮아 보임.. 팀원과 상의후 결정

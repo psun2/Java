@@ -15,19 +15,39 @@ public class PuyoGameInfo extends JPanel {
 		// TODO Auto-generated constructor stub
 
 		setLayout(null);
-		setBackground(Color.cyan);
+		setBackground(Color.black);
 
 		score = new JLabel("점수");
 		combo = new JLabel("콤보");
 		time = new JLabel("경과 시간");
 
-		score.setBounds(0, 0, 96, 50);
-		combo.setBounds(96, 0, 192, 50);
-		time.setBounds(192, 0, 288, 50);
+		score.setForeground(Color.white);
+		combo.setForeground(Color.white);
+		time.setForeground(Color.white);
+
+		// 폰트 중앙 정렬
+//		score.setHorizontalAlignment(score.CENTER);
+//		combo.setHorizontalAlignment(combo.CENTER);
+//		time.setHorizontalAlignment(time.CENTER);
+
+		// 바운더리 확인
+//		score.setBackground(Color.blue);
+//		score.setOpaque(true);
+//		combo.setBackground(Color.red);
+//		combo.setOpaque(true);
+//		time.setBackground(Color.green);
+//		time.setOpaque(true);
+
+		score.setBounds(0, 0, 100, Puyo.PUYOSIZE);
+		combo.setBounds(100, 0, 200, Puyo.PUYOSIZE);
+		time.setBounds(200, 0, 300, Puyo.PUYOSIZE);
 
 		add(score);
 		add(combo);
 		add(time);
+
+		setVisible(false);
+		setVisible(true);
 
 	}
 }

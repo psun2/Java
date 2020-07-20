@@ -23,6 +23,7 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 					return;
 
 				if (second % 30 == 0) { // 30초마다 속도가 2씩 증가
+
 					frame.main.step += 2;
 				}
 
