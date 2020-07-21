@@ -2,7 +2,6 @@ package game;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +10,14 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.MyLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MePuyoPanel extends JPanel {
+
+	Socket socket;
+	ObjectOutputStream oos;
 
 	ImageIcon background;
 
@@ -39,9 +38,11 @@ public class MePuyoPanel extends JPanel {
 
 	boolean bombChk;
 
-	ExecutorService threadPool;
+	public ExecutorService threadPool;
 
-	public MePuyoPanel() { // 생성자
+	public MePuyoPanel(Socket socket) { // 생성자
+
+		this.socket = socket;
 
 		init();
 
@@ -64,7 +65,7 @@ public class MePuyoPanel extends JPanel {
 		add(info);
 
 		createPuyo(); // 뿌요생산 스타트
-		// new PuyoTimer(this).start();
+		new PuyoTimer(this).start(); // 타이머와 정보 업데이트
 
 	} // 생성자 끝
 
@@ -83,6 +84,12 @@ public class MePuyoPanel extends JPanel {
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
+		try {
+			this.oos = new ObjectOutputStream(socket.getOutputStream());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -158,6 +165,7 @@ public class MePuyoPanel extends JPanel {
 		};
 
 		threadPool.submit(thread); // 쓰레드를 사용하기 위해 쓰레드 풀에 등록
+		// TestServer.threadPool.submit(thread);
 		System.out.println("createPuyo => 뿌요생성 끝 게임 종료");
 	}
 
@@ -492,7 +500,7 @@ public class MePuyoPanel extends JPanel {
 			setVisible(true); // update
 		}
 
-		modifyNode();
+		// modifyNode();
 
 		comboChk++; // 처음 터졌을시 0 이되고
 		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
@@ -508,19 +516,11 @@ public class MePuyoPanel extends JPanel {
 
 		System.out.println("empty 진입");
 
-		System.out.println("bombArr : " + bombArr);
-
 		for (MyLabel puyo : bombArr) {
 			// 터진 뿌요를 맵 과 어레이에서 삭제
-			System.out.println("equalsPuyo(puyo).color : " + equalsPuyo(puyo).color);
-
-//			 meInfo.puyos.remove(equalsPuyo(puyo));
-//			 puyoLbs.remove(puyo); // 푸요들이 담긴 배열에서 삭제
-//			 map.get(puyo.getName()).remove(puyo);
-
-			System.out.println();
-			System.out.println("equalsPuyo(puyo).color : " + equalsPuyo(puyo).color);
-
+			map.get(puyo.getName()).remove(puyo);
+			meInfo.puyos.remove(equalsPuyo(puyo));
+			puyoLbs.remove(puyo); // 푸요들이 담긴 배열에서 삭제
 		}
 
 		emptyMove();
@@ -621,28 +621,6 @@ public class MePuyoPanel extends JPanel {
 		}
 
 	}
-//	void emptyEndMove(HashSet<MyLabel> updatePuyo) {
-//
-//		System.out.println("emptyEndMove 진입"); // 진입 완료
-//
-//		while (true) {
-//
-//			for (MyLabel puyo : updatePuyo) {
-//
-//				try {
-//
-//					Thread.sleep(33); // 33초의 딜레이
-//					endMove(equalsPuyo(puyo), puyo); // 뿌요가 밑으로 흘러내려 갑니다.
-//
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//
-//			}
-//		}
-//
-//	}
 
 	Puyo equalsPuyo(MyLabel lb) {
 
@@ -654,30 +632,43 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-}
+	void sender() {
 
-class MyLabel extends JLabel implements Comparable<MyLabel> {
+		System.out.println("sender 진입");
 
-	public MyLabel(Icon image) {
-		// TODO Auto-generated constructor stub
+		Runnable thread = new Runnable() {
 
-		this(null, image, CENTER);
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
 
-	}
+				try {
 
-	public MyLabel(Object object, Icon image, int center) {
-		// TODO Auto-generated constructor stub
-	}
+					while (true) {
 
-	@Override
-	public int compareTo(MyLabel o) {
-		// TODO Auto-generated method stub
-		int res = o.getY() - getY();
+						if (oos != null) {
+							oos.writeObject(meInfo);
+							oos.flush();
+							// oos.reset();
 
-		if (res == 0)
-			res = getX() - o.getY();
+							// System.out.println("정보를 서버에 보냄"); // 보냄 확인
 
-		return res;
+						}
+
+					}
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		};
+
+		this.threadPool.submit(thread);
+		// TestServer.threadPool.submit(thread);
+		System.out.println("sender 종료");
+
 	}
 
 }

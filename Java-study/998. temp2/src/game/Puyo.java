@@ -1,6 +1,10 @@
 package game;
 
-public class Puyo {
+import java.io.Serializable;
+
+public class Puyo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	final static int PUYOSIZE = 50;
 

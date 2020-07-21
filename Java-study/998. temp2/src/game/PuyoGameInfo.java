@@ -38,9 +38,9 @@ public class PuyoGameInfo extends JPanel {
 //		time.setBackground(Color.green);
 //		time.setOpaque(true);
 
-		score.setBounds(0, 0, 100, Puyo2.PUYOSIZE);
-		combo.setBounds(100, 0, 200, Puyo2.PUYOSIZE);
-		time.setBounds(200, 0, 300, Puyo2.PUYOSIZE);
+		score.setBounds(0, 0, 100, Puyo.PUYOSIZE);
+		combo.setBounds(100, 0, 200, Puyo.PUYOSIZE);
+		time.setBounds(200, 0, 300, Puyo.PUYOSIZE);
 
 		add(score);
 		add(combo);
