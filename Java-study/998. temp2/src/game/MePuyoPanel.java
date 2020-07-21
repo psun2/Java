@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -50,16 +51,6 @@ public class MePuyoPanel extends JPanel {
 		this.background = new ImageIcon("./img/background.png");
 		setLayout(null);
 
-		// 배경 라벨 맨 마지막에 추가 해야 보임 - 추후에 수정
-//		MyLabel b = new MyLabel(background);
-//		b.setBounds(0, 0, 512, 1024);
-//		// this.setComponentZOrder(b, 0);
-
-		// 먼저 추가 되는것이 위에 뜬다...
-//		MyLabel aa = new Puyo().label();
-//		aa.setBounds(0, 0, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
-//		add(aa);
-
 		info = new PuyoGameInfo();
 		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		add(info);
@@ -84,13 +75,15 @@ public class MePuyoPanel extends JPanel {
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
-		try {
-			this.oos = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		g.drawImage(background.getImage(), 0, 0, null);
+		setOpaque(false);
+		super.paintComponent(g);
 	}
 
 	void createPuyo() { // 뿌요의 계속적인 생산을 위하여 쓰레드 사용
@@ -634,43 +627,43 @@ public class MePuyoPanel extends JPanel {
 
 	void sender() {
 
-		System.out.println("sender 진입");
+		// System.out.println("sender 진입");
 
-		Runnable thread = new Runnable() {
+		try {
+			this.oos = new ObjectOutputStream(socket.getOutputStream());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
+		try {
 
-				try {
+			if (oos != null) { // 보낼땐 제대로 들어감
+				while (true) {
+					// System.out.println(meInfo);
+					oos.writeObject(meInfo);
+					oos.flush();
+					// oos.reset();
 
-//					oos.writeUTF("로비");
-
-					while (true) {
-
-						if (oos != null) { // 보낼땐 제대로 들어감
-
-							oos.writeObject(meInfo);
-							oos.flush();
-							// oos.reset();
-
-							// System.out.println("정보를 서버에 보냄"); // 보냄 확인
-
-						}
-
-					}
-
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// System.out.println("정보를 서버에 보냄"); // 보냄 확인
 				}
-
 			}
-		};
+			Thread.sleep(1000);
 
-		this.threadPool.submit(thread);
-		// TestServer.threadPool.submit(thread);
-		System.out.println("sender 종료");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (oos != null)
+					oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 	}
 

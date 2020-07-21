@@ -48,7 +48,6 @@ public class TestServer {
 			while (true) {
 				this.client = server.accept();
 				receve();
-				send();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -62,21 +61,21 @@ public class TestServer {
 					e1.printStackTrace();
 				}
 		}
-
 		System.out.println(client.getLocalAddress() + " 이새끼 접속함");
 
 	}
 
 	void receve() {
 
-		System.out.println("receve Start");
-
 		try {
 			ois = new ObjectInputStream(client.getInputStream());
+			oos = new ObjectOutputStream(client.getOutputStream());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
+		System.out.println("receve Start");
 
 		Runnable thread = new Runnable() {
 
@@ -88,14 +87,26 @@ public class TestServer {
 					while (true) { // 서버에서 읽어오는게 업데이트가 안됨
 
 						if (ois != null) {
-							obj = ois.readObject();
+							send(ois.readObject());
+							// System.out.println("여긴 서버 : " + ois.readObject());
+							// System.out.println(obj); // 서버에서 읽어오다가 죽어버리네 ?
+							// obj = ois.readObject();
 							// System.out.println("유저 정보 읽는 중"); // 읽는 거 확인
 						}
 					}
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// e.printStackTrace();
+					System.out.println("서버 오아이 에스 에러");
+				} finally {
+					try {
+						if (ois != null)
+							ois.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			}
@@ -108,45 +119,28 @@ public class TestServer {
 
 	}
 
-	void send() {
+	void send(Object obj) {
 
 		System.out.println("send Start");
 
+		System.out.println("여긴 서버 샌드 : " + obj);
+
 		try {
-			oos = new ObjectOutputStream(client.getOutputStream());
-		} catch (IOException e1) {
+			oos.writeObject(obj);
+			oos.flush();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		Runnable thread = new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-
-				try {
-					while (true) {
-
-						if (oos != null) {
-
-							oos.writeObject(obj);
-							oos.flush();
-							// oos.reset();
-							// System.out.println("유저에게 정보 전송"); // 확인
-
-						}
-
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			// e.printStackTrace();
+			System.out.println("서버 oos 에러");
+		} finally {
+			try {
+				if (oos != null)
+					oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-		};
-
-		this.threadPool.submit(thread);
+		}
 
 		System.out.println("send 종료");
 

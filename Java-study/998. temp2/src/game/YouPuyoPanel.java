@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -16,6 +17,7 @@ public class YouPuyoPanel extends JPanel {
 	Socket socket;
 	ObjectInputStream ois;
 	PuyoGameInfo info;
+	ImageIcon icon;
 
 	ExecutorService threadPool;
 
@@ -23,6 +25,8 @@ public class YouPuyoPanel extends JPanel {
 		// TODO Auto-generated constructor stub
 
 		System.out.println("--- you  생성");
+
+		this.icon = new ImageIcon("./img/background.png");
 
 		setLayout(null);
 		setBackground(Color.green);
@@ -38,6 +42,14 @@ public class YouPuyoPanel extends JPanel {
 
 		recever();
 
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		g.drawImage(icon.getImage(), 0, 0, null);
+		setOpaque(false);
+		super.paintComponent(g);
 	}
 
 	public void recever() {
@@ -67,10 +79,20 @@ public class YouPuyoPanel extends JPanel {
 							// System.out.println(ois.readObject());
 							// System.out.println("서버로 부터 정보를 얻어 오는데 성공");
 						}
+
+						Thread.sleep(1000);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} finally {
+						try {
+							if (ois != null)
+								ois.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				}
 
 			}
@@ -95,8 +117,9 @@ public class YouPuyoPanel extends JPanel {
 				lb.setBounds(puyo.x, puyo.y, puyo.PUYOSIZE, puyo.PUYOSIZE);
 				add(lb);
 
-//				System.out.println("puyo.y : " + puyo.color + " : " + puyo.y);
-//				System.out.println(lb.getName() + " : " + lb.getY()); // 좌표 업데이트가 안됨
+				// System.out.println("lb : " + lb);
+				// System.out.println("puyo.y : " + puyo.color + " : " + puyo.y);
+				// System.out.println(lb.getName() + " : " + lb.getY()); // 좌표 업데이트가 안됨
 
 			}
 		}
