@@ -63,8 +63,8 @@ public class YouPuyoPanel extends JPanel {
 					while (true) {
 
 						if (ois != null) {
-							// paint((MeGameInfo) ois.readObject());
-							System.out.println(ois.readObject());
+							paint((MeGameInfo) ois.readObject());
+							// System.out.println(ois.readObject());
 							// System.out.println("서버로 부터 정보를 얻어 오는데 성공");
 						}
 					}

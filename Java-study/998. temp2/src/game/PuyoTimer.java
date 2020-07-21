@@ -35,7 +35,7 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 				panel.info.combo.setText("연쇄 : " + panel.comboCnt + "연쇄");
 				panel.info.time.setText("경과 시간 : " + second + "s");
 
-				updateInfo();
+//				updateInfo();
 
 				sleep(1000);
 				second++;

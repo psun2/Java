@@ -644,9 +644,12 @@ public class MePuyoPanel extends JPanel {
 
 				try {
 
+//					oos.writeUTF("로비");
+
 					while (true) {
 
-						if (oos != null) {
+						if (oos != null) { // 보낼땐 제대로 들어감
+
 							oos.writeObject(meInfo);
 							oos.flush();
 							// oos.reset();

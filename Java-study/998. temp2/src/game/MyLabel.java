@@ -11,10 +11,6 @@ public class MyLabel extends JLabel implements Comparable<MyLabel> {
 
 	}
 
-	public MyLabel(Object object, Icon image, int center) {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public int compareTo(MyLabel o) {
 		// TODO Auto-generated method stub
