@@ -11,8 +11,10 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.MyLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,12 +28,12 @@ public class MePuyoPanel extends JPanel {
 	Puyo me;
 	Puyo you;
 
-	JLabel meLb;
-	JLabel youLb;
+	MyLabel meLb;
+	MyLabel youLb;
 
-	ArrayList<JLabel> puyoLbs;
-	ArrayList<JLabel> bombArr;
-	HashMap<String, HashSet<JLabel>> map;
+	ArrayList<MyLabel> puyoLbs;
+	HashSet<MyLabel> bombArr;
+	HashMap<String, HashSet<MyLabel>> map;
 
 	int step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수
 
@@ -48,12 +50,12 @@ public class MePuyoPanel extends JPanel {
 		setLayout(null);
 
 		// 배경 라벨 맨 마지막에 추가 해야 보임 - 추후에 수정
-//		JLabel b = new JLabel(background);
+//		MyLabel b = new MyLabel(background);
 //		b.setBounds(0, 0, 512, 1024);
 //		// this.setComponentZOrder(b, 0);
 
 		// 먼저 추가 되는것이 위에 뜬다...
-//		JLabel aa = new Puyo().label();
+//		MyLabel aa = new Puyo().label();
 //		aa.setBounds(0, 0, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 //		add(aa);
 
@@ -73,9 +75,9 @@ public class MePuyoPanel extends JPanel {
 		this.meInfo = new MeGameInfo(); // 정보 저장 클래스 생성
 		this.threadPool = Executors.newCachedThreadPool(); // 쓰레드 풀 초기화
 		this.step = 3; // 뿌요가 떨어질때의 칸수
-		this.puyoLbs = new ArrayList<JLabel>();
-		this.map = new HashMap<String, HashSet<JLabel>>();
-		this.bombArr = new ArrayList<JLabel>();
+		this.puyoLbs = new ArrayList<MyLabel>();
+		this.map = new HashMap<String, HashSet<MyLabel>>();
+		this.bombArr = new HashSet<MyLabel>();
 		this.bombChk = false;
 		this.score = 0;
 		this.jum = 0;
@@ -114,7 +116,7 @@ public class MePuyoPanel extends JPanel {
 
 						// me 생성
 						me = new Puyo();
-						meLb = new JLabel(new ImageIcon("./img/" + me.color + "-48.png"));
+						meLb = new MyLabel(new ImageIcon("./img/" + me.color + "-48.png"));
 						meLb.setBounds(LocationX, LocationY, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						meLb.setName(me.color);
 						add(meLb);
@@ -124,7 +126,7 @@ public class MePuyoPanel extends JPanel {
 
 						// you 생성
 						you = new Puyo();
-						youLb = new JLabel(new ImageIcon("./img/" + you.color + "-48.png"));
+						youLb = new MyLabel(new ImageIcon("./img/" + you.color + "-48.png"));
 						youLb.setBounds(LocationX, LocationY - Puyo.PUYOSIZE, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						youLb.setName(you.color);
 						add(youLb);
@@ -159,7 +161,7 @@ public class MePuyoPanel extends JPanel {
 		System.out.println("createPuyo => 뿌요생성 끝 게임 종료");
 	}
 
-	void addMap(JLabel puyo) { // 생성될때 깔별로 맵으로 한번더 구분
+	void addMap(MyLabel puyo) { // 생성될때 깔별로 맵으로 한번더 구분
 
 		System.out.println("addMap 진입");
 		if (this.map.containsKey(puyo.getName())) {
@@ -167,7 +169,7 @@ public class MePuyoPanel extends JPanel {
 			map.get(puyo.getName()).add(puyo);
 
 		} else {
-			HashSet<JLabel> set = new HashSet<JLabel>();
+			HashSet<MyLabel> set = new HashSet<MyLabel>();
 			set.add(puyo);
 			this.map.put(puyo.getName(), set);
 		}
@@ -210,7 +212,7 @@ public class MePuyoPanel extends JPanel {
 
 	} // move 함수 끝
 
-	void endMove(Puyo puyo, JLabel lb) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
+	void endMove(Puyo puyo, MyLabel lb) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
 
 		fixBug(puyo, lb);
 
@@ -246,7 +248,7 @@ public class MePuyoPanel extends JPanel {
 
 	} // endMove 끝
 
-	int nodeY(JLabel puyo) { // 뿌요의 y좌표를 반환 받는 함수
+	int nodeY(MyLabel puyo) { // 뿌요의 y좌표를 반환 받는 함수
 
 		int y = puyo.getY();
 		int result = y + step;
@@ -255,11 +257,11 @@ public class MePuyoPanel extends JPanel {
 
 	} // nodeY 끝
 
-	boolean search(JLabel puyo) { // 뿌요가 밑으로 흐를때 내 밑에 무엇인가 존재 한다면 y값을 다시 셋팅하여 반환
+	boolean search(MyLabel puyo) { // 뿌요가 밑으로 흐를때 내 밑에 무엇인가 존재 한다면 y값을 다시 셋팅하여 반환
 									// 문제점 : 즉 세로 방향일때 윗친구는 아랫 친구 때문에 못나오는 현상 발생
 		boolean result = false;
 
-		for (JLabel pu : puyoLbs) {
+		for (MyLabel pu : puyoLbs) {
 			if (puyo.getY() < pu.getY()) { // 생성되는 뿌요의 y 축 값을 먼저 비교해 나의 y보다 큰 애들만 본다. => 나보다 밑에 있는 애들
 				if (puyo.getX() == pu.getX()) { // x축이 같아야 동일 선상입니다.
 					if (puyo.getY() + Puyo.PUYOSIZE > pu.getY()) { // 나의 y가 밑에있는 뿌요의 y보다 같거나 커지려고 할때
@@ -281,7 +283,7 @@ public class MePuyoPanel extends JPanel {
 
 		System.out.println("modifyNode 진입");
 
-		for (JLabel puyo : puyoLbs) {
+		for (MyLabel puyo : puyoLbs) {
 
 			// y 좌표가 자꾸 먹는 현상 발생!!!!
 			// y 좌표를 50으로 나누어 0이 안되는 것 찾기
@@ -303,7 +305,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void fixBug(Puyo puyo, JLabel lb) { // 가끔식 생기는 잡버그 수정 (중간에 걸리는 현상)
+	void fixBug(Puyo puyo, MyLabel lb) { // 가끔식 생기는 잡버그 수정 (중간에 걸리는 현상)
 
 //		 System.out.println("★★★★★★★★fixBug 진입★★★★★★★★");
 
@@ -313,7 +315,7 @@ public class MePuyoPanel extends JPanel {
 		int chk = 0;
 		if (puyo.stopChk && lb.getY() != getSize().height - Puyo.PUYOSIZE) {
 
-			for (JLabel pu : puyoLbs) {
+			for (MyLabel pu : puyoLbs) {
 
 				if (lb.getY() + Puyo.PUYOSIZE == pu.getY())
 					chk++;
@@ -339,7 +341,7 @@ public class MePuyoPanel extends JPanel {
 
 		boolean result = false;
 
-		for (HashSet<JLabel> puyo : map.values()) {
+		for (HashSet<MyLabel> puyo : map.values()) {
 
 			if (puyo.size() >= MeGameInfo.PANG)
 				result = true;
@@ -356,9 +358,9 @@ public class MePuyoPanel extends JPanel {
 		System.out.println("bomb 진입");
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
-		HashMap<String, HashSet<JLabel>> cloneMap = new HashMap<String, HashSet<JLabel>>(this.map);
+		HashMap<String, HashSet<MyLabel>> cloneMap = new HashMap<String, HashSet<MyLabel>>(this.map);
 
-		for (HashSet<JLabel> puyo : cloneMap.values()) {
+		for (HashSet<MyLabel> puyo : cloneMap.values()) {
 
 			// 맵에서 해당 색깔의 해쉬셋의 길이가 4미만이면 볼 필요도 없다.
 			System.out.println("puyo.size() : " + puyo.size());
@@ -376,16 +378,16 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void deepBomb(HashSet<JLabel> colors) { // clolors 가 업데이트가 안됨
+	void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
 
 		System.out.println("deepBomb 실행");
 
-		HashSet<JLabel> equals = new HashSet<JLabel>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
+		HashSet<MyLabel> equals = new HashSet<MyLabel>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
 
-		for (JLabel puyo : colors) {
+		for (MyLabel puyo : colors) {
 
-			HashSet<JLabel> equalsTemp = new HashSet<JLabel>();
+			HashSet<MyLabel> equalsTemp = new HashSet<MyLabel>();
 
 			equalsTemp.add(puyo);
 
@@ -393,7 +395,7 @@ public class MePuyoPanel extends JPanel {
 			int x = puyo.getX();
 			int y = puyo.getY();
 
-			for (JLabel pu : colors) {
+			for (MyLabel pu : colors) {
 
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
@@ -431,19 +433,19 @@ public class MePuyoPanel extends JPanel {
 		System.out.println("deepBomb 끝");
 	}
 
-	HashSet<JLabel> deepDeepBomb(HashSet<JLabel> colors, HashSet<JLabel> equals) {
+	HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
 		System.out.println("deepDeepBomb 진입");
 
 		if (equals.size() <= 1)
 			return equals;
 
-		HashSet<JLabel> result = new HashSet<JLabel>();
-//		HashSet<JLabel> resultColor = new HashSet<JLabel>(equals);
+		HashSet<MyLabel> result = new HashSet<MyLabel>();
+//		HashSet<MyLabel> resultColor = new HashSet<MyLabel>(equals);
 
-		HashSet<JLabel> removeColor = new HashSet<JLabel>(colors);
+		HashSet<MyLabel> removeColor = new HashSet<MyLabel>(colors);
 		removeColor.removeAll(equals);
 
-		for (JLabel puyo : equals) {
+		for (MyLabel puyo : equals) {
 
 			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.getX();
@@ -452,7 +454,7 @@ public class MePuyoPanel extends JPanel {
 			result.add(puyo);
 			modifyNode();
 
-			for (JLabel pu : removeColor) {
+			for (MyLabel pu : removeColor) {
 
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
@@ -483,7 +485,7 @@ public class MePuyoPanel extends JPanel {
 
 		System.out.println("remove 진입");
 
-		for (JLabel puyo : bombArr) {
+		for (MyLabel puyo : bombArr) {
 			// 터지는 뿌요 패널에서 삭제 작업
 			remove(puyo); // 패널에서 지움
 			setVisible(false); // update
@@ -508,7 +510,7 @@ public class MePuyoPanel extends JPanel {
 
 		System.out.println("bombArr : " + bombArr);
 
-		for (JLabel puyo : bombArr) {
+		for (MyLabel puyo : bombArr) {
 			// 터진 뿌요를 맵 과 어레이에서 삭제
 			System.out.println("equalsPuyo(puyo).color : " + equalsPuyo(puyo).color);
 
@@ -533,15 +535,15 @@ public class MePuyoPanel extends JPanel {
 
 		// 바닥에 있는 아이들음 움직임이 필요 없으므로 제외
 
-		HashSet<JLabel> updatePuyo = new HashSet<JLabel>();
+		TreeSet<MyLabel> updatePuyo = new TreeSet<MyLabel>();
 
 		// 아에 처음부터 업데이트 될 녀석만 가져오자
 
 		System.out.println(bombArr);
 
-		for (JLabel puyo : bombArr) {
+		for (MyLabel puyo : bombArr) {
 
-			for (JLabel pu : puyoLbs) {
+			for (MyLabel pu : puyoLbs) {
 
 				if (puyo.getX() == pu.getX()) { // 삭제된 뿌요와 x가 같고
 					if (puyo.getY() > pu.getY()) { // 삭제된 뿌요보다 위에 있다면...
@@ -558,14 +560,14 @@ public class MePuyoPanel extends JPanel {
 		}
 
 		if (updatePuyo.size() == 0) { // 업데이트 될 요소가 없다면 리턴
-//			bombArr = new HashSet<JLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
+//			bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
 //			bombChk = false;
 			return;
 		}
 
 		// 있다면 아래와 같이 진행
 
-		bombArr = new HashSet<JLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
+		bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
 
 		emptyEndMove(updatePuyo); // 요소들이 터져서 이동이 끝난뒤
 		modifyNode();
@@ -580,16 +582,16 @@ public class MePuyoPanel extends JPanel {
 
 	} // move 함수 끝
 
-	void emptyEndMove(HashSet<JLabel> updatePuyo) {
+	void emptyEndMove(TreeSet<MyLabel> updatePuyo) {
 
 		System.out.println("emptyEndMove 진입"); // 진입 완료
 
 		while (true) {
 
-			for (JLabel puyo : updatePuyo) {
+			for (MyLabel puyo : updatePuyo) {
 
 				int index = 0;
-				for (JLabel pu : updatePuyo) {
+				for (MyLabel pu : updatePuyo) {
 
 					// System.out.println("puyo.stopChk : " + puyo.stopChk); // flase
 					if (equalsPuyo(pu).stopChk)
@@ -619,13 +621,13 @@ public class MePuyoPanel extends JPanel {
 		}
 
 	}
-//	void emptyEndMove(HashSet<JLabel> updatePuyo) {
+//	void emptyEndMove(HashSet<MyLabel> updatePuyo) {
 //
 //		System.out.println("emptyEndMove 진입"); // 진입 완료
 //
 //		while (true) {
 //
-//			for (JLabel puyo : updatePuyo) {
+//			for (MyLabel puyo : updatePuyo) {
 //
 //				try {
 //
@@ -642,7 +644,7 @@ public class MePuyoPanel extends JPanel {
 //
 //	}
 
-	Puyo equalsPuyo(JLabel lb) {
+	Puyo equalsPuyo(MyLabel lb) {
 
 		int index = puyoLbs.indexOf(lb);
 
@@ -650,6 +652,32 @@ public class MePuyoPanel extends JPanel {
 
 		return result;
 
+	}
+
+}
+
+class MyLabel extends JLabel implements Comparable<MyLabel> {
+
+	public MyLabel(Icon image) {
+		// TODO Auto-generated constructor stub
+
+		this(null, image, CENTER);
+
+	}
+
+	public MyLabel(Object object, Icon image, int center) {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int compareTo(MyLabel o) {
+		// TODO Auto-generated method stub
+		int res = o.getY() - getY();
+
+		if (res == 0)
+			res = getX() - o.getY();
+
+		return res;
 	}
 
 }
