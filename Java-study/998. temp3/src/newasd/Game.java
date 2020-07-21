@@ -5,7 +5,7 @@ public class Game {
 	int size = 50;
 	int kan = 6;
 	int jul = 12;
-	int[][] node = new int[12][6];
+	int[][] node = new int[jul][kan];
 	String name;
 
 	// 시작위치, 2, 0

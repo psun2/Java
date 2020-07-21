@@ -96,30 +96,29 @@ public class MeGUI extends JPanel {
 	void move(MyLabel lb) {
 		System.out.println("asdasd");
 
-		int x = lb.getX() / game.size;
+		int x = lb.getX();
 		int y = lb.getY() / game.size;
 
 		System.out.println(Arrays.deepToString(game.node));
-		System.out.println(game.kan - 1);
-		System.out.println(game.jul - 1);
+
+		int yPos = game.node.length - 1;
+		System.out.println(yPos);
 
 		for (int i = 0; i < game.node.length; i++) {
 
 			for (int j = 0; j < game.node[i].length; j++) {
 
-				if (i == game.node.length - 1) {
+				if (i == yPos) {
+					System.out.println(j);
+					y = (i * game.size) + game.size;
+					lb.setLocation(x, y);
+
+				} else {
 					game.node[i][j] = 1;
-					y = i;
-					x = j;
 				}
-
-				y = i + game.size;
-				x = j;
-
 			}
+			yPos -= 1;
 		}
-
-		lb.setLocation(x, y);
 
 	}
 
