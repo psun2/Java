@@ -35,9 +35,9 @@ public class MePuyoPanel extends JPanel {
 	HashSet<MyLabel> bombArr;
 	HashMap<String, HashSet<MyLabel>> map;
 
-	int step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수
+	int step, cutLine, score, jum, combo, comboCnt, comboChk, currentItemNum; // 뿌요가 떨어질때의 칸수
 
-	boolean bombChk;
+	boolean bombChk, itemChk;
 
 	public ExecutorService threadPool;
 
@@ -75,6 +75,8 @@ public class MePuyoPanel extends JPanel {
 		this.jum = 0;
 		this.combo = 0;
 		this.comboCnt = 0;
+		this.itemChk = false;
+		this.currentItemNum = 0;
 
 	}
 
@@ -493,7 +495,7 @@ public class MePuyoPanel extends JPanel {
 			setVisible(true); // update
 		}
 
-		// modifyNode();
+		item(bombArr);
 
 		comboChk++; // 처음 터졌을시 0 이되고
 		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
@@ -502,6 +504,44 @@ public class MePuyoPanel extends JPanel {
 		combo = comboCnt * (jum * 2);
 
 		System.out.println("remove 끝");
+
+	}
+
+	void item(HashSet bombArr) {
+
+		ArrayList<MyLabel> item = new ArrayList<MyLabel>(bombArr);
+
+		if (item.get(0).getName().equals("ninja")) {
+			this.itemChk = true;
+		}
+
+		// 한줄을 기준으로 랜덤을 돌려 숫자가 겹치게 나올때는 그자리에 아이템 한개만...
+		// 랜덤한 요소로 게임의 재미 up
+
+		for (int i = 0; i < 3; i++) {
+
+			pushItem((int) Math.random() * 7);
+
+		}
+
+	}
+
+	void pushItem(int pos) {
+
+		this.currentItemNum = pos;
+
+		int[] xPos = { 0, 50, 150, 200, 250, 300 };
+
+		int yPos = 0;
+		for (MyLabel puyo : puyoLbs) {
+			if (xPos[currentItemNum] == puyo.getX())
+				if (yPos < puyo.getY())
+					yPos = puyo.getY();
+		}
+
+		yPos = yPos + Puyo.PUYOSIZE;
+		
+		아이템을 줄 좌표는 다 구함 이제 상대방에게 어떻게 넘겨 줄 것인가 에 대한 고민을 ..pos..pos.
 
 	}
 
