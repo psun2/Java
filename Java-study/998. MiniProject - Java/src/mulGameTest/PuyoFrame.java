@@ -19,8 +19,9 @@ public class PuyoFrame extends JFrame {
 
 	public PuyoFrame() {
 		// TODO Auto-generated constructor stub
-		init();
+
 		System.out.println("Frame 시작 == 게임 시작");
+		init();
 		setSize(width, height); // 프레임 사이즈
 		setLocationRelativeTo(null); // 프레임 시작시 모니터 중앙에 출력
 		setResizable(false); // 프레임 사이즈 조절 할 수 없음
