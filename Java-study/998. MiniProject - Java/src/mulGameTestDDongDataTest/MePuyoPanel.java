@@ -1,9 +1,8 @@
-package mulGameTestDDongData;
+package mulGameTestDDongDataTest;
 
 import java.awt.Graphics;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +18,6 @@ import ddong.DDongData;
 
 public class MePuyoPanel extends JPanel {
 
-	Socket socket;
 	ObjectOutputStream oos;
 	DDongData data;
 	String id;
@@ -45,10 +43,9 @@ public class MePuyoPanel extends JPanel {
 
 	public ExecutorService threadPool;
 
-	public MePuyoPanel(String id, Socket socket) { // 생성자
+	public MePuyoPanel(String id) {
+		// TODO Auto-generated constructor stub
 
-		this.socket = socket;
-		System.out.println("me 생성자 socket" + socket);
 		this.id = id;
 
 		init();
@@ -63,8 +60,7 @@ public class MePuyoPanel extends JPanel {
 
 		createPuyo(); // 뿌요생산 스타트
 		new PuyoTimer(this).start(); // 타이머와 정보 업데이트
-
-	} // 생성자 끝
+	}
 
 	void init() {
 
@@ -74,6 +70,8 @@ public class MePuyoPanel extends JPanel {
 		this.data = new DDongData();
 		data.src = this.id;
 		data.type = "게임";
+		data.data = meInfo;
+		System.out.println(meInfo);
 		this.threadPool = Executors.newCachedThreadPool(); // 쓰레드 풀 초기화
 		this.step = 3; // 뿌요가 떨어질때의 칸수
 		this.puyoLbs = new ArrayList<MyLabel>();
@@ -86,21 +84,6 @@ public class MePuyoPanel extends JPanel {
 		this.comboCnt = 0;
 		this.itemChk = false;
 		this.currentItemNum = 0;
-
-		// 맴버에서 쓰기 초기화
-		try {
-			this.oos = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			try {
-				if (oos != null)
-					oos.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 
 	}
 
@@ -688,33 +671,6 @@ public class MePuyoPanel extends JPanel {
 		Puyo result = meInfo.puyos.get(index);
 
 		return result;
-
-	}
-
-	void sender() {
-
-		System.out.println("sender 진입");
-		System.out.println("me sender socket" + socket);
-
-		try {
-			if (oos != null) {
-				data.data = meInfo;
-				oos.writeObject(data);
-				oos.flush();
-				oos.reset();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				if (oos != null) {
-					oos.close();
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 
 	}
 

@@ -1,4 +1,4 @@
-package mulGameTestDDongData;
+package mulGameTestDDongDataTest;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -41,11 +41,19 @@ public class GameSend extends Thread {
 
 			while (true) {
 				if (oos != null) {
-					oos.writeObject(frame.me.meInfo);
+
+//					System.out.println("난 샌드");
+//					frame.me.data.data = frame.me.meInfo;
+//					System.out.println(frame.me.meInfo);
+//					System.out.println(frame.me.data.data);
+//					System.out.println("난 샌드");
+//					System.out.println(frame.me.data);
+//					System.out.println(frame.me.data.data);
+					oos.writeObject(frame.me.data);
 					oos.flush();
-					oos.reset();
-					Thread.sleep(1000);
+					// oos.reset();
 				}
+				Thread.sleep(1000);
 			}
 
 		} catch (Exception e) {

@@ -1,4 +1,4 @@
-package mulGameTestDDongData;
+package mulGameTestDDongDataTest;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import ddong.DDongData;
 
 public class TestGameServer {
 
@@ -87,12 +89,14 @@ public class TestGameServer {
 				try {
 
 					while (true) {
-						if (ois != null) {
+						if (ois != null) { // 서버로 받을때 널이 됨
 							obj = ois.readObject();
-							System.out.println("유저로 부터 정보를 읽어 오는데 성공!!!!");
 							System.out.println(obj);
-							// Thread.sleep(1000); // 1초에 한번씩 읽습니다.
+							System.out.println("유저로 부터 정보를 읽어 오는데 성공!!!!");
+							System.out.println((MeGameInfo) ((DDongData) obj).data);
+							System.out.println(((MeGameInfo) ((DDongData) obj).data).second + "\t 초");
 						}
+
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -143,14 +147,17 @@ public class TestGameServer {
 //						System.out.println(!((MeGameInfo) obj).endGame); // 지금 이게 null
 //						null 이 아닐때 !!
 //						if (oos != null && !((MeGameInfo) obj).endGame) {
+//						if (oos != null) {
 						if (oos != null) {
 							oos.writeObject(obj);
 							oos.flush();
 							oos.reset();
 							System.out.println("유저로 객체 전달 성공!!!!!");
 							System.out.println(obj);
-							// Thread.sleep(1000);
+							// System.out.println((MeGameInfo) ((DDongData) obj).data); => 여기가 널이래
+
 						}
+
 					}
 
 				} catch (Exception e) {
