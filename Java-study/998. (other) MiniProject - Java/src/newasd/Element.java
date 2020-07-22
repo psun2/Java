@@ -1,22 +1,16 @@
-package game;
+package newasd;
 
-import java.io.Serializable;
+public class Element {
 
-public class Puyo implements Serializable {
-
-	private static final long serialVersionUID = 2L;
-
-	final static int PUYOSIZE = 50;
-
-	int x;
-	int y;
+	int x, y;
 	String color;
-	boolean stopChk;
+	boolean stop;
 
-	public Puyo() {
+	public Element(int x, int y) {
 		// TODO Auto-generated constructor stub
 
-		this.stopChk = false;
+		this.x = x;
+		this.y = y;
 
 		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
 		int i = (int) (Math.random() * 5);
@@ -30,6 +24,7 @@ public class Puyo implements Serializable {
 		}
 
 		this.color = colors[i];
+		this.stop = false;
 	}
 
 }

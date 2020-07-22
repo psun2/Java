@@ -1,4 +1,4 @@
-package game;
+package single;
 
 public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같이 관리
 
@@ -36,7 +36,6 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 				panel.info.time.setText("경과 시간 : " + second + "s");
 
 				updateInfo();
-				panel.sender();
 				sleep(1000);
 				second++;
 
@@ -71,14 +70,10 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 
 		panel.meInfo.score = panel.score;
 		panel.meInfo.combo = panel.comboCnt;
+		System.out.println("시간 업데이트 되나요 ?  : " + panel.meInfo.second);
 		panel.meInfo.second = this.second;
+		System.out.println("2시간 업데이트 되나요 ?  : " + panel.meInfo.second);
 		panel.meInfo.total = panel.score + panel.combo;
-
-		// System.out.println("시간 업데이트 되나요 ? : " + panel.meInfo.second);
-		// System.out.println("2시간 업데이트 되나요 ? : " + panel.meInfo.second);
-
-		// System.out.println(" 업데이트 정보 : " + panel.meInfo.puyos.size()); // 2020-07-22
-		// 업데이트 정보 확인
 
 //		System.out.println("second : " + panel.meInfo.second);
 		// System.out.println("updateInfo 끝");

@@ -1,4 +1,4 @@
-package game;
+package mulGameTest;
 
 public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같이 관리
 
@@ -33,7 +33,7 @@ public class PuyoTimer extends Thread { // 타이머 쓰레드 // 점수도 같�
 				}
 				panel.info.score.setText("점수 : " + (panel.score + panel.combo) + "점");
 				panel.info.combo.setText("연쇄 : " + panel.comboCnt + "연쇄");
-				panel.info.time.setText("경과 시간 : " + second + "s");
+				panel.info.second.setText("경과 시간 : " + second + "s");
 
 				updateInfo();
 				panel.sender();

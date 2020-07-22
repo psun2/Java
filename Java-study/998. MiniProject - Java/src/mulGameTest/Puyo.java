@@ -1,4 +1,4 @@
-package game;
+package mulGameTest;
 
 import java.io.Serializable;
 
