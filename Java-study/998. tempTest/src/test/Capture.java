@@ -2,10 +2,10 @@ package test;
 
 import java.awt.AWTException;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -47,13 +47,14 @@ public class Capture extends JFrame {
 				try {
 					// 전체 화면 Capture
 					BufferedImage screencapture = new Robot()
-//							.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-							.createScreenCapture(new Rectangle(new Dimension(getSize().width, getSize().height)));
+							.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+//							.createScreenCapture(new Rectangle(new Dimension(getSize().width, getSize().height)));
 //							.createScreenCapture((new Rectangle(0, 0, display.getWidth(), display.getHeight())));
 
 					// JPEG 저장.
 					File file = new File("./캡쳐테스트/캡쳐되나요.png");
 					ImageIO.write(screencapture, "png", file);
+					System.out.println("캡쳐 되었습니다.");
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
 				} catch (AWTException e2) {

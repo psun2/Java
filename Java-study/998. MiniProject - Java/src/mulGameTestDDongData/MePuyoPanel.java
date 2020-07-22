@@ -1,4 +1,4 @@
-package game;
+package mulGameTestDDongData;
 
 import java.awt.Graphics;
 import java.io.IOException;
@@ -19,10 +19,10 @@ import ddong.DDongData;
 
 public class MePuyoPanel extends JPanel {
 
-	DDongData data;
-
 	Socket socket;
 	ObjectOutputStream oos;
+	DDongData data;
+	String id;
 
 	ImageIcon background;
 
@@ -45,9 +45,11 @@ public class MePuyoPanel extends JPanel {
 
 	public ExecutorService threadPool;
 
-	public MePuyoPanel(Socket socket) { // 생성자
+	public MePuyoPanel(String id, Socket socket) { // 생성자
 
 		this.socket = socket;
+		System.out.println("me 생성자 socket" + socket);
+		this.id = id;
 
 		init();
 
@@ -68,11 +70,10 @@ public class MePuyoPanel extends JPanel {
 
 		// 패널이 생성되어 add 되었다는것은 게임의 시작을 의미
 
-		this.data = new DDongData();
-//		data. // 보내는 사람
-//		data.type = "게임"; // 서버에 서 갈릴 나의 type
-
 		this.meInfo = new MeGameInfo(); // 정보 저장 클래스 생성
+		this.data = new DDongData();
+		data.src = this.id;
+		data.type = "게임";
 		this.threadPool = Executors.newCachedThreadPool(); // 쓰레드 풀 초기화
 		this.step = 3; // 뿌요가 떨어질때의 칸수
 		this.puyoLbs = new ArrayList<MyLabel>();
@@ -92,6 +93,13 @@ public class MePuyoPanel extends JPanel {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			try {
+				if (oos != null)
+					oos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -124,6 +132,14 @@ public class MePuyoPanel extends JPanel {
 
 						if (threadPool != null && !threadPool.isShutdown()) // 게임이 끝나고 쓰레드 풀이 열려 있다면
 							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
+
+						try {
+							if (oos != null)
+								oos.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 						return; // 게임 종료
 					}
@@ -686,28 +702,26 @@ public class MePuyoPanel extends JPanel {
 	void sender() {
 
 		System.out.println("sender 진입");
-
-
-		System.out.println("sender 로 보내기 전 정보 자료 : " + this.meInfo);
+		System.out.println("me sender socket" + socket);
 
 		try {
-
-			if (oos != null) { // 보낼땐 제대로 들어감
-
-//				data.data = meInfo;
-
-				// System.out.println(meInfo);
-				oos.writeObject(meInfo);
-//				oos.writeObject(data);
+			if (oos != null) {
+				data.data = meInfo;
+				oos.writeObject(data);
 				oos.flush();
 				oos.reset();
-
-				// System.out.println("정보를 서버에 보냄"); // 보냄 확인
 			}
-
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				if (oos != null) {
+					oos.close();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}
