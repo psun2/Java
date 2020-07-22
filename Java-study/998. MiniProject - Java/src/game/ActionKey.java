@@ -3,9 +3,11 @@ package game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JLabel;
+
 public class ActionKey implements KeyListener {
 
-	PuyoPanel panel;
+	MePuyoPanel panel;
 
 	int meX;
 	int meY;
@@ -13,7 +15,7 @@ public class ActionKey implements KeyListener {
 	int youX;
 	int youY;
 
-	public ActionKey(PuyoPanel panel) { // 생성시 메인 프레임을 가져옴
+	public ActionKey(MePuyoPanel panel) { // 생성시 메인 프레임을 가져옴
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
 	}
@@ -29,16 +31,16 @@ public class ActionKey implements KeyListener {
 		// TODO Auto-generated method stub
 		System.out.println("keyPressed 진입");
 
-		if (!panel.me.stopChk || !panel.you.stopChk) { // 뿌요가 하나라도 스탑되면 키를 사용하지 못함
+		if (panel.me.stopChk || panel.you.stopChk) { // 뿌요가 하나라도 스탑되면 키를 사용하지 못함
 			System.out.println("뿌요가 정지 되어 키보드 사용 불가");
 			return;
 		}
 
-		meX = panel.me.Lb.getX(); // 프레임을 통해 x값과 y값을 설정
-		meY = panel.me.Lb.getY();
+		meX = panel.meLb.getX(); // 프레임을 통해 x값과 y값을 설정
+		meY = panel.meLb.getY();
 
-		youX = panel.you.Lb.getX();
-		youY = panel.you.Lb.getY();
+		youX = panel.youLb.getX();
+		youY = panel.youLb.getY();
 
 		int key = e.getKeyCode();
 
@@ -55,8 +57,8 @@ public class ActionKey implements KeyListener {
 			youX -= Puyo.PUYOSIZE;
 
 			if (inspectLeft()) {
-				meX = panel.me.Lb.getX();
-				youX = panel.you.Lb.getX();
+				meX = panel.meLb.getX();
+				youX = panel.youLb.getX();
 			}
 			printNode();
 			break;
@@ -70,8 +72,8 @@ public class ActionKey implements KeyListener {
 			meX += Puyo.PUYOSIZE;
 			youX += Puyo.PUYOSIZE;
 			if (inspectRight()) {
-				meX = panel.me.Lb.getX();
-				youX = panel.you.Lb.getX();
+				meX = panel.meLb.getX();
+				youX = panel.youLb.getX();
 			}
 			printNode();
 			break;
@@ -106,8 +108,8 @@ public class ActionKey implements KeyListener {
 
 		// 세로방향일땐 누가 누군지 상관없음
 
-		panel.you.Lb.setLocation(youX, youY);
-		panel.me.Lb.setLocation(meX, meY);
+		panel.youLb.setLocation(youX, youY);
+		panel.meLb.setLocation(meX, meY);
 
 	}
 
@@ -115,7 +117,8 @@ public class ActionKey implements KeyListener {
 
 		boolean result = false;
 
-		if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2) || youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
+		if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2)
+				|| youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
 			result = true;
 
 		return result;
@@ -128,13 +131,13 @@ public class ActionKey implements KeyListener {
 
 		// me 와 you가 왼쪽으로 움직이려 할때 그옆에 요소가 있나 없나를 체크
 		// me 와 you 가 세로방향일때 둘 중하나라고 옆에 요소가 있으면 못 움직임
-		for (Puyo puyo : panel.puyos) {
-			if (!panel.me.equals(puyo) && !panel.you.equals(puyo)) { // 비교 대상에서 나와 너는 제외
-				if (panel.me.Lb.getX() > puyo.Lb.getX() || panel.you.Lb.getX() > puyo.Lb.getX()) {
-					if (panel.me.Lb.getY() >= puyo.Lb.getY() || panel.you.Lb.getY() >= puyo.Lb.getY()) {
+		for (JLabel puyo : panel.puyoLbs) {
+			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // 비교 대상에서 나와 너는 제외
+				if (panel.meLb.getX() > puyo.getX() || panel.youLb.getX() > puyo.getX()) {
+					if (panel.meLb.getY() >= puyo.getY() || panel.youLb.getY() >= puyo.getY()) {
 						// 나 또는 너의 y 값이 옆의 요소의 y값에 포함될때 옆에 요소가 있음을 알 수 있음
-						if (panel.me.Lb.getX() <= puyo.Lb.getX() + Puyo.PUYOSIZE
-								|| panel.you.Lb.getX() <= puyo.Lb.getX() + Puyo.PUYOSIZE) {
+						if (panel.meLb.getX() <= puyo.getX() + Puyo.PUYOSIZE
+								|| panel.youLb.getX() <= puyo.getX() + Puyo.PUYOSIZE) {
 							// me 또는 you의 x값이 옆 요소의 x 값을 침범 하려 할때....
 							result = true; // true가 되면 옆으로 가지 못하게 함
 						}
@@ -154,13 +157,13 @@ public class ActionKey implements KeyListener {
 
 		// me 와 you가 왼쪽으로 움직이려 할때 그옆에 요소가 있나 없나를 체크
 		// me 와 you 가 세로방향일때 둘 중하나라고 옆에 요소가 있으면 못 움직임
-		for (Puyo puyo : panel.puyos) {
-			if (!panel.me.equals(puyo) && !panel.you.equals(puyo)) { // 비교 대상에서 나와 너는 제외
-				if (panel.me.Lb.getX() < puyo.Lb.getX() || panel.you.Lb.getX() < puyo.Lb.getX()) {
-					if (panel.me.Lb.getY() >= puyo.Lb.getY() || panel.you.Lb.getY() >= puyo.Lb.getY()) {
+		for (JLabel puyo : panel.puyoLbs) {
+			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // 비교 대상에서 나와 너는 제외
+				if (panel.meLb.getX() < puyo.getX() || panel.youLb.getX() < puyo.getX()) {
+					if (panel.meLb.getY() >= puyo.getY() || panel.youLb.getY() >= puyo.getY()) {
 						// 나 또는 너의 y 값이 옆의 요소의 y값에 포함될때 옆에 요소가 있음을 알 수 있음
-						if (panel.me.Lb.getX() + Puyo.PUYOSIZE >= puyo.Lb.getX()
-								|| panel.you.Lb.getX() + Puyo.PUYOSIZE >= puyo.Lb.getX()) {
+						if (panel.meLb.getX() + Puyo.PUYOSIZE >= puyo.getX()
+								|| panel.youLb.getX() + Puyo.PUYOSIZE >= puyo.getX()) {
 							// me 또는 you의 x값이 옆 요소의 x 값을 침범 하려 할때....
 							result = true; // true가 되면 옆으로 가지 못하게 함
 						}
@@ -233,10 +236,10 @@ public class ActionKey implements KeyListener {
 
 		boolean result = false;
 
-		for (Puyo puyo : panel.puyos) {
+		for (JLabel puyo : panel.puyoLbs) {
 
-			if (youX + Puyo.PUYOSIZE == puyo.Lb.getX())
-				if (youY + Puyo.PUYOSIZE >= puyo.Lb.getY())
+			if (youX + Puyo.PUYOSIZE == puyo.getX())
+				if (youY + Puyo.PUYOSIZE >= puyo.getY())
 					result = true;
 
 		}
@@ -257,10 +260,10 @@ public class ActionKey implements KeyListener {
 
 		boolean result = false;
 
-		for (Puyo puyo : panel.puyos) {
+		for (JLabel puyo : panel.puyoLbs) {
 
-			if (youX - Puyo.PUYOSIZE == puyo.Lb.getX())
-				if (youY + Puyo.PUYOSIZE >= puyo.Lb.getY())
+			if (youX - Puyo.PUYOSIZE == puyo.getX())
+				if (youY + Puyo.PUYOSIZE >= puyo.getY())
 					result = true;
 
 		}
