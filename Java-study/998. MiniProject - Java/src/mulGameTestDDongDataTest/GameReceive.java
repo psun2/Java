@@ -34,7 +34,7 @@ public class GameReceive extends Thread {
 		}
 
 		System.out.println("reseive ois 생성 완료");
-		System.out.println(ois);
+
 	}
 
 	@Override
@@ -43,16 +43,14 @@ public class GameReceive extends Thread {
 
 		try {
 
-			System.out.println(ois);
-
 			while (true) { // 서버로 부터 지속적으로 데이터를 받아옴
 
 				if (ois != null) { // null 이 아닐때만 지속적으로 데이터를 받음
 
-					System.out.println(ois.readObject());
-					System.out.println(ois.readObject());
-					this.data = (DDongData) ois.readObject();
-					System.out.println("data : " + data);
+					DDongData temp = (DDongData) ois.readObject();
+					data = temp;
+
+					System.out.println("리시버 : " + data);
 
 					if (data.src.equals(frame.me.id)) { // 받아오는 src가 나의 id와 같을때 처리
 						frame.you.paint((MeGameInfo) data.data);
@@ -62,7 +60,6 @@ public class GameReceive extends Thread {
 						System.out.println("(MeGameInfo) data.data : " + (MeGameInfo) data.data);
 					}
 
-					Thread.sleep(1000);
 				}
 
 			}

@@ -17,4 +17,9 @@ public class DDongData implements Serializable {
 
 	public Object data;
 
+	@Override
+	public String toString() {
+		return "DDongData [src=" + src + ", type=" + type + ", dst=" + dst + ", data=" + data + "]";
+	}
+
 }

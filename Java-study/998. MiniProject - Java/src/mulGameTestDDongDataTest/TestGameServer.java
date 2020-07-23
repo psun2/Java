@@ -18,7 +18,7 @@ public class TestGameServer {
 	ExecutorService threadPool = Executors.newCachedThreadPool();
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
-	Object obj;
+	DDongData data;
 
 	public TestGameServer() {
 		// TODO Auto-generated constructor stub
@@ -89,12 +89,15 @@ public class TestGameServer {
 				try {
 
 					while (true) {
+
 						if (ois != null) { // 서버로 받을때 널이 됨
-							obj = ois.readObject();
-							System.out.println(obj);
-							System.out.println("유저로 부터 정보를 읽어 오는데 성공!!!!");
-							System.out.println((MeGameInfo) ((DDongData) obj).data);
-							System.out.println(((MeGameInfo) ((DDongData) obj).data).second + "\t 초");
+
+							DDongData temp = (DDongData) ois.readObject();
+
+							data = temp;
+
+							System.out.println("서버 리시버 : " + data);
+
 						}
 
 					}
@@ -144,18 +147,11 @@ public class TestGameServer {
 				try {
 
 					while (true) {
-//						System.out.println(!((MeGameInfo) obj).endGame); // 지금 이게 null
-//						null 이 아닐때 !!
-//						if (oos != null && !((MeGameInfo) obj).endGame) {
-//						if (oos != null) {
 						if (oos != null) {
-							oos.writeObject(obj);
+							oos.writeObject(data);
 							oos.flush();
 							oos.reset();
-							System.out.println("유저로 객체 전달 성공!!!!!");
-							System.out.println(obj);
-							// System.out.println((MeGameInfo) ((DDongData) obj).data); => 여기가 널이래
-
+							// System.out.println("유저로 객체 전달 성공!!!!!");
 						}
 
 					}

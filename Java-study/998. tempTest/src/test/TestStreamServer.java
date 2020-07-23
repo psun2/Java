@@ -72,7 +72,7 @@ public class TestStreamServer {
 							obj = ois.readObject();
 							System.out.println("정보를 읽어오는데 성공 !!!");
 							System.out.println(obj);
-							Thread.sleep(1000);
+							// Thread.sleep(1000);
 						}
 
 					}
@@ -109,7 +109,7 @@ public class TestStreamServer {
 							oos.reset();
 							System.out.println("정보를 쓰는데 성공 !!!");
 							System.out.println(obj);
-							Thread.sleep(1000);
+							// Thread.sleep(1000);
 						}
 					}
 				} catch (Exception e) {

@@ -117,8 +117,7 @@ public class ActionKey implements KeyListener {
 
 		boolean result = false;
 
-		if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2)
-				|| youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
+		if (meY >= (panel.getSize().height - Puyo.PUYOSIZE * 2) || youY >= (panel.getSize().height - Puyo.PUYOSIZE * 2))
 			result = true;
 
 		return result;

@@ -1,18 +1,27 @@
 package mulGameTestDDongDataTest;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.Socket;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public class PuyoFrame extends JFrame {
 
-	final int width = 606;
-	final int height = 680;
+	final int width = 806;
+	final int height = 679;
+
 	MePuyoPanel me;
 	YouPuyoPanel you;
+	JPanel center;
+	JButton exitRoom;
+	JToggleButton startGame;
 	Socket socket;
 	String host;
 	int port;
@@ -33,19 +42,66 @@ public class PuyoFrame extends JFrame {
 		me = new MePuyoPanel(id);
 		me.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 		add(me);
-
-		you = new YouPuyoPanel();
-		you.setBounds(Puyo.PUYOSIZE * 6, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
-		add(you);
-
 		addKeyListener(new ActionKey(me));
 
+//		center = new JPanel();
+//		center.setLayout(null);
+//		center.setBackground(Color.red);
+//		center.setBounds(Puyo.PUYOSIZE * 6, 0, Puyo.PUYOSIZE * 4, Puyo.PUYOSIZE * 13);
+//		add(center);
+//
+//		startGame = new JToggleButton("게임 준비");
+//		startGame.setBounds(50, 250, 100, 30);
+//		center.add(startGame);
+//		 startGame.addActionListener(ActBtn);
+//
+//		exitRoom = new JButton("방 나가기");
+//		exitRoom.setBounds(50, 300, 100, 30);
+//		center.add(exitRoom);
+//		 exitRoom.addActionListener(ActBtn);
+
+//		static boolean runing = false;
+//		static String sendmsg = "";
+//		int i = 0;
+//		ActionListener ActBtn = new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				if (e.getSource() == startGame) {
+//					startGame.setText("게임 준비 취소");
+//					i++;
+//					runing = true;
+//					if (i % 2 == 1) {
+//						sendmsg = "true";
+////					System.out.println(sendmsg);
+//					} else if (i % 2 == 0) {
+//						startGame.setText("게임 준비");
+//						sendmsg = "false";
+////						System.out.println(sendmsg);
+//					}
+//
+//				}
+//
+//				if (e.getSource() == exitRoom) {
+//					dispose();
+//
+//					// 여기에 디비 정보지우는거 넣기
+//
+//				}
+//
+//			}
+//		};
+
+		you = new YouPuyoPanel();
+		you.setBounds(Puyo.PUYOSIZE * 10, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
+		add(you);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
 		setVisible(true); // 프레임을 보여줌
 
 		new GameSend(socket, this).start();
-		//new GameReceive(socket, this).start();
+		new GameReceive(socket, this).start();
 	}
 
 	void init() {

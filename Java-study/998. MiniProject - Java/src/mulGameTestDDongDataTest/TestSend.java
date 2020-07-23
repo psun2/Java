@@ -6,30 +6,22 @@ import java.net.Socket;
 
 import ddong.DDongData;
 
-public class GameSend extends Thread {
+public class TestSend extends Thread {
 
 	Socket socket;
-	PuyoFrame frame;
 	ObjectOutputStream oos;
+	DDongData data;
 
-	public GameSend(Socket socket, PuyoFrame frame) {
+	public TestSend(Socket socket, DDongData data) {
 		// TODO Auto-generated constructor stub
-
 		this.socket = socket;
-		this.frame = frame;
+		this.data = data;
+
 		try {
 			this.oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			try {
-				if (oos != null) {
-					oos.close();
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		}
 	}
 
@@ -37,37 +29,26 @@ public class GameSend extends Thread {
 	public void run() {
 		// TODO Auto-generated method stub
 
+		System.out.println("유저 샌더 ㄱㄱ");
+
 		try {
 
 			while (true) {
 				if (oos != null) {
 
-					DDongData data = frame.me.data;
+					DDongData temp = new DDongData();
+					temp = data;
 					System.out.println("샌더 : " + data);
 					oos.writeObject(data);
 					oos.flush();
 					oos.reset();
 				}
+
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			try {
-				if (oos != null)
-					oos.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} finally {
-			try {
-				if (oos != null)
-					oos.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 	}
