@@ -3,6 +3,7 @@ package mulGameTestDDongDataTest;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -101,23 +102,31 @@ public class 대기방 extends JFrame {
 				// 내가 준비일때 상대방의 통신상태를 받아
 				// 게임 이시작 됨....
 				// me 패널과 you 패널을 리무브
+
+				temp.setEnabled(false);
 				대기방.this.remove(meP);
 				대기방.this.remove(youP);
 
-				me = new MePuyoPanel("tasd");
+				me = new MePuyoPanel();
 				me.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
-				대기방.this.addKeyListener(new ActionKey(me));
-				대기방.this.me.addKeyListener(new ActionKey(me));
+				
+				
 				대기방.this.add(me);
 
-				대기방.this.me.setVisible(true);
-
+				
+				
+				//System.out.println(Arrays.toString(대기방.this.getKeyListeners()));
 				YouPuyoPanel you = new YouPuyoPanel();
 				you.setBounds(Puyo.PUYOSIZE * 10, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 				대기방.this.add(you);
 
 				대기방.this.setVisible(false);
 				대기방.this.setVisible(true);
+
+				대기방.this.setFocusable(true);
+				대기방.this.addKeyListener(new ActionKey(me));
+				// 게임이 끝나며ㅑㄴ 원상태로 돌리기
+				
 			}
 
 		}

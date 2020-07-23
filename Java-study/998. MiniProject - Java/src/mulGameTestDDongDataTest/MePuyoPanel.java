@@ -43,7 +43,7 @@ public class MePuyoPanel extends JPanel {
 
 	public ExecutorService threadPool;
 
-	public MePuyoPanel(String id) {
+	public MePuyoPanel() {
 		// TODO Auto-generated constructor stub
 
 		this.id = id;

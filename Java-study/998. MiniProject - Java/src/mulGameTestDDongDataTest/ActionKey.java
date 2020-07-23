@@ -16,7 +16,7 @@ public class ActionKey implements KeyListener {
 	int youY;
 
 	public ActionKey(MePuyoPanel panel) { // 생성시 메인 프레임을 가져옴
-		// TODO Auto-generated constructor stub
+		//System.out.println("ffnweofnoefnewofnnewefnefwo");
 		this.panel = panel;
 	}
 

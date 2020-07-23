@@ -5,21 +5,16 @@ import java.util.ArrayList;
 
 public class DDongData implements Serializable {
 
-	private static final long serialVersionUID = 3L;
-
 	/*
-	 * src = Î≥¥ÎÇ¥ÎäîÏÇ¨Îûå type = Í≤åÏûÑ,Î°úÎπÑ,Ï±ÑÌåÖ dst = "Ïù∏ÏõêÏàò" ---> (ÌÉÄÍ≤ü) data (Ïò§Î∏åÏ†ùÌä∏)
+	 * src = ∫∏≥ª¥¬ªÁ∂˜ type = ∞‘¿”,∑Œ∫Ò,√§∆√ dst = "¿Œø¯ºˆ" ---> (≈∏∞Ÿ) data (ø¿∫Í¡ß∆Æ)
 	 * 
 	 */
 	public String src, type;
 
+	public boolean chk;
+
 	public ArrayList<String> dst;
 
 	public Object data;
-
-	@Override
-	public String toString() {
-		return "DDongData [src=" + src + ", type=" + type + ", dst=" + dst + ", data=" + data + "]";
-	}
 
 }

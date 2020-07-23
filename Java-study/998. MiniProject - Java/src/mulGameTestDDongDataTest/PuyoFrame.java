@@ -44,55 +44,6 @@ public class PuyoFrame extends JFrame {
 		add(me);
 		addKeyListener(new ActionKey(me));
 
-//		center = new JPanel();
-//		center.setLayout(null);
-//		center.setBackground(Color.red);
-//		center.setBounds(Puyo.PUYOSIZE * 6, 0, Puyo.PUYOSIZE * 4, Puyo.PUYOSIZE * 13);
-//		add(center);
-//
-//		startGame = new JToggleButton("게임 준비");
-//		startGame.setBounds(50, 250, 100, 30);
-//		center.add(startGame);
-//		 startGame.addActionListener(ActBtn);
-//
-//		exitRoom = new JButton("방 나가기");
-//		exitRoom.setBounds(50, 300, 100, 30);
-//		center.add(exitRoom);
-//		 exitRoom.addActionListener(ActBtn);
-
-//		static boolean runing = false;
-//		static String sendmsg = "";
-//		int i = 0;
-//		ActionListener ActBtn = new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				if (e.getSource() == startGame) {
-//					startGame.setText("게임 준비 취소");
-//					i++;
-//					runing = true;
-//					if (i % 2 == 1) {
-//						sendmsg = "true";
-////					System.out.println(sendmsg);
-//					} else if (i % 2 == 0) {
-//						startGame.setText("게임 준비");
-//						sendmsg = "false";
-////						System.out.println(sendmsg);
-//					}
-//
-//				}
-//
-//				if (e.getSource() == exitRoom) {
-//					dispose();
-//
-//					// 여기에 디비 정보지우는거 넣기
-//
-//				}
-//
-//			}
-//		};
-
 		you = new YouPuyoPanel();
 		you.setBounds(Puyo.PUYOSIZE * 10, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 		add(you);
