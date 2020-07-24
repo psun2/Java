@@ -7,7 +7,7 @@ public class NetData {
 
 	public static int port = 7777;
 
-	public static String host = "192.168.0.127";
+	public static String host = "192.168.1.6";
 
 	static void getIp() {
 		try {

@@ -23,8 +23,8 @@ public class Server extends JFrame {
 
 	ServerSocket serverSocket;
 	Socket client;
-	ArrayList<ObjectOutputStream> clients;
-	HashMap<String, ArrayList<ObjectOutputStream>> userMap;
+	ArrayList<ObjectOutputStream> clients; // 전체 유저
+	HashMap<String, ObjectOutputStream> userMap; // 유저별
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
 	ExecutorService threadPool;
@@ -42,7 +42,7 @@ public class Server extends JFrame {
 			this.serverSocket = new ServerSocket(NetData.port);
 			this.clients = new ArrayList<ObjectOutputStream>();
 			Collections.synchronizedList(clients);
-			this.userMap = new HashMap<String, ArrayList<ObjectOutputStream>>();
+			this.userMap = new HashMap<String, ObjectOutputStream>();
 			Collections.synchronizedMap(userMap);
 			this.threadPool = Executors.newCachedThreadPool();
 		} catch (IOException e) {
@@ -92,6 +92,11 @@ public class Server extends JFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			updateMessage("[" + client.getLocalAddress() + "] 접속 오류");
+			System.out.println("[" + client.getLocalAddress() + "] 접속 오류");
+		} finally {
+			updateMessage("[" + client.getLocalAddress() + "] 접속 해제");
+			System.out.println("[" + client.getLocalAddress() + "] 접속 해제");
 		}
 
 	}
@@ -112,6 +117,7 @@ public class Server extends JFrame {
 					ois.close();
 					oos.close();
 				}
+
 				this.clients.remove(oos);
 			} catch (Exception e2) {
 				// TODO: handle exception
@@ -135,13 +141,13 @@ public class Server extends JFrame {
 						switch (type) {
 						case "채팅":
 							mapAdd(type);
-							chatSend(type, data);
+							chatSend(data);
 							updateMessage("[" + client.getLocalAddress() + "] 채팅 데이터 전송 => " + data);
 							System.out.println("chatSend");
 							break;
 						case "게임":
 							mapAdd(type);
-							gameSend(type, data);
+							gameSend(data);
 							updateMessage("[" + client.getLocalAddress() + "] 게임 데이터 전송 => " + data);
 							System.out.println("gameSend");
 							break;
@@ -159,7 +165,7 @@ public class Server extends JFrame {
 						ois.close();
 						oos.close();
 						Server.this.clients.remove(oos);
-						Server.this.userMap.get(type).remove(oos);
+						Server.this.userMap.remove(type);
 					} catch (Exception e2) {
 						// TODO: handle exception
 						e2.printStackTrace();
@@ -177,103 +183,17 @@ public class Server extends JFrame {
 
 	void mapAdd(String type) {
 
-		if (this.userMap.containsKey(type)) {
-			this.userMap.get(type).add(oos);
-			System.out.println(this.userMap.get(type));
-		} else {
-			ArrayList<ObjectOutputStream> outs = new ArrayList<ObjectOutputStream>();
-			Collections.synchronizedList(outs);
-			outs.add(oos);
-			this.userMap.put(type, outs);
-			System.out.println(outs);
-		}
+	}
+
+	void chatSend(Data data) {
 
 	}
 
-	void chatSend(String type, Data data) {
-
-		ArrayList<ObjectOutputStream> chatOos = this.userMap.get(type);
-
-		try {
-			for (ObjectOutputStream oos : chatOos) {
-				oos.writeObject(data);
-				oos.flush();
-				oos.reset();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				ois.close();
-				oos.close();
-				Server.this.clients.remove(oos);
-				Server.this.userMap.get(type).remove(oos);
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
-
-	}
-
-	void gameSend(String type, Data data) {
-
-		ArrayList<ObjectOutputStream> gameOos = this.userMap.get(type);
-
-		try {
-			for (ObjectOutputStream oos : gameOos) {
-				oos.writeObject(data);
-				oos.flush();
-				oos.reset();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				ois.close();
-				oos.close();
-				this.clients.remove(oos);
-				this.userMap.get(type).remove(oos);
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
+	void gameSend(Data data) {
 
 	}
 
 	void sendToAll(Data data) {
-
-		try {
-			for (ObjectOutputStream oos : clients) {
-				oos.writeObject(data);
-				oos.flush();
-				oos.reset();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			try {
-				if (ois != null && oos != null) {
-					ois.close();
-					oos.close();
-					this.clients.remove(oos);
-					for (ArrayList<ObjectOutputStream> arr : userMap.values()) {
-
-						for (ObjectOutputStream oos : arr) {
-							if (this.oos.equals(oos)) {
-								arr.remove(this.oos);
-								break;
-							}
-						}
-
-					}
-				}
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
 
 	}
 
