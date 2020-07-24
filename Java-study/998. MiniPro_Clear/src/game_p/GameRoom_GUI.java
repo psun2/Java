@@ -33,16 +33,18 @@ public class GameRoom_GUI extends JFrame implements DDongInter {
 	public GameRoom_GUI() {
 		// TODO Auto-generated constructor stub
 
+		cn = new ClientNetWork("asdasd");
+		
 		this.readyChk = false;
 		this.enemy = null;
 
-		System.out.println("Frame ½ÃÀÛ == °ÔÀÓ ½ÃÀÛ");
-		setSize(width, height); // ÇÁ·¹ÀÓ »çÀÌÁî
-		setLocationRelativeTo(null); // ÇÁ·¹ÀÓ ½ÃÀÛ½Ã ¸ð´ÏÅÍ Áß¾Ó¿¡ Ãâ·Â
-		setResizable(false); // ÇÁ·¹ÀÓ »çÀÌÁî Á¶Àý ÇÒ ¼ö ¾øÀ½
-		getContentPane().setLayout(null); // ·¹ÀÌ2¾Æ¿ô
-		setTitle("»Ñ¿ä»Ñ¿ä"); // Å¸ÀÌÆ²
-		setIconImage(new ImageIcon("./img/logo.png").getImage()); // Å¸ÀÌÆ²¹Ù ·Î°í ¼³Á¤
+		System.out.println("Frame ï¿½ï¿½ï¿½ï¿½ == ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+		setSize(width, height); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		setLocationRelativeTo(null); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾Ó¿ï¿½ ï¿½ï¿½ï¿½
+		setResizable(false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		getContentPane().setLayout(null); // ï¿½ï¿½ï¿½ï¿½2ï¿½Æ¿ï¿½
+		setTitle("ï¿½Ñ¿ï¿½Ñ¿ï¿½"); // Å¸ï¿½ï¿½Æ²
+		setIconImage(new ImageIcon("./img/logo.png").getImage()); // Å¸ï¿½ï¿½Æ²ï¿½ï¿½ ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½
 		getContentPane().setBackground(Color.blue);
 
 		meP = new JPanel();
@@ -64,12 +66,12 @@ public class GameRoom_GUI extends JFrame implements DDongInter {
 
 		System.out.println(state.getSize()); // 200 , 650
 
-		JToggleButton ready = new JToggleButton("ÁØºñ");
-		JButton exit = new JButton("³ª°¡±â");
+		JToggleButton ready = new JToggleButton("ï¿½Øºï¿½");
+		JButton exit = new JButton("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
-		// ¹öÆ° °£°Ý 50;
-		// ¹öÆ° ÃÑ ±æÀÌ 130;
-		// ³²Àº ±æÀÌ 520;
+		// ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ 50;
+		// ï¿½ï¿½Æ° ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 130;
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 520;
 		// 520 - 130 / 2
 		int btnSizeW = 100;
 		int btnSizeH = 40;
@@ -118,18 +120,18 @@ public class GameRoom_GUI extends JFrame implements DDongInter {
 			JToggleButton temp = (JToggleButton) e.getSource();
 
 			if (readyChk) {
-				temp.setText("ÁØºñ");
+				temp.setText("ï¿½Øºï¿½");
 				readyChk = false;
 			} else {
-				temp.setText("ÁØºñ ¿Ï·á");
+				temp.setText("ï¿½Øºï¿½ ï¿½Ï·ï¿½");
 				readyChk = true;
 				temp.setEnabled(false);
-				cn.send(data); // »ý¼º°ú µ¿½Ã¿¡ ¸®½Ã¹ö·Î ¹Þ±â ¶§¹®¿¡ ¿©±ä ³ªÀÇ Á¤º¸°¡ ÀÖ°ÙÁö ?
-				System.out.println("¿©±â¼­ µ¥ÀÌÅÍ¸¦ ¸ø °¡Á®¿À¸é ³Ê¹« Èûµé¾î¿ä !!" + data);
+				cn.send(data); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½ ?
+				System.out.println("ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ !!" + data);
 
-				// ³»°¡ ÁØºñÀÏ¶§ »ó´ë¹æÀÇ Åë½Å»óÅÂ¸¦ ¹Þ¾Æ
-				// °ÔÀÓ ÀÌ½ÃÀÛ µÊ....
-				// me ÆÐ³Î°ú you ÆÐ³ÎÀ» ¸®¹«ºê
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å»ï¿½ï¿½Â¸ï¿½ ï¿½Þ¾ï¿½
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½....
+				// me ï¿½Ð³Î°ï¿½ you ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //				GameRoom_GUI.this.remove(meP);
 //				GameRoom_GUI.this.remove(youP);
 //
@@ -169,10 +171,10 @@ public class GameRoom_GUI extends JFrame implements DDongInter {
 	}
 
 	@Override
-	public void reciver(DDongData dd) { // ·ÎÁ÷ ¼öÁ¤ÀÌ ÇÊ¿ä ÇÒ ¼öµµ ....
+	public void reciver(DDongData dd) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ....
 		// TODO Auto-generated method stub
 
-		if (dd.type.equals("°ÔÀÓ")) {
+		if (dd.type.equals("ï¿½ï¿½ï¿½ï¿½")) {
 
 			if (dd.src.equals(cn.id)) {
 
@@ -196,8 +198,8 @@ public class GameRoom_GUI extends JFrame implements DDongInter {
 					PuyoFrame goGame = new PuyoFrame();
 					goGame.cn = cn;
 					cn.ddInter = goGame;
-					cn.send(dd); // ¹ÞÀº°É ±×´ë·Î ÁÖ¾î Åë½ÅÀ» ÀÌ¾î °¡µµ·Ï....
-					// ÀÌ°É »ý¼ºµÈ ³»°¡ ¹ÞÀ» ¼ö ÀÖ³ª ¸ð¸£°Ú³× .... ?
+					cn.send(dd); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½....
+					// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö³ï¿½ ï¿½ð¸£°Ú³ï¿½ .... ?
 				}
 
 			}

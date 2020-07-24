@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-
 public class ClientNetWork {
 
 	ObjectOutputStream oos;
@@ -14,7 +13,6 @@ public class ClientNetWork {
 	public String id;
 
 	public DDongInter ddInter;
-
 
 	public ClientNetWork(String id) {
 
@@ -26,7 +24,7 @@ public class ClientNetWork {
 			oos = new ObjectOutputStream(soc.getOutputStream());
 			DDongData ddos = new DDongData();
 			ddos.data = id;
-			ddos.type ="login";
+			ddos.type = "login";
 			ddos.chk = false;
 			oos.writeObject(ddos);
 			oos.flush();
@@ -40,7 +38,6 @@ public class ClientNetWork {
 		}
 	}
 
-
 	public void send(DDongData ddos) {
 
 		try {
@@ -51,16 +48,15 @@ public class ClientNetWork {
 			oos.flush();
 			oos.reset();
 
-			System.out.println("Àü¼ÛÀßµÇ¿ä");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ßµÇ¿ï¿½");
 
 		} catch (Exception e) {
 		}
-	}	         
+	}
 
+	public class Resiver extends Thread {
 
-	public class Resiver extends Thread{
-
-		public Resiver(Socket soc ) {
+		public Resiver(Socket soc) {
 
 			try {
 				ois = new ObjectInputStream(soc.getInputStream());
@@ -73,9 +69,9 @@ public class ClientNetWork {
 		@Override
 		public void run() {
 
-			while(ois!=null) {
+			while (ois != null) {
 				try {
-					DDongData data = (DDongData)ois.readObject();
+					DDongData data = (DDongData) ois.readObject();
 					ddInter.reciver(data);
 
 				} catch (Exception e) {
