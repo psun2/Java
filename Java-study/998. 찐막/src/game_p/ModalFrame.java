@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import ddong.DDongData;
 import jdbc_p.GameRoomDAO;
 import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
@@ -111,6 +112,9 @@ public class ModalFrame extends JFrame {
 		}
 
 		new Lobby_Main(frame.cn);
+		DDongData data = new DDongData();
+		data.type = "·Îºñ";
+		frame.cn.send(data);
 	}
 
 }
