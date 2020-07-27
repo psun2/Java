@@ -71,7 +71,8 @@ public class PuyoFrame extends JFrame implements DDongInter {
 		youLb.setHorizontalAlignment(JLabel.CENTER);
 		add(youLb);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true); // 프레임을 보여줌
 
 		update();

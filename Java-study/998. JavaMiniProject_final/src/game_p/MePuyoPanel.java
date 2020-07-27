@@ -342,9 +342,8 @@ public class MePuyoPanel extends JPanel {
 
 	////////////// TODO 폭발 로직
 
-	boolean bombChk() {
-
-		modifyNode();
+	synchronized boolean bombChk() {
+		
 
 		boolean result = false;
 
@@ -365,7 +364,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void bomb() {
+	synchronized void bomb() {
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
 		HashMap<String, HashSet<MyLabel>> cloneMap = new HashMap<String, HashSet<MyLabel>>(this.map);
@@ -387,19 +386,9 @@ public class MePuyoPanel extends JPanel {
 		this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
 		this.bombArrColor = new HashSet<String>();
 
-//		for (Entry<String, HashSet<MyLabel>> puyo : cloneMap.entrySet()) {
-//
-//			if (!puyo.getKey().equals(itemColor)) {
-//				if (puyo.getValue().size() >= MeGameInfo.PANG) {
-//					deepBomb(puyo.getValue());
-//				}
-//			}
-//
-//		}
-
 	}
 
-	void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
+	synchronized void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
 
 		modifyNode();
 
@@ -456,7 +445,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
+	synchronized HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
 
 		if (equals.size() <= 1)
 			return equals;

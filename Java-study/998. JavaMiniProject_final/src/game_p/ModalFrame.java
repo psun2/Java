@@ -50,7 +50,8 @@ public class ModalFrame extends JFrame implements DDongInter {
 		textLb2.setHorizontalAlignment(JLabel.CENTER);
 		add(textLb2);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setVisible(true); // 프레임을 보여줌
 
 		endTimer();
@@ -112,6 +113,27 @@ public class ModalFrame extends JFrame implements DDongInter {
 				new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]);
 
 			}
+
+		} else { // 한명만 나갔다면.... 그 한명은 게임이 진행 되어야 하기 때문에....
+
+			// 디비에서 방에서 나간 유저 삭제 후 temp 유저 입장
+			GameRoomDTO users = new GameRoomDAO().detailroom(frame.roomNum);
+
+			String user1 = users.getUser1();
+			String user2 = users.getUser2();
+
+			String[] userArr = { user1, user2 };
+
+			for (int i = 0; i < userArr.length; i++) {
+
+				if (frame.meId.equals(userArr[i])) {
+					new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]);
+					new GameRoomDAO().modifyUser6(new String[] { "user1", "user2" }[i], frame.roomNum);
+					break;
+				}
+
+			}
+			// 방 디비 업데이트 끝
 
 		}
 
