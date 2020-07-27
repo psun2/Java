@@ -9,13 +9,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import ddong.ClientNetWork;
 import ddong.DDongData;
+import ddong.DDongInter;
 import jdbc_p.GameRoomDAO;
 import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
 import lobby_p.Lobby_Main;
 
-public class ModalFrame extends JFrame {
+public class ModalFrame extends JFrame implements DDongInter {
+
+	ClientNetWork cn;
 
 	PuyoFrame frame;
 
@@ -90,6 +94,14 @@ public class ModalFrame extends JFrame {
 
 	void goLobby() {
 
+		try {
+			if (ModalFrame.this.frame.threadPool != null && !ModalFrame.this.frame.threadPool.isShutdown()) {
+				ModalFrame.this.frame.threadPool.shutdown();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		ModalFrame.this.dispose();
 		ModalFrame.this.frame.dispose();
 
@@ -111,10 +123,18 @@ public class ModalFrame extends JFrame {
 
 		}
 
-		new Lobby_Main(frame.cn);
-		DDongData data = new DDongData();
-		data.type = "로비";
-		frame.cn.send(data);
+		frame.data = new DDongData();
+		frame.data.type = "로비진입";
+		this.cn.send(frame.data);
+
+		new Lobby_Main(cn);
+
+	}
+
+	@Override
+	public void reciver(DDongData dd) {
+		// TODO Auto-generated method stub
+		System.out.println("통신 을 받지 않음");
 	}
 
 }

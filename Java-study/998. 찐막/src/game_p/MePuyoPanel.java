@@ -122,9 +122,13 @@ public class MePuyoPanel extends JPanel {
 
 						if (frame.enemyData.endGame && MePuyoPanel.this.meInfo.endGame) {
 							MePuyoPanel.this.lobbyChk = true;
-							new ModalFrame(MePuyoPanel.this.frame, "승리");
+							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "승리");
+							mf.cn = frame.cn;
+							frame.cn.ddInter = mf;
 						} else { // 상대방이 게임이 안끝났으면 나는 패배
-							new ModalFrame(MePuyoPanel.this.frame, "패배");
+							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "패배");
+							mf.cn = frame.cn;
+							frame.cn.ddInter = mf;
 						}
 
 						return; // 게임 종료
