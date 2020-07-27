@@ -19,33 +19,22 @@ import jdbc_p.RankDTO;
 public class MePuyoPanel extends JPanel {
 
 	String id;
-
 	ImageIcon background;
-
 	MeGameInfo meInfo;
 	PuyoGameInfo info;
-
 	Puyo me;
 	Puyo you;
-
 	MyLabel meLb;
 	MyLabel youLb;
-
 	ArrayList<MyLabel> puyoLbs;
 	HashSet<MyLabel> bombArr;
 	HashSet<String> bombArrColor;
 	HashMap<String, HashSet<MyLabel>> map;
-
 	int LocationX, LocationY, endLine, step, cutLine, score, jum, combo, comboCnt, comboChk; // 뿌요가 떨어질때의 칸수
-
 	boolean bombChk, itemChk, lobbyChk;
-
 	PuyoTimer timer;
-
 	PuyoFrame frame;
-
 	String itemColor;
-
 	public ExecutorService threadPool;
 
 	public MePuyoPanel(PuyoFrame frame) {
@@ -123,12 +112,8 @@ public class MePuyoPanel extends JPanel {
 						if (frame.enemyData.endGame && MePuyoPanel.this.meInfo.endGame) {
 							MePuyoPanel.this.lobbyChk = true;
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "승리");
-							mf.cn = frame.cn;
-							frame.cn.ddInter = mf;
 						} else { // 상대방이 게임이 안끝났으면 나는 패배
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "패배");
-							mf.cn = frame.cn;
-							frame.cn.ddInter = mf;
 						}
 
 						return; // 게임 종료

@@ -17,7 +17,7 @@ import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
 import lobby_p.Lobby_Main;
 
-public class ModalFrame extends JFrame implements DDongInter {
+public class ModalFrame extends JFrame {
 
 	ClientNetWork cn;
 
@@ -123,18 +123,12 @@ public class ModalFrame extends JFrame implements DDongInter {
 
 		}
 
-		frame.data = new DDongData();
-		frame.data.type = "로비진입";
-		this.cn.send(frame.data);
+		new Lobby_Main(frame.cn);
 
-		new Lobby_Main(cn);
+		DDongData data = new DDongData();
+		data.type = "로비진입";
+		frame.cn.send(data);
 
-	}
-
-	@Override
-	public void reciver(DDongData dd) {
-		// TODO Auto-generated method stub
-		System.out.println("통신 을 받지 않음");
 	}
 
 }

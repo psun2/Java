@@ -1,9 +1,6 @@
 package game_p;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -139,9 +136,5 @@ public class PuyoFrame extends JFrame implements DDongInter {
 			}
 		};
 		this.threadPool.submit(thread);
-	}
-
-	public static void main(String[] args) {
-		new PuyoFrame(7, "몰라요", "알아요");
 	}
 }
