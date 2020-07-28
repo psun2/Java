@@ -118,7 +118,7 @@ public class MePuyoPanel extends JPanel {
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
 
 						updateRank(); // 점수 업데이트
-						frame.data.chk = true;
+						// frame.data.chk = true;
 						frame.cn.send(frame.data);
 
 						if (threadPool != null && !threadPool.isShutdown()) { // 게임이 끝나고 쓰레드 풀이 열려 있다면

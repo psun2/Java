@@ -8,84 +8,85 @@ import java.net.Socket;
 
 public class ClientNetWork {
 
-   ObjectOutputStream oos;
-   ObjectInputStream ois;
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
 
-   public String id;
+	public String id;
 
-   public DDongInter ddInter;
-   public Resiver resiver;
+	public DDongInter ddInter;
+	public Resiver resiver;
 
-   public ClientNetWork(String id) {
+	public ClientNetWork(String id) {
 
-      try {
+		try {
 
-         this.id = id;
+			this.id = id;
 
-         Socket soc = new Socket(InitData.ip, 7777);
-         oos = new ObjectOutputStream(soc.getOutputStream());
-         DDongData ddos = new DDongData();
-         ddos.src = id;
-         ddos.type = "login";
-         
-         String msg = ddos.src+"서버 접속합니다";
-         ddos.data = msg;
-         ddos.chk = false;
-         oos.writeObject(ddos);
-         oos.flush();
-         oos.reset();
-         
-         resiver = new Resiver(soc);
-         resiver.start();
+			Socket soc = new Socket(InitData.ip, 7777);
+			oos = new ObjectOutputStream(soc.getOutputStream());
+			DDongData ddos = new DDongData();
+			ddos.src = id;
+			ddos.type = "login";
 
-      } catch (Exception e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
-   }
+			String msg = ddos.src + "서버 접속합니다";
+			ddos.data = msg;
+			ddos.chk = false;
+			oos.writeObject(ddos);
+			oos.flush();
+			oos.reset();
 
-   public void send(DDongData ddos) {
+			resiver = new Resiver(soc);
+			resiver.start();
 
-      try {
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-         ddos.src = id;
+	public void send(DDongData ddos) {
 
-         oos.writeObject(ddos);
-         oos.flush();
-         oos.reset();
+		try {
 
-        // System.out.println("전송잘돼요");
+			ddos.src = id;
 
-      } catch (Exception e) {
-      }
-   }
+			oos.writeObject(ddos);
+			oos.flush();
+			oos.reset();
 
-   public class Resiver extends Thread {
+			System.out.println("전송잘돼요");
 
-      public Resiver(Socket soc) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-         try {
-            ois = new ObjectInputStream(soc.getInputStream());
-         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-      }
+	public class Resiver extends Thread {
 
-      @Override
-      public void run() {
+		public Resiver(Socket soc) {
 
-         while (ois != null) {
-            try {
-               DDongData data = (DDongData) ois.readObject(); // 여기서 에러나서 리시브가 안된다
-             
-               ddInter.reciver(data);
+			try {
+				ois = new ObjectInputStream(soc.getInputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-            } catch (Exception e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-            }
-         }
-      }
-   }
+		@Override
+		public void run() {
+
+			while (ois != null) {
+				try {
+					DDongData data = (DDongData) ois.readObject(); // 여기서 에러나서 리시브가 안된다
+
+					ddInter.reciver(data);
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

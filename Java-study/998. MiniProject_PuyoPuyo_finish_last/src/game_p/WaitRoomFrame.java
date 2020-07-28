@@ -200,6 +200,13 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 			game.cn = cn;
 			cn.ddInter = game;
 
+			try {
+				Thread.sleep(33);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+
 			data.type = "∞‘¿”¡ﬂ";
 			data.dst = enenmy;
 			cn.send(data);

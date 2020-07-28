@@ -17,7 +17,7 @@ public class GameRoomDAO {
 	ResultSet rs;
 
 	String url = "jdbc:oracle:thin:@" + InitData.ip + ":1521:xe";
-//	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//   String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	String id = InitData.id;
 	String pw = InitData.pw;
 
@@ -232,25 +232,25 @@ public class GameRoomDAO {
 		return res;
 
 	}
-	
+
 	public int modifyUser6(String col, Integer roomNum) {
 
-	      int res = 0;
+		int res = 0;
 
-	      sql = "update gameroom set " + col + " = 'temp' where no = " + roomNum + "";
-	      System.out.println(sql);
+		sql = "update gameroom set " + col + " = 'temp' where no = " + roomNum + "";
+		System.out.println(sql);
 
-	      try {
+		try {
 
-	         res = stmt.executeUpdate(sql); // 수정한 내용 업데이트
+			res = stmt.executeUpdate(sql); // 수정한 내용 업데이트
 
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally { // 위에서와 마찬가지로 DB사용 후 DB를 닫아준다
-	         close(); // DB를 닫기 전 확인을 위한 메소드
-	      }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // 위에서와 마찬가지로 DB사용 후 DB를 닫아준다
+			close(); // DB를 닫기 전 확인을 위한 메소드
+		}
 
-	      return res;
+		return res;
 	}
 
 	// --------------------------------------------------------
@@ -274,5 +274,25 @@ public class GameRoomDAO {
 		return res;
 		// 삭제된 데이터의 업데이트가 성공적으로 되면 결과값을 0로 반환해준다
 	} // == public int delete 끝 =======
+
+	public GameRoomDTO roomdPepleetail(String id) {
+		GameRoomDTO dto = new GameRoomDTO();
+		sql = "select * from gameroom where user1 = '" + id + "'" + " or user2='" + id + "'";
+		try {
+
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				dto.user1 = rs.getString("user1");
+				dto.user2 = rs.getString("user2");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return dto;
+	}
 
 }

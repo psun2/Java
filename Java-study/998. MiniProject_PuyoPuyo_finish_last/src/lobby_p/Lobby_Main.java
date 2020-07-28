@@ -458,9 +458,10 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			// 스크롤을 맨 마지막 대화쪽에 위치해준다
 
 		} else if (dd.type.equals("로비") || dd.type.equals("게임")) {
-
-			System.out.println("여기는 로비");
-			roomBtn();
+			if (dd.dst == null) {
+				System.out.println("여기는 로비");
+				roomBtn();
+			}
 		}
 
 	}

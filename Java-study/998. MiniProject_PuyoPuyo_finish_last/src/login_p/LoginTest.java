@@ -18,7 +18,8 @@ import javax.swing.JTextField;
 import ddong.ClientNetWork;
 import ddong.DDongData;
 import ddong.DDongInter;
-
+import jdbc_p.GameRoomDAO;
+import jdbc_p.GameRoomDTO;
 import jdbc_p.GameUserDAO;
 import jdbc_p.GameUserDTO;
 import jdbc_p.LobbyDAO;
@@ -46,7 +47,7 @@ public class LoginTest extends JFrame implements DDongInter {
 	JButton btnCloseGame;
 	LobbyDAO lodao;
 	LobbyDTO lodto;
-	String ids;
+	String ids, ids2, ids3;
 
 	public ClientNetWork cn;
 
@@ -122,6 +123,23 @@ public class LoginTest extends JFrame implements DDongInter {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	void roomchk() {
+
+		GameRoomDTO gdto = new GameRoomDTO();
+		GameRoomDAO gdao = new GameRoomDAO();
+		gdto = gdao.roomdPepleetail(idText.getText());
+		ids2 = gdto.getUser1();
+		ids3 = gdto.getUser2();
+	}
+
+	void robichk() {
+		lodao = new LobbyDAO();
+		lodto = new LobbyDTO();
+		lodto = lodao.detail(idText.getText());
+		ids = lodto.getId();
+
+	}
+
 	Socket soc;
 	ActionListener actBut = new ActionListener() {
 
@@ -132,17 +150,18 @@ public class LoginTest extends JFrame implements DDongInter {
 				try {
 
 					if (dao.Login(idText.getText(), pwText.getText())) {
-						JOptionPane.showMessageDialog(null, "로그인 성공");
+						roomchk();
+						robichk();
 
-						lodao = new LobbyDAO();
-						lodto = new LobbyDTO();
-						lodto = lodao.detail(idText.getText());
-						ids = lodto.getId();
-
-						if (idText.getText().equals(ids)) {
+						if (idText.getText().equals(ids) || idText.getText().equals(ids2)
+								|| idText.getText().equals(ids3)) {
 							JOptionPane.showMessageDialog(null, "이미접속중입니다");
-							dispose();
+							idText.setText("");
+							pwText.setText("");
+							idText.setFocusable(true);
 						} else {
+							JOptionPane.showMessageDialog(null, "로그인 성공");
+
 							new LobbyDAO().insert(idText.getText());
 							cn = new ClientNetWork(idText.getText());
 							Lobby_Main mm = new Lobby_Main(cn);

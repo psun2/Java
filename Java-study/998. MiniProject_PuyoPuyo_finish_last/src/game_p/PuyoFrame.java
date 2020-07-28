@@ -118,7 +118,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		if (dd.type.equals("게임중")) {
 
 			if ((MeGameInfo) dd.data != null) {
-				enemyChk = dd.chk;
+				// enemyChk = dd.chk;
 				you.paint((MeGameInfo) dd.data);
 				this.enemyData = (MeGameInfo) dd.data;
 				if (((MeGameInfo) dd.data).itemChk)
@@ -142,9 +142,15 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 					try {
 
-						System.out.println(enemyChk + "\t");
-						if (me.meInfo.endGame || enemyChk) // 상대방에게 데이터 를 보내지 않음
-							return;
+						System.out.println("내가 끝났을때 : " + me.meInfo.endGame);
+						if (PuyoFrame.this.enemyData != null) {
+							if (me.meInfo.endGame || PuyoFrame.this.enemyData.endGame) {
+								System.out.println("내가 끝났을때 : " + me.meInfo.endGame);
+								System.out.println("적이 끝났을떄 : " + PuyoFrame.this.enemyData.endGame);
+								return;
+							}
+						}
+						// 상대방에게 데이터 를 보내지 않음
 
 						cn.send(data);
 						me.meInfo.itemChk = false;

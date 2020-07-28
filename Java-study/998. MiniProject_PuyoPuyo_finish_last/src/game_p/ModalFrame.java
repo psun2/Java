@@ -100,9 +100,9 @@ public class ModalFrame extends JFrame implements DDongInter, WindowListener {
 	void goLobby() {
 
 		ModalFrame.this.dispose();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 이게 먹히나 ?
+		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 이게 먹히나 ?
 		ModalFrame.this.frame.dispose();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		new LobbyDAO().insert(frame.meId);
 
