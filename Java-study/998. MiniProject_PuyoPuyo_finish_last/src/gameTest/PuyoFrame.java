@@ -1,4 +1,4 @@
-package game_p;
+package gameTest;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -48,7 +48,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated constructor stub
 
 		init(roomNum, meId, enemyId);
-
+		System.out.println("여긴 다른 패키지");
 		setSize(width, height); // 프레임 사이즈
 		setLocationRelativeTo(null); // 프레임 시작시 모니터 중앙에 출력
 		setResizable(false); // 프레임 사이즈 조절 할 수 없음
@@ -139,9 +139,8 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 					try {
 
-			
 						if (PuyoFrame.this.enemyData != null) {
-							if (me.meInfo.endGame || PuyoFrame.this.enemyData.endGame) 
+							if (me.meInfo.endGame || PuyoFrame.this.enemyData.endGame)
 								return;
 
 						}

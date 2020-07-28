@@ -1,3 +1,4 @@
+// 200729 수정완료
 package lobby_p;
 
 import java.awt.Color;
@@ -168,11 +169,11 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 				new LobbyDAO().delete(cn.id);
 
+				System.exit(0);
+
 				dData = new DDongData();
 				dData.type = "로비";
 				cn.send(dData);
-
-				System.exit(0);
 			}
 		});
 		// -- 나가기 버튼 -------
@@ -184,8 +185,13 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		// dao.delete(cn.id); // 클로크로 껐을때 로비리스트 디비에서 삭제되게 수정하기
 
 		addWindowListener(this); // 윈도우창을 x로 닫으면 닫히게 한다
+
+		// DDongData data = new DDongData();
+		// data.type = "로비";
+		// cn.send(data);
 
 	}
 
@@ -259,7 +265,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 			// 방버튼이 눌렸을때
 			roombtn.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
@@ -279,7 +284,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						dto.setUser1(cn.id);
 
 						new GameRoomDAO().modifyUser1(dto);
-
 						new LobbyDAO().delete(cn.id);
 
 						// System.out.println(dData.type.toString()+","+dData.toString()+"여긴 두번 눌렀을떄
@@ -383,6 +387,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			rankPop.setIconImage(new ImageIcon("./img/logo.png").getImage());
 			rankPop.getContentPane().add(new RankMain_GUI());
 			rankPop.setVisible(true);
+
 		}
 	}
 	// == 랭킹버튼 리스너 끝 ===
@@ -458,8 +463,8 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			// 스크롤을 맨 마지막 대화쪽에 위치해준다
 
 		} else if (dd.type.equals("로비") || dd.type.equals("게임")) {
+			System.out.println("여기는 로비");
 			if (dd.dst == null) {
-				System.out.println("여기는 로비");
 				roomBtn();
 			}
 		}

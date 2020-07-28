@@ -1,4 +1,4 @@
-package game_p;
+package gameTest;
 
 import java.awt.Color;
 import java.awt.GridLayout;
