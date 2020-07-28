@@ -341,9 +341,7 @@ public class MePuyoPanel extends JPanel {
 	}
 
 	////////////// TODO 폭발 로직
-
-	synchronized boolean bombChk() {
-		
+	boolean bombChk() {
 
 		boolean result = false;
 
@@ -364,7 +362,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	synchronized void bomb() {
+	void bomb() {
 
 		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
 		HashMap<String, HashSet<MyLabel>> cloneMap = new HashMap<String, HashSet<MyLabel>>(this.map);
@@ -381,19 +379,18 @@ public class MePuyoPanel extends JPanel {
 
 		}
 
-		System.out.println("bombArr : " + bombArr);
 		System.out.println("bombArrColor : " + bombArrColor);
 		this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
 		this.bombArrColor = new HashSet<String>();
 
 	}
 
-	synchronized void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
-
-		modifyNode();
+	void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
 
 		HashSet<MyLabel> equals = new HashSet<MyLabel>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 		int size = 0;
+
+		System.out.println(colors);
 
 		for (MyLabel puyo : colors) {
 
@@ -408,13 +405,27 @@ public class MePuyoPanel extends JPanel {
 			int y = puyo.getY();
 
 			for (MyLabel pu : colors) {
+				
+				modifyNode();
 
-				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
-						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
+				// 1안 - 버그 있음
+//				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
+//						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
+//					equalsTemp.add(pu);
+//				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE
+//						|| y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+//					equalsTemp.add(pu);
+
+				// 2안 실험 해봐야함
+				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE)
 					equalsTemp.add(pu);
-				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE
-						|| y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+				if (x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
 					equalsTemp.add(pu);
+				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE)
+					equalsTemp.add(pu);
+				if (y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+					equalsTemp.add(pu);
+
 			}
 
 			if (size < equalsTemp.size()) { // 최고 많이 붙어 있는 덩어리를 가림
@@ -445,7 +456,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	synchronized HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
+	HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
 
 		if (equals.size() <= 1)
 			return equals;
@@ -457,21 +468,38 @@ public class MePuyoPanel extends JPanel {
 
 		for (MyLabel puyo : equals) {
 
+			modifyNode();
+			result.add(puyo); // 처음부터 result 와 equals 가 같을 수 있으므 로 본인을 추가 set이여서 중복 불가!!
+
 			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.getX();
 			int y = puyo.getY();
 
-			result.add(puyo);
-			modifyNode();
-
 			for (MyLabel pu : removeColor) {
+				
+				modifyNode();
 
-				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
-						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
+				// 1안 - 기존 로직
+				// --------------------------------------------------------------
+//				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
+//						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
+//					result.add(pu);
+//				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE
+//						|| y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+//					result.add(pu);
+				// --------------------------------------------------------------
+
+				// 2안 - 기존 로직을 갈라 놓음
+				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE)
 					result.add(pu);
-				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE
-						|| y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+				if (x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
 					result.add(pu);
+				if (y == pu.getY() && x == pu.getX() + Puyo.PUYOSIZE)
+					result.add(pu);
+				if (y == pu.getY() && x == pu.getX() - Puyo.PUYOSIZE)
+					result.add(pu);
+
+				// --------------------------------------------------------------
 
 			}
 
@@ -482,9 +510,13 @@ public class MePuyoPanel extends JPanel {
 //      System.out.println("**  원본 colors 에서 같은 애들을 제외한 배열 : " + removeColor);
 //      System.out.println("** result 배열 : " + result);
 
+		System.out.println("여기까지 온다메 ?");
+		System.out.println(result);
+
 		if (result.size() > equals.size())
 			result = deepDeepBomb(colors, result);
 
+		System.out.println(result);
 		return result;
 
 	}
@@ -613,16 +645,10 @@ public class MePuyoPanel extends JPanel {
 
 				if (!equalsPuyo(puyo).stopChk) {
 
-					try {
+					endMove(equalsPuyo(puyo), puyo); // 뿌요가 밑으로 흘러내려 갑니다.
+					updateInfo();
+					sleepThread();
 
-						endMove(equalsPuyo(puyo), puyo); // 뿌요가 밑으로 흘러내려 갑니다.
-						updateInfo();
-						Thread.sleep(33); // 33초의 딜레이
-
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
 
 			}

@@ -27,7 +27,7 @@ import ddong.ClientNetWork;
 import ddong.DDongData;
 import ddong.DDongInter;
 import game_p.PuyoFrame;
-import game_p.WaitRoom;
+import game_p.WaitRoomFrame;
 import jdbc_p.GameRoomDAO;
 import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
@@ -288,7 +288,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener{
 
                   //                  System.out.println(dData.type.toString()+","+dData.toString()+"여긴 두번 눌렀을떄 타입,데이터1");
 
-                  WaitRoom goGame = new WaitRoom(cn.id,roomN); // 여기서 게임생성
+                  WaitRoomFrame goGame = new WaitRoomFrame(cn.id,roomN); // 여기서 게임생성
                   goGame.cn = cn;
                   cn.ddInter = goGame;
                   
@@ -315,7 +315,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener{
 
                   new LobbyDAO().delete(cn.id);
 
-                  WaitRoom goGame = new WaitRoom(cn.id,roomN); // 여기서 게임생성
+                  WaitRoomFrame goGame = new WaitRoomFrame(cn.id,roomN); // 여기서 게임생성
                   goGame.cn = cn;
                   cn.ddInter = goGame;
 
