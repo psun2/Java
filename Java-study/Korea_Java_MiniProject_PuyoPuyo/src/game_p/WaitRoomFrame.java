@@ -146,7 +146,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 	public void reciver(DDongData dd) {
 		// TODO Auto-generated method stub
 
-		System.out.println(this.enenmy);
+		// System.out.println(this.enenmy);
 
 		if (dd.type.equals("∞‘¿”")) {
 
