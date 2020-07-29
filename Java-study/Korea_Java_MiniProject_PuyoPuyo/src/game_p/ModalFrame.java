@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import ddong.ClientNetWork;
 import ddong.DDongData;
 import ddong.DDongInter;
+import jdbc_p.GameRoomDAO;
+import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
 import lobby_p.Lobby_Main;
 
