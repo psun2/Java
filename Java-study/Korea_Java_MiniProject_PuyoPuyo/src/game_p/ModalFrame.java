@@ -125,6 +125,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 	public void windowClosing(WindowEvent e) { // 강제 종료시.....
 		// TODO Auto-generated method stub
 		frame.updateRoomDb();
+
 	}
 
 	@Override

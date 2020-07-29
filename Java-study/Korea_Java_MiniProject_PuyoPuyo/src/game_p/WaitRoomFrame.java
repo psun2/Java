@@ -138,7 +138,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	void ddongDataInit() {
 		this.data = new DDongData(); // 똥 양식 셋팅
-		data.type = "게임";
+		data.type = "게임통신";
 
 	}
 
@@ -148,7 +148,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 		// System.out.println(this.enenmy);
 
-		if (dd.type.equals("게임")) {
+		if (dd.type.equals("게임통신") || dd.type.equals("게임")) {
 
 			searchUser();
 
@@ -292,6 +292,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		// TODO Auto-generated method stub
 		waitRoomDb();
 		signal();
+
 	}
 
 	@Override

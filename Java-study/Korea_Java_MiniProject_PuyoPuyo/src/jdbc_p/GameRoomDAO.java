@@ -166,36 +166,13 @@ public class GameRoomDAO {
 
 	// --------------------------------------------------------
 	// == public int modifyUser3 =======
-	public int modifyUser3(String id) { // user2가 방에 입장하면 추가
+
+	public int modifyUser4(String col, String id, Integer roomNum) { // user2가 방에 입장하면 추가
 
 		int res = 0; // 쿼리문 결과 값이 숫자로 나오므로 int로 결과를 받아준다
 
 		// java에서 수정한 데이터 삽입해주는 쿼리문
-		sql = "update gameroom set user1 = " + null + " where user1 = '" + id + "'";
-
-		try {
-
-			res = stmt.executeUpdate(sql); // 수정한 내용 업데이트
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally { // 위에서와 마찬가지로 DB사용 후 DB를 닫아준다
-			close(); // DB를 닫기 전 확인을 위한 메소드
-		}
-
-		return res;
-		// 수정된 데이터의 업데이트가 성공적으로 되면 결과값을 0로 반환해준다
-	} // == public int modifyUser2 끝 =======
-		// --------------------------------------------------------
-
-	// --------------------------------------------------------
-	// == public int modifyUser3 =======
-	public int modifyUser4(String id) { // user2가 방에 입장하면 추가
-
-		int res = 0; // 쿼리문 결과 값이 숫자로 나오므로 int로 결과를 받아준다
-
-		// java에서 수정한 데이터 삽입해주는 쿼리문
-		sql = "update gameroom set user2 = " + null + " where user2 = '" + id + "'";
+		sql = "update gameroom set " + col + " = " + null + " where " + col + " = '" + id + "' and no = " + roomNum;
 
 		try {
 
@@ -213,6 +190,8 @@ public class GameRoomDAO {
 		// --------------------------------------------------------
 
 	public int modifyUser5(String col, String id) {
+
+		System.out.println("진입");
 
 		int res = 0;
 
@@ -237,7 +216,7 @@ public class GameRoomDAO {
 
 		int res = 0;
 
-		sql = "update gameroom set " + col + " = 'temp' where no = " + roomNum + "";
+		sql = "update gameroom set " + col + " = 'temp' where no = " + roomNum;
 		// System.out.println(sql);
 
 		try {

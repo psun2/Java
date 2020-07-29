@@ -117,8 +117,7 @@ public class MePuyoPanel extends JPanel {
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
 
 						updateRank(); // 점수 업데이트
-//                  frame.data.chk = true;
-						frame.cn.send(frame.data);
+//						frame.data.chk = true;
 
 						if (threadPool != null && !threadPool.isShutdown()) { // 게임이 끝나고 쓰레드 풀이 열려 있다면
 							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
@@ -133,8 +132,10 @@ public class MePuyoPanel extends JPanel {
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "승리");
 						} else { // 상대방이 게임이 안끝났으면 나는 패배
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "패배");
-
 						}
+
+						if (!lobbyChk)
+							frame.cn.send(frame.data);
 
 						return; // 게임 종료
 					}

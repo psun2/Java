@@ -216,7 +216,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						ttt = "<html>NO. " + roomN + " (1 / 2)<br><br> >> 입장하기 </html>";
 						btnName.setText(ttt);
 
-						System.out.println(roomN + "여긴 유저가 없는 곳을 눌렀을때");
 						dto.setNo(roomN);
 						dto.setUser1(cn.id);
 
@@ -234,7 +233,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						dData = new DDongData();
 						dData.type = "게임"; //
 						cn.send(dData);
-						System.out.println(dData.type.toString() + "," + dData.toString() + "여긴 두번 눌렀을떄 타입,데이터1");
 
 						dispose();
 
@@ -244,8 +242,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						roombtn.setBackground(Color.MAGENTA);
 						ttt = "<html>NO. " + roomN + "(2 / 2)<br><br> - 입장불가 - </html>";
 						btnName.setText(ttt);
-
-						System.out.println(roomN + "여긴 유저가 1명 있는곳을 눌렀을때");
 
 						dto.setNo(roomN);
 						dto.setUser2(cn.id);
@@ -261,7 +257,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						dData = new DDongData();
 						dData.type = "게임"; // 게임방에서 DB업데이트 시점을 알려주기 위해서 사용
 						cn.send(dData);
-						System.out.println(dData.type.toString() + "," + dData.toString() + "여긴 두번 눌렀을떄 타입,데이터1");
+
 						dispose();
 
 					} else if (new GameRoomDAO().detailroom(roomN).getUser1() == null
@@ -271,7 +267,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						ttt = "<html>NO. " + roomN + "(2 / 2)<br><br> - 입장불가 - </html>";
 						btnName.setText(ttt);
 
-						System.out.println(roomN + "여긴 유저가 없는 곳을 눌렀을때");
 						dto.setNo(roomN);
 						dto.setUser1(cn.id);
 
@@ -289,14 +284,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						dData = new DDongData();
 						dData.type = "게임"; //
 						cn.send(dData);
-						System.out.println(dData.type.toString() + "," + dData.toString() + "여긴 두번 눌렀을떄 타입,데이터1");
 
 						dispose();
 
 					} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
 							&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
 
-						System.out.println(roomN + "꽉차 있는곳을 눌렀을때");
 						JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.\n다른방을 이용해 주세요!!");
 					}
 
@@ -437,11 +430,8 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 	@Override
 	public void reciver(DDongData dd) {
 
-		System.out.println("Tq 리씨버 받는다" + dd);
-
 		if (dd.type.equals("채팅")) {
 
-			System.out.println(dd.data.toString() + " - 롸이트해주는곳인데 데이터타입뭐니");
 			textArea.append(" [" + dd.src + "]  " + dd.data + "\n"); // 여기서 에러나는디
 			// 읽어 온 내용을 대화창에 입력해주고 줄바꿈을 해준다
 			textArea.setCaretPosition(textArea.getDocument().getLength());
@@ -449,8 +439,8 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 		} else if (dd.type.equals("로비") || dd.type.equals("게임")) {
 
-			System.out.println("여기는 로비");
-			roomBtn();
+			if (dd.dst == null)
+				roomBtn();
 		}
 
 	}

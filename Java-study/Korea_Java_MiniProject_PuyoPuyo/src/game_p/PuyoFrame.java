@@ -143,8 +143,8 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 								return;
 
 						}
-						// 상대방에게 데이터 를 보내지 않음
 
+						// 상대방에게 데이터 를 보내지 않음
 						cn.send(data);
 						me.meInfo.itemChk = false;
 						Thread.sleep(frame);
@@ -185,7 +185,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 			for (int i = 0; i < userArr.length; i++) {
 
-				new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]);
+				new GameRoomDAO().modifyUser4(new String[] { "user1", "user2" }[i], userArr[i], roomNum);
 
 			}
 
@@ -255,6 +255,5 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated method stub
 
 	}
-
 
 }
