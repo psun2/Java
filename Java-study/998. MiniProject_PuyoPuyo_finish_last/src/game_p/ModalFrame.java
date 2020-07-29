@@ -106,9 +106,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 
 		frame.updateRoomDb();
 
-		System.out.println("asdasdasd");
 		new Lobby_Main(frame.cn);
-		System.out.println("asdasdasd");
 
 		DDongData data = new DDongData();
 		data.type = "·Îºñ";

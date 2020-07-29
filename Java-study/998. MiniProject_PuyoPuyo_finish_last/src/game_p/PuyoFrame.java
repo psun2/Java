@@ -48,7 +48,6 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated constructor stub
 
 		init(roomNum, meId, enemyId);
-
 		setSize(width, height); // 프레임 사이즈
 		setLocationRelativeTo(null); // 프레임 시작시 모니터 중앙에 출력
 		setResizable(false); // 프레임 사이즈 조절 할 수 없음
@@ -139,9 +138,8 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 					try {
 
-			
 						if (PuyoFrame.this.enemyData != null) {
-							if (me.meInfo.endGame || PuyoFrame.this.enemyData.endGame) 
+							if (me.meInfo.endGame || PuyoFrame.this.enemyData.endGame)
 								return;
 
 						}
@@ -179,9 +177,9 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 		String[] userArr = { user1, user2 };
 
-		System.out.println(me.lobbyChk + "로비첵");
-		System.out.println(me.meInfo.endGame + "앤드게임");
-		System.out.println(this.enemyData.endGame + "에너미 데이터 앤드게임");
+//		System.out.println(me.lobbyChk + "로비첵");
+//		System.out.println(me.meInfo.endGame + "앤드게임");
+//		System.out.println(this.enemyData.endGame + "에너미 데이터 앤드게임");
 
 		if (me.lobbyChk) { // 둘다 게임이 종료 되어 나갔다면 방 폭파
 
@@ -258,8 +256,5 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 	}
 
-	public static void main(String[] args) {
-		new PuyoFrame(7, "asdasd", "asssssssssss");
-	}
 
 }

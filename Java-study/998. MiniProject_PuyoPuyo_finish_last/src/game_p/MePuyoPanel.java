@@ -1,4 +1,3 @@
-
 package game_p;
 
 import java.awt.Graphics;
@@ -114,11 +113,11 @@ public class MePuyoPanel extends JPanel {
 				while (true) { // 게임이 끝날때까지 무한 반복한다.
 
 					if (meInfo.endGame) { // end 게임끝을 chk
-						System.out.println("게임종료");
+						// System.out.println("게임종료");
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
 
 						updateRank(); // 점수 업데이트
-						// frame.data.chk = true;
+//                  frame.data.chk = true;
 						frame.cn.send(frame.data);
 
 						if (threadPool != null && !threadPool.isShutdown()) { // 게임이 끝나고 쓰레드 풀이 열려 있다면
@@ -134,6 +133,7 @@ public class MePuyoPanel extends JPanel {
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "승리");
 						} else { // 상대방이 게임이 안끝났으면 나는 패배
 							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "패배");
+
 						}
 
 						return; // 게임 종료
@@ -154,6 +154,8 @@ public class MePuyoPanel extends JPanel {
 						puyoLbs.add(meLb); // 라벨만 따로 저장
 						addMap(meLb); // 본 패널에서 사용할 정보 저장
 
+						sleepThread();
+
 						// you 생성
 						you = new Puyo();
 						youLb = new MyLabel(new ImageIcon("./img/" + you.color + "-48.png"));
@@ -170,7 +172,7 @@ public class MePuyoPanel extends JPanel {
 
 						if (bombChk()) { // 쓰레드여서 계속 실행시키는 문제 발생
 							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
-							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이;
+							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이
 							// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
 							// 다른 요소가 나올소 있도록 boolean 값을변경
 						} else {
@@ -293,8 +295,6 @@ public class MePuyoPanel extends JPanel {
 
 	void modifyNode() {
 
-		System.out.println("asdasdasdasdasdasdasdasdasd");
-
 		for (MyLabel puyo : puyoLbs) {
 
 			// y 좌표가 자꾸 먹는 현상 발생!!!!
@@ -312,7 +312,6 @@ public class MePuyoPanel extends JPanel {
 			}
 
 		}
-		System.out.println("asdasdasdasdasdasdasdasdasd");
 
 	}
 
@@ -346,9 +345,7 @@ public class MePuyoPanel extends JPanel {
 
 		boolean result = false;
 
-		HashMap<String, HashSet<MyLabel>> chkMap = new HashMap<String, HashSet<MyLabel>>(this.map);
-
-		for (Entry<String, HashSet<MyLabel>> puyo : chkMap.entrySet()) {
+		for (Entry<String, HashSet<MyLabel>> puyo : map.entrySet()) {
 
 			if (!puyo.getKey().equals(itemColor)) {
 				if (puyo.getValue().size() >= MeGameInfo.PANG) {
@@ -367,32 +364,44 @@ public class MePuyoPanel extends JPanel {
 
 	void bomb() {
 
-		System.out.println("----------------------");
+		// for문이 돌아갈때 map도 remove가 되므로 클론을 하나 사용 합니다.
+		HashMap<String, HashSet<MyLabel>> cloneMap = new HashMap<String, HashSet<MyLabel>>(this.map);
 
 		for (String color : bombArrColor) {
-			deepBomb(this.map.get(color));
+
+			for (Entry<String, HashSet<MyLabel>> colorMap : cloneMap.entrySet()) {
+
+				if (colorMap.getKey().equals(color)) {
+					deepBomb(colorMap.getValue());
+				}
+
+			}
+
 		}
-		
-		System.out.println("deepBomb 부른곳 끝");
+
+		// System.out.println("bombArrColor : " + bombArrColor);
+		this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
+		this.bombArrColor = new HashSet<String>();
 
 	}
 
 	void deepBomb(HashSet<MyLabel> colors) { // clolors 가 업데이트가 안됨
 
-		System.out.println("--------------");
-		
-		
-
 		for (MyLabel puyo : colors) {
 
-			int x = puyo.getX();
-			int y = puyo.getY();
+			modifyNode();
 
-			HashSet<MyLabel> equals = new HashSet<MyLabel>();
+			HashSet<MyLabel> equals = new HashSet<MyLabel>(); // 붙어 있는 것중 제일 큰 덩어리들을 담은 배열
 
 			equals.add(puyo);
 
+			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
+			int x = puyo.getX();
+			int y = puyo.getY();
+
 			for (MyLabel pu : colors) {
+
+				modifyNode();
 
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
@@ -403,45 +412,44 @@ public class MePuyoPanel extends JPanel {
 
 			}
 
-			if (equals.size() >= 3) {
+			equals = deepDeepBomb(colors, equals);
 
-				equals = deepDeepBomb(colors, equals);
-
-				if (equals.size() >= MeGameInfo.PANG) {
-					bombArr = equals;
-					jum = 10;
-					this.score += bombArr.size() * jum;
-					remove();
-					empty();
-//					modifyNode();
-					System.out.println("여기가 끝1");
-				}
-				System.out.println("여기가 끝2");
-
+			if (equals.size() >= 4) {
+				bombArr = equals;
+				jum = 10;
+				this.score += bombArr.size() * jum;
+				remove();
+				empty();
+				modifyNode();
+				return;
 			}
-			System.out.println("여기가 끝3");
-			System.out.println(colors);
-		}
 
-		System.out.println("deepBomb 포문 끝");
+		}
 
 	}
 
 	HashSet<MyLabel> deepDeepBomb(HashSet<MyLabel> colors, HashSet<MyLabel> equals) {
 
+		if (equals.size() <= 1)
+			return equals;
+
 		HashSet<MyLabel> result = new HashSet<MyLabel>();
 
-		HashSet<MyLabel> removeColors = new HashSet<MyLabel>(colors);
-		removeColors.removeAll(equals);
+		HashSet<MyLabel> removeColor = new HashSet<MyLabel>(colors);
+		removeColor.removeAll(equals);
 
 		for (MyLabel puyo : equals) {
 
+			modifyNode();
+			result.add(puyo); // 처음부터 result 와 equals 가 같을 수 있으므 로 본인을 추가 set이여서 중복 불가!!
+
+			// 십자가를 보기위해 기준이 되는 puyo의 좌표를 얻어옴
 			int x = puyo.getX();
 			int y = puyo.getY();
 
-			result.add(puyo);
+			for (MyLabel pu : removeColor) {
 
-			for (MyLabel pu : removeColors) {
+				modifyNode();
 
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
@@ -453,6 +461,11 @@ public class MePuyoPanel extends JPanel {
 			}
 
 		}
+
+//      System.out.println("** 원본 colors : " + colors);
+//      System.out.println("** 같은 애들만 담아온 배열 : " + equals);
+//      System.out.println("**  원본 colors 에서 같은 애들을 제외한 배열 : " + removeColor);
+//		System.out.println("** result 배열 : " + result);
 
 		if (result.size() > equals.size())
 			result = deepDeepBomb(colors, result);
@@ -463,8 +476,6 @@ public class MePuyoPanel extends JPanel {
 
 	void remove() {
 
-		System.out.println(bombArr);
-
 		for (MyLabel puyo : bombArr) {
 			// 터지는 뿌요 패널에서 삭제 작업
 			remove(puyo); // 패널에서 지움
@@ -472,9 +483,37 @@ public class MePuyoPanel extends JPanel {
 			setVisible(true); // update
 		}
 
+		modifyNode();
+
+		item(bombArr);
+
+		comboChk++; // 처음 터졌을시 0 이되고
+		// 재귀적으로 이구간을 또 거칠때 터졌으므로 1 이되서 연쇄 콤보 증가
+		if (comboChk > 0)
+			this.comboCnt++;
+		combo = comboCnt * (jum * 2);
+
 	}
 
 	void item(HashSet<MyLabel> bombArr) { // 아이템 블럭이 터졌나 안터졌나를 감별
+		// 아이템을 보내고 내부분을 다시 업데이트 하는 부분이 중요
+		// 그럼 보낼때마다 새로생성해 ? meInfo를 ... ?
+
+		ArrayList<MyLabel> item = new ArrayList<MyLabel>(bombArr);
+
+		// 터진 요소중에 아이템 블럭이 있는지 확인
+		for (MyLabel myLabel : item) {
+
+			if (myLabel.getName().equals("ninja")) {
+				meInfo.itemChk = true; // 있다면 true
+				// System.out.println("아이템이 터지면 열로 와요 : " + meInfo.itemChk);
+				// 프레임에서 샌드후 다시 false로 바꿈
+				break;
+			}
+
+		}
+
+		modifyNode();
 
 	}
 
@@ -488,6 +527,7 @@ public class MePuyoPanel extends JPanel {
 		}
 
 		emptyMove();
+
 	}
 
 	void emptyMove() { // 자동적인 움직임은 y축만 업데이트 하면 됩니다.
@@ -528,6 +568,11 @@ public class MePuyoPanel extends JPanel {
 
 		emptyEndMove(updatePuyo); // 요소들이 터져서 이동이 끝난뒤
 		modifyNode();
+
+		if (bombChk()) { // 재귀적으로 터질 곳이 있나 검색합니다.
+			bomb();
+			modifyNode();
+		}
 
 	} // move 함수 끝
 

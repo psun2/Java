@@ -211,8 +211,6 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 			data.dst = enenmy;
 			cn.send(data);
 
-			System.out.println("¿şÀÕ ~~~~~~~~~~~~~~~~~~~~~~ : " + data.dst);
-
 		}
 
 	}
