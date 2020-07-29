@@ -46,7 +46,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 	RoomList roomList;
 
 	JScrollPane js;
-	//	JPanel roomListA; // 방리스트
+	// JPanel roomListA; // 방리스트
 	String ttt;
 	// ----------
 
@@ -55,7 +55,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 	// ----------
 
 	private JPanel contentPane;
-
 
 	public Lobby_Main(ClientNetWork cn) {
 
@@ -148,22 +147,19 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 	}
 
-	class RoomList extends JPanel{
+	class RoomList extends JPanel {
 
 		JButton roombtn;
 		JLabel btnName;
-
 
 		public RoomList() {
 
 			setLayout(null);
 		}
 
-
 		void roomBtn() { // 방버튼
 
 			userList.init();
-
 
 			for (int i = 1; i < 19; i++) {
 
@@ -309,7 +305,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 		}
 	}
 
-
 	class UserList_Main extends JPanel {
 
 		String id;
@@ -357,169 +352,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 		}
 	}
-
-
-
-	//	void roomBtn() { // 방버튼
-	//
-	//		if (js != null) {
-	//
-	//			roomList.removeAll();
-	//			js.removeAll();
-	//			contentPane.remove(js);
-	//		}
-	//
-	//		userList.init();
-	//
-	//		roomList = new JPanel();
-	//		roomList.setPreferredSize(new Dimension(550, 840));
-	//		js = new JScrollPane(roomList);
-	//		js.setBounds(20, 20, 570, 420);
-	//		roomList.setLayout(null);
-	//		contentPane.add(js);
-	//
-	//		for (int i = 1; i < 19; i++) {
-	//
-	//			Integer roomN = i;
-	//			int btnX = 0;
-	//			int btnY = 0;
-	//
-	//			if (i % 3 == 1) {
-	//
-	//				btnY += 140 * (i / 3);
-	//			} else if (i % 3 == 2) {
-	//				btnX = 184;
-	//				btnY += 140 * (i / 3);
-	//			} else if (i % 3 == 0) {
-	//				btnX = 368;
-	//				btnY += 140 * (i / 3 - 1);
-	//			}
-	//
-	//			JButton roombtn = new JButton();
-	//			roombtn.setBounds(btnX, btnY, 184, 140);
-	//			roombtn.setBackground(Color.yellow);
-	//			JLabel btnName = new JLabel();
-	//			btnName.setFont(new Font("돋움", Font.BOLD, 14));
-	//			ttt = "<html>NO. " + roomN + " (0 / 2)<br><br> >> 방만들기 << </html>";
-	//			btnName.setText(ttt);
-	//			roombtn.add(btnName);
-	//			roomList.add(roombtn);
-	//
-	//			// 방이 업데이트 됐을때 작동 될 아이
-	//			if (new GameRoomDAO().detailroom(roomN).getUser1() != null
-	//					&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
-	//
-	//				roombtn.setBackground(Color.cyan);
-	//				ttt = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> 입장하기</html>";
-	//				btnName.setText(ttt);
-	//
-	//			} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
-	//					&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
-	//
-	//				roombtn.setBackground(Color.MAGENTA);
-	//				ttt = "<html>NO. " + roomN + " (2 / 2)<br><br> - 입장불가 - </html>";
-	//				btnName.setText(ttt);
-	//			} else if (new GameRoomDAO().detailroom(roomN).getUser1() == null
-	//					&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
-	//
-	//				roombtn.setBackground(Color.cyan);
-	//				ttt = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> 입장하기</html>";
-	//				btnName.setText(ttt);
-	//			}
-	//
-	//			// 방버튼이 눌렸을때
-	//			roombtn.addActionListener(new ActionListener() {
-	//				@Override
-	//				public void actionPerformed(ActionEvent e) {
-	//
-	//					GameRoomDTO dto = new GameRoomDTO();
-	//
-	//					dData = new DDongData();
-	//
-	//					if (new GameRoomDAO().detailroom(roomN).getUser1() == null
-	//							&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
-	//
-	//						roombtn.setBackground(Color.cyan);
-	//						ttt = "<html>NO. " + roomN + " (1 / 2)<br><br> >> 입장하기 </html>";
-	//						btnName.setText(ttt);
-	//
-	//						dto.setNo(roomN);
-	//						dto.setUser1(cn.id);
-	//
-	//						new GameRoomDAO().modifyUser1(dto);
-	//						new LobbyDAO().delete(cn.id);
-	//
-	//						WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // 여기서 게임생성
-	//						goGame.cn = cn;
-	//						cn.ddInter = goGame;
-	//
-	//						dData = new DDongData();
-	//						dData.type = "게임"; //
-	//						cn.send(dData);
-	//
-	//						dispose();
-	//
-	//					} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
-	//							&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
-	//
-	//						roombtn.setBackground(Color.MAGENTA);
-	//						ttt = "<html>NO. " + roomN + "(2 / 2)<br><br> - 입장불가 - </html>";
-	//						btnName.setText(ttt);
-	//
-	//						dto.setNo(roomN);
-	//						dto.setUser2(cn.id);
-	//
-	//						new GameRoomDAO().modifyUser2(dto);
-	//
-	//						new LobbyDAO().delete(cn.id);
-	//
-	//						WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // 여기서 게임생성
-	//						goGame.cn = cn;
-	//						cn.ddInter = goGame;
-	//
-	//						dData = new DDongData();
-	//						dData.type = "게임"; // 게임방에서 DB업데이트 시점을 알려주기 위해서 사용
-	//						cn.send(dData);
-	//					
-	//						dispose();
-	//
-	//					} else if (new GameRoomDAO().detailroom(roomN).getUser1() == null
-	//							&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
-	//
-	//						roombtn.setBackground(Color.MAGENTA);
-	//						ttt = "<html>NO. " + roomN + "(2 / 2)<br><br> - 입장불가 - </html>";
-	//						btnName.setText(ttt);
-	//
-	//						dto.setNo(roomN);
-	//						dto.setUser1(cn.id);
-	//
-	//						new GameRoomDAO().modifyUser1(dto);
-	//
-	//						new LobbyDAO().delete(cn.id);
-	//
-	//						WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // 여기서 게임생성
-	//						goGame.cn = cn;
-	//						cn.ddInter = goGame;
-	//
-	//						dData = new DDongData();
-	//						dData.type = "게임"; //
-	//						cn.send(dData);
-	//
-	//						dispose();
-	//
-	//					} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
-	//							&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
-	//
-	//						JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.\n다른방을 이용해 주세요!!");
-	//					}
-	//
-	//				}
-	//			});
-	//		}
-	//
-	//		js.setVisible(false);
-	//		js.setVisible(true);
-	//	}
 
 	// == 랭킹버튼 리스너 ===
 	class RankBtnAction implements ActionListener { // 랭킹 버튼 리스너
@@ -603,7 +435,6 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 	@Override
 	public void reciver(DDongData dd) {
 
-
 		if (dd.type.equals("채팅")) {
 
 			textArea.append(" [" + dd.src + "]  " + dd.data + "\n"); // 여기서 에러나는디
@@ -611,9 +442,9 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			textArea.setCaretPosition(textArea.getDocument().getLength());
 			// 스크롤을 맨 마지막 대화쪽에 위치해준다
 
-		}else if (dd.type.equals("로비") || dd.type.equals("게임")) {
+		} else if (dd.type.equals("로비") || dd.type.equals("게임")) {
 
-			if(dd.dst==null) {
+			if (dd.dst == null) {
 				roomList.roomBtn();
 			}
 		}
