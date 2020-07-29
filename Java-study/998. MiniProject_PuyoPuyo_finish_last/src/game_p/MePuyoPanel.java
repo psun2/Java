@@ -504,7 +504,7 @@ public class MePuyoPanel extends JPanel {
 		// 터진 요소중에 아이템 블럭이 있는지 확인
 		for (MyLabel myLabel : item) {
 
-			if (myLabel.getName().equals("ninja")) {
+			if (myLabel.getName().equals(itemColor)) {
 				meInfo.itemChk = true; // 있다면 true
 				// System.out.println("아이템이 터지면 열로 와요 : " + meInfo.itemChk);
 				// 프레임에서 샌드후 다시 false로 바꿈
