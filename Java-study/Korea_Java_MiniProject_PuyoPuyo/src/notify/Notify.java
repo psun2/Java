@@ -18,6 +18,7 @@ public class Notify {
 	// [2020-07-27] modify - [game_p.ActionKey] : 207Line 회전시 먹어들어가는거 회전버그 수정
 	// 위하여....
 
-	// [2020-07-29] modify - [game_p.MePuyoPanel] : 안터지는 버그 수정 - 테스트 필요
+	// [2020-07-29] modify - [game_p.MePuyoPanel] : 안터지는 버그 수정 - 테스트 필요 -
+	// !!!!!!!!!!!!! 확인!! - 아주 잘됨
 
 }

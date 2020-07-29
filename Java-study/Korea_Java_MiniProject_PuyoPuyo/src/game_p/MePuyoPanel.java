@@ -213,8 +213,6 @@ public class MePuyoPanel extends JPanel {
 		while (true) {
 
 			if (me.stopChk && you.stopChk) { // 뿌요 한쌍이 둘이 자리를 잡았다.
-				fixBug(me, meLb); // 가끔식 생기는 잡버그 수정
-				fixBug(you, youLb); // 가끔식 생기는 잡버그 수정
 				modifyNode();
 				comboChk = -1; // 콤보 chk 초기화
 				this.bombChk = true; // 생산을 잠시 중단하고 터질 요소가 있는지 검색
@@ -223,7 +221,9 @@ public class MePuyoPanel extends JPanel {
 
 			sleepThread();
 			endMove(me, meLb); // 뿌요가 밑으로 흘러내려 갑니다.
+			fixBug(me, meLb); // 가끔식 생기는 잡버그 수정
 			endMove(you, youLb); // 뿌요가 밑으로 흘러내려 갑니다
+			fixBug(you, youLb); // 가끔식 생기는 잡버그 수정
 			updateInfo();
 
 		}
@@ -231,8 +231,6 @@ public class MePuyoPanel extends JPanel {
 	} // move 함수 끝
 
 	void endMove(Puyo puyo, MyLabel lb) { // 뿌요가 마지막까지 흘러 내려 갈 수 있게 하는 함수
-
-		fixBug(puyo, lb);
 
 		if (puyo.stopChk)
 			return;
@@ -402,8 +400,6 @@ public class MePuyoPanel extends JPanel {
 
 			for (MyLabel pu : colors) {
 
-				modifyNode();
-
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)
 					equals.add(pu);
@@ -449,8 +445,6 @@ public class MePuyoPanel extends JPanel {
 			int y = puyo.getY();
 
 			for (MyLabel pu : removeColor) {
-
-				modifyNode();
 
 				if (x == pu.getX() && y == pu.getY() + Puyo.PUYOSIZE
 						|| x == pu.getX() && y == pu.getY() - Puyo.PUYOSIZE)

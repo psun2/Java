@@ -191,8 +191,6 @@ public class GameRoomDAO {
 
 	public int modifyUser5(String col, String id) {
 
-		System.out.println("ÁøÀÔ");
-
 		int res = 0;
 
 		sql = "update gameroom set " + col + " = " + null + " where " + col + " = '" + id + "'";
