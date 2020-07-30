@@ -105,8 +105,9 @@ public class GameUserDAO {
 
 		try {
 			stmt = con.createStatement();
-
-			sql = "select * from gameuser where email='" + email + "'";
+			sql = "select * from gameuser where email='" + email + "'" + "and name='" + name + "'" + "and birth='"
+					+ birth + "'";
+			// sql = "select * from gameuser where email='" + email + "'";
 			rs = stmt.executeQuery(sql); // 읽어오는거라 다르다 비교해 //리턴타입이 ResultSet
 
 			if (rs.next()) { // id가 존재x
