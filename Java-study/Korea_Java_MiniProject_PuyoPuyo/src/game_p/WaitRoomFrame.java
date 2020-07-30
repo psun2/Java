@@ -190,9 +190,9 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	}
 
-	void match() { // 준비 버튼을 눌렀을때 통신을 보내고 통신이 왔을때 적의 상태 확인
+	void match() {
 
-		if (this.meChk && youChk) {
+		if (this.meChk && youChk) { // 준비 버튼을 눌렀을때 통신을 보내고 통신이 왔을때 적의 상태 확인
 
 			this.dispose();
 
