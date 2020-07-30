@@ -15,9 +15,12 @@ public class ActionKey implements KeyListener {
 	int youX;
 	int youY;
 
+	boolean retateChk;
+
 	public ActionKey(MePuyoPanel panel) { // 생성시 메인 패널
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
+		this.retateChk = false;
 	}
 
 	@Override
@@ -47,6 +50,9 @@ public class ActionKey implements KeyListener {
 
 			// System.out.println("왼쪽");
 
+			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+				return;
+
 			if (meX == 0 || youX == 0)
 				return;
 
@@ -57,12 +63,16 @@ public class ActionKey implements KeyListener {
 				meX = panel.meLb.getX();
 				youX = panel.youLb.getX();
 			}
+			fixBug();
 			// printNode();
 			break;
 
 		case KeyEvent.VK_RIGHT:
 
 			// System.out.println("오른쪽");
+
+			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+				return;
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
 				return;
@@ -73,6 +83,7 @@ public class ActionKey implements KeyListener {
 				youX = panel.youLb.getX();
 			}
 			// printNode();
+			fixBug();
 			break;
 
 		case KeyEvent.VK_UP:
@@ -82,7 +93,13 @@ public class ActionKey implements KeyListener {
 				return;
 			}
 
+			this.retateChk = true;
+
 			rotate();
+
+			this.retateChk = false;
+
+			fixBug();
 			break;
 
 		case KeyEvent.VK_DOWN:
@@ -96,6 +113,7 @@ public class ActionKey implements KeyListener {
 			meY += speed;
 			youY += speed;
 			// printNode();
+			fixBug();
 			break;
 		}
 
@@ -206,7 +224,7 @@ public class ActionKey implements KeyListener {
 			// me의 밑에 무엇인가 존재 하면 회전 못시키게 만들면 되겟네...
 			for (MyLabel puyo : panel.puyoLbs) {
 				if (meX == puyo.getX() && meY + (Puyo.PUYOSIZE * 2) == puyo.getY()) {
-					System.out.println("여기가 언제 진입함 ?????????????");
+					// System.out.println("여기가 언제 진입함 ?????????????");
 					return;
 				}
 			}
@@ -270,6 +288,14 @@ public class ActionKey implements KeyListener {
 			result = true;
 
 		return result;
+
+	}
+
+	void fixBug() {
+
+		if (meY > youY || meY < youY) { // 세로 방향일때 틀 어짐을 잡아줌.... // me 를 기준으로 하기 때문 you의 X 는 me 의 xe다
+			youX = meX;
+		}
 
 	}
 
