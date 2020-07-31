@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import ddong.ClientNetWork;
 import ddong.DDongData;
@@ -77,7 +78,8 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		add(youLb);
 
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setVisible(true); // 프레임을 보여줌
 
 		addWindowListener(this); // 프레임을 강제 종료시 행동할 이벤트리스너

@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 
 import ddong.ClientNetWork;
 import ddong.DDongData;
@@ -78,7 +79,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		state.setBackground(Color.white);
 		add(state);
 
-		ready = new JToggleButton("준비");
+		this.ready = new JToggleButton("준비");
 		JButton exit = new JButton("나가기");
 
 		// 버튼 간격 50;
@@ -103,6 +104,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		exit.setBounds(x, y + gap, btnSizeW, btnSizeH);
 
 		ready.setEnabled(false);
+		this.ready.setSelected(false);
 
 		ready.addActionListener(new ReadyBtn());
 		exit.addActionListener(new ExitBtn());
@@ -121,7 +123,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		add(youLb);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
 
 		addWindowListener(this);
@@ -181,8 +183,11 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 					this.ready.setEnabled(true);
 				}
 			} else { // null 이 한번 이라도 있다면
+				WaitRoomFrame.this.meChk = false; // 적이 나가면 나의 준비상태 초기화
+				data.chk = false; // 적이 나가면 나의 준비상태 초기화
 				this.enenmy = null;
 				youLb.setText("다른유저의 접속대기");
+				this.ready.setSelected(false);
 				this.ready.setEnabled(false);
 			}
 

@@ -21,7 +21,7 @@ public class Puyo implements Serializable {
 		String[] colors = { "blue", "green", "red", "yellow", "ninja" };
 		int i = (int) (Math.random() * 5);
 
-		if (i == 4) {
+		if (i != 4) {
 
 			for (int j = 0; j < 3; j++) {
 				i = (int) (Math.random() * 5);
