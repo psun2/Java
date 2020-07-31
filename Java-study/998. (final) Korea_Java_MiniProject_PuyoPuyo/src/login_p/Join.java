@@ -51,13 +51,15 @@ public class Join extends JFrame {
 	JButton btnCancelMake; // 종료 버튼
 	JButton btnMakeMember; // 회원가입시 완료 버튼
 	JButton btnIdChk; // 아이디 중복 검사
-	int monthL = 0;
-	int dayL = 0;
-	int yearL = 0;
+	int monthL = 1;
+	int dayL = 1;
+	int yearL = 2020;
 	int days = 1;
 	int lastday;
+	int i=0;
 
 	boolean truechk = false;
+	boolean monchk = false;
 
 	public Join() {
 
@@ -175,41 +177,60 @@ public class Join extends JFrame {
 			month.addItem(i);
 		}
 
-		JComboBox day = new JComboBox(); // 일
+		JComboBox<Integer> day = new JComboBox(); // 일
 		day.setBounds(396, 297, 46, 23);
 
-		for (int i = 1; i <= 31; i++) {
-			day.addItem(i);
+		for (int j = 1; j <= 31; j++) {
+			day.addItem(j);
 		}
-
+		
+		
+		year.setSelectedItem(2020);
 		getContentPane().add(year);
 		getContentPane().add(month);
 		getContentPane().add(day);
 
-		month.addActionListener(new ActionListener() {
+		
+		year.addActionListener(new  ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				yearL = (int) year.getItemAt(year.getSelectedIndex());
-				monthL = (int) month.getItemAt(month.getSelectedIndex());
-				calders.set(yearL, monthL - 1, days);
-
-				lastday = calders.getActualMaximum(Calendar.DAY_OF_MONTH);
-
 			}
 		});
-
-		day.addActionListener(new ActionListener() {
+		
+		
+		month.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dayL = (int) day.getItemAt(day.getSelectedIndex());
+			
 
-				if (dayL > lastday) {
-				} else {
-					truechk = true;
+				if(day.getItemCount()>1) {
+					day.removeAllItems();
+				}
+				
+				monthL = (int) month.getItemAt(month.getSelectedIndex());
+				calders.set(yearL, monthL - 1, days);
+				lastday = calders.getActualMaximum(Calendar.DAY_OF_MONTH);
+				
+				for (int j = 1; j <= lastday; j++) {
+					day.addItem(j);
 				}
 
 			}
 		});
+		
+	
+		day.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(day.getSelectedItem()!=null) {
+					dayL = (int) day.getItemAt(day.getSelectedIndex());
+					System.out.println(dayL);
+				}
+			}
+		});
+		
+
 
 		JLabel lblNewLabel_2 = new JLabel("년");
 		lblNewLabel_2.setBounds(300, 295, 21, 27);
@@ -242,11 +263,9 @@ public class Join extends JFrame {
 			}
 
 			if (e.getSource() == btnIdChk) { // 중복 검사
-
 				String jt = JoinIdText.getText().trim();
 				if ("".equals(jt) || !Pattern.matches(regex[0], jt)) {
-					JOptionPane.showMessageDialog(null, " 아이디를 확인 해주세요");
-
+					JOptionPane.showMessageDialog(null, "아이디를 확인 해주세요");
 				} else if (dao.idChk(jt) == 0) {
 					JOptionPane.showMessageDialog(null, JoinIdText.getText() + " 중복입니다.");
 				} else if (dao.idChk(jt) == 1 && Pattern.matches(regex[0], jt)) {
@@ -257,6 +276,8 @@ public class Join extends JFrame {
 
 			}
 
+			
+
 			if (e.getSource() == btnMakeMember) { // 회원 가입
 				id = JoinIdText.getText().trim();
 				pw = passwordField.getText().trim();
@@ -264,6 +285,9 @@ public class Join extends JFrame {
 				name = JoinNameText.getText().trim();
 				birth = yearL + "년" + monthL + "월" + dayL + "일";
 				email = JoinEmailText.getText().trim();
+				
+				
+				System.out.println(birth);
 
 				String[] joinChk = { id, pw, pw2, name, email }; // 유효성 검사를 위해 배열형
 				String[] pppChk = { "id를 확인 해주세요", "비밀번호를 확인해 주세요", "비밀번호를 확인해 주세요", "이름을 확인해 주세요", "email을 확인해 주세요" }; // 에러내용
@@ -301,11 +325,12 @@ public class Join extends JFrame {
 							break;
 						}
 
-						if (truechk) {
-							dto.setBirth(birth);
-						} else {
-							JOptionPane.showMessageDialog(null, "월의 최대일수를 넘었습니다. 또는 잘못 입력하셨습니다.");
+						if (yearL==0 || monthL==0 || dayL==0) {	
+							JOptionPane.showMessageDialog(null, "생년월일을입력해주세요");
 							break;
+						} else {
+							dto.setBirth(birth);
+							
 						}
 						i++;
 
@@ -333,5 +358,8 @@ public class Join extends JFrame {
 
 		}
 	};
-
+	
+	public static void main(String[] args) {
+		new Join();
+	}
 }

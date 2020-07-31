@@ -38,14 +38,12 @@ public class FinddingId extends JFrame{
 	JButton findBtn;
 	String birthday="";
 	
-	
-	   int monthL=0;
-	   int dayL=0;
-	   int yearL=0;
-	   int days=1;
-	   int lastday;
+	int monthL = 1;
+	int dayL = 1;
+	int yearL = 2020;
+	int days=1;
+	int lastday;
 	   
-	   boolean truechk = false;
 	
 	
 	
@@ -82,12 +80,14 @@ public class FinddingId extends JFrame{
 	    	  month.addItem(i);
 	      }      
 	      
-	      JComboBox day = new JComboBox(); //일
+	      JComboBox<Integer> day = new JComboBox(); // 일
 	      day.setBounds(410, 250, 46, 23);
 	      
 	      for (int i = 1; i <=31; i++) {
 	    	  day.addItem(i);
 	      }      
+	      
+	      
 	      JLabel lblNewLabel_2 = new JLabel("년");
 	      lblNewLabel_2.setBounds(325, 250, 21, 27);
 	      getContentPane().add(lblNewLabel_2);
@@ -100,41 +100,51 @@ public class FinddingId extends JFrame{
 	      lblNewLabel_2_1_1.setBounds(465, 250, 21, 27);
 	      getContentPane().add(lblNewLabel_2_1_1);
 	      
+		  year.setSelectedItem(2020);
 	      getContentPane().add(year);
 	      getContentPane().add(month);
 	      getContentPane().add(day);
 	      
 	      
+	      year.addActionListener(new  ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					yearL = (int) year.getItemAt(year.getSelectedIndex());
+				}
+			});
 	      
-	      month.addActionListener(new ActionListener() {
+	      
+	      
+	  	month.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				  yearL = (int) year.getItemAt(year.getSelectedIndex());
-				  monthL = (int) month.getItemAt(month.getSelectedIndex());
-				  calders.set(yearL, monthL-1,days);
-				  lastday = calders.getActualMaximum(Calendar.DAY_OF_MONTH);
-				  
-				  
-				  
-			}
-	      });
-	      
-	      
-	      day.addActionListener(new ActionListener() {
-	     	@Override
-	  		public void actionPerformed(ActionEvent e) {
-	      		dayL = (int) day.getItemAt(day.getSelectedIndex());
-	      		System.out.println(dayL);
-	      		
-	      		if(dayL>lastday || yearL==0 || monthL==0 ) {
-	      		}else {
-	      			truechk = true;
-	      			birthday = yearL+"년"+monthL+"월"+dayL+"일";
-	      		}
-	      		
-	      	}
-	  	});
+			
 
+				if(day.getItemCount()>1) {
+					day.removeAllItems();
+				}
+				
+				monthL = (int) month.getItemAt(month.getSelectedIndex());
+				calders.set(yearL, monthL - 1, days);
+				lastday = calders.getActualMaximum(Calendar.DAY_OF_MONTH);
+				
+				for (int j = 1; j <= lastday; j++) {
+					day.addItem(j);
+				}
+
+			}
+		});
+		
+	
+		day.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(day.getSelectedItem()!=null) {
+					dayL = (int) day.getItemAt(day.getSelectedIndex());
+					System.out.println(dayL);
+				}
+			}
+		});
 		
 
 		nameText = new JTextField();
@@ -185,9 +195,9 @@ public class FinddingId extends JFrame{
 
 			if (e.getSource() == findBtn) {
 				String name = nameText.getText().trim();
-				String birth = birthday;
+				String birth = yearL + "년" + monthL + "월" + dayL + "일";
 				String mail = emailText.getText().trim();
-				
+				System.out.println(birth+"벌스벌스");
 				while (true) {
 					GameUserDTO dto = new GameUserDTO();
 
@@ -198,11 +208,12 @@ public class FinddingId extends JFrame{
 						dto.setName(name);
 					}
 					
-					if (!truechk || birth.equals("")) {
+					if (yearL==0 || monthL==0 || monthL==0) {
 						JOptionPane.showMessageDialog(null, "생일을 입력해 주세요");
 						break;
 					} else {
 						dto.setBirth(birth);
+		
 					}
 
 					if (mail.equals("")) {
@@ -237,5 +248,8 @@ public class FinddingId extends JFrame{
 		}
 
 	};
+	public static void main(String[] args) {
+		new FinddingId();
+	}
 
 }

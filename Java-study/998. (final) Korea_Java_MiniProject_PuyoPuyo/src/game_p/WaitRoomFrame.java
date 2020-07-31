@@ -1,3 +1,4 @@
+
 package game_p;
 
 import java.awt.Color;
@@ -183,7 +184,6 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 				this.enenmy = null;
 				youLb.setText("다른유저의 접속대기");
 				this.ready.setEnabled(false);
-
 			}
 
 		}
@@ -243,8 +243,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	void signal() {
 		DDongData data = new DDongData();
-		data.type = "로비";
-		data.data = null;
+		data.type = "게임";
 		cn.send(data);
 	}
 
