@@ -19,8 +19,6 @@ public class WaitRoomPanel extends JPanel {
 		this.src = src;
 		this.chk = chk;
 		this.background = new ImageIcon(src);
-
-		System.out.println("생성자 끝 : " + this.chk);
 	}
 
 	@Override
@@ -34,7 +32,6 @@ public class WaitRoomPanel extends JPanel {
 	@Override
 	public void paint(Graphics g) { // 게임이 끝났을시 투명도를 설정
 		super.paint(g);
-		System.out.println("페인트 : " + this.chk);
 		if (!this.chk)
 			return;
 		BufferedImage img = (BufferedImage) createImage(getWidth(), getHeight());
