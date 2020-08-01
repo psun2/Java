@@ -19,13 +19,11 @@ public class YouPuyoPanel extends JPanel {
 	ImageIcon icon;
 	ArrayList<JLabel> puyos;
 	boolean chk;
-	ExecutorService threadPool;
 
 	public YouPuyoPanel() {
 		// TODO Auto-generated constructor stub
 
 		this.chk = false;
-		this.threadPool = Executors.newCachedThreadPool();
 		this.icon = new ImageIcon("./img/background.png");
 
 		setLayout(null);
@@ -34,8 +32,6 @@ public class YouPuyoPanel extends JPanel {
 		info = new PuyoGameInfo();
 		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		add(info);
-
-		endChk();
 
 	}
 
@@ -95,30 +91,6 @@ public class YouPuyoPanel extends JPanel {
 			setVisible(true);
 
 		}
-	}
-
-	void endChk() {
-
-		Runnable thread = new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-
-				while (true) {
-
-					if (chk) {
-						if (YouPuyoPanel.this.threadPool != null && !YouPuyoPanel.this.threadPool.isShutdown())
-							YouPuyoPanel.this.threadPool.shutdown();
-						setVisible(false);
-						setVisible(true);
-					}
-
-				}
-
-			}
-		};
-		this.threadPool.submit(thread);
 	}
 
 	@Override

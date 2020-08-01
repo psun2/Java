@@ -110,7 +110,11 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 			if ((MeGameInfo) dd.data != null) {
 				you.painting((MeGameInfo) dd.data);
 				this.enemyData = (MeGameInfo) dd.data;
-				you.chk = enemyData.endGame;
+				if (enemyData.endGame) {
+					you.chk = enemyData.endGame;
+					you.setVisible(false);
+					you.setVisible(true);
+				}
 				if (((MeGameInfo) dd.data).itemChk)
 					me.itemChk = true;
 			}

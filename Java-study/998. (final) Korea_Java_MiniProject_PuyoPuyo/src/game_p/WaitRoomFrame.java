@@ -63,7 +63,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		getContentPane().setBackground(Color.white);
 		this.imgSrc = "./img/background.png";
 
-		meP = new WaitRoomPanel(imgSrc);
+		meP = new WaitRoomPanel(imgSrc, false);
 		meP.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 		add(meP);
 
@@ -112,7 +112,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		state.add(ready);
 		state.add(exit);
 
-		youP = new WaitRoomPanel(imgSrc);
+		youP = new WaitRoomPanel(imgSrc, true);
 		youP.setBounds(Puyo.PUYOSIZE * 10, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE * 13);
 		youP.setBackground(Color.green);
 		add(youP);
@@ -181,6 +181,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 					this.enenmy = user;
 					youLb.setText(enenmy);
 					this.ready.setEnabled(true);
+					waitStatus(false);
 				}
 			} else { // null 이 한번 이라도 있다면
 				WaitRoomFrame.this.meChk = false; // 적이 나가면 나의 준비상태 초기화
@@ -189,6 +190,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 				youLb.setText("다른유저의 접속대기");
 				this.ready.setSelected(false);
 				this.ready.setEnabled(false);
+				waitStatus(true);
 			}
 
 		}
@@ -217,6 +219,14 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 			cn.send(data);
 
 		}
+
+	}
+
+	void waitStatus(boolean chk) {
+
+		youP.chk = chk;
+		youP.setVisible(false);
+		youP.setVisible(true);
 
 	}
 
