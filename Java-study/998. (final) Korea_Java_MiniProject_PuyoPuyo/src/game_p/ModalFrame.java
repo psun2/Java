@@ -44,7 +44,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 		setIconImage(new ImageIcon("./img/logo.png").getImage()); // 타이틀바 로고 설정
 		getContentPane().setBackground(Color.white);
 
-		JLabel textLb = new JLabel(frame.enemyId + " 와의 승부에서 " + result);
+		JLabel textLb = new JLabel(frame.enemyId + " 님과의 승부에서 " + result);
 		textLb.setHorizontalAlignment(JLabel.CENTER);
 		add(textLb);
 

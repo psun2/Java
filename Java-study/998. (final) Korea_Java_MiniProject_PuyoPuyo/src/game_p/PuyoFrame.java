@@ -1,11 +1,11 @@
 package game_p;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import ddong.ClientNetWork;
 import ddong.DDongData;
@@ -40,8 +39,6 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 	DDongData data;
 	MeGameInfo enemyData;
-
-	boolean enemyChk;
 
 	ExecutorService threadPool;
 
@@ -77,9 +74,9 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		youLb.setHorizontalAlignment(JLabel.CENTER);
 		add(youLb);
 
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임 닫기 옵션
 		// setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setVisible(true); // 프레임을 보여줌
 
 		addWindowListener(this); // 프레임을 강제 종료시 행동할 이벤트리스너
@@ -93,7 +90,6 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		this.meId = meId;
 		this.enemyId = enemyId;
 		this.threadPool = Executors.newCachedThreadPool();
-		this.enemyChk = false;
 
 		ddongDataInit();
 
@@ -110,15 +106,11 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 	public void reciver(DDongData dd) {
 		// TODO Auto-generated method stub;
 
-		if (enemyChk)
-			return;
-
 		if (dd.type.equals("게임중")) {
-
 			if ((MeGameInfo) dd.data != null) {
-				// enemyChk = dd.chk;
-				you.paint((MeGameInfo) dd.data);
+				you.painting((MeGameInfo) dd.data);
 				this.enemyData = (MeGameInfo) dd.data;
+				you.chk = enemyData.endGame;
 				if (((MeGameInfo) dd.data).itemChk)
 					me.itemChk = true;
 			}
@@ -183,27 +175,42 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 //		System.out.println(me.meInfo.endGame + "앤드게임");
 //		System.out.println(this.enemyData.endGame + "에너미 데이터 앤드게임");
 
+//		System.out.println(user1);
+//		System.out.println(user2);
+
 		if (me.lobbyChk) { // 둘다 게임이 종료 되어 나갔다면 방 폭파
 
-			for (int i = 0; i < userArr.length; i++) {
-
-				new GameRoomDAO().modifyUser4(new String[] { "user1", "user2" }[i], userArr[i], roomNum);
-
-			}
+			roomBomb(userArr, roomNum);
 
 		} else { // 한명만 나갔다면.... 그 한명은 게임이 진행 되어야 하기 때문에....
 
-			for (int i = 0; i < userArr.length; i++) {
+			if (user1.equals("temp") || user2.equals("temp")) { // 두명다 강제 종료 한경우
 
-				if (meId.equals(userArr[i])) {
-					new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]); // 방 디비에서 날 삭제
-					new GameRoomDAO().modifyUser6(new String[] { "user1", "user2" }[i], roomNum); // 방 디비에 임시유저 진입
+				roomBomb(userArr, roomNum);
+
+			} else {
+
+				for (int i = 0; i < userArr.length; i++) {
+
+					if (meId.equals(userArr[i])) {
+						new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]); // 방 디비에서 날 삭제
+						new GameRoomDAO().modifyUser6(new String[] { "user1", "user2" }[i], roomNum); // 방 디비에 임시유저 진입
+					}
+
 				}
-
+				// 방 디비 업데이트 끝
 			}
-			// 방 디비 업데이트 끝
 		}
 
+	}
+
+	void roomBomb(String[] users, Integer roomNum) {
+
+		for (int i = 0; i < users.length; i++) {
+
+			new GameRoomDAO().modifyUser4(new String[] { "user1", "user2" }[i], users[i], roomNum);
+
+		}
 	}
 
 	@Override
@@ -220,10 +227,10 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// 두명중 게임이 끝난 사람 기준으로 방을 폭파 해야 하기 때문에 ....
 
 		me.meInfo.endGame = true; // 강제 종료 이기 때문에 나의 게임은 강제적으로 종료
-
+		me.updateInfo();
 		cn.send(data);
 
-		updateRoomDb(); // 강제 종료시 로비로 가지 않고 바로 게임이 끝남
+		updateRoomDb(); // 강제 종료시 로비로 가지 않고 바로 게임이 끝남 - 디비만 업데이트
 		signal();
 
 	}
@@ -257,5 +264,4 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated method stub
 
 	}
-
 }

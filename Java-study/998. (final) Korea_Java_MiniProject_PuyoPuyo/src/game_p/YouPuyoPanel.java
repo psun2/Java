@@ -1,7 +1,10 @@
 package game_p;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,12 +18,14 @@ public class YouPuyoPanel extends JPanel {
 	PuyoGameInfo info;
 	ImageIcon icon;
 	ArrayList<JLabel> puyos;
-
+	boolean chk;
 	ExecutorService threadPool;
 
 	public YouPuyoPanel() {
 		// TODO Auto-generated constructor stub
 
+		this.chk = false;
+		this.threadPool = Executors.newCachedThreadPool();
 		this.icon = new ImageIcon("./img/background.png");
 
 		setLayout(null);
@@ -30,7 +35,7 @@ public class YouPuyoPanel extends JPanel {
 		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		add(info);
 
-		this.threadPool = Executors.newCachedThreadPool();
+		endChk();
 
 	}
 
@@ -42,7 +47,7 @@ public class YouPuyoPanel extends JPanel {
 		super.paintComponent(g);
 	}
 
-	void paint(MeGameInfo info) {
+	void painting(MeGameInfo info) {
 
 		// System.out.println("paint 진입"); // 진입 확인
 
@@ -90,6 +95,41 @@ public class YouPuyoPanel extends JPanel {
 			setVisible(true);
 
 		}
+	}
+
+	void endChk() {
+
+		Runnable thread = new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+				while (true) {
+
+					if (chk) {
+						if (YouPuyoPanel.this.threadPool != null && !YouPuyoPanel.this.threadPool.isShutdown())
+							YouPuyoPanel.this.threadPool.shutdown();
+						setVisible(false);
+						setVisible(true);
+					}
+
+				}
+
+			}
+		};
+		this.threadPool.submit(thread);
+	}
+
+	@Override
+	public void paint(Graphics g) { // 게임이 끝났을시 투명도를 설정
+		super.paint(g);
+		if (!this.chk)
+			return;
+		BufferedImage img = (BufferedImage) createImage(getWidth(), getHeight());
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+		g2.drawImage(img, 0, 0, null);
 	}
 
 }

@@ -1,6 +1,9 @@
 package game_p;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,15 +119,18 @@ public class MePuyoPanel extends JPanel {
 						// System.out.println("게임종료");
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
 
+						setVisible(false); // 화면에 회색을 그리기위해
+						setVisible(true);
+
 						updateRank(); // 점수 업데이트
 //						frame.data.chk = true;
 
-						if (threadPool != null && !threadPool.isShutdown()) { // 게임이 끝나고 쓰레드 풀이 열려 있다면
-							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
-						}
-
 						if (frame.threadPool != null && !frame.threadPool.isShutdown()) {
 							frame.threadPool.shutdown();
+						}
+
+						if (threadPool != null && !threadPool.isShutdown()) { // 게임이 끝나고 쓰레드 풀이 열려 있다면
+							threadPool.shutdown(); // 게임이 끝났으므로 모든 쓰레드를 죽임.
 						}
 
 						if (frame.enemyData.endGame && MePuyoPanel.this.meInfo.endGame) {
@@ -661,7 +667,7 @@ public class MePuyoPanel extends JPanel {
 
 		changeMap(this.puyoLbs);
 
-		paint(this.puyoLbs);
+		painting(this.puyoLbs);
 
 		updateInfo();
 
@@ -707,7 +713,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void paint(ArrayList<MyLabel> lbs) {
+	void painting(ArrayList<MyLabel> lbs) {
 
 		// 그려주기 작업 -- allStop 되었을 시점에 그려 주어야함....
 
@@ -765,6 +771,17 @@ public class MePuyoPanel extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void paint(Graphics g) { // 게임이 끝났을시 투명도를 설정
+		super.paint(g);
+		if (!this.meInfo.endGame)
+			return;
+		BufferedImage img = (BufferedImage) createImage(getWidth(), getHeight());
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+		g2.drawImage(img, 0, 0, null);
 	}
 
 }
