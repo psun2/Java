@@ -51,10 +51,13 @@ public class ActionKey implements KeyListener {
 
 			// System.out.println("왼쪽");
 
-			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
-				return;
+//			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+//				return;
 
 			if (meX == 0 || youX == 0)
+				return;
+
+			if (inspectLeft())
 				return;
 
 			if (keyChk) { // 키의 겹침으로 한키가 눌릴땐 다른키를 못 누르게 설정
@@ -63,10 +66,6 @@ public class ActionKey implements KeyListener {
 				youX -= Puyo.PUYOSIZE;
 			}
 
-			if (inspectLeft()) {
-				meX = panel.meLb.getX();
-				youX = panel.youLb.getX();
-			}
 			// fixBug();
 			// printNode();
 			break;
@@ -75,20 +74,20 @@ public class ActionKey implements KeyListener {
 
 			// System.out.println("오른쪽");
 
-			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
-				return;
+//			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+//				return;
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
+				return;
+
+			if (inspectRight())
 				return;
 
 			if (keyChk) { // 키의 겹침으로 한키가 눌릴땐 다른키를 못 누르게 설정
 				keyChk = false;
 				meX += Puyo.PUYOSIZE;
 				youX += Puyo.PUYOSIZE;
-				if (inspectRight()) {
-					meX = panel.meLb.getX();
-					youX = panel.youLb.getX();
-				}
+
 			}
 			// printNode();
 			// fixBug();
@@ -325,6 +324,12 @@ public class ActionKey implements KeyListener {
 
 		if (meX == youX) { // 세로 방향일때 틀 어짐을 잡아줌.... // me 를 기준으로 하기 때문 you의 X 는 me 의 xe다
 			youX = panel.meLb.getX();
+		} else {
+
+			if (meX > youX)
+				youX = panel.meLb.getX() - Puyo.PUYOSIZE;
+			else
+				youX = panel.meLb.getX() + Puyo.PUYOSIZE;
 		}
 
 	}
