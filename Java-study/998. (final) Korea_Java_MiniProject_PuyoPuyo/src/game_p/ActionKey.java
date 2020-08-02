@@ -15,12 +15,13 @@ public class ActionKey implements KeyListener {
 	int youX;
 	int youY;
 
-	boolean retateChk;
+	boolean retateChk, keyChk;
 
 	public ActionKey(MePuyoPanel panel) { // 생성시 메인 패널
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
 		this.retateChk = false;
+		this.keyChk = true;
 	}
 
 	@Override
@@ -56,8 +57,11 @@ public class ActionKey implements KeyListener {
 			if (meX == 0 || youX == 0)
 				return;
 
-			meX -= Puyo.PUYOSIZE;
-			youX -= Puyo.PUYOSIZE;
+			if (keyChk) {
+				keyChk = false;
+				meX -= Puyo.PUYOSIZE;
+				youX -= Puyo.PUYOSIZE;
+			}
 
 			if (inspectLeft()) {
 				meX = panel.meLb.getX();
@@ -76,11 +80,15 @@ public class ActionKey implements KeyListener {
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
 				return;
-			meX += Puyo.PUYOSIZE;
-			youX += Puyo.PUYOSIZE;
-			if (inspectRight()) {
-				meX = panel.meLb.getX();
-				youX = panel.youLb.getX();
+
+			if (keyChk) {
+				keyChk = false;
+				meX += Puyo.PUYOSIZE;
+				youX += Puyo.PUYOSIZE;
+				if (inspectRight()) {
+					meX = panel.meLb.getX();
+					youX = panel.youLb.getX();
+				}
 			}
 			// printNode();
 			// fixBug();
@@ -93,12 +101,16 @@ public class ActionKey implements KeyListener {
 				return;
 			}
 
-			this.retateChk = true;
+			if (keyChk) {
 
-			rotate();
+				keyChk = false;
 
-			this.retateChk = false;
+				this.retateChk = true;
 
+				rotate();
+
+				this.retateChk = false;
+			}
 			// fixBug();
 			break;
 
@@ -110,10 +122,13 @@ public class ActionKey implements KeyListener {
 			if (fix())
 				return;
 
-			meY += speed;
-			youY += speed;
-			// printNode();
-			// fixBug();
+			if (keyChk) {
+				keyChk = false;
+				meY += speed;
+				youY += speed;
+				// printNode();
+				// fixBug();
+			}
 			break;
 		}
 
@@ -126,6 +141,8 @@ public class ActionKey implements KeyListener {
 		panel.meLb.setLocation(meX, meY);
 		fixBug();
 		panel.youLb.setLocation(youX, youY);
+		keyChk = true;
+		printNode();
 
 	}
 

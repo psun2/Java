@@ -92,7 +92,7 @@ public class MePuyoPanel extends JPanel {
 		this.itemColor = "nuisance";
 		this.LocationX = (Puyo.PUYOSIZE * 6) / 2; // 뿌요들의 생성 위치를 잡아기위한 x
 		this.LocationY = -Puyo.PUYOSIZE; // 뿌요들의 생성 위치를 잡아기위한 y
-		this.endLine = this.LocationY;
+		this.endLine = 0;
 		this.timer = new PuyoTimer(this);
 
 	}
@@ -146,8 +146,8 @@ public class MePuyoPanel extends JPanel {
 						return; // 게임 종료
 					}
 
-					if (MePuyoPanel.this.itemChk)
-						addItem();
+//					if (MePuyoPanel.this.itemChk)
+//						addItem();
 
 					if (!bombChk) {
 
@@ -179,14 +179,19 @@ public class MePuyoPanel extends JPanel {
 
 						if (bombChk()) { // 쓰레드여서 계속 실행시키는 문제 발생
 							bomb(); // 항상 지켜보다가 같은 색이 4개 이상 모였을때 다음 로직을 진행
+							if (MePuyoPanel.this.itemChk)
+								addItem();
 							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이
 							// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
 							// 다른 요소가 나올소 있도록 boolean 값을변경
 							modifyNode();
 						} else {
+							if (MePuyoPanel.this.itemChk)
+								addItem();
 							bombChk = false; // 356 Line 에서 땡김 삭제 할것이 없고, 삭제가 되어 모든 로직이
 							// bomb 메소드에서 끝이 나므로 이 메소드의 마지막에
 							// 다른 요소가 나올소 있도록 boolean 값을변경
+							modifyNode();
 						}
 
 					}
@@ -250,7 +255,7 @@ public class MePuyoPanel extends JPanel {
 			if (search(lb)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
 				y = cutLine;
 				puyo.stopChk = true; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
-				if (y <= endLine) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
+				if (y < endLine) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
 					meInfo.endGame = true;
 			}
 
@@ -483,7 +488,7 @@ public class MePuyoPanel extends JPanel {
 			setVisible(true); // update
 		}
 
-		// modifyNode();
+		modifyNode();
 
 		item(bombArr);
 
@@ -535,15 +540,14 @@ public class MePuyoPanel extends JPanel {
 		// 아에 처음부터 업데이트 될 녀석만 가져오자
 		// 바닥에 있는 아이들음 움직임이 필요 없으므로 제외
 
-		TreeSet<MyLabel> removeLbs = new TreeSet<MyLabel>(puyoLbs);
-		removeLbs.removeAll(bombArr); // 뿌요들에게서 터진 뿌요를 제외한 모든 뿌요들을 가져옴
+		modifyNode();
 
 		// HashSet에 담아 TreeSet으로 옴기는 작업을 통해
 		// 아래서 부터 차례차례 업데이트 가능
 		HashSet<MyLabel> up = new HashSet<MyLabel>(); // hashSet => 에드가 겹치게 되는 오류 발견
 
 		for (MyLabel puyo : bombArr) { // 터진 애들
-			for (MyLabel pu : removeLbs) { // 터진애들은 빼고
+			for (MyLabel pu : puyoLbs) { // 터진애들은 빼고
 
 				if (puyo.getX() == pu.getX()) { // 삭제된 뿌요와 x가 같고
 					if (puyo.getY() > pu.getY()) { // 삭제된 뿌요보다 위에 있다면...
@@ -570,7 +574,7 @@ public class MePuyoPanel extends JPanel {
 //      this.bombArrColor = new HashSet<String>();
 
 		emptyEndMove(updatePuyo); // 요소들이 터져서 이동이 끝난뒤
-		// modifyNode();
+		modifyNode();
 
 		if (bombChk()) { // 재귀적으로 터질 곳이 있나 검색합니다.
 			bomb();
@@ -620,6 +624,8 @@ public class MePuyoPanel extends JPanel {
 
 	void addItem() {
 
+		modifyNode();
+
 		ArrayList<MyLabel> lbs = positionUpdate(this.puyoLbs);
 
 		int x = 0;
@@ -637,8 +643,6 @@ public class MePuyoPanel extends JPanel {
 		}
 
 		reInit(lbs);
-
-		this.itemChk = false;
 
 	}
 
@@ -671,6 +675,8 @@ public class MePuyoPanel extends JPanel {
 		painting(this.puyoLbs);
 
 		updateInfo();
+
+		this.itemChk = false;
 
 	}
 
