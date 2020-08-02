@@ -268,9 +268,5 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public static void main(String[] args) {
-		new PuyoFrame(1123, "asdasd", "sx");
-	}
 
 }

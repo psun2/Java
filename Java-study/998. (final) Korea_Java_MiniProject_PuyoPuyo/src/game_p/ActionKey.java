@@ -51,8 +51,8 @@ public class ActionKey implements KeyListener {
 
 			// System.out.println("왼쪽");
 
-//			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
-//				return;
+			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+				return;
 
 			if (meX == 0 || youX == 0)
 				return;
@@ -74,8 +74,8 @@ public class ActionKey implements KeyListener {
 
 			// System.out.println("오른쪽");
 
-//			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
-//				return;
+			if (retateChk) // 돌리면서 양쪽으로 와리 가리 칠때 버그가 생긴다고함...
+				return;
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
 				return;
