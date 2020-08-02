@@ -17,7 +17,7 @@ public class MyLabel extends JLabel implements Comparable<MyLabel> {
 		int res = o.getY() - getY();
 
 		if (res == 0)
-			res = getX() - o.getY();
+			res = getX() - o.getX();
 
 		return res;
 	}

@@ -92,7 +92,7 @@ public class MePuyoPanel extends JPanel {
 		this.itemColor = "nuisance";
 		this.LocationX = (Puyo.PUYOSIZE * 6) / 2; // 뿌요들의 생성 위치를 잡아기위한 x
 		this.LocationY = -Puyo.PUYOSIZE; // 뿌요들의 생성 위치를 잡아기위한 y
-		this.endLine = 0;
+		this.endLine = LocationY - 1;
 		this.timer = new PuyoTimer(this);
 
 	}
@@ -119,6 +119,7 @@ public class MePuyoPanel extends JPanel {
 						// System.out.println("게임종료");
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
 
+						System.out.println("엔드게임");
 						setVisible(false); // 화면에 회색을 그리기위해
 						setVisible(true);
 
@@ -263,6 +264,7 @@ public class MePuyoPanel extends JPanel {
 				y = getSize().height - Puyo.PUYOSIZE;
 
 			lb.setLocation(lb.getX(), y);
+
 		} else {
 			puyo.stopChk = true; // 아래 뿌요 또는 가로 일때 위치가 정지 되었을때....
 		}
@@ -383,14 +385,14 @@ public class MePuyoPanel extends JPanel {
 				if (colorMap.getKey().equals(color)) {
 					deepBomb(colorMap.getValue());
 				}
+				this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
+				this.bombArrColor = new HashSet<String>();
 
 			}
 
 		}
 
 		// System.out.println("bombArrColor : " + bombArrColor);
-		this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
-		this.bombArrColor = new HashSet<String>();
 
 	}
 
@@ -548,7 +550,6 @@ public class MePuyoPanel extends JPanel {
 
 		for (MyLabel puyo : bombArr) { // 터진 애들
 			for (MyLabel pu : puyoLbs) { // 터진애들은 빼고
-
 				if (puyo.getX() == pu.getX()) { // 삭제된 뿌요와 x가 같고
 					if (puyo.getY() > pu.getY()) { // 삭제된 뿌요보다 위에 있다면...
 						equalsPuyo(pu).stopChk = false;
@@ -568,10 +569,6 @@ public class MePuyoPanel extends JPanel {
 		}
 
 		// 있다면 아래와 같이 진행
-
-		// 자리한번 옴겨 볼께요
-//      this.bombArr = new HashSet<MyLabel>(); // 터질 목록은 이제 필요 없으므로 초기화
-//      this.bombArrColor = new HashSet<String>();
 
 		emptyEndMove(updatePuyo); // 요소들이 터져서 이동이 끝난뒤
 		modifyNode();
@@ -714,9 +711,6 @@ public class MePuyoPanel extends JPanel {
 		for (MyLabel puyoLb : lbs) {
 			remove(puyoLb);
 		}
-
-		setVisible(false);
-		setVisible(true);
 
 	}
 

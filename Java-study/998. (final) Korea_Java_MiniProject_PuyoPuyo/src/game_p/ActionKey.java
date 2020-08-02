@@ -43,6 +43,9 @@ public class ActionKey implements KeyListener {
 		youX = panel.youLb.getX();
 		youY = panel.youLb.getY();
 
+//		if (meY <= 0 || youY <= 0)
+//			return;
+
 		int key = e.getKeyCode();
 
 		switch (key) {
@@ -115,6 +118,7 @@ public class ActionKey implements KeyListener {
 			break;
 
 		case KeyEvent.VK_DOWN:
+
 			int speed = 10;
 			// 너무 짧게 잡으면 바닥을 뚫고 들어가는 버그 로 인해 넉넉하게 한뿌요의 크기 정도를 잡아 리턴
 			// 가로 모양 일때
@@ -142,7 +146,7 @@ public class ActionKey implements KeyListener {
 		fixBug();
 		panel.youLb.setLocation(youX, youY);
 		keyChk = true;
-		printNode();
+//		printNode();
 
 	}
 
