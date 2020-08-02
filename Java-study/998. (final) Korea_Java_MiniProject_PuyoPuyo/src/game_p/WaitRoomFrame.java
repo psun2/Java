@@ -28,7 +28,7 @@ import lobby_p.Lobby_Main;
 public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener {
 
 	final int width = 806;
-	final int height = 679 + 50;
+	final int height = 729;
 
 	boolean meChk, youChk;
 

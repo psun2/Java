@@ -63,7 +63,7 @@ public class ActionKey implements KeyListener {
 				meX = panel.meLb.getX();
 				youX = panel.youLb.getX();
 			}
-			fixBug();
+			// fixBug();
 			// printNode();
 			break;
 
@@ -83,7 +83,7 @@ public class ActionKey implements KeyListener {
 				youX = panel.youLb.getX();
 			}
 			// printNode();
-			fixBug();
+			// fixBug();
 			break;
 
 		case KeyEvent.VK_UP:
@@ -99,7 +99,7 @@ public class ActionKey implements KeyListener {
 
 			this.retateChk = false;
 
-			fixBug();
+			// fixBug();
 			break;
 
 		case KeyEvent.VK_DOWN:
@@ -113,7 +113,7 @@ public class ActionKey implements KeyListener {
 			meY += speed;
 			youY += speed;
 			// printNode();
-			fixBug();
+			// fixBug();
 			break;
 		}
 
@@ -124,6 +124,7 @@ public class ActionKey implements KeyListener {
 		// 세로방향일땐 누가 누군지 상관없음
 
 		panel.meLb.setLocation(meX, meY);
+		fixBug();
 		panel.youLb.setLocation(youX, youY);
 
 	}
@@ -294,7 +295,7 @@ public class ActionKey implements KeyListener {
 	void fixBug() {
 
 		if (meY > youY || meY < youY) { // 세로 방향일때 틀 어짐을 잡아줌.... // me 를 기준으로 하기 때문 you의 X 는 me 의 xe다
-			youX = meX;
+			youX = panel.meLb.getX();
 		}
 
 	}

@@ -25,7 +25,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 	public ClientNetWork cn;
 
 	final int width = 806;
-	final int height = 679 + 50;
+	final int height = 729;
 
 	MePuyoPanel me;
 	YouPuyoPanel you;
@@ -268,4 +268,5 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated method stub
 
 	}
+
 }

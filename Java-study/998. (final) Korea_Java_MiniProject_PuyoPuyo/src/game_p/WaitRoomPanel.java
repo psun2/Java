@@ -38,7 +38,6 @@ public class WaitRoomPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setComposite(AlphaComposite.SrcOver.derive(0.8f));
 		g2.drawImage(img, 0, 0, null);
-		System.out.println("여긴 한번이 맞아 적패넣에서");
 	}
 
 }

@@ -151,7 +151,7 @@ public class Join extends JFrame {
 		lblNewLabel_1.setBounds(223, 170, 187, 21);
 		getContentPane().add(lblNewLabel_1);
 
-		JLabel lblNewLabel_3 = new JLabel("2~4글자");
+		JLabel lblNewLabel_3 = new JLabel("한글 2~4글자");
 		lblNewLabel_3.setFont(new Font("굴림", Font.PLAIN, 11));
 		lblNewLabel_3.setForeground(Color.BLACK);
 		lblNewLabel_3.setBounds(223, 270, 187, 21);
