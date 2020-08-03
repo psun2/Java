@@ -324,6 +324,7 @@ public class ActionKey implements KeyListener {
 
 		if (meX == youX) { // 세로 방향일때 틀 어짐을 잡아줌.... // me 를 기준으로 하기 때문 you의 X 는 me 의 xe다
 			youX = panel.meLb.getX();
+
 		} else {
 
 			if (meX > youX)
