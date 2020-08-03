@@ -116,6 +116,8 @@ public class MePuyoPanel extends JPanel {
 
 				while (true) { // 게임이 끝날때까지 무한 반복한다.
 
+					endChk();
+
 					if (meInfo.endGame) { // end 게임끝을 chk
 						// System.out.println("게임종료");
 						// 싱글모드 : // JOptionPane.showMessageDialog(MePuyoPanel.this, "게임 종료!");
@@ -257,8 +259,6 @@ public class MePuyoPanel extends JPanel {
 			if (search(lb)) { // 여길 들려서 y 값이 제자리에 셋팅이 될때는 뿌요가 자리를 잡았다라는 의미. 즉 바닥에 떨어 졌다.
 				y = cutLine;
 				puyo.stopChk = true; // 뿌요가 세로 방향시 윗 뿌요의 위치가 정지 되었을때 ....
-				if (y < endLine) // 뿌요가 자리를 잡았는데 Y의 값이 0보다 작거나 같을때 즉 맨위까지 쌓였을때 게임을 끝냅
-					meInfo.endGame = true;
 			}
 
 			if (y >= getSize().height - Puyo.PUYOSIZE)
@@ -748,6 +748,15 @@ public class MePuyoPanel extends JPanel {
 
 		// System.out.println("updateInfo");
 
+	}
+
+	void endChk() {
+
+		for (MyLabel puyo : puyoLbs) {
+			if (puyo.getX() == LocationX && puyo.getY() == endLine)
+				meInfo.endGame = true;
+
+		}
 	}
 
 	void updateRank() { // 랭킹 업데이트
