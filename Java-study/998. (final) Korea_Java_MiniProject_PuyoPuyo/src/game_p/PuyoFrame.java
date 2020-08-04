@@ -1,9 +1,6 @@
 package game_p;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.concurrent.ExecutorService;
@@ -46,12 +43,12 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		// TODO Auto-generated constructor stub
 
 		init(roomNum, meId, enemyId);
-		setSize(width, height); // ÇÁ·¹ÀÓ »çÀÌÁî
-		setLocationRelativeTo(null); // ÇÁ·¹ÀÓ ½ÃÀÛ½Ã ¸ğ´ÏÅÍ Áß¾Ó¿¡ Ãâ·Â
-		setResizable(false); // ÇÁ·¹ÀÓ »çÀÌÁî Á¶Àı ÇÒ ¼ö ¾øÀ½
-		getContentPane().setLayout(null); // ·¹ÀÌ2¾Æ¿ô
-		setTitle("Á©¸®Á©¸®"); // Å¸ÀÌÆ²
-		setIconImage(new ImageIcon("./img/logo.png").getImage()); // Å¸ÀÌÆ²¹Ù ·Î°í ¼³Á¤
+		setSize(width, height); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ
+		setLocationRelativeTo(null); // í”„ë ˆì„ ì‹œì‘ì‹œ ëª¨ë‹ˆí„° ì¤‘ì•™ì— ì¶œë ¥
+		setResizable(false); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ ì¡°ì ˆ í•  ìˆ˜ ì—†ìŒ
+		getContentPane().setLayout(null); // ë ˆì´2ì•„ì›ƒ
+		setTitle("ì ¤ë¦¬ì ¤ë¦¬"); // íƒ€ì´í‹€
+		setIconImage(new ImageIcon("./img/logo.png").getImage()); // íƒ€ì´í‹€ë°” ë¡œê³  ì„¤ì •
 		getContentPane().setBackground(Color.white);
 
 		me = new MePuyoPanel(this);
@@ -74,12 +71,12 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 		youLb.setHorizontalAlignment(JLabel.CENTER);
 		add(youLb);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ÇÁ·¹ÀÓ ´İ±â ¿É¼Ç
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // í”„ë ˆì„ ë‹«ê¸° ì˜µì…˜
 		// setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		setVisible(true); // ÇÁ·¹ÀÓÀ» º¸¿©ÁÜ
+		setVisible(true); // í”„ë ˆì„ì„ ë³´ì—¬ì¤Œ
 
-		addWindowListener(this); // ÇÁ·¹ÀÓÀ» °­Á¦ Á¾·á½Ã Çàµ¿ÇÒ ÀÌº¥Æ®¸®½º³Ê
+		addWindowListener(this); // í”„ë ˆì„ì„ ê°•ì œ ì¢…ë£Œì‹œ í–‰ë™í•  ì´ë²¤íŠ¸ë¦¬ìŠ¤ë„ˆ
 
 		update();
 
@@ -97,7 +94,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 	void ddongDataInit() {
 		this.data = new DDongData();
-		data.type = "°ÔÀÓÁß";
+		data.type = "ê²Œì„ì¤‘";
 		data.dst = enemyId;
 
 	}
@@ -106,7 +103,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 	public void reciver(DDongData dd) {
 		// TODO Auto-generated method stub;
 
-		if (dd.type.equals("°ÔÀÓÁß")) {
+		if (dd.type.equals("ê²Œì„ì¤‘")) {
 			if ((MeGameInfo) dd.data != null) {
 				you.painting((MeGameInfo) dd.data);
 				this.enemyData = (MeGameInfo) dd.data;
@@ -142,7 +139,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 						}
 
-						// »ó´ë¹æ¿¡°Ô µ¥ÀÌÅÍ ¸¦ º¸³»Áö ¾ÊÀ½
+						// ìƒëŒ€ë°©ì—ê²Œ ë°ì´í„° ë¥¼ ë³´ë‚´ì§€ ì•ŠìŒ
 						cn.send(data);
 						me.meInfo.itemChk = false;
 						Thread.sleep(frame);
@@ -161,7 +158,7 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 	void signal() {
 		DDongData data = new DDongData();
-		data.type = "·Îºñ";
+		data.type = "ë¡œë¹„";
 		data.data = null;
 		cn.send(data);
 	}
@@ -175,20 +172,20 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 
 		String[] userArr = { user1, user2 };
 
-//		System.out.println(me.lobbyChk + "·ÎºñÃ½");
-//		System.out.println(me.meInfo.endGame + "¾Øµå°ÔÀÓ");
-//		System.out.println(this.enemyData.endGame + "¿¡³Ê¹Ì µ¥ÀÌÅÍ ¾Øµå°ÔÀÓ");
+//		System.out.println(me.lobbyChk + "ë¡œë¹„ì²µ");
+//		System.out.println(me.meInfo.endGame + "ì•¤ë“œê²Œì„");
+//		System.out.println(this.enemyData.endGame + "ì—ë„ˆë¯¸ ë°ì´í„° ì•¤ë“œê²Œì„");
 
 //		System.out.println(user1);
 //		System.out.println(user2);
 
-		if (me.lobbyChk) { // µÑ´Ù °ÔÀÓÀÌ Á¾·á µÇ¾î ³ª°¬´Ù¸é ¹æ ÆøÆÄ
+		if (me.lobbyChk) { // ë‘˜ë‹¤ ê²Œì„ì´ ì¢…ë£Œ ë˜ì–´ ë‚˜ê°”ë‹¤ë©´ ë°© í­íŒŒ
 
 			roomBomb(userArr, roomNum);
 
-		} else { // ÇÑ¸í¸¸ ³ª°¬´Ù¸é.... ±× ÇÑ¸íÀº °ÔÀÓÀÌ ÁøÇà µÇ¾î¾ß ÇÏ±â ¶§¹®¿¡....
+		} else { // í•œëª…ë§Œ ë‚˜ê°”ë‹¤ë©´.... ê·¸ í•œëª…ì€ ê²Œì„ì´ ì§„í–‰ ë˜ì–´ì•¼ í•˜ê¸° ë•Œë¬¸ì—....
 
-			if (user1.equals("temp") || user2.equals("temp")) { // µÎ¸í´Ù °­Á¦ Á¾·á ÇÑ°æ¿ì
+			if (user1.equals("temp") || user2.equals("temp")) { // ë‘ëª…ë‹¤ ê°•ì œ ì¢…ë£Œ í•œê²½ìš°
 
 				roomBomb(userArr, roomNum);
 
@@ -197,12 +194,12 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 				for (int i = 0; i < userArr.length; i++) {
 
 					if (meId.equals(userArr[i])) {
-						new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]); // ¹æ µğºñ¿¡¼­ ³¯ »èÁ¦
-						new GameRoomDAO().modifyUser6(new String[] { "user1", "user2" }[i], roomNum); // ¹æ µğºñ¿¡ ÀÓ½ÃÀ¯Àú ÁøÀÔ
+						new GameRoomDAO().modifyUser5(new String[] { "user1", "user2" }[i], userArr[i]); // ë°© ë””ë¹„ì—ì„œ ë‚  ì‚­ì œ
+						new GameRoomDAO().modifyUser6(new String[] { "user1", "user2" }[i], roomNum); // ë°© ë””ë¹„ì— ì„ì‹œìœ ì € ì§„ì…
 					}
 
 				}
-				// ¹æ µğºñ ¾÷µ¥ÀÌÆ® ³¡
+				// ë°© ë””ë¹„ ì—…ë°ì´íŠ¸ ë
 			}
 		}
 
@@ -226,15 +223,15 @@ public class PuyoFrame extends JFrame implements DDongInter, WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		// Áö±İÀº °ÔÀÓ ÁøÇàÁßÀÎ ÆĞ³Î...
-		// °­Á¦ Á¾·á Çß´Ù¸é ¹æ µğºñ¿¡¼­ »èÁ¦.... ·Îºñ µğºñ·Î º¸³¾ ÇÊ¿ä´Â ¾øÀ½...
-		// µÎ¸íÁß °ÔÀÓÀÌ ³¡³­ »ç¶÷ ±âÁØÀ¸·Î ¹æÀ» ÆøÆÄ ÇØ¾ß ÇÏ±â ¶§¹®¿¡ ....
+		// ì§€ê¸ˆì€ ê²Œì„ ì§„í–‰ì¤‘ì¸ íŒ¨ë„...
+		// ê°•ì œ ì¢…ë£Œ í–ˆë‹¤ë©´ ë°© ë””ë¹„ì—ì„œ ì‚­ì œ.... ë¡œë¹„ ë””ë¹„ë¡œ ë³´ë‚¼ í•„ìš”ëŠ” ì—†ìŒ...
+		// ë‘ëª…ì¤‘ ê²Œì„ì´ ëë‚œ ì‚¬ëŒ ê¸°ì¤€ìœ¼ë¡œ ë°©ì„ í­íŒŒ í•´ì•¼ í•˜ê¸° ë•Œë¬¸ì— ....
 
-		me.meInfo.endGame = true; // °­Á¦ Á¾·á ÀÌ±â ¶§¹®¿¡ ³ªÀÇ °ÔÀÓÀº °­Á¦ÀûÀ¸·Î Á¾·á
+		me.meInfo.endGame = true; // ê°•ì œ ì¢…ë£Œ ì´ê¸° ë•Œë¬¸ì— ë‚˜ì˜ ê²Œì„ì€ ê°•ì œì ìœ¼ë¡œ ì¢…ë£Œ
 		me.updateInfo();
 		cn.send(data);
 
-		updateRoomDb(); // °­Á¦ Á¾·á½Ã ·Îºñ·Î °¡Áö ¾Ê°í ¹Ù·Î °ÔÀÓÀÌ ³¡³² - µğºñ¸¸ ¾÷µ¥ÀÌÆ®
+		updateRoomDb(); // ê°•ì œ ì¢…ë£Œì‹œ ë¡œë¹„ë¡œ ê°€ì§€ ì•Šê³  ë°”ë¡œ ê²Œì„ì´ ëë‚¨ - ë””ë¹„ë§Œ ì—…ë°ì´íŠ¸
 		signal();
 
 	}

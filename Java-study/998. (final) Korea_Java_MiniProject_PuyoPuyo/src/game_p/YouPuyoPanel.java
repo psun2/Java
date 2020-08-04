@@ -45,13 +45,13 @@ public class YouPuyoPanel extends JPanel {
 
 	void painting(MeGameInfo info) {
 
-		// System.out.println("paint ÁøÀÔ"); // ÁøÀÔ È®ÀÎ
+		// System.out.println("paint ì§„ì…"); // ì§„ì… í™•ì¸
 
 		if (info != null) {
 
-			removeComponent(); // Àü¿¡²¬ Áö¿ì°í
+			removeComponent(); // ì „ì—ê»„ ì§€ìš°ê³ 
 
-			this.puyos = new ArrayList<JLabel>(); // »õ·Î ¾÷µ¥ÀÌÆ®
+			this.puyos = new ArrayList<JLabel>(); // ìƒˆë¡œ ì—…ë°ì´íŠ¸
 
 			for (Puyo puyo : info.puyos) {
 
@@ -64,13 +64,13 @@ public class YouPuyoPanel extends JPanel {
 
 //				System.out.println("lb : " + lb);
 //				System.out.println("puyo.y : " + puyo.color + " : " + puyo.y);
-//				System.out.println(lb.getName() + " : " + lb.getY()); // ÁÂÇ¥ ¾÷µ¥ÀÌÆ®°¡ ¾ÈµÊ
+//				System.out.println(lb.getName() + " : " + lb.getY()); // ì¢Œí‘œ ì—…ë°ì´íŠ¸ê°€ ì•ˆë¨
 
 			}
 
-			this.info.score.setText("Á¡¼ö : " + info.score + "Á¡");
-			this.info.combo.setText("¿¬¼â : " + info.combo + "¿¬¼â");
-			this.info.second.setText("°æ°ú ½Ã°£ : " + info.second + "s");
+			this.info.score.setText("ì ìˆ˜ : " + info.score + "ì ");
+			this.info.combo.setText("ì—°ì‡„ : " + info.combo + "ì—°ì‡„");
+			this.info.second.setText("ê²½ê³¼ ì‹œê°„ : " + info.second + "s");
 
 			setVisible(false);
 			setVisible(true);
@@ -94,7 +94,7 @@ public class YouPuyoPanel extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) { // °ÔÀÓÀÌ ³¡³µÀ»½Ã Åõ¸íµµ¸¦ ¼³Á¤
+	public void paint(Graphics g) { // ê²Œì„ì´ ëë‚¬ì„ì‹œ íˆ¬ëª…ë„ë¥¼ ì„¤ì •
 		super.paint(g);
 		if (!this.chk)
 			return;

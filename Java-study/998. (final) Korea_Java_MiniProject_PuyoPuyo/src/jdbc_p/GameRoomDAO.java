@@ -87,8 +87,8 @@ public class GameRoomDAO {
 	}
 
 	// --------------------------------------------------------
-	// public GameRoomDTO detail : ¿øÇÏ´Â Á¤º¸¸¦ Ã£À»¶§ »ç¿ëÇÑ´Ù
-	public GameRoomDTO detailroom(Integer no) { // ¹æ¸¸µé¶§ user1ÀÚ¸®°¡ nullÀÎ °÷ ºÎÅÍ ¹æ»ı¼º
+	// public GameRoomDTO detail : ì›í•˜ëŠ” ì •ë³´ë¥¼ ì°¾ì„ë•Œ ì‚¬ìš©í•œë‹¤
+	public GameRoomDTO detailroom(Integer no) { // ë°©ë§Œë“¤ë•Œ user1ìë¦¬ê°€ nullì¸ ê³³ ë¶€í„° ë°©ìƒì„±
 
 		GameRoomDTO dto = null;
 
@@ -96,97 +96,97 @@ public class GameRoomDAO {
 
 		try {
 
-			rs = stmt.executeQuery(sql); // Äõ¸®¿¡¼­ Ã£¾Æº»´Ù
+			rs = stmt.executeQuery(sql); // ì¿¼ë¦¬ì—ì„œ ì°¾ì•„ë³¸ë‹¤
 
-			if (rs.next()) { // Äõ¸®¿¡¼­ Ã£Àº µ¥ÀÌÅÍ¸¦ DTO¿¡¼­ getÇØ¿Â´Ù
+			if (rs.next()) { // ì¿¼ë¦¬ì—ì„œ ì°¾ì€ ë°ì´í„°ë¥¼ DTOì—ì„œ getí•´ì˜¨ë‹¤
 
 				dto = new GameRoomDTO();
 
 				dto.user1 = rs.getString("user1");
 				dto.user2 = rs.getString("user2");
 				dto.no = rs.getInt("no");
-			} // if¹® ³¡
+			} // ifë¬¸ ë
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return dto;
-		// Ã£Àº µ¥ÀÌÅÍ °ªÀ» ¹İÈ¯ÇØÁØ´Ù
+		// ì°¾ì€ ë°ì´í„° ê°’ì„ ë°˜í™˜í•´ì¤€ë‹¤
 	}
 
 	// --------------------------------------------------------
 	// == public int modifyUser1 =======
-	public int modifyUser1(GameRoomDTO dto) { // user1°¡ ¹æÀ» ¸¸µé¸é Ãß°¡
+	public int modifyUser1(GameRoomDTO dto) { // user1ê°€ ë°©ì„ ë§Œë“¤ë©´ ì¶”ê°€
 
-		int res = 0; // Äõ¸®¹® °á°ú °ªÀÌ ¼ıÀÚ·Î ³ª¿À¹Ç·Î int·Î °á°ú¸¦ ¹Ş¾ÆÁØ´Ù
+		int res = 0; // ì¿¼ë¦¬ë¬¸ ê²°ê³¼ ê°’ì´ ìˆ«ìë¡œ ë‚˜ì˜¤ë¯€ë¡œ intë¡œ ê²°ê³¼ë¥¼ ë°›ì•„ì¤€ë‹¤
 
-		// java¿¡¼­ ¼öÁ¤ÇÑ µ¥ÀÌÅÍ »ğÀÔÇØÁÖ´Â Äõ¸®¹®
+		// javaì—ì„œ ìˆ˜ì •í•œ ë°ì´í„° ì‚½ì…í•´ì£¼ëŠ” ì¿¼ë¦¬ë¬¸
 		sql = "update gameroom set user1 = '" + dto.user1 + "' where  no = '" + dto.no + "'";
 
 		try {
 
-			res = stmt.executeUpdate(sql); // ¼öÁ¤ÇÑ ³»¿ë ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ìˆ˜ì •í•œ ë‚´ìš© ì—…ë°ì´íŠ¸
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
-		// ¼öÁ¤µÈ µ¥ÀÌÅÍÀÇ ¾÷µ¥ÀÌÆ®°¡ ¼º°øÀûÀ¸·Î µÇ¸é °á°ú°ªÀ» 0·Î ¹İÈ¯ÇØÁØ´Ù
-	} // == public int modifyUser1 ³¡ =======
+		// ìˆ˜ì •ëœ ë°ì´í„°ì˜ ì—…ë°ì´íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ë˜ë©´ ê²°ê³¼ê°’ì„ 0ë¡œ ë°˜í™˜í•´ì¤€ë‹¤
+	} // == public int modifyUser1 ë =======
 
 	// --------------------------------------------------------
 	// == public int modifyUser2 =======
-	public int modifyUser2(GameRoomDTO dto) { // user2°¡ ¹æ¿¡ ÀÔÀåÇÏ¸é Ãß°¡
+	public int modifyUser2(GameRoomDTO dto) { // user2ê°€ ë°©ì— ì…ì¥í•˜ë©´ ì¶”ê°€
 
-		int res = 0; // Äõ¸®¹® °á°ú °ªÀÌ ¼ıÀÚ·Î ³ª¿À¹Ç·Î int·Î °á°ú¸¦ ¹Ş¾ÆÁØ´Ù
+		int res = 0; // ì¿¼ë¦¬ë¬¸ ê²°ê³¼ ê°’ì´ ìˆ«ìë¡œ ë‚˜ì˜¤ë¯€ë¡œ intë¡œ ê²°ê³¼ë¥¼ ë°›ì•„ì¤€ë‹¤
 
-		// java¿¡¼­ ¼öÁ¤ÇÑ µ¥ÀÌÅÍ »ğÀÔÇØÁÖ´Â Äõ¸®¹®
+		// javaì—ì„œ ìˆ˜ì •í•œ ë°ì´í„° ì‚½ì…í•´ì£¼ëŠ” ì¿¼ë¦¬ë¬¸
 		sql = "update gameroom set user2 = '" + dto.user2 + "' where  no = '" + dto.no + "'";
 
 		try {
 
-			res = stmt.executeUpdate(sql); // ¼öÁ¤ÇÑ ³»¿ë ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ìˆ˜ì •í•œ ë‚´ìš© ì—…ë°ì´íŠ¸
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
-		// ¼öÁ¤µÈ µ¥ÀÌÅÍÀÇ ¾÷µ¥ÀÌÆ®°¡ ¼º°øÀûÀ¸·Î µÇ¸é °á°ú°ªÀ» 0·Î ¹İÈ¯ÇØÁØ´Ù
-	} // == public int modifyUser2 ³¡ =======
+		// ìˆ˜ì •ëœ ë°ì´í„°ì˜ ì—…ë°ì´íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ë˜ë©´ ê²°ê³¼ê°’ì„ 0ë¡œ ë°˜í™˜í•´ì¤€ë‹¤
+	} // == public int modifyUser2 ë =======
 		// --------------------------------------------------------
 
 	// --------------------------------------------------------
 	// == public int modifyUser3 =======
 
-	public int modifyUser4(String col, String id, Integer roomNum) { // user2°¡ ¹æ¿¡ ÀÔÀåÇÏ¸é Ãß°¡
+	public int modifyUser4(String col, String id, Integer roomNum) { // user2ê°€ ë°©ì— ì…ì¥í•˜ë©´ ì¶”ê°€
 
-		int res = 0; // Äõ¸®¹® °á°ú °ªÀÌ ¼ıÀÚ·Î ³ª¿À¹Ç·Î int·Î °á°ú¸¦ ¹Ş¾ÆÁØ´Ù
+		int res = 0; // ì¿¼ë¦¬ë¬¸ ê²°ê³¼ ê°’ì´ ìˆ«ìë¡œ ë‚˜ì˜¤ë¯€ë¡œ intë¡œ ê²°ê³¼ë¥¼ ë°›ì•„ì¤€ë‹¤
 
-		// java¿¡¼­ ¼öÁ¤ÇÑ µ¥ÀÌÅÍ »ğÀÔÇØÁÖ´Â Äõ¸®¹®
+		// javaì—ì„œ ìˆ˜ì •í•œ ë°ì´í„° ì‚½ì…í•´ì£¼ëŠ” ì¿¼ë¦¬ë¬¸
 		sql = "update gameroom set " + col + " = " + null + " where " + col + " = '" + id + "' and no = " + roomNum;
 
 		try {
 
-			res = stmt.executeUpdate(sql); // ¼öÁ¤ÇÑ ³»¿ë ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ìˆ˜ì •í•œ ë‚´ìš© ì—…ë°ì´íŠ¸
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
-		// ¼öÁ¤µÈ µ¥ÀÌÅÍÀÇ ¾÷µ¥ÀÌÆ®°¡ ¼º°øÀûÀ¸·Î µÇ¸é °á°ú°ªÀ» 0·Î ¹İÈ¯ÇØÁØ´Ù
-	} // == public int modifyUser2 ³¡ =======
+		// ìˆ˜ì •ëœ ë°ì´í„°ì˜ ì—…ë°ì´íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ë˜ë©´ ê²°ê³¼ê°’ì„ 0ë¡œ ë°˜í™˜í•´ì¤€ë‹¤
+	} // == public int modifyUser2 ë =======
 		// --------------------------------------------------------
 
 	public int modifyUser5(String col, String id) {
@@ -198,12 +198,12 @@ public class GameRoomDAO {
 
 		try {
 
-			res = stmt.executeUpdate(sql); // ¼öÁ¤ÇÑ ³»¿ë ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ìˆ˜ì •í•œ ë‚´ìš© ì—…ë°ì´íŠ¸
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
@@ -219,38 +219,38 @@ public class GameRoomDAO {
 
 		try {
 
-			res = stmt.executeUpdate(sql); // ¼öÁ¤ÇÑ ³»¿ë ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ìˆ˜ì •í•œ ë‚´ìš© ì—…ë°ì´íŠ¸
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
 	}
 
 	// --------------------------------------------------------
-	// == public int delete : java¿¡¼­ »èÁ¦ÇÑ µ¥ÀÌÅÍ DB¿¡¼­ »èÁ¦ =======
-	public int reset(GameRoomDTO dto) { // user1ÀÌ ¹æÀ» ³ª°¡¸é ¹æÀ» ¾ø¾Ø´Ù
+	// == public int delete : javaì—ì„œ ì‚­ì œí•œ ë°ì´í„° DBì—ì„œ ì‚­ì œ =======
+	public int reset(GameRoomDTO dto) { // user1ì´ ë°©ì„ ë‚˜ê°€ë©´ ë°©ì„ ì—†ì•¤ë‹¤
 
-		int res = 0; // Äõ¸®¹® °á°ú °ªÀÌ ¼ıÀÚ·Î ³ª¿À¹Ç·Î int·Î °á°ú¸¦ ¹Ş¾ÆÁØ´Ù
+		int res = 0; // ì¿¼ë¦¬ë¬¸ ê²°ê³¼ ê°’ì´ ìˆ«ìë¡œ ë‚˜ì˜¤ë¯€ë¡œ intë¡œ ê²°ê³¼ë¥¼ ë°›ì•„ì¤€ë‹¤
 
 		sql = "update gameroom set user1 = " + dto.user1 + ", user2 = " + dto.user2 + " where  no = '" + dto.no + "'";
 
 		try {
 
-			res = stmt.executeUpdate(sql); // »èÁ¦ÇÑ ³»¿ëÀ» ¾÷µ¥ÀÌÆ®
+			res = stmt.executeUpdate(sql); // ì‚­ì œí•œ ë‚´ìš©ì„ ì—…ë°ì´íŠ¸
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // À§¿¡¼­¿Í ¸¶Âù°¡Áö·Î DB»ç¿ë ÈÄ DB¸¦ ´İ¾ÆÁØ´Ù
-			close(); // DB¸¦ ´İ±â Àü È®ÀÎÀ» À§ÇÑ ¸Ş¼Òµå
+		} finally { // ìœ„ì—ì„œì™€ ë§ˆì°¬ê°€ì§€ë¡œ DBì‚¬ìš© í›„ DBë¥¼ ë‹«ì•„ì¤€ë‹¤
+			close(); // DBë¥¼ ë‹«ê¸° ì „ í™•ì¸ì„ ìœ„í•œ ë©”ì†Œë“œ
 		}
 
 		return res;
-		// »èÁ¦µÈ µ¥ÀÌÅÍÀÇ ¾÷µ¥ÀÌÆ®°¡ ¼º°øÀûÀ¸·Î µÇ¸é °á°ú°ªÀ» 0·Î ¹İÈ¯ÇØÁØ´Ù
-	} // == public int delete ³¡ =======
+		// ì‚­ì œëœ ë°ì´í„°ì˜ ì—…ë°ì´íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ë˜ë©´ ê²°ê³¼ê°’ì„ 0ë¡œ ë°˜í™˜í•´ì¤€ë‹¤
+	} // == public int delete ë =======
 
 	public GameRoomDTO roomdPepleetail(String id) {
 		GameRoomDTO dto = new GameRoomDTO();

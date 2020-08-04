@@ -28,7 +28,7 @@ public class ClientNetWork {
          ddos.src = id;
          ddos.type = "login";
          
-         String msg = ddos.src+"¼­¹ö Á¢¼ÓÇÕ´Ï´Ù";
+         String msg = ddos.src+"ì„œë²„ ì ‘ì†í•©ë‹ˆë‹¤";
          ddos.data = msg;
          ddos.chk = false;
          oos.writeObject(ddos);
@@ -75,7 +75,7 @@ public class ClientNetWork {
 
          while (ois != null) {
             try {
-               DDongData data = (DDongData) ois.readObject(); // ¿©±â¼­ ¿¡·¯³ª¼­ ¸®½Ãºê°¡ ¾ÈµÈ´Ù
+               DDongData data = (DDongData) ois.readObject(); // ì—¬ê¸°ì„œ ì—ëŸ¬ë‚˜ì„œ ë¦¬ì‹œë¸Œê°€ ì•ˆëœë‹¤
              
                ddInter.reciver(data);
 

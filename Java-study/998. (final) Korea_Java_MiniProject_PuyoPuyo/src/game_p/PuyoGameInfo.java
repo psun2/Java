@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 
 public class PuyoGameInfo extends JPanel {
 
-	JLabel score; // Á¡¼ö ¶óº§
-	JLabel combo; // ÄŞº¸ ¶óº§
-	JLabel second; // ½Ã°£ ¶óº§
+	JLabel score; // ì ìˆ˜ ë¼ë²¨
+	JLabel combo; // ì½¤ë³´ ë¼ë²¨
+	JLabel second; // ì‹œê°„ ë¼ë²¨
 
 	public PuyoGameInfo() {
 		// TODO Auto-generated constructor stub
@@ -17,9 +17,9 @@ public class PuyoGameInfo extends JPanel {
 		setLayout(null);
 		setBackground(Color.black);
 
-		score = new JLabel("Á¡¼ö");
-		combo = new JLabel("ÄŞº¸");
-		second = new JLabel("°æ°ú ½Ã°£");
+		score = new JLabel("ì ìˆ˜");
+		combo = new JLabel("ì½¤ë³´");
+		second = new JLabel("ê²½ê³¼ ì‹œê°„");
 
 		score.setForeground(Color.white);
 		combo.setForeground(Color.white);

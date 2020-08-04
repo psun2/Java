@@ -55,7 +55,7 @@ public class Login extends JFrame implements DDongInter {
 
 	public Login() {
 
-		setTitle("¡©∏Æ¡©∏Æ"); // ≈∏¿Ã∆≤
+		setTitle("Ï†§Î¶¨Ï†§Î¶¨"); // ÌÉÄÏù¥ÌãÄ
 		setIconImage(new ImageIcon("./img/logo.png").getImage());
 		contentPane = getContentPane();
 //      setSize(455, 615);
@@ -65,35 +65,35 @@ public class Login extends JFrame implements DDongInter {
 		setResizable(false);
 
 		lbId = new JLabel("ID");
-		lbId.setFont(new Font("±º∏≤", Font.BOLD, 25));
+		lbId.setFont(new Font("Íµ¥Î¶º", Font.BOLD, 25));
 		lbId.setBounds(130, 202, 74, 44);
 		getContentPane().add(lbId);
 
 		lbPw = new JLabel("PW");
-		lbPw.setFont(new Font("±º∏≤", Font.BOLD, 26));
+		lbPw.setFont(new Font("Íµ¥Î¶º", Font.BOLD, 26));
 		lbPw.setBounds(130, 246, 74, 44);
 		getContentPane().add(lbPw);
 
 		btnLogin = new JButton("\uB85C\uADF8\uC778");
-		btnLogin.setFont(new Font("±º∏≤", Font.PLAIN, 25));
+		btnLogin.setFont(new Font("Íµ¥Î¶º", Font.PLAIN, 25));
 		btnLogin.setBackground(Color.LIGHT_GRAY);
 		btnLogin.setBounds(236, 321, 107, 29);
 		getContentPane().add(btnLogin);
 		btnLogin.addActionListener(actBut);
 
-		btnJoin = new JButton("»∏ø¯∞°¿‘");
+		btnJoin = new JButton("ÌöåÏõêÍ∞ÄÏûÖ");
 		btnJoin.setBackground(Color.LIGHT_GRAY);
 		btnJoin.setBounds(108, 379, 107, 35);
 		getContentPane().add(btnJoin);
 		btnJoin.addActionListener(actBut);
 
-		btnFindingInfo = new JButton("∞Ë¡§ √£±‚");
+		btnFindingInfo = new JButton("Í≥ÑÏ†ï Ï∞æÍ∏∞");
 		btnFindingInfo.setBackground(Color.LIGHT_GRAY);
 		btnFindingInfo.setBounds(214, 379, 154, 35);
 		getContentPane().add(btnFindingInfo);
 
 		idText = new JTextField();
-		idText.setFont(new Font("±º∏≤", Font.BOLD, 25));
+		idText.setFont(new Font("Íµ¥Î¶º", Font.BOLD, 25));
 		idText.setBounds(236, 206, 213, 36);
 		getContentPane().add(idText);
 
@@ -111,7 +111,7 @@ public class Login extends JFrame implements DDongInter {
 			}
 		});
 
-		btnCloseGame = new JButton("≥™∞°±‚");
+		btnCloseGame = new JButton("ÎÇòÍ∞ÄÍ∏∞");
 		btnCloseGame.setBackground(Color.LIGHT_GRAY);
 		btnCloseGame.setBounds(367, 379, 107, 35);
 		getContentPane().add(btnCloseGame);
@@ -156,19 +156,19 @@ public class Login extends JFrame implements DDongInter {
 					if (idText.getText().equals(ids) 
 						|| idText.getText().equals(ids2)
 					    || idText.getText().equals(ids3)) {
-						JOptionPane.showMessageDialog(null, "¿ÃπÃ¡¢º”¡ﬂ¿‘¥œ¥Ÿ");
+						JOptionPane.showMessageDialog(null, "Ïù¥ÎØ∏Ï†ëÏÜçÏ§ëÏûÖÎãàÎã§");
 						idText.setText("");
 						pwText.setText("");
 						idText.setFocusable(true);
 					} else {
-						JOptionPane.showMessageDialog(null, "∑Œ±◊¿Œ º∫∞¯");
+						JOptionPane.showMessageDialog(null, "Î°úÍ∑∏Ïù∏ ÏÑ±Í≥µ");
 
 						new LobbyDAO().insert(idText.getText());
 						cn = new ClientNetWork(idText.getText());
 						Lobby_Main mm = new Lobby_Main(cn);
 
 						ddos = new DDongData();
-						ddos.type = "∑Œ∫Ò";
+						ddos.type = "Î°úÎπÑ";
 						cn.send(ddos);
 
 						dispose();
@@ -176,7 +176,7 @@ public class Login extends JFrame implements DDongInter {
 
 					} else if (dao.Login(idText.getText(), pwText.getText()) == false) {
 
-						JOptionPane.showMessageDialog(null, "æ∆¿ÃµøÕ ∫Òπ–π¯»£ »Æ¿Œ«ÿ¡÷ººø‰");
+						JOptionPane.showMessageDialog(null, "ÏïÑÏù¥ÎîîÏôÄ ÎπÑÎ∞ÄÎ≤àÌò∏ ÌôïÏù∏Ìï¥Ï£ºÏÑ∏Ïöî");
 					}
 
 				} catch (Exception e1) {

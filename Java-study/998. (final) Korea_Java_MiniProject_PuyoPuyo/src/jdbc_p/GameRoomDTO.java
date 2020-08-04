@@ -2,8 +2,8 @@ package jdbc_p;
 
 public class GameRoomDTO {
 
-	int no; // ¹æ¹øÈ£
-	String user1, user2; // À¯Àú
+	int no; // ë°©ë²ˆí˜¸
+	String user1, user2; // ìœ ì €
 	
 	
 	public int getNo() {

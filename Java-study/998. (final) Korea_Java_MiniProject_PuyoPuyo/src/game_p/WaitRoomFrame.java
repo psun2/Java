@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.WindowConstants;
 
 import ddong.ClientNetWork;
 import ddong.DDongData;
@@ -54,12 +53,12 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 		init(id, roomNum);
 
-		setSize(width, height); // ÇÁ·¹ÀÓ »çÀÌÁî
-		setLocationRelativeTo(null); // ÇÁ·¹ÀÓ ½ÃÀÛ½Ã ¸ğ´ÏÅÍ Áß¾Ó¿¡ Ãâ·Â
-		setResizable(false); // ÇÁ·¹ÀÓ »çÀÌÁî Á¶Àı ÇÒ ¼ö ¾øÀ½
-		getContentPane().setLayout(null); // ·¹ÀÌ2¾Æ¿ô
-		setTitle("Á©¸®Á©¸®"); // Å¸ÀÌÆ²
-		setIconImage(new ImageIcon("./img/logo.png").getImage()); // Å¸ÀÌÆ²¹Ù ·Î°í ¼³Á¤
+		setSize(width, height); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ
+		setLocationRelativeTo(null); // í”„ë ˆì„ ì‹œì‘ì‹œ ëª¨ë‹ˆí„° ì¤‘ì•™ì— ì¶œë ¥
+		setResizable(false); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ ì¡°ì ˆ í•  ìˆ˜ ì—†ìŒ
+		getContentPane().setLayout(null); // ë ˆì´2ì•„ì›ƒ
+		setTitle("ì ¤ë¦¬ì ¤ë¦¬"); // íƒ€ì´í‹€
+		setIconImage(new ImageIcon("./img/logo.png").getImage()); // íƒ€ì´í‹€ë°” ë¡œê³  ì„¤ì •
 		getContentPane().setBackground(Color.white);
 		this.imgSrc = "./img/background.png";
 
@@ -79,12 +78,12 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		state.setBackground(Color.white);
 		add(state);
 
-		this.ready = new JToggleButton("ÁØºñ");
-		JButton exit = new JButton("³ª°¡±â");
+		this.ready = new JToggleButton("ì¤€ë¹„");
+		JButton exit = new JButton("ë‚˜ê°€ê¸°");
 
-		// ¹öÆ° °£°İ 50;
-		// ¹öÆ° ÃÑ ±æÀÌ 130;
-		// ³²Àº ±æÀÌ 520;
+		// ë²„íŠ¼ ê°„ê²© 50;
+		// ë²„íŠ¼ ì´ ê¸¸ì´ 130;
+		// ë‚¨ì€ ê¸¸ì´ 520;
 		// 520 - 130 / 2
 		int btnSizeW = 100;
 		int btnSizeH = 40;
@@ -117,7 +116,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 		youP.setBackground(Color.green);
 		add(youP);
 
-		this.youLb = new JLabel("´Ù¸¥À¯ÀúÀÇ Á¢¼Ó´ë±â");
+		this.youLb = new JLabel("ë‹¤ë¥¸ìœ ì €ì˜ ì ‘ì†ëŒ€ê¸°");
 		youLb.setBounds(Puyo.PUYOSIZE * 10, Puyo.PUYOSIZE * 13, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		youLb.setHorizontalAlignment(JLabel.CENTER);
 		add(youLb);
@@ -140,8 +139,8 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 	}
 
 	void ddongDataInit() {
-		this.data = new DDongData(); // ¶Ë ¾ç½Ä ¼ÂÆÃ
-		data.type = "°ÔÀÓÅë½Å";
+		this.data = new DDongData(); // ë˜¥ ì–‘ì‹ ì…‹íŒ…
+		data.type = "ê²Œì„í†µì‹ ";
 
 	}
 
@@ -151,11 +150,11 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 		// System.out.println(this.enenmy);
 
-		if (dd.type.equals("°ÔÀÓÅë½Å") || dd.type.equals("°ÔÀÓ")) {
+		if (dd.type.equals("ê²Œì„í†µì‹ ") || dd.type.equals("ê²Œì„")) {
 
 			searchUser();
 
-			if (this.enenmy != null && dd.src.equals(enenmy)) { // ÀûÀÌ ÀÖÀ¸¸é¼­ ÀûÀÇ Á¤º¸¸¦ ¹ŞÀ»¶§
+			if (this.enenmy != null && dd.src.equals(enenmy)) { // ì ì´ ìˆìœ¼ë©´ì„œ ì ì˜ ì •ë³´ë¥¼ ë°›ì„ë•Œ
 				this.youChk = dd.chk;
 
 			}
@@ -165,9 +164,9 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	}
 
-	void searchUser() { // Åë½ÅÀÌ ¿ÔÀ»¶§ Àû Ã£±â
+	void searchUser() { // í†µì‹ ì´ ì™”ì„ë•Œ ì  ì°¾ê¸°
 
-		GameRoomDTO users = new GameRoomDAO().detailroom(WaitRoomFrame.this.roomNum); // ¹æ¹øÈ£·Î µğºñ¿¡ Á¢±Ù
+		GameRoomDTO users = new GameRoomDAO().detailroom(WaitRoomFrame.this.roomNum); // ë°©ë²ˆí˜¸ë¡œ ë””ë¹„ì— ì ‘ê·¼
 
 		String user1 = users.getUser1();
 		String user2 = users.getUser2();
@@ -183,11 +182,11 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 					this.ready.setEnabled(true);
 					waitStatus(false);
 				}
-			} else { // null ÀÌ ÇÑ¹ø ÀÌ¶óµµ ÀÖ´Ù¸é
-				WaitRoomFrame.this.meChk = false; // ÀûÀÌ ³ª°¡¸é ³ªÀÇ ÁØºñ»óÅÂ ÃÊ±âÈ­
-				data.chk = false; // ÀûÀÌ ³ª°¡¸é ³ªÀÇ ÁØºñ»óÅÂ ÃÊ±âÈ­
+			} else { // null ì´ í•œë²ˆ ì´ë¼ë„ ìˆë‹¤ë©´
+				WaitRoomFrame.this.meChk = false; // ì ì´ ë‚˜ê°€ë©´ ë‚˜ì˜ ì¤€ë¹„ìƒíƒœ ì´ˆê¸°í™”
+				data.chk = false; // ì ì´ ë‚˜ê°€ë©´ ë‚˜ì˜ ì¤€ë¹„ìƒíƒœ ì´ˆê¸°í™”
 				this.enenmy = null;
-				youLb.setText("´Ù¸¥À¯ÀúÀÇ Á¢¼Ó´ë±â");
+				youLb.setText("ë‹¤ë¥¸ìœ ì €ì˜ ì ‘ì†ëŒ€ê¸°");
 				this.ready.setSelected(false);
 				this.ready.setEnabled(false);
 				waitStatus(true);
@@ -199,7 +198,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	void match() {
 
-		if (this.meChk && youChk) { // ÁØºñ ¹öÆ°À» ´­·¶À»¶§ Åë½ÅÀ» º¸³»°í Åë½ÅÀÌ ¿ÔÀ»¶§ ÀûÀÇ »óÅÂ È®ÀÎ
+		if (this.meChk && youChk) { // ì¤€ë¹„ ë²„íŠ¼ì„ ëˆŒë €ì„ë•Œ í†µì‹ ì„ ë³´ë‚´ê³  í†µì‹ ì´ ì™”ì„ë•Œ ì ì˜ ìƒíƒœ í™•ì¸
 
 			this.dispose();
 
@@ -214,7 +213,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 				e.printStackTrace();
 			}
 
-			data.type = "°ÔÀÓÁß";
+			data.type = "ê²Œì„ì¤‘";
 			data.dst = enenmy;
 			cn.send(data);
 
@@ -232,7 +231,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	void waitRoomDb() {
 
-		// µğºñ¿¡¼­ ¹æ¿¡¼­ ³ª°£ À¯Àú »èÁ¦
+		// ë””ë¹„ì—ì„œ ë°©ì—ì„œ ë‚˜ê°„ ìœ ì € ì‚­ì œ
 		GameRoomDTO users = new GameRoomDAO().detailroom(WaitRoomFrame.this.roomNum);
 
 		String user1 = users.getUser1();
@@ -248,9 +247,9 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 			}
 
 		}
-		// ¹æ µğºñ ¾÷µ¥ÀÌÆ® ³¡
+		// ë°© ë””ë¹„ ì—…ë°ì´íŠ¸ ë
 
-		// ¹æ È­¸é Á¾·á
+		// ë°© í™”ë©´ ì¢…ë£Œ
 		WaitRoomFrame.this.dispose();
 		WaitRoomFrame.this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -258,11 +257,11 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	void signal() {
 		DDongData data = new DDongData();
-		data.type = "°ÔÀÓ";
+		data.type = "ê²Œì„";
 		cn.send(data);
 	}
 
-	class ReadyBtn implements ActionListener { // ÁØºñ ¹öÆ°
+	class ReadyBtn implements ActionListener { // ì¤€ë¹„ ë²„íŠ¼
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -282,7 +281,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 
 	}
 
-	class ExitBtn implements ActionListener { // ³ª°¡±â ¹öÆ° send ¸¦ ÇØ¼­ ¹öÆ° È°¼ºÈ­¿Í ºñÈ°¼ºÈ­¸¦ ³ª´² Áà¾ßÁö
+	class ExitBtn implements ActionListener { // ë‚˜ê°€ê¸° ë²„íŠ¼ send ë¥¼ í•´ì„œ ë²„íŠ¼ í™œì„±í™”ì™€ ë¹„í™œì„±í™”ë¥¼ ë‚˜ëˆ  ì¤˜ì•¼ì§€
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -302,7 +301,7 @@ public class WaitRoomFrame extends JFrame implements DDongInter, WindowListener 
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) { // °­Á¦ Á¾·á½Ã
+	public void windowClosing(WindowEvent e) { // ê°•ì œ ì¢…ë£Œì‹œ
 		// TODO Auto-generated method stub
 		waitRoomDb();
 		signal();

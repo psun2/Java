@@ -23,24 +23,24 @@ import javax.swing.JComboBox;
 
 public class Join extends JFrame {
 
-	public ArrayList<String> data = new ArrayList<String>(); // id, pw, name, email, birth °ªÀ» ÀúÀå ÇØ¼­ mainÀ¸·Î ³Ñ°ÜÁÜ
+	public ArrayList<String> data = new ArrayList<String>(); // id, pw, name, email, birth ê°’ì„ ì €ì¥ í•´ì„œ mainìœ¼ë¡œ ë„˜ê²¨ì¤Œ
 
 	GameUserDTO dto = new GameUserDTO();
 	GameUserDAO dao = new GameUserDAO();
 
-	String[] regex = { "^[a-zA-Z0-9_]{5,12}$", // ¾ÆÀÌµğ ¿µ¾î¶û ¼ıÀÚ¸¸ 5±ÛÀÚ¿¡¼­ 12±ÛÀÚ »çÀÌ
-			"^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$", // ¿µ¹®¼ıÀÚÆ¯¼ö¹®ÀÚ Æ÷ÇÔ 8ÀÚ ÀÌ»ó
-			"^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$", // ¿µ¹®¼ıÀÚÆ¯¼ö¹®ÀÚ Æ÷ÇÔ 8ÀÚ ÀÌ»ó
-			"^[°¡-ÆR]{2,4}$", // ÀÌ¸§ÇÑ±Û 2~4ÀÚ
-			"^[0-9a-zA-Z_]{2,}@[a-zA-Z]{2,}.(([a-zA-Z]{2,})|([a-zA-Z]{2,}.[a-zA-Z]{2,}))" // ÀÌ¸ŞÀÏ À¯È¿¼º °Ë»ç
+	String[] regex = { "^[a-zA-Z0-9_]{5,12}$", // ì•„ì´ë”” ì˜ì–´ë‘ ìˆ«ìë§Œ 5ê¸€ìì—ì„œ 12ê¸€ì ì‚¬ì´
+			"^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$", // ì˜ë¬¸ìˆ«ìíŠ¹ìˆ˜ë¬¸ì í¬í•¨ 8ì ì´ìƒ
+			"^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$", // ì˜ë¬¸ìˆ«ìíŠ¹ìˆ˜ë¬¸ì í¬í•¨ 8ì ì´ìƒ
+			"^[ê°€-í£]{2,4}$", // ì´ë¦„í•œê¸€ 2~4ì
+			"^[0-9a-zA-Z_]{2,}@[a-zA-Z]{2,}.(([a-zA-Z]{2,})|([a-zA-Z]{2,}.[a-zA-Z]{2,}))" // ì´ë©”ì¼ ìœ íš¨ì„± ê²€ì‚¬
 	};
 
-	public String id; // id ´ã¾ÆµÑ °ø°£
-	public String pw; // pw ´ã¾ÆµÑ °ø°£
-	public String pw2; // pwÈ®ÀÎ¶õ
-	public String name; // ÀÌ¸§
-	public String email; // ¸ŞÀÏ
-	public String birth; // »ıÀÏ
+	public String id; // id ë‹´ì•„ë‘˜ ê³µê°„
+	public String pw; // pw ë‹´ì•„ë‘˜ ê³µê°„
+	public String pw2; // pwí™•ì¸ë€
+	public String name; // ì´ë¦„
+	public String email; // ë©”ì¼
+	public String birth; // ìƒì¼
 
 	JTextField JoinIdText;
 	JPasswordField passwordField;
@@ -48,9 +48,9 @@ public class Join extends JFrame {
 	JTextField JoinNameText;
 	JTextField JoinEmailText;
 
-	JButton btnCancelMake; // Á¾·á ¹öÆ°
-	JButton btnMakeMember; // È¸¿ø°¡ÀÔ½Ã ¿Ï·á ¹öÆ°
-	JButton btnIdChk; // ¾ÆÀÌµğ Áßº¹ °Ë»ç
+	JButton btnCancelMake; // ì¢…ë£Œ ë²„íŠ¼
+	JButton btnMakeMember; // íšŒì›ê°€ì…ì‹œ ì™„ë£Œ ë²„íŠ¼
+	JButton btnIdChk; // ì•„ì´ë”” ì¤‘ë³µ ê²€ì‚¬
 	int monthL = 1;
 	int dayL = 1;
 	int yearL = 2020;
@@ -63,37 +63,37 @@ public class Join extends JFrame {
 
 	public Join() {
 
-		getContentPane().setForeground(Color.RED); // È¸¿ø °¡ÀÔ guiÃ¢
+		getContentPane().setForeground(Color.RED); // íšŒì› ê°€ì… guiì°½
 
-		setTitle("È¸¿ø°¡ÀÔ");
+		setTitle("íšŒì›ê°€ì…");
 		setIconImage(new ImageIcon("./img/logo.png").getImage());
 		getContentPane().setLayout(null);
 		setSize(600, 700);
-		setLocationRelativeTo(null); // gui È­¸é Á¤ Áß¾ÓÀ¸·Î ¸ÂÃçÁÜ
+		setLocationRelativeTo(null); // gui í™”ë©´ ì • ì¤‘ì•™ìœ¼ë¡œ ë§ì¶°ì¤Œ
 		getContentPane().setLayout(null);
-		setResizable(false); // gui »çÀÌÁî ¼öÁ¤ ºÒ°¡
+		setResizable(false); // gui ì‚¬ì´ì¦ˆ ìˆ˜ì • ë¶ˆê°€
 
-		JLabel lbJoinId = new JLabel("¾ÆÀÌµğ");
+		JLabel lbJoinId = new JLabel("ì•„ì´ë””");
 		lbJoinId.setBounds(98, 95, 74, 27);
 		getContentPane().add(lbJoinId);
 
-		JLabel lbJoinPw = new JLabel("ºñ¹Ğ¹øÈ£");
+		JLabel lbJoinPw = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 		lbJoinPw.setBounds(98, 145, 74, 27);
 		getContentPane().add(lbJoinPw);
 
-		JLabel lbJoinPwC = new JLabel("ºñ¹Ğ¹øÈ£ È®ÀÎ");
+		JLabel lbJoinPwC = new JLabel("ë¹„ë°€ë²ˆí˜¸ í™•ì¸");
 		lbJoinPwC.setBounds(98, 195, 122, 27);
 		getContentPane().add(lbJoinPwC);
 
-		JLabel lbName = new JLabel("ÀÌ¸§");
+		JLabel lbName = new JLabel("ì´ë¦„");
 		lbName.setBounds(98, 245, 74, 27);
 		getContentPane().add(lbName);
 
-		JLabel lbJoinBirth = new JLabel("»ı³â¿ùÀÏ");
+		JLabel lbJoinBirth = new JLabel("ìƒë…„ì›”ì¼");
 		lbJoinBirth.setBounds(98, 295, 74, 27);
 		getContentPane().add(lbJoinBirth);
 
-		JLabel lbJoinEmail = new JLabel("ÀÌ¸ŞÀÏ");
+		JLabel lbJoinEmail = new JLabel("ì´ë©”ì¼");
 		lbJoinEmail.setBounds(98, 345, 74, 27);
 		getContentPane().add(lbJoinEmail);
 
@@ -121,63 +121,63 @@ public class Join extends JFrame {
 		JoinEmailText.setBounds(223, 345, 187, 27);
 		getContentPane().add(JoinEmailText);
 
-		btnCancelMake = new JButton("Á¾·á");
+		btnCancelMake = new JButton("ì¢…ë£Œ");
 		btnCancelMake.setBackground(Color.LIGHT_GRAY);
 		btnCancelMake.setBounds(313, 435, 129, 29);
 		getContentPane().add(btnCancelMake);
 		btnCancelMake.addActionListener(butAct);
 
-		btnMakeMember = new JButton("È¸¿ø°¡ÀÔ");
+		btnMakeMember = new JButton("íšŒì›ê°€ì…");
 		btnMakeMember.setBackground(Color.LIGHT_GRAY);
 		btnMakeMember.setBounds(142, 435, 129, 29);
 		getContentPane().add(btnMakeMember);
 		btnMakeMember.addActionListener(butAct);
 		btnMakeMember.setEnabled(false);
 
-		btnIdChk = new JButton("Áßº¹È®ÀÎ");
+		btnIdChk = new JButton("ì¤‘ë³µí™•ì¸");
 		btnIdChk.setBackground(Color.LIGHT_GRAY);
 		btnIdChk.setBounds(424, 95, 108, 27);
 		getContentPane().add(btnIdChk);
 
-		JLabel lblNewLabel = new JLabel("¿µ¹® ¶Ç´Â ¼ıÀÚ·Î 5±ÛÀÚ ÀÌ»ó");
-		lblNewLabel.setFont(new Font("±¼¸²", Font.PLAIN, 11));
+		JLabel lblNewLabel = new JLabel("ì˜ë¬¸ ë˜ëŠ” ìˆ«ìë¡œ 5ê¸€ì ì´ìƒ");
+		lblNewLabel.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 11));
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setBounds(223, 120, 187, 21);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("¿µ¹®,¼ıÀÚ,Æ¯¼ö¹®ÀÚ Á¶ÇÕ 8±ÛÀÚ ÀÌ»ó");
-		lblNewLabel_1.setFont(new Font("±¼¸²", Font.PLAIN, 11));
+		JLabel lblNewLabel_1 = new JLabel("ì˜ë¬¸,ìˆ«ì,íŠ¹ìˆ˜ë¬¸ì ì¡°í•© 8ê¸€ì ì´ìƒ");
+		lblNewLabel_1.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 11));
 		lblNewLabel_1.setForeground(Color.BLACK);
 		lblNewLabel_1.setBounds(223, 170, 187, 21);
 		getContentPane().add(lblNewLabel_1);
 
-		JLabel lblNewLabel_3 = new JLabel("ÇÑ±Û 2~4±ÛÀÚ");
-		lblNewLabel_3.setFont(new Font("±¼¸²", Font.PLAIN, 11));
+		JLabel lblNewLabel_3 = new JLabel("í•œê¸€ 2~4ê¸€ì");
+		lblNewLabel_3.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 11));
 		lblNewLabel_3.setForeground(Color.BLACK);
 		lblNewLabel_3.setBounds(223, 270, 187, 21);
 		getContentPane().add(lblNewLabel_3);
 
-		JLabel lblNewLabel_5 = new JLabel("ex) ¾ÆÀÌµğ@µµ¸ŞÀÎ ÁÖ¼Ò");
-		lblNewLabel_5.setFont(new Font("±¼¸²", Font.PLAIN, 11));
+		JLabel lblNewLabel_5 = new JLabel("ex) ì•„ì´ë””@ë„ë©”ì¸ ì£¼ì†Œ");
+		lblNewLabel_5.setFont(new Font("êµ´ë¦¼", Font.PLAIN, 11));
 		lblNewLabel_5.setForeground(Color.BLACK);
 		lblNewLabel_5.setBounds(223, 370, 187, 21);
 		getContentPane().add(lblNewLabel_5);
 
 		Calendar calders = Calendar.getInstance();
 
-		JComboBox year = new JComboBox(); // ³â
+		JComboBox year = new JComboBox(); // ë…„
 		year.setBounds(223, 297, 74, 23);
 		for (int i = 1920; i <= 2020; i++) {
 			year.addItem(i);
 		}
 
-		JComboBox month = new JComboBox(); // ¿ù
+		JComboBox month = new JComboBox(); // ì›”
 		month.setBounds(322, 297, 52, 23);
 		for (int i = 1; i <= 12; i++) {
 			month.addItem(i);
 		}
 
-		JComboBox<Integer> day = new JComboBox(); // ÀÏ
+		JComboBox<Integer> day = new JComboBox(); // ì¼
 		day.setBounds(396, 297, 46, 23);
 
 		for (int j = 1; j <= 31; j++) {
@@ -232,15 +232,15 @@ public class Join extends JFrame {
 		
 
 
-		JLabel lblNewLabel_2 = new JLabel("³â");
+		JLabel lblNewLabel_2 = new JLabel("ë…„");
 		lblNewLabel_2.setBounds(300, 295, 21, 27);
 		getContentPane().add(lblNewLabel_2);
 
-		JLabel lblNewLabel_2_1 = new JLabel("¿ù");
+		JLabel lblNewLabel_2_1 = new JLabel("ì›”");
 		lblNewLabel_2_1.setBounds(378, 295, 21, 27);
 		getContentPane().add(lblNewLabel_2_1);
 
-		JLabel lblNewLabel_2_1_1 = new JLabel("ÀÏ");
+		JLabel lblNewLabel_2_1_1 = new JLabel("ì¼");
 		lblNewLabel_2_1_1.setBounds(446, 295, 21, 27);
 		getContentPane().add(lblNewLabel_2_1_1);
 
@@ -251,25 +251,25 @@ public class Join extends JFrame {
 
 	}
 
-	ActionListener butAct = new ActionListener() { // ¾×¼Ç¸®½ºÆ®
+	ActionListener butAct = new ActionListener() { // ì•¡ì…˜ë¦¬ìŠ¤íŠ¸
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == btnCancelMake) { // Á¾·á ¹öÆ° ´©¸¦ ½Ã ·Î±×ÀÎ Ã¢À¸·Î È­¸é ÀüÈ¯
+			if (e.getSource() == btnCancelMake) { // ì¢…ë£Œ ë²„íŠ¼ ëˆ„ë¥¼ ì‹œ ë¡œê·¸ì¸ ì°½ìœ¼ë¡œ í™”ë©´ ì „í™˜
 
 				Login lt = new Login();
 				dispose();
 
 			}
 
-			if (e.getSource() == btnIdChk) { // Áßº¹ °Ë»ç
+			if (e.getSource() == btnIdChk) { // ì¤‘ë³µ ê²€ì‚¬
 				String jt = JoinIdText.getText().trim();
 				if ("".equals(jt) || !Pattern.matches(regex[0], jt)) {
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ¸¦ È®ÀÎ ÇØÁÖ¼¼¿ä");
+					JOptionPane.showMessageDialog(null, "ì•„ì´ë””ë¥¼ í™•ì¸ í•´ì£¼ì„¸ìš”");
 				} else if (dao.idChk(jt) == 0) {
-					JOptionPane.showMessageDialog(null, JoinIdText.getText() + " Áßº¹ÀÔ´Ï´Ù.");
+					JOptionPane.showMessageDialog(null, JoinIdText.getText() + " ì¤‘ë³µì…ë‹ˆë‹¤.");
 				} else if (dao.idChk(jt) == 1 && Pattern.matches(regex[0], jt)) {
-					JOptionPane.showMessageDialog(null, JoinIdText.getText() + " »ç¿ë°¡´ÉÇÕ´Ï´Ù.");
+					JOptionPane.showMessageDialog(null, JoinIdText.getText() + " ì‚¬ìš©ê°€ëŠ¥í•©ë‹ˆë‹¤.");
 					JoinIdText.setEditable(false);
 					btnMakeMember.setEnabled(true);
 				}
@@ -278,38 +278,38 @@ public class Join extends JFrame {
 
 			
 
-			if (e.getSource() == btnMakeMember) { // È¸¿ø °¡ÀÔ
+			if (e.getSource() == btnMakeMember) { // íšŒì› ê°€ì…
 				id = JoinIdText.getText().trim();
 				pw = passwordField.getText().trim();
 				pw2 = passwordField_1.getText().trim();
 				name = JoinNameText.getText().trim();
-				birth = yearL + "³â" + monthL + "¿ù" + dayL + "ÀÏ";
+				birth = yearL + "ë…„" + monthL + "ì›”" + dayL + "ì¼";
 				email = JoinEmailText.getText().trim();
 				
 				
 				System.out.println(birth);
 
-				String[] joinChk = { id, pw, pw2, name, email }; // À¯È¿¼º °Ë»ç¸¦ À§ÇØ ¹è¿­Çü
-				String[] pppChk = { "id¸¦ È®ÀÎ ÇØÁÖ¼¼¿ä", "ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä", "ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä", "ÀÌ¸§À» È®ÀÎÇØ ÁÖ¼¼¿ä", "emailÀ» È®ÀÎÇØ ÁÖ¼¼¿ä" }; // ¿¡·¯³»¿ë
+				String[] joinChk = { id, pw, pw2, name, email }; // ìœ íš¨ì„± ê²€ì‚¬ë¥¼ ìœ„í•´ ë°°ì—´í˜•
+				String[] pppChk = { "idë¥¼ í™•ì¸ í•´ì£¼ì„¸ìš”", "ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”", "ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”", "ì´ë¦„ì„ í™•ì¸í•´ ì£¼ì„¸ìš”", "emailì„ í™•ì¸í•´ ì£¼ì„¸ìš”" }; // ì—ëŸ¬ë‚´ìš©
 
-				while (true) { // while ¹®À» µ¹·Á¼­ À¯È¿¼º °Ë»ç ÁøÇà
-					int i = 0; // id¿Í À¯È¿¼º °Ë»ç ¹è¿­, ¿¡·¯ ¾Ë¸²¸Ş¼¼Áö ¹è¿­ ÀÎµ¦½º°ª Ç¥Çö ¿ë º¯¼ö
+				while (true) { // while ë¬¸ì„ ëŒë ¤ì„œ ìœ íš¨ì„± ê²€ì‚¬ ì§„í–‰
+					int i = 0; // idì™€ ìœ íš¨ì„± ê²€ì‚¬ ë°°ì—´, ì—ëŸ¬ ì•Œë¦¼ë©”ì„¸ì§€ ë°°ì—´ ì¸ë±ìŠ¤ê°’ í‘œí˜„ ìš© ë³€ìˆ˜
 					if (true) {
-						if (Pattern.matches(regex[i], joinChk[i])) { // ÆĞÅÏÀÌ ÀÏÄ¡ÇÏ¸é data¿¡ ÀúÀå
+						if (Pattern.matches(regex[i], joinChk[i])) { // íŒ¨í„´ì´ ì¼ì¹˜í•˜ë©´ dataì— ì €ì¥
 							dto.setId(id);
-						} else { // ÀÏÄ¡ ÇÏÁö ¾ÊÀ» ½Ã idÈ®ÀÎ ¸Ş¼¼Áö Ã¢
+						} else { // ì¼ì¹˜ í•˜ì§€ ì•Šì„ ì‹œ idí™•ì¸ ë©”ì„¸ì§€ ì°½
 							JOptionPane.showMessageDialog(null, pppChk[i]);
 							break;
 						}
 						i++;
 
-						if (Pattern.matches(regex[i], joinChk[i])) { // ÆĞÅÏÀÌ ÀÏÄ¡ÇÏ¸é data¿¡ ÀúÀå
-						} else { // ÀÏÄ¡ ÇÏÁö ¾ÊÀ» ½Ã idÈ®ÀÎ ¸Ş¼¼Áö Ã¢
+						if (Pattern.matches(regex[i], joinChk[i])) { // íŒ¨í„´ì´ ì¼ì¹˜í•˜ë©´ dataì— ì €ì¥
+						} else { // ì¼ì¹˜ í•˜ì§€ ì•Šì„ ì‹œ idí™•ì¸ ë©”ì„¸ì§€ ì°½
 							JOptionPane.showMessageDialog(null, pppChk[i]);
 							break;
 						}
 
-						i++; // id Åë°ú½Ã i¸¦ Áõ°¡½ÃÄÑ ´ÙÀ½ ¹è¿­ ¼ø¼­ ÁøÇà
+						i++; // id í†µê³¼ì‹œ ië¥¼ ì¦ê°€ì‹œì¼œ ë‹¤ìŒ ë°°ì—´ ìˆœì„œ ì§„í–‰
 						if (Pattern.matches(regex[i], joinChk[i])) {
 							if (pw2.equals(pw))
 								dto.setPw(pw);
@@ -326,7 +326,7 @@ public class Join extends JFrame {
 						}
 
 						if (yearL==0 || monthL==0 || dayL==0) {	
-							JOptionPane.showMessageDialog(null, "»ı³â¿ùÀÏÀ»ÀÔ·ÂÇØÁÖ¼¼¿ä");
+							JOptionPane.showMessageDialog(null, "ìƒë…„ì›”ì¼ì„ì…ë ¥í•´ì£¼ì„¸ìš”");
 							break;
 						} else {
 							dto.setBirth(birth);
@@ -344,7 +344,7 @@ public class Join extends JFrame {
 					}
 
 					new GameUserDAO().insert(dto);
-					JOptionPane.showMessageDialog(null, name + "´Ô È¸¿ø°¡ÀÔ ¿Ï·á");
+					JOptionPane.showMessageDialog(null, name + "ë‹˜ íšŒì›ê°€ì… ì™„ë£Œ");
 
 					new RankDAO().insertId(id);
 

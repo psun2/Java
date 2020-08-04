@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.xml.crypto.Data;
 
 import jdbc_p.RankDAO;
 import jdbc_p.RankDTO;
@@ -39,7 +38,7 @@ public class MePuyoPanel extends JPanel {
 	HashSet<String> bombArrColor;
 	HashMap<String, HashSet<MyLabel>> map;
 
-	int LocationX, LocationY, endLine, step, cutLine, score, jum, combo, comboCnt, comboChk; // »Ñ¿ä°¡ ¶³¾îÁú¶§ÀÇ Ä­¼ö
+	int LocationX, LocationY, endLine, step, cutLine, score, jum, combo, comboCnt, comboChk; // ë¿Œìš”ê°€ ë–¨ì–´ì§ˆë•Œì˜ ì¹¸ìˆ˜
 
 	boolean bombChk, itemChk, lobbyChk;
 
@@ -64,20 +63,20 @@ public class MePuyoPanel extends JPanel {
 		info.setBounds(0, 0, Puyo.PUYOSIZE * 6, Puyo.PUYOSIZE);
 		add(info);
 
-		createPuyo(); // »Ñ¿ä»ı»ê ½ºÅ¸Æ®
+		createPuyo(); // ë¿Œìš”ìƒì‚° ìŠ¤íƒ€íŠ¸
 		timer.start();
 
 	}
 
 	void init(PuyoFrame frame) {
 
-		// ÆĞ³ÎÀÌ »ı¼ºµÇ¾î add µÇ¾ú´Ù´Â°ÍÀº °ÔÀÓÀÇ ½ÃÀÛÀ» ÀÇ¹Ì
+		// íŒ¨ë„ì´ ìƒì„±ë˜ì–´ add ë˜ì—ˆë‹¤ëŠ”ê²ƒì€ ê²Œì„ì˜ ì‹œì‘ì„ ì˜ë¯¸
 
 		this.id = frame.meId;
 		this.frame = frame;
-		this.threadPool = Executors.newCachedThreadPool(); // ¾²·¹µå Ç® ÃÊ±âÈ­
-		this.meInfo = new MeGameInfo(); // Á¤º¸ ÀúÀå Å¬·¡½º »ı¼º
-		this.step = 3; // »Ñ¿ä°¡ ¶³¾îÁú¶§ÀÇ Ä­¼ö
+		this.threadPool = Executors.newCachedThreadPool(); // ì“°ë ˆë“œ í’€ ì´ˆê¸°í™”
+		this.meInfo = new MeGameInfo(); // ì •ë³´ ì €ì¥ í´ë˜ìŠ¤ ìƒì„±
+		this.step = 3; // ë¿Œìš”ê°€ ë–¨ì–´ì§ˆë•Œì˜ ì¹¸ìˆ˜
 		this.puyoLbs = new ArrayList<MyLabel>();
 		this.map = new HashMap<String, HashSet<MyLabel>>();
 		this.bombArr = new HashSet<MyLabel>();
@@ -90,8 +89,8 @@ public class MePuyoPanel extends JPanel {
 		this.combo = 0;
 		this.comboCnt = 0;
 		this.itemColor = "nuisance";
-		this.LocationX = (Puyo.PUYOSIZE * 6) / 2; // »Ñ¿äµéÀÇ »ı¼º À§Ä¡¸¦ Àâ¾Æ±âÀ§ÇÑ x
-		this.LocationY = -Puyo.PUYOSIZE; // »Ñ¿äµéÀÇ »ı¼º À§Ä¡¸¦ Àâ¾Æ±âÀ§ÇÑ y
+		this.LocationX = (Puyo.PUYOSIZE * 6) / 2; // ë¿Œìš”ë“¤ì˜ ìƒì„± ìœ„ì¹˜ë¥¼ ì¡ì•„ê¸°ìœ„í•œ x
+		this.LocationY = -Puyo.PUYOSIZE; // ë¿Œìš”ë“¤ì˜ ìƒì„± ìœ„ì¹˜ë¥¼ ì¡ì•„ê¸°ìœ„í•œ y
 		// this.endLine = LocationY - 1;
 		this.endLine = 0;
 		this.timer = new PuyoTimer(this);
@@ -106,48 +105,48 @@ public class MePuyoPanel extends JPanel {
 		super.paintComponent(g);
 	}
 
-	void createPuyo() { // »Ñ¿äÀÇ °è¼ÓÀûÀÎ »ı»êÀ» À§ÇÏ¿© ¾²·¹µå »ç¿ë
+	void createPuyo() { // ë¿Œìš”ì˜ ê³„ì†ì ì¸ ìƒì‚°ì„ ìœ„í•˜ì—¬ ì“°ë ˆë“œ ì‚¬ìš©
 
-		Runnable thread = new Runnable() { // »Ñ¿ä »ı¼º ¾²·¹µå => ÇÁ·¹ÀÓ°ú °°ÀÌ µ¹¾Æ¾ß ÇÏ¹Ç·Î ¾²·¹µå¸¦ ÁÜ
+		Runnable thread = new Runnable() { // ë¿Œìš” ìƒì„± ì“°ë ˆë“œ => í”„ë ˆì„ê³¼ ê°™ì´ ëŒì•„ì•¼ í•˜ë¯€ë¡œ ì“°ë ˆë“œë¥¼ ì¤Œ
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 
-				while (true) { // °ÔÀÓÀÌ ³¡³¯¶§±îÁö ¹«ÇÑ ¹İº¹ÇÑ´Ù.
+				while (true) { // ê²Œì„ì´ ëë‚ ë•Œê¹Œì§€ ë¬´í•œ ë°˜ë³µí•œë‹¤.
 
 					endChk();
 
-					if (meInfo.endGame) { // end °ÔÀÓ³¡À» chk
-						// System.out.println("°ÔÀÓÁ¾·á");
-						// ½Ì±Û¸ğµå : // JOptionPane.showMessageDialog(MePuyoPanel.this, "°ÔÀÓ Á¾·á!");
+					if (meInfo.endGame) { // end ê²Œì„ëì„ chk
+						// System.out.println("ê²Œì„ì¢…ë£Œ");
+						// ì‹±ê¸€ëª¨ë“œ : // JOptionPane.showMessageDialog(MePuyoPanel.this, "ê²Œì„ ì¢…ë£Œ!");
 
-						System.out.println("°ÔÀÓÁ¾·á");
-						setVisible(false); // È­¸é¿¡ È¸»öÀ» ±×¸®±âÀ§ÇØ
+						System.out.println("ê²Œì„ì¢…ë£Œ");
+						setVisible(false); // í™”ë©´ì— íšŒìƒ‰ì„ ê·¸ë¦¬ê¸°ìœ„í•´
 						setVisible(true);
 
-						updateRank(); // Á¡¼ö ¾÷µ¥ÀÌÆ®
+						updateRank(); // ì ìˆ˜ ì—…ë°ì´íŠ¸
 //						frame.data.chk = true;
 
 						if (frame.threadPool != null && !frame.threadPool.isShutdown()) {
 							frame.threadPool.shutdown();
 						}
 
-						if (threadPool != null && !threadPool.isShutdown()) { // °ÔÀÓÀÌ ³¡³ª°í ¾²·¹µå Ç®ÀÌ ¿­·Á ÀÖ´Ù¸é
-							threadPool.shutdown(); // °ÔÀÓÀÌ ³¡³µÀ¸¹Ç·Î ¸ğµç ¾²·¹µå¸¦ Á×ÀÓ.
+						if (threadPool != null && !threadPool.isShutdown()) { // ê²Œì„ì´ ëë‚˜ê³  ì“°ë ˆë“œ í’€ì´ ì—´ë ¤ ìˆë‹¤ë©´
+							threadPool.shutdown(); // ê²Œì„ì´ ëë‚¬ìœ¼ë¯€ë¡œ ëª¨ë“  ì“°ë ˆë“œë¥¼ ì£½ì„.
 						}
 
 						if (frame.enemyData.endGame && MePuyoPanel.this.meInfo.endGame) {
 							MePuyoPanel.this.lobbyChk = true;
-							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "½Â¸®");
-						} else { // »ó´ë¹æÀÌ °ÔÀÓÀÌ ¾È³¡³µÀ¸¸é ³ª´Â ÆĞ¹è
-							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "ÆĞ¹è");
+							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "ìŠ¹ë¦¬");
+						} else { // ìƒëŒ€ë°©ì´ ê²Œì„ì´ ì•ˆëë‚¬ìœ¼ë©´ ë‚˜ëŠ” íŒ¨ë°°
+							ModalFrame mf = new ModalFrame(MePuyoPanel.this.frame, "íŒ¨ë°°");
 						}
 
 						if (!lobbyChk)
 							frame.cn.send(frame.data);
 
-						return; // °ÔÀÓ Á¾·á
+						return; // ê²Œì„ ì¢…ë£Œ
 					}
 
 //					if (MePuyoPanel.this.itemChk)
@@ -155,19 +154,19 @@ public class MePuyoPanel extends JPanel {
 
 					if (!bombChk) {
 
-						// me »ı¼º
+						// me ìƒì„±
 						me = new Puyo();
 						meLb = new MyLabel(new ImageIcon("./img/" + me.color + "-48.png"));
 						meLb.setBounds(LocationX, LocationY, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
 						meLb.setName(me.color);
 						add(meLb);
-						meInfo.puyos.add(me); // Á¤º¸Å¬·¡½º¿¡ Á¤º¸ ÀúÀå
-						puyoLbs.add(meLb); // ¶óº§¸¸ µû·Î ÀúÀå
-						addMap(meLb); // º» ÆĞ³Î¿¡¼­ »ç¿ëÇÒ Á¤º¸ ÀúÀå
+						meInfo.puyos.add(me); // ì •ë³´í´ë˜ìŠ¤ì— ì •ë³´ ì €ì¥
+						puyoLbs.add(meLb); // ë¼ë²¨ë§Œ ë”°ë¡œ ì €ì¥
+						addMap(meLb); // ë³¸ íŒ¨ë„ì—ì„œ ì‚¬ìš©í•  ì •ë³´ ì €ì¥
 
 						sleepThread();
 
-						// you »ı¼º
+						// you ìƒì„±
 						you = new Puyo();
 						youLb = new MyLabel(new ImageIcon("./img/" + you.color + "-48.png"));
 						youLb.setBounds(LocationX, LocationY - Puyo.PUYOSIZE, Puyo.PUYOSIZE, Puyo.PUYOSIZE);
@@ -177,24 +176,24 @@ public class MePuyoPanel extends JPanel {
 						puyoLbs.add(youLb);
 						addMap(youLb);
 
-						move(); // ¹«ºê
+						move(); // ë¬´ë¸Œ
 
 					} else {
 
-						if (bombChk()) { // ¾²·¹µå¿©¼­ °è¼Ó ½ÇÇà½ÃÅ°´Â ¹®Á¦ ¹ß»ı
-							bomb(); // Ç×»ó ÁöÄÑº¸´Ù°¡ °°Àº »öÀÌ 4°³ ÀÌ»ó ¸ğ¿´À»¶§ ´ÙÀ½ ·ÎÁ÷À» ÁøÇà
+						if (bombChk()) { // ì“°ë ˆë“œì—¬ì„œ ê³„ì† ì‹¤í–‰ì‹œí‚¤ëŠ” ë¬¸ì œ ë°œìƒ
+							bomb(); // í•­ìƒ ì§€ì¼œë³´ë‹¤ê°€ ê°™ì€ ìƒ‰ì´ 4ê°œ ì´ìƒ ëª¨ì˜€ì„ë•Œ ë‹¤ìŒ ë¡œì§ì„ ì§„í–‰
 							if (MePuyoPanel.this.itemChk)
 								addItem();
-							bombChk = false; // 356 Line ¿¡¼­ ¶¯±è »èÁ¦ ÇÒ°ÍÀÌ ¾ø°í, »èÁ¦°¡ µÇ¾î ¸ğµç ·ÎÁ÷ÀÌ
-							// bomb ¸Ş¼Òµå¿¡¼­ ³¡ÀÌ ³ª¹Ç·Î ÀÌ ¸Ş¼ÒµåÀÇ ¸¶Áö¸·¿¡
-							// ´Ù¸¥ ¿ä¼Ò°¡ ³ª¿Ã¼Ò ÀÖµµ·Ï boolean °ªÀ»º¯°æ
+							bombChk = false; // 356 Line ì—ì„œ ë•¡ê¹€ ì‚­ì œ í• ê²ƒì´ ì—†ê³ , ì‚­ì œê°€ ë˜ì–´ ëª¨ë“  ë¡œì§ì´
+							// bomb ë©”ì†Œë“œì—ì„œ ëì´ ë‚˜ë¯€ë¡œ ì´ ë©”ì†Œë“œì˜ ë§ˆì§€ë§‰ì—
+							// ë‹¤ë¥¸ ìš”ì†Œê°€ ë‚˜ì˜¬ì†Œ ìˆë„ë¡ boolean ê°’ì„ë³€ê²½
 							modifyNode();
 						} else {
 							if (MePuyoPanel.this.itemChk)
 								addItem();
-							bombChk = false; // 356 Line ¿¡¼­ ¶¯±è »èÁ¦ ÇÒ°ÍÀÌ ¾ø°í, »èÁ¦°¡ µÇ¾î ¸ğµç ·ÎÁ÷ÀÌ
-							// bomb ¸Ş¼Òµå¿¡¼­ ³¡ÀÌ ³ª¹Ç·Î ÀÌ ¸Ş¼ÒµåÀÇ ¸¶Áö¸·¿¡
-							// ´Ù¸¥ ¿ä¼Ò°¡ ³ª¿Ã¼Ò ÀÖµµ·Ï boolean °ªÀ»º¯°æ
+							bombChk = false; // 356 Line ì—ì„œ ë•¡ê¹€ ì‚­ì œ í• ê²ƒì´ ì—†ê³ , ì‚­ì œê°€ ë˜ì–´ ëª¨ë“  ë¡œì§ì´
+							// bomb ë©”ì†Œë“œì—ì„œ ëì´ ë‚˜ë¯€ë¡œ ì´ ë©”ì†Œë“œì˜ ë§ˆì§€ë§‰ì—
+							// ë‹¤ë¥¸ ìš”ì†Œê°€ ë‚˜ì˜¬ì†Œ ìˆë„ë¡ boolean ê°’ì„ë³€ê²½
 							modifyNode();
 						}
 
@@ -206,11 +205,11 @@ public class MePuyoPanel extends JPanel {
 
 		};
 
-		threadPool.submit(thread); // ¾²·¹µå¸¦ »ç¿ëÇÏ±â À§ÇØ ¾²·¹µå Ç®¿¡ µî·Ï
+		threadPool.submit(thread); // ì“°ë ˆë“œë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì“°ë ˆë“œ í’€ì— ë“±ë¡
 
 	}
 
-	void addMap(MyLabel puyo) { // »ı¼ºµÉ¶§ ±òº°·Î ¸ÊÀ¸·Î ÇÑ¹ø´õ ±¸ºĞ
+	void addMap(MyLabel puyo) { // ìƒì„±ë ë•Œ ê¹”ë³„ë¡œ ë§µìœ¼ë¡œ í•œë²ˆë” êµ¬ë¶„
 
 		if (this.map.containsKey(puyo.getName())) {
 
@@ -224,41 +223,41 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void move() { // ÀÚµ¿ÀûÀÎ ¿òÁ÷ÀÓÀº yÃà¸¸ ¾÷µ¥ÀÌÆ® ÇÏ¸é µË´Ï´Ù.
-		// »Ñ¿ä°¡ »ı¼º µÇ¸é x ÃàÀº keyº¸µå·Î Á¶Á¾ÇÏ°í, yÃàÀ¸·Ğ ÀÚµ¿À¸·Î Èå¸¥´Ù.
+	void move() { // ìë™ì ì¸ ì›€ì§ì„ì€ yì¶•ë§Œ ì—…ë°ì´íŠ¸ í•˜ë©´ ë©ë‹ˆë‹¤.
+		// ë¿Œìš”ê°€ ìƒì„± ë˜ë©´ x ì¶•ì€ keyë³´ë“œë¡œ ì¡°ì¢…í•˜ê³ , yì¶•ìœ¼ë¡  ìë™ìœ¼ë¡œ íë¥¸ë‹¤.
 		while (true) {
 
-			if (me.stopChk && you.stopChk) { // »Ñ¿ä ÇÑ½ÖÀÌ µÑÀÌ ÀÚ¸®¸¦ Àâ¾Ò´Ù.
+			if (me.stopChk && you.stopChk) { // ë¿Œìš” í•œìŒì´ ë‘˜ì´ ìë¦¬ë¥¼ ì¡ì•˜ë‹¤.
 				modifyNode();
-				comboChk = -1; // ÄŞº¸ chk ÃÊ±âÈ­
-				this.bombChk = true; // »ı»êÀ» Àá½Ã Áß´ÜÇÏ°í ÅÍÁú ¿ä¼Ò°¡ ÀÖ´ÂÁö °Ë»ö
-				return; // ´ÙÀ½ »Ñ¿ä »ı¼ºÀ» À§ÇØ ¹İº¹¹® Á¾·á
+				comboChk = -1; // ì½¤ë³´ chk ì´ˆê¸°í™”
+				this.bombChk = true; // ìƒì‚°ì„ ì ì‹œ ì¤‘ë‹¨í•˜ê³  í„°ì§ˆ ìš”ì†Œê°€ ìˆëŠ”ì§€ ê²€ìƒ‰
+				return; // ë‹¤ìŒ ë¿Œìš” ìƒì„±ì„ ìœ„í•´ ë°˜ë³µë¬¸ ì¢…ë£Œ
 			}
 
 			sleepThread();
-			endMove(me, meLb); // »Ñ¿ä°¡ ¹ØÀ¸·Î Èê·¯³»·Á °©´Ï´Ù.
-			fixBug(me, meLb); // °¡²û½Ä »ı±â´Â Àâ¹ö±× ¼öÁ¤
-			endMove(you, youLb); // »Ñ¿ä°¡ ¹ØÀ¸·Î Èê·¯³»·Á °©´Ï´Ù
-			fixBug(you, youLb); // °¡²û½Ä »ı±â´Â Àâ¹ö±× ¼öÁ¤
+			endMove(me, meLb); // ë¿Œìš”ê°€ ë°‘ìœ¼ë¡œ í˜ëŸ¬ë‚´ë ¤ ê°‘ë‹ˆë‹¤.
+			fixBug(me, meLb); // ê°€ë”ì‹ ìƒê¸°ëŠ” ì¡ë²„ê·¸ ìˆ˜ì •
+			endMove(you, youLb); // ë¿Œìš”ê°€ ë°‘ìœ¼ë¡œ í˜ëŸ¬ë‚´ë ¤ ê°‘ë‹ˆë‹¤
+			fixBug(you, youLb); // ê°€ë”ì‹ ìƒê¸°ëŠ” ì¡ë²„ê·¸ ìˆ˜ì •
 			updateInfo();
 
 		}
 
-	} // move ÇÔ¼ö ³¡
+	} // move í•¨ìˆ˜ ë
 
-	void endMove(Puyo puyo, MyLabel lb) { // »Ñ¿ä°¡ ¸¶Áö¸·±îÁö Èê·¯ ³»·Á °¥ ¼ö ÀÖ°Ô ÇÏ´Â ÇÔ¼ö
+	void endMove(Puyo puyo, MyLabel lb) { // ë¿Œìš”ê°€ ë§ˆì§€ë§‰ê¹Œì§€ í˜ëŸ¬ ë‚´ë ¤ ê°ˆ ìˆ˜ ìˆê²Œ í•˜ëŠ” í•¨ìˆ˜
 
 		if (puyo.stopChk)
 			return;
 
-		int y = nodeY(lb); // y°ªÀº »Ñ¿ä°¡ ¼ÂÆÃµÉ yÃàÀÇ °ª
+		int y = nodeY(lb); // yê°’ì€ ë¿Œìš”ê°€ ì…‹íŒ…ë  yì¶•ì˜ ê°’
 
-		if (y <= getSize().height - Puyo.PUYOSIZE) { // »Ñ¿äÀÇ yÃàÀÇ °ªÀÌ ¹Ù´Ú°ú ´êÀ¸·Á ÇÒ¶§ ±îÁö¸¸ Á¶°Ç¿¡ ÃæÁ·
-			// ¿©±â¼­ ¹Ù´Ú±îÁö °¥²«µ¥....
-			// ±× Àü¿¡ ´Ù¸¥ ¿ä¼Ò°¡ ÀÖ´Ù¸é stop
-			if (search(lb)) { // ¿©±æ µé·Á¼­ y °ªÀÌ Á¦ÀÚ¸®¿¡ ¼ÂÆÃÀÌ µÉ¶§´Â »Ñ¿ä°¡ ÀÚ¸®¸¦ Àâ¾Ò´Ù¶ó´Â ÀÇ¹Ì. Áï ¹Ù´Ú¿¡ ¶³¾î Á³´Ù.
+		if (y <= getSize().height - Puyo.PUYOSIZE) { // ë¿Œìš”ì˜ yì¶•ì˜ ê°’ì´ ë°”ë‹¥ê³¼ ë‹¿ìœ¼ë ¤ í• ë•Œ ê¹Œì§€ë§Œ ì¡°ê±´ì— ì¶©ì¡±
+			// ì—¬ê¸°ì„œ ë°”ë‹¥ê¹Œì§€ ê°ˆê»€ë°....
+			// ê·¸ ì „ì— ë‹¤ë¥¸ ìš”ì†Œê°€ ìˆë‹¤ë©´ stop
+			if (search(lb)) { // ì—¬ê¸¸ ë“¤ë ¤ì„œ y ê°’ì´ ì œìë¦¬ì— ì…‹íŒ…ì´ ë ë•ŒëŠ” ë¿Œìš”ê°€ ìë¦¬ë¥¼ ì¡ì•˜ë‹¤ë¼ëŠ” ì˜ë¯¸. ì¦‰ ë°”ë‹¥ì— ë–¨ì–´ ì¡Œë‹¤.
 				y = cutLine;
-				puyo.stopChk = true; // »Ñ¿ä°¡ ¼¼·Î ¹æÇâ½Ã À­ »Ñ¿äÀÇ À§Ä¡°¡ Á¤Áö µÇ¾úÀ»¶§ ....
+				puyo.stopChk = true; // ë¿Œìš”ê°€ ì„¸ë¡œ ë°©í–¥ì‹œ ìœ— ë¿Œìš”ì˜ ìœ„ì¹˜ê°€ ì •ì§€ ë˜ì—ˆì„ë•Œ ....
 			}
 
 			if (y >= getSize().height - Puyo.PUYOSIZE)
@@ -267,28 +266,28 @@ public class MePuyoPanel extends JPanel {
 			lb.setLocation(lb.getX(), y);
 
 		} else {
-			puyo.stopChk = true; // ¾Æ·¡ »Ñ¿ä ¶Ç´Â °¡·Î ÀÏ¶§ À§Ä¡°¡ Á¤Áö µÇ¾úÀ»¶§....
+			puyo.stopChk = true; // ì•„ë˜ ë¿Œìš” ë˜ëŠ” ê°€ë¡œ ì¼ë•Œ ìœ„ì¹˜ê°€ ì •ì§€ ë˜ì—ˆì„ë•Œ....
 		}
 
-	} // endMove ³¡
+	} // endMove ë
 
-	int nodeY(MyLabel puyo) { // »Ñ¿äÀÇ yÁÂÇ¥¸¦ ¹İÈ¯ ¹Ş´Â ÇÔ¼ö
+	int nodeY(MyLabel puyo) { // ë¿Œìš”ì˜ yì¢Œí‘œë¥¼ ë°˜í™˜ ë°›ëŠ” í•¨ìˆ˜
 
 		int y = puyo.getY();
 		int result = y + step;
 
 		return result;
 
-	} // nodeY ³¡
+	} // nodeY ë
 
-	boolean search(MyLabel puyo) { // »Ñ¿ä°¡ ¹ØÀ¸·Î Èå¸¦¶§ ³» ¹Ø¿¡ ¹«¾ùÀÎ°¡ Á¸Àç ÇÑ´Ù¸é y°ªÀ» ´Ù½Ã ¼ÂÆÃÇÏ¿© ¹İÈ¯
-		// ¹®Á¦Á¡ : Áï ¼¼·Î ¹æÇâÀÏ¶§ À­Ä£±¸´Â ¾Æ·§ Ä£±¸ ¶§¹®¿¡ ¸ø³ª¿À´Â Çö»ó ¹ß»ı
+	boolean search(MyLabel puyo) { // ë¿Œìš”ê°€ ë°‘ìœ¼ë¡œ íë¥¼ë•Œ ë‚´ ë°‘ì— ë¬´ì—‡ì¸ê°€ ì¡´ì¬ í•œë‹¤ë©´ yê°’ì„ ë‹¤ì‹œ ì…‹íŒ…í•˜ì—¬ ë°˜í™˜
+		// ë¬¸ì œì  : ì¦‰ ì„¸ë¡œ ë°©í–¥ì¼ë•Œ ìœ—ì¹œêµ¬ëŠ” ì•„ë« ì¹œêµ¬ ë•Œë¬¸ì— ëª»ë‚˜ì˜¤ëŠ” í˜„ìƒ ë°œìƒ
 		boolean result = false;
 
 		for (MyLabel pu : puyoLbs) {
-			if (puyo.getX() == pu.getX()) { // xÃàÀÌ °°¾Æ¾ß µ¿ÀÏ ¼±»óÀÔ´Ï´Ù.
-				if (puyo.getY() < pu.getY()) { // »ı¼ºµÇ´Â »Ñ¿äÀÇ y Ãà °ªÀ» ¸ÕÀú ºñ±³ÇØ ³ªÀÇ yº¸´Ù Å« ¾Öµé¸¸ º»´Ù. => ³ªº¸´Ù ¹Ø¿¡ ÀÖ´Â ¾Öµé
-					if (puyo.getY() + Puyo.PUYOSIZE > pu.getY()) { // ³ªÀÇ y°¡ ¹Ø¿¡ÀÖ´Â »Ñ¿äÀÇ yº¸´Ù °°°Å³ª Ä¿Áö·Á°í ÇÒ¶§
+			if (puyo.getX() == pu.getX()) { // xì¶•ì´ ê°™ì•„ì•¼ ë™ì¼ ì„ ìƒì…ë‹ˆë‹¤.
+				if (puyo.getY() < pu.getY()) { // ìƒì„±ë˜ëŠ” ë¿Œìš”ì˜ y ì¶• ê°’ì„ ë¨¼ì € ë¹„êµí•´ ë‚˜ì˜ yë³´ë‹¤ í° ì• ë“¤ë§Œ ë³¸ë‹¤. => ë‚˜ë³´ë‹¤ ë°‘ì— ìˆëŠ” ì• ë“¤
+					if (puyo.getY() + Puyo.PUYOSIZE > pu.getY()) { // ë‚˜ì˜ yê°€ ë°‘ì—ìˆëŠ” ë¿Œìš”ì˜ yë³´ë‹¤ ê°™ê±°ë‚˜ ì»¤ì§€ë ¤ê³  í• ë•Œ
 						// System.out.println("puyo.Lb.getY() + Puyo.PUYOSIZE : " + (puyo.getY() +
 						// Puyo.PUYOSIZE));
 						// System.out.println(" pu.Lb.getY() : " + pu.getY());
@@ -303,21 +302,21 @@ public class MePuyoPanel extends JPanel {
 
 		return result;
 
-	} // inspectY ÇÔ¼ö ³¡
+	} // inspectY í•¨ìˆ˜ ë
 
 	void modifyNode() {
 
 		for (MyLabel puyo : puyoLbs) {
 
-			// y ÁÂÇ¥°¡ ÀÚ²Ù ¸Ô´Â Çö»ó ¹ß»ı!!!!
-			// y ÁÂÇ¥¸¦ 50À¸·Î ³ª´©¾î 0ÀÌ ¾ÈµÇ´Â °Í Ã£±â
+			// y ì¢Œí‘œê°€ ìê¾¸ ë¨¹ëŠ” í˜„ìƒ ë°œìƒ!!!!
+			// y ì¢Œí‘œë¥¼ 50ìœ¼ë¡œ ë‚˜ëˆ„ì–´ 0ì´ ì•ˆë˜ëŠ” ê²ƒ ì°¾ê¸°
 
 			if (puyo.getY() % Puyo.PUYOSIZE != 0) {
 				// modifyArr.add(puyo);
 				double y = puyo.getY();
 				double remainder = Puyo.PUYOSIZE - (puyo.getY() % Puyo.PUYOSIZE);
 				int result = (int) (y + remainder);
-				// °ÔÀÓ Æ¯¼º»ó ÁÂÇ¥°¡ ÀÏÁ¤ÇÏÁö ¾Ê°ÔµÉ ¼ö ÀÖÀ½ »çÀÌÁî Å©±â¸¸Å­ ³ª´« ³ª¸ÓÁö ¸¸Å­¸¸ ´õÇØÁÖ¾î ´Ù½Ã ¼ÂÆÃ
+				// ê²Œì„ íŠ¹ì„±ìƒ ì¢Œí‘œê°€ ì¼ì •í•˜ì§€ ì•Šê²Œë  ìˆ˜ ìˆìŒ ì‚¬ì´ì¦ˆ í¬ê¸°ë§Œí¼ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€ ë§Œí¼ë§Œ ë”í•´ì£¼ì–´ ë‹¤ì‹œ ì…‹íŒ…
 
 				puyo.setLocation(puyo.getX(), result);
 
@@ -327,7 +326,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void fixBug(Puyo puyo, MyLabel lb) { // °¡²û½Ä »ı±â´Â Àâ¹ö±× ¼öÁ¤ (Áß°£¿¡ °É¸®´Â Çö»ó)
+	void fixBug(Puyo puyo, MyLabel lb) { // ê°€ë”ì‹ ìƒê¸°ëŠ” ì¡ë²„ê·¸ ìˆ˜ì • (ì¤‘ê°„ì— ê±¸ë¦¬ëŠ” í˜„ìƒ)
 
 		if (!puyo.stopChk)
 			return;
@@ -352,7 +351,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	////////////// TODO Æø¹ß ·ÎÁ÷
+	////////////// TODO í­ë°œ ë¡œì§
 	boolean bombChk() {
 
 		boolean result = false;
@@ -376,7 +375,7 @@ public class MePuyoPanel extends JPanel {
 
 	void bomb() {
 
-		// for¹®ÀÌ µ¹¾Æ°¥¶§ mapµµ remove°¡ µÇ¹Ç·Î Å¬·ĞÀ» ÇÏ³ª »ç¿ë ÇÕ´Ï´Ù.
+		// forë¬¸ì´ ëŒì•„ê°ˆë•Œ mapë„ removeê°€ ë˜ë¯€ë¡œ í´ë¡ ì„ í•˜ë‚˜ ì‚¬ìš© í•©ë‹ˆë‹¤.
 		HashMap<String, HashSet<MyLabel>> cloneMap = new HashMap<String, HashSet<MyLabel>>(this.map);
 
 		for (String color : bombArrColor) {
@@ -386,7 +385,7 @@ public class MePuyoPanel extends JPanel {
 				if (colorMap.getKey().equals(color)) {
 					deepBomb(colorMap.getValue());
 				}
-				this.bombArr = new HashSet<MyLabel>(); // ÅÍÁú ¸ñ·ÏÀº ÀÌÁ¦ ÇÊ¿ä ¾øÀ¸¹Ç·Î ÃÊ±âÈ­
+				this.bombArr = new HashSet<MyLabel>(); // í„°ì§ˆ ëª©ë¡ì€ ì´ì œ í•„ìš” ì—†ìœ¼ë¯€ë¡œ ì´ˆê¸°í™”
 				this.bombArrColor = new HashSet<String>();
 
 			}
@@ -397,17 +396,17 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void deepBomb(HashSet<MyLabel> colors) { // clolors °¡ ¾÷µ¥ÀÌÆ®°¡ ¾ÈµÊ
+	void deepBomb(HashSet<MyLabel> colors) { // clolors ê°€ ì—…ë°ì´íŠ¸ê°€ ì•ˆë¨
 
 		for (MyLabel puyo : colors) {
 
 			modifyNode();
 
-			HashSet<MyLabel> equals = new HashSet<MyLabel>(); // ºÙ¾î ÀÖ´Â °ÍÁß Á¦ÀÏ Å« µ¢¾î¸®µéÀ» ´ãÀº ¹è¿­
+			HashSet<MyLabel> equals = new HashSet<MyLabel>(); // ë¶™ì–´ ìˆëŠ” ê²ƒì¤‘ ì œì¼ í° ë©ì–´ë¦¬ë“¤ì„ ë‹´ì€ ë°°ì—´
 
 			equals.add(puyo);
 
-			// ½ÊÀÚ°¡¸¦ º¸±âÀ§ÇØ ±âÁØÀÌ µÇ´Â puyoÀÇ ÁÂÇ¥¸¦ ¾ò¾î¿È
+			// ì‹­ìê°€ë¥¼ ë³´ê¸°ìœ„í•´ ê¸°ì¤€ì´ ë˜ëŠ” puyoì˜ ì¢Œí‘œë¥¼ ì–»ì–´ì˜´
 			int x = puyo.getX();
 			int y = puyo.getY();
 
@@ -451,9 +450,9 @@ public class MePuyoPanel extends JPanel {
 		for (MyLabel puyo : equals) {
 
 			modifyNode();
-			result.add(puyo); // Ã³À½ºÎÅÍ result ¿Í equals °¡ °°À» ¼ö ÀÖÀ¸¹Ç ·Î º»ÀÎÀ» Ãß°¡ setÀÌ¿©¼­ Áßº¹ ºÒ°¡!!
+			result.add(puyo); // ì²˜ìŒë¶€í„° result ì™€ equals ê°€ ê°™ì„ ìˆ˜ ìˆìœ¼ë¯€ ë¡œ ë³¸ì¸ì„ ì¶”ê°€ setì´ì—¬ì„œ ì¤‘ë³µ ë¶ˆê°€!!
 
-			// ½ÊÀÚ°¡¸¦ º¸±âÀ§ÇØ ±âÁØÀÌ µÇ´Â puyoÀÇ ÁÂÇ¥¸¦ ¾ò¾î¿È
+			// ì‹­ìê°€ë¥¼ ë³´ê¸°ìœ„í•´ ê¸°ì¤€ì´ ë˜ëŠ” puyoì˜ ì¢Œí‘œë¥¼ ì–»ì–´ì˜´
 			int x = puyo.getX();
 			int y = puyo.getY();
 
@@ -470,10 +469,10 @@ public class MePuyoPanel extends JPanel {
 
 		}
 
-//      System.out.println("** ¿øº» colors : " + colors);
-//      System.out.println("** °°Àº ¾Öµé¸¸ ´ã¾Æ¿Â ¹è¿­ : " + equals);
-//      System.out.println("**  ¿øº» colors ¿¡¼­ °°Àº ¾ÖµéÀ» Á¦¿ÜÇÑ ¹è¿­ : " + removeColor);
-//		System.out.println("** result ¹è¿­ : " + result);
+//      System.out.println("** ì›ë³¸ colors : " + colors);
+//      System.out.println("** ê°™ì€ ì• ë“¤ë§Œ ë‹´ì•„ì˜¨ ë°°ì—´ : " + equals);
+//      System.out.println("**  ì›ë³¸ colors ì—ì„œ ê°™ì€ ì• ë“¤ì„ ì œì™¸í•œ ë°°ì—´ : " + removeColor);
+//		System.out.println("** result ë°°ì—´ : " + result);
 
 		if (result.size() > equals.size())
 			result = deepDeepBomb(colors, result);
@@ -485,8 +484,8 @@ public class MePuyoPanel extends JPanel {
 	void remove() {
 
 		for (MyLabel puyo : bombArr) {
-			// ÅÍÁö´Â »Ñ¿ä ÆĞ³Î¿¡¼­ »èÁ¦ ÀÛ¾÷
-			remove(puyo); // ÆĞ³Î¿¡¼­ Áö¿ò
+			// í„°ì§€ëŠ” ë¿Œìš” íŒ¨ë„ì—ì„œ ì‚­ì œ ì‘ì—…
+			remove(puyo); // íŒ¨ë„ì—ì„œ ì§€ì›€
 			setVisible(false); // update
 			setVisible(true); // update
 		}
@@ -495,27 +494,27 @@ public class MePuyoPanel extends JPanel {
 
 		item(bombArr);
 
-		comboChk++; // Ã³À½ ÅÍÁ³À»½Ã 0 ÀÌµÇ°í
-		// Àç±ÍÀûÀ¸·Î ÀÌ±¸°£À» ¶Ç °ÅÄ¥¶§ ÅÍÁ³À¸¹Ç·Î 1 ÀÌµÇ¼­ ¿¬¼â ÄŞº¸ Áõ°¡
+		comboChk++; // ì²˜ìŒ í„°ì¡Œì„ì‹œ 0 ì´ë˜ê³ 
+		// ì¬ê·€ì ìœ¼ë¡œ ì´êµ¬ê°„ì„ ë˜ ê±°ì¹ ë•Œ í„°ì¡Œìœ¼ë¯€ë¡œ 1 ì´ë˜ì„œ ì—°ì‡„ ì½¤ë³´ ì¦ê°€
 		if (comboChk > 0)
 			this.comboCnt++;
 		combo = comboCnt * (jum * 2);
 
 	}
 
-	void item(HashSet<MyLabel> bombArr) { // ¾ÆÀÌÅÛ ºí·°ÀÌ ÅÍÁ³³ª ¾ÈÅÍÁ³³ª¸¦ °¨º°
-		// ¾ÆÀÌÅÛÀ» º¸³»°í ³»ºÎºĞÀ» ´Ù½Ã ¾÷µ¥ÀÌÆ® ÇÏ´Â ºÎºĞÀÌ Áß¿ä
-		// ±×·³ º¸³¾¶§¸¶´Ù »õ·Î»ı¼ºÇØ ? meInfo¸¦ ... ?
+	void item(HashSet<MyLabel> bombArr) { // ì•„ì´í…œ ë¸”ëŸ­ì´ í„°ì¡Œë‚˜ ì•ˆí„°ì¡Œë‚˜ë¥¼ ê°ë³„
+		// ì•„ì´í…œì„ ë³´ë‚´ê³  ë‚´ë¶€ë¶„ì„ ë‹¤ì‹œ ì—…ë°ì´íŠ¸ í•˜ëŠ” ë¶€ë¶„ì´ ì¤‘ìš”
+		// ê·¸ëŸ¼ ë³´ë‚¼ë•Œë§ˆë‹¤ ìƒˆë¡œìƒì„±í•´ ? meInfoë¥¼ ... ?
 
 		ArrayList<MyLabel> item = new ArrayList<MyLabel>(bombArr);
 
-		// ÅÍÁø ¿ä¼ÒÁß¿¡ ¾ÆÀÌÅÛ ºí·°ÀÌ ÀÖ´ÂÁö È®ÀÎ
+		// í„°ì§„ ìš”ì†Œì¤‘ì— ì•„ì´í…œ ë¸”ëŸ­ì´ ìˆëŠ”ì§€ í™•ì¸
 		for (MyLabel myLabel : item) {
 
 			if (myLabel.getName().equals("ninja")) {
-				meInfo.itemChk = true; // ÀÖ´Ù¸é true
-				// System.out.println("¾ÆÀÌÅÛÀÌ ÅÍÁö¸é ¿­·Î ¿Í¿ä : " + meInfo.itemChk);
-				// ÇÁ·¹ÀÓ¿¡¼­ »÷µåÈÄ ´Ù½Ã false·Î ¹Ù²Ş
+				meInfo.itemChk = true; // ìˆë‹¤ë©´ true
+				// System.out.println("ì•„ì´í…œì´ í„°ì§€ë©´ ì—´ë¡œ ì™€ìš” : " + meInfo.itemChk);
+				// í”„ë ˆì„ì—ì„œ ìƒŒë“œí›„ ë‹¤ì‹œ falseë¡œ ë°”ê¿ˆ
 				break;
 			}
 
@@ -525,34 +524,34 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void empty() { // ÅÍÁø »Ñ¿ä°¡ ÀÖÀ¸¸é ºó°ø°£À» ¸Ş²Ù´Â ¸Ş¼Òµå ½ÇÇà
+	void empty() { // í„°ì§„ ë¿Œìš”ê°€ ìˆìœ¼ë©´ ë¹ˆê³µê°„ì„ ë©”ê¾¸ëŠ” ë©”ì†Œë“œ ì‹¤í–‰
 
 		for (MyLabel puyo : bombArr) {
-			// ÅÍÁø »Ñ¿ä¸¦ ¸Ê °ú ¾î·¹ÀÌ¿¡¼­ »èÁ¦
+			// í„°ì§„ ë¿Œìš”ë¥¼ ë§µ ê³¼ ì–´ë ˆì´ì—ì„œ ì‚­ì œ
 			map.get(puyo.getName()).remove(puyo);
 			meInfo.puyos.remove(equalsPuyo(puyo));
-			puyoLbs.remove(puyo); // Çª¿äµéÀÌ ´ã±ä ¹è¿­¿¡¼­ »èÁ¦
+			puyoLbs.remove(puyo); // í‘¸ìš”ë“¤ì´ ë‹´ê¸´ ë°°ì—´ì—ì„œ ì‚­ì œ
 		}
 
 		emptyMove();
 
 	}
 
-	void emptyMove() { // ÀÚµ¿ÀûÀÎ ¿òÁ÷ÀÓÀº yÃà¸¸ ¾÷µ¥ÀÌÆ® ÇÏ¸é µË´Ï´Ù.
+	void emptyMove() { // ìë™ì ì¸ ì›€ì§ì„ì€ yì¶•ë§Œ ì—…ë°ì´íŠ¸ í•˜ë©´ ë©ë‹ˆë‹¤.
 
-		// ¾Æ¿¡ Ã³À½ºÎÅÍ ¾÷µ¥ÀÌÆ® µÉ ³à¼®¸¸ °¡Á®¿ÀÀÚ
-		// ¹Ù´Ú¿¡ ÀÖ´Â ¾ÆÀÌµéÀ½ ¿òÁ÷ÀÓÀÌ ÇÊ¿ä ¾øÀ¸¹Ç·Î Á¦¿Ü
+		// ì•„ì— ì²˜ìŒë¶€í„° ì—…ë°ì´íŠ¸ ë  ë…€ì„ë§Œ ê°€ì ¸ì˜¤ì
+		// ë°”ë‹¥ì— ìˆëŠ” ì•„ì´ë“¤ìŒ ì›€ì§ì„ì´ í•„ìš” ì—†ìœ¼ë¯€ë¡œ ì œì™¸
 
 		modifyNode();
 
-		// HashSet¿¡ ´ã¾Æ TreeSetÀ¸·Î ¿È±â´Â ÀÛ¾÷À» ÅëÇØ
-		// ¾Æ·¡¼­ ºÎÅÍ Â÷·ÊÂ÷·Ê ¾÷µ¥ÀÌÆ® °¡´É
-		HashSet<MyLabel> up = new HashSet<MyLabel>(); // hashSet => ¿¡µå°¡ °ãÄ¡°Ô µÇ´Â ¿À·ù ¹ß°ß
+		// HashSetì— ë‹´ì•„ TreeSetìœ¼ë¡œ ì˜´ê¸°ëŠ” ì‘ì—…ì„ í†µí•´
+		// ì•„ë˜ì„œ ë¶€í„° ì°¨ë¡€ì°¨ë¡€ ì—…ë°ì´íŠ¸ ê°€ëŠ¥
+		HashSet<MyLabel> up = new HashSet<MyLabel>(); // hashSet => ì—ë“œê°€ ê²¹ì¹˜ê²Œ ë˜ëŠ” ì˜¤ë¥˜ ë°œê²¬
 
-		for (MyLabel puyo : bombArr) { // ÅÍÁø ¾Öµé
-			for (MyLabel pu : puyoLbs) { // ÅÍÁø¾ÖµéÀº »©°í
-				if (puyo.getX() == pu.getX()) { // »èÁ¦µÈ »Ñ¿ä¿Í x°¡ °°°í
-					if (puyo.getY() > pu.getY()) { // »èÁ¦µÈ »Ñ¿äº¸´Ù À§¿¡ ÀÖ´Ù¸é...
+		for (MyLabel puyo : bombArr) { // í„°ì§„ ì• ë“¤
+			for (MyLabel pu : puyoLbs) { // í„°ì§„ì• ë“¤ì€ ë¹¼ê³ 
+				if (puyo.getX() == pu.getX()) { // ì‚­ì œëœ ë¿Œìš”ì™€ xê°€ ê°™ê³ 
+					if (puyo.getY() > pu.getY()) { // ì‚­ì œëœ ë¿Œìš”ë³´ë‹¤ ìœ„ì— ìˆë‹¤ë©´...
 						equalsPuyo(pu).stopChk = false;
 						up.add(pu);
 
@@ -565,20 +564,20 @@ public class MePuyoPanel extends JPanel {
 
 		TreeSet<MyLabel> updatePuyo = new TreeSet<MyLabel>(up);
 
-		if (updatePuyo.size() == 0) { // ¾÷µ¥ÀÌÆ® µÉ ¿ä¼Ò°¡ ¾ø´Ù¸é ¸®ÅÏ
+		if (updatePuyo.size() == 0) { // ì—…ë°ì´íŠ¸ ë  ìš”ì†Œê°€ ì—†ë‹¤ë©´ ë¦¬í„´
 			return;
 		}
 
-		// ÀÖ´Ù¸é ¾Æ·¡¿Í °°ÀÌ ÁøÇà
+		// ìˆë‹¤ë©´ ì•„ë˜ì™€ ê°™ì´ ì§„í–‰
 
-		emptyEndMove(updatePuyo); // ¿ä¼ÒµéÀÌ ÅÍÁ®¼­ ÀÌµ¿ÀÌ ³¡³­µÚ
+		emptyEndMove(updatePuyo); // ìš”ì†Œë“¤ì´ í„°ì ¸ì„œ ì´ë™ì´ ëë‚œë’¤
 		modifyNode();
 
-		if (bombChk()) { // Àç±ÍÀûÀ¸·Î ÅÍÁú °÷ÀÌ ÀÖ³ª °Ë»öÇÕ´Ï´Ù.
+		if (bombChk()) { // ì¬ê·€ì ìœ¼ë¡œ í„°ì§ˆ ê³³ì´ ìˆë‚˜ ê²€ìƒ‰í•©ë‹ˆë‹¤.
 			bomb();
 		}
 
-	} // move ÇÔ¼ö ³¡
+	} // move í•¨ìˆ˜ ë
 
 	void emptyEndMove(TreeSet<MyLabel> updatePuyo) {
 
@@ -594,12 +593,12 @@ public class MePuyoPanel extends JPanel {
 
 				}
 
-				if (updatePuyo.size() == index) // ¾÷µ¥ÀÌÆ® ¸ñ·Ï ¾øÀ½ retuen
+				if (updatePuyo.size() == index) // ì—…ë°ì´íŠ¸ ëª©ë¡ ì—†ìŒ retuen
 					return;
 
 				if (!equalsPuyo(puyo).stopChk) {
 
-					endMove(equalsPuyo(puyo), puyo); // »Ñ¿ä°¡ ¹ØÀ¸·Î Èê·¯³»·Á °©´Ï´Ù.
+					endMove(equalsPuyo(puyo), puyo); // ë¿Œìš”ê°€ ë°‘ìœ¼ë¡œ í˜ëŸ¬ë‚´ë ¤ ê°‘ë‹ˆë‹¤.
 					updateInfo();
 					sleepThread();
 
@@ -610,7 +609,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	Puyo equalsPuyo(MyLabel lb) { // ÇöÀçÀÇ ¶óº§¿¡ ¸Â´Â puyo Å¬·¡½º¸¦ ¹İÈ¯ÇÏ´Â ¸Ş¼Òµå
+	Puyo equalsPuyo(MyLabel lb) { // í˜„ì¬ì˜ ë¼ë²¨ì— ë§ëŠ” puyo í´ë˜ìŠ¤ë¥¼ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œ
 
 		int index = puyoLbs.indexOf(lb);
 
@@ -644,7 +643,7 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	ArrayList<MyLabel> positionUpdate(ArrayList<MyLabel> lbs) { // ÇÑÄ­¾¿ À§·Î ¿Ã·ÁÁİ´Ï´Ù.
+	ArrayList<MyLabel> positionUpdate(ArrayList<MyLabel> lbs) { // í•œì¹¸ì”© ìœ„ë¡œ ì˜¬ë ¤ì¤ë‹ˆë‹¤.
 
 		ArrayList<MyLabel> result = new ArrayList<MyLabel>(lbs);
 
@@ -665,7 +664,7 @@ public class MePuyoPanel extends JPanel {
 
 		removeComponent(this.puyoLbs);
 
-		// ¾ÆÀÌÅÛÀÌ Ãß°¡µÈ ¹è¿­·Î ¹Ù²ãÄ¡±â
+		// ì•„ì´í…œì´ ì¶”ê°€ëœ ë°°ì—´ë¡œ ë°”ê¿”ì¹˜ê¸°
 		this.puyoLbs = lbs;
 
 		changeMap(this.puyoLbs);
@@ -717,7 +716,7 @@ public class MePuyoPanel extends JPanel {
 
 	void painting(ArrayList<MyLabel> lbs) {
 
-		// ±×·ÁÁÖ±â ÀÛ¾÷ -- allStop µÇ¾úÀ» ½ÃÁ¡¿¡ ±×·Á ÁÖ¾î¾ßÇÔ....
+		// ê·¸ë ¤ì£¼ê¸° ì‘ì—… -- allStop ë˜ì—ˆì„ ì‹œì ì— ê·¸ë ¤ ì£¼ì–´ì•¼í•¨....
 
 		for (MyLabel myLabel : lbs) {
 			add(myLabel);
@@ -728,8 +727,8 @@ public class MePuyoPanel extends JPanel {
 
 	}
 
-	void updateInfo() { // ½Ã°£¸¶´Ù ÆĞ³ÎÀÇ Á¤º¸·Î
-		// Á¤º¸´Ù·ç´Â Å¬·¡½ºÀÇ Á¤º¸¸¦ ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+	void updateInfo() { // ì‹œê°„ë§ˆë‹¤ íŒ¨ë„ì˜ ì •ë³´ë¡œ
+		// ì •ë³´ë‹¤ë£¨ëŠ” í´ë˜ìŠ¤ì˜ ì •ë³´ë¥¼ ì—…ë°ì´íŠ¸ í•œë‹¤.
 		// System.out.println("updateInfo");
 
 		for (int i = 0; i < puyoLbs.size(); i++) {
@@ -759,7 +758,7 @@ public class MePuyoPanel extends JPanel {
 		}
 	}
 
-	void updateRank() { // ·©Å· ¾÷µ¥ÀÌÆ®
+	void updateRank() { // ë­í‚¹ ì—…ë°ì´íŠ¸
 
 		RankDTO dto = new RankDAO().detail(id);
 
@@ -785,7 +784,7 @@ public class MePuyoPanel extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) { // °ÔÀÓÀÌ ³¡³µÀ»½Ã Åõ¸íµµ¸¦ ¼³Á¤
+	public void paint(Graphics g) { // ê²Œì„ì´ ëë‚¬ì„ì‹œ íˆ¬ëª…ë„ë¥¼ ì„¤ì •
 		super.paint(g);
 		if (!this.meInfo.endGame)
 			return;

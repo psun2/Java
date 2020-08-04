@@ -1,6 +1,6 @@
 package jdbc_p;
 
-public class RankDTO { // DB¸¦ ±³È¯ÇØÁÖ´Â ¿ªÇÒ. ¿©±â´Â getter¶û setter·Î ÀÌ·ç¾îÁü
+public class RankDTO { // DBë¥¼ êµí™˜í•´ì£¼ëŠ” ì—­í• . ì—¬ê¸°ëŠ” getterë‘ setterë¡œ ì´ë£¨ì–´ì§
 
 	String id;
 	Integer score, rank;
@@ -30,8 +30,8 @@ public class RankDTO { // DB¸¦ ±³È¯ÇØÁÖ´Â ¿ªÇÒ. ¿©±â´Â getter¶û setter·Î ÀÌ·ç¾îÁ
 	}
 
 	@Override
-	public String toString() { // µ¥ÀÌÅÍ°ª ¾îÄÉ °¡Á®¿À´ÂÁö º¸·Á°í ¸¸µë
-		return "¼øÀ§ : " + rank + ", ID  : " + id + ", Á¡¼ö : " + score;
+	public String toString() { // ë°ì´í„°ê°’ ì–´ì¼€ ê°€ì ¸ì˜¤ëŠ”ì§€ ë³´ë ¤ê³  ë§Œë“¬
+		return "ìˆœìœ„ : " + rank + ", ID  : " + id + ", ì ìˆ˜ : " + score;
 	}
 
 }

@@ -47,7 +47,7 @@ public class GameUserDTO {
 	@Override
 	public String toString() {
 
-		return name + "´ÔÀÇ [id=" + id + ", pw=" + pw + "]";
+		return name + "ë‹˜ì˜ [id=" + id + ", pw=" + pw + "]";
 
 	}
 

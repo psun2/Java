@@ -2,8 +2,8 @@ package ddong;
 
 public class InitData {
 
-	public static String ip = "192.168.1.9"; // ¹ßÇ¥¼­¹ö
-//	public static String ip = "192.168.0.117"; // ÀÚ½À½Ç ¼­¹ö
+	public static String ip = "192.168.1.9"; // ë°œí‘œì„œë²„
+//	public static String ip = "192.168.0.117"; // ììŠµì‹¤ ì„œë²„
 	public static String id = "hr", pw = "hr";
 
 }

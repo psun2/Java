@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import ddong.InitData;
 
-//DAO µ¥ÀÌÅÍº£ÀÌ½º¿¡ Á¢±ÙÇØ¼­ ÀÛ¾÷À» ÇÏ´Â ºÎºĞÀ» ¼ÒÀ¯ÇÑ Å¬·¡½º 
+//DAO ë°ì´í„°ë² ì´ìŠ¤ì— ì ‘ê·¼í•´ì„œ ì‘ì—…ì„ í•˜ëŠ” ë¶€ë¶„ì„ ì†Œìœ í•œ í´ë˜ìŠ¤ 
 public class GameUserDAO {
 
 	Connection con = null;
@@ -66,7 +66,7 @@ public class GameUserDAO {
 		return res;
 	}
 
-	// ·Î±×ÀÎ ºÎºĞ~~~~~~
+	// ë¡œê·¸ì¸ ë¶€ë¶„~~~~~~
 	public boolean Login(String id, String pw) {
 		boolean result = false;
 
@@ -74,18 +74,18 @@ public class GameUserDAO {
 			stmt = con.createStatement();
 
 			sql = "select * from gameuser where id='" + id + "'";
-			rs = stmt.executeQuery(sql); // ÀĞ¾î¿À´Â°Å¶ó ´Ù¸£´Ù ºñ±³ÇØ //¸®ÅÏÅ¸ÀÔÀÌ ResultSet
+			rs = stmt.executeQuery(sql); // ì½ì–´ì˜¤ëŠ”ê±°ë¼ ë‹¤ë¥´ë‹¤ ë¹„êµí•´ //ë¦¬í„´íƒ€ì…ì´ ResultSet
 
-			if (rs.next() == false || (id.isEmpty()) == true) { // id°¡ Á¸Àçx
+			if (rs.next() == false || (id.isEmpty()) == true) { // idê°€ ì¡´ì¬x
 				result = false;
 			} else {
 				sql = "select * from (select * from gameuser where id='" + id + "')";
 				rs = stmt.executeQuery(sql);
-				while (rs.next() == true) { // ´ÙÀ½°ªÀÇ
-					if (rs.getString(1).equals(id) && rs.getString(2).equals(pw)) { // pw¿Í °°ÀºÁö ºñ±³
-						result = true; // °°À¸¸é ·Î±×ÀÎ ¼º°ø
+				while (rs.next() == true) { // ë‹¤ìŒê°’ì˜
+					if (rs.getString(1).equals(id) && rs.getString(2).equals(pw)) { // pwì™€ ê°™ì€ì§€ ë¹„êµ
+						result = true; // ê°™ìœ¼ë©´ ë¡œê·¸ì¸ ì„±ê³µ
 						break;
-					} else { // ¾ÆÀÌµğ´Â°°°í pw°¡ ´Ù¸¥°æ¿ì
+					} else { // ì•„ì´ë””ëŠ”ê°™ê³  pwê°€ ë‹¤ë¥¸ê²½ìš°
 						result = false;
 
 						break;
@@ -98,7 +98,7 @@ public class GameUserDAO {
 		return result;
 	}
 
-	// ¾ÆÀÌµğ ºñ¹ø Ã£±â
+	// ì•„ì´ë”” ë¹„ë²ˆ ì°¾ê¸°
 	public GameUserDTO find(String name, String birth, String email) {
 
 		GameUserDTO dto = new GameUserDTO();
@@ -108,16 +108,16 @@ public class GameUserDAO {
 			sql = "select * from gameuser where email='" + email + "'" + "and name='" + name + "'" + "and birth='"
 					+ birth + "'";
 			// sql = "select * from gameuser where email='" + email + "'";
-			rs = stmt.executeQuery(sql); // ÀĞ¾î¿À´Â°Å¶ó ´Ù¸£´Ù ºñ±³ÇØ //¸®ÅÏÅ¸ÀÔÀÌ ResultSet
+			rs = stmt.executeQuery(sql); // ì½ì–´ì˜¤ëŠ”ê±°ë¼ ë‹¤ë¥´ë‹¤ ë¹„êµí•´ //ë¦¬í„´íƒ€ì…ì´ ResultSet
 
-			if (rs.next()) { // id°¡ Á¸Àçx
+			if (rs.next()) { // idê°€ ì¡´ì¬x
 				if (rs.getString(3).equals(name) && rs.getString(4).equals(birth) && rs.getString(5).equals(email)) {
 					dto.id = rs.getString("id");
 					dto.pw = rs.getString("pw");
 					dto.name = rs.getString("name");
 					dto.birth = rs.getString("birth");
 					dto.email = rs.getString("email");
-					// System.out.println(dto+"dao¿¡¼­ dto");
+					// System.out.println(dto+"daoì—ì„œ dto");
 				} else {
 					dto = null;
 				}
@@ -159,7 +159,7 @@ public class GameUserDAO {
 		return dto;
 	}
 
-	// È¸¿ø °¡ÀÔ¶õ~~~~~~~~~~
+	// íšŒì› ê°€ì…ë€~~~~~~~~~~
 	public int insert(GameUserDTO dto) {
 
 		int res = 0;
@@ -198,7 +198,7 @@ public class GameUserDAO {
 		return res;
 	}
 
-	// ¾ÆÀÌµğ Áßº¹°Ë»ç~~~~~~~
+	// ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬~~~~~~~
 	public int idChk(String id) {
 
 		int result = 1;
@@ -207,9 +207,9 @@ public class GameUserDAO {
 			stmt = con.createStatement();
 
 			sql = "select * from gameuser where id='" + id + "'";
-			rs = stmt.executeQuery(sql); // ÀĞ¾î¿À´Â°Å¶ó ´Ù¸£´Ù ºñ±³ÇØ //¸®ÅÏÅ¸ÀÔÀÌ ResultSet
+			rs = stmt.executeQuery(sql); // ì½ì–´ì˜¤ëŠ”ê±°ë¼ ë‹¤ë¥´ë‹¤ ë¹„êµí•´ //ë¦¬í„´íƒ€ì…ì´ ResultSet
 
-			if (rs.next() == false || (id.isEmpty()) == true) { // id°¡ Á¸Àçx
+			if (rs.next() == false || (id.isEmpty()) == true) { // idê°€ ì¡´ì¬x
 				result = 1;
 			} else {
 				sql = "select * from (select * from gameuser where id='" + id + "')";

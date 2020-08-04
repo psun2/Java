@@ -52,7 +52,7 @@ public class FinddingId extends JFrame{
 	
 	public FinddingId() {
 		getContentPane().setLayout(null);
-		setTitle("∞Ë¡§ √£±‚");
+		setTitle("Í≥ÑÏ†ï Ï∞æÍ∏∞");
 		setIconImage(new ImageIcon("./img/logo.png").getImage());
 		setSize(600, 700);
 		setLocationRelativeTo(null);
@@ -60,7 +60,7 @@ public class FinddingId extends JFrame{
 		setResizable(false);
 		
 
-		JLabel lbJoinId_1_1_1 = new JLabel("¿Ã∏ﬁ¿œ");
+		JLabel lbJoinId_1_1_1 = new JLabel("Ïù¥Î©îÏùº");
 		lbJoinId_1_1_1.setBounds(138, 291, 74, 27);
 		getContentPane().add(lbJoinId_1_1_1);
 
@@ -68,19 +68,19 @@ public class FinddingId extends JFrame{
 		
 	      Calendar calders = Calendar.getInstance();
 	      
-	      JComboBox year= new JComboBox();  //≥‚
+	      JComboBox year= new JComboBox();  //ÎÖÑ
 	      year.setBounds(245, 250, 74, 23);
 	      for (int i = 1920; i <= 2020; i++) {
 	    	  year.addItem(i);
 	      }
 	      
-	      JComboBox month = new JComboBox(); //ø˘
+	      JComboBox month = new JComboBox(); //Ïõî
 	      month.setBounds(340, 250, 52, 23);
 	      for (int i = 1; i <=12; i++) {
 	    	  month.addItem(i);
 	      }      
 	      
-	      JComboBox<Integer> day = new JComboBox(); // ¿œ
+	      JComboBox<Integer> day = new JComboBox(); // Ïùº
 	      day.setBounds(410, 250, 46, 23);
 	      
 	      for (int i = 1; i <=31; i++) {
@@ -88,15 +88,15 @@ public class FinddingId extends JFrame{
 	      }      
 	      
 	      
-	      JLabel lblNewLabel_2 = new JLabel("≥‚");
+	      JLabel lblNewLabel_2 = new JLabel("ÎÖÑ");
 	      lblNewLabel_2.setBounds(325, 250, 21, 27);
 	      getContentPane().add(lblNewLabel_2);
 	      
-	      JLabel lblNewLabel_2_1 = new JLabel("ø˘");
+	      JLabel lblNewLabel_2_1 = new JLabel("Ïõî");
 	      lblNewLabel_2_1.setBounds(395, 250, 21, 27);
 	      getContentPane().add(lblNewLabel_2_1);
 	      
-	      JLabel lblNewLabel_2_1_1 = new JLabel("¿œ");
+	      JLabel lblNewLabel_2_1_1 = new JLabel("Ïùº");
 	      lblNewLabel_2_1_1.setBounds(465, 250, 21, 27);
 	      getContentPane().add(lblNewLabel_2_1_1);
 	      
@@ -157,13 +157,13 @@ public class FinddingId extends JFrame{
 		emailText.setBounds(245, 291, 209, 27);
 		getContentPane().add(emailText);
 
-		closeBtn = new JButton("¡æ∑·");
+		closeBtn = new JButton("Ï¢ÖÎ£å");
 		closeBtn.setBackground(Color.LIGHT_GRAY);
 		closeBtn.setBounds(305, 416, 129, 29);
 		getContentPane().add(closeBtn);
 		closeBtn.addActionListener(actBtn);
 
-		findBtn = new JButton("√£±‚");
+		findBtn = new JButton("Ï∞æÍ∏∞");
 		findBtn.setBackground(Color.LIGHT_GRAY);
 		findBtn.setBounds(159, 416, 129, 29);
 		getContentPane().add(findBtn);
@@ -195,21 +195,21 @@ public class FinddingId extends JFrame{
 
 			if (e.getSource() == findBtn) {
 				String name = nameText.getText().trim();
-				String birth = yearL + "≥‚" + monthL + "ø˘" + dayL + "¿œ";
+				String birth = yearL + "ÎÖÑ" + monthL + "Ïõî" + dayL + "Ïùº";
 				String mail = emailText.getText().trim();
-				System.out.println(birth+"π˙Ω∫π˙Ω∫");
+				System.out.println(birth+"Î≤åÏä§Î≤åÏä§");
 				while (true) {
 					GameUserDTO dto = new GameUserDTO();
 
 					if (name.equals("")) {
-						JOptionPane.showMessageDialog(null, "¿Ã∏ß¿ª ¿‘∑¬«ÿ ¡÷ººø‰");
+						JOptionPane.showMessageDialog(null, "Ïù¥Î¶ÑÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî");
 						break;
 					} else {
 						dto.setName(name);
 					}
 					
 					if (yearL==0 || monthL==0 || monthL==0) {
-						JOptionPane.showMessageDialog(null, "ª˝¿œ¿ª ¿‘∑¬«ÿ ¡÷ººø‰");
+						JOptionPane.showMessageDialog(null, "ÏÉùÏùºÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî");
 						break;
 					} else {
 						dto.setBirth(birth);
@@ -217,7 +217,7 @@ public class FinddingId extends JFrame{
 					}
 
 					if (mail.equals("")) {
-						JOptionPane.showMessageDialog(null, "∏ﬁ¿œ¿ª ¿‘∑¬«ÿ ¡÷ººø‰");
+						JOptionPane.showMessageDialog(null, "Î©îÏùºÏùÑ ÏûÖÎ†•Ìï¥ Ï£ºÏÑ∏Ïöî");
 						break;
 					} else {
 						dto.setEmail(mail);
@@ -230,12 +230,12 @@ public class FinddingId extends JFrame{
 
 					if (findname != null && findId != null && findPw != null ) {
 						JOptionPane.showMessageDialog(null,
-								findname + "¥‘¿« æ∆¿Ãµ : " + findId + " ∫Òπ–π¯»£ : " + findPw + " ¿‘¥œ¥Ÿ.");
+								findname + "ÎãòÏùò ÏïÑÏù¥Îîî : " + findId + " ÎπÑÎ∞ÄÎ≤àÌò∏ : " + findPw + " ÏûÖÎãàÎã§.");
 						pwF.clear();
 						dispose();
 						new Login();
 					}else{
-						JOptionPane.showMessageDialog(null, "¿Ø»ø«œ¡ˆ æ ¿∫ ¡§∫∏ ¿‘¥œ¥Ÿ.");
+						JOptionPane.showMessageDialog(null, "Ïú†Ìö®ÌïòÏßÄ ÏïäÏùÄ Ï†ïÎ≥¥ ÏûÖÎãàÎã§.");
 						pwF.clear();
 					}
 

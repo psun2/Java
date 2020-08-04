@@ -13,9 +13,6 @@ import javax.swing.JLabel;
 
 import ddong.ClientNetWork;
 import ddong.DDongData;
-import ddong.DDongInter;
-import jdbc_p.GameRoomDAO;
-import jdbc_p.GameRoomDTO;
 import jdbc_p.LobbyDAO;
 import lobby_p.Lobby_Main;
 
@@ -36,15 +33,15 @@ public class ModalFrame extends JFrame implements WindowListener {
 
 		init(frame);
 
-		setSize(width, height); // ÇÁ·¹ÀÓ »çÀÌÁî
-		setLocationRelativeTo(null); // ÇÁ·¹ÀÓ ½ÃÀÛ½Ã ¸ğ´ÏÅÍ Áß¾Ó¿¡ Ãâ·Â
-		setResizable(false); // ÇÁ·¹ÀÓ »çÀÌÁî Á¶Àı ÇÒ ¼ö ¾øÀ½
-		getContentPane().setLayout(new GridLayout(2, 1)); // ·¹ÀÌ2¾Æ¿ô
-		setTitle("°ÔÀÓ Á¾·á");
-		setIconImage(new ImageIcon("./img/logo.png").getImage()); // Å¸ÀÌÆ²¹Ù ·Î°í ¼³Á¤
+		setSize(width, height); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ
+		setLocationRelativeTo(null); // í”„ë ˆì„ ì‹œì‘ì‹œ ëª¨ë‹ˆí„° ì¤‘ì•™ì— ì¶œë ¥
+		setResizable(false); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ ì¡°ì ˆ í•  ìˆ˜ ì—†ìŒ
+		getContentPane().setLayout(new GridLayout(2, 1)); // ë ˆì´2ì•„ì›ƒ
+		setTitle("ê²Œì„ ì¢…ë£Œ");
+		setIconImage(new ImageIcon("./img/logo.png").getImage()); // íƒ€ì´í‹€ë°” ë¡œê³  ì„¤ì •
 		getContentPane().setBackground(Color.white);
 
-		JLabel textLb = new JLabel(frame.enemyId + " ´Ô°úÀÇ ½ÂºÎ¿¡¼­ " + result);
+		JLabel textLb = new JLabel(frame.enemyId + " ë‹˜ê³¼ì˜ ìŠ¹ë¶€ì—ì„œ " + result);
 		textLb.setHorizontalAlignment(JLabel.CENTER);
 		add(textLb);
 
@@ -52,11 +49,11 @@ public class ModalFrame extends JFrame implements WindowListener {
 		textLb2.setHorizontalAlignment(JLabel.CENTER);
 		add(textLb2);
 
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ÇÁ·¹ÀÓ ´İ±â ¿É¼Ç
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ÇÁ·¹ÀÓ ´İ±â ºñÈ°¼ºÈ­
-		setVisible(true); // ÇÁ·¹ÀÓÀ» º¸¿©ÁÜ
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // í”„ë ˆì„ ë‹«ê¸° ì˜µì…˜
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // í”„ë ˆì„ ë‹«ê¸° ë¹„í™œì„±í™”
+		setVisible(true); // í”„ë ˆì„ì„ ë³´ì—¬ì¤Œ
 
-		addWindowListener(this); // À©µµ¿ìÃ¢À» x·Î ´İÀ¸¸é ´İÈ÷°Ô ÇÑ´Ù
+		addWindowListener(this); // ìœˆë„ìš°ì°½ì„ xë¡œ ë‹«ìœ¼ë©´ ë‹«íˆê²Œ í•œë‹¤
 
 		endTimer();
 
@@ -83,7 +80,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 				while (second >= 0) {
 
 					try {
-						ModalFrame.this.textLb2.setText(second + "ÃÊ ÈÄ ·Îºñ·Î ÀÌµ¿µË´Ï´Ù.");
+						ModalFrame.this.textLb2.setText(second + "ì´ˆ í›„ ë¡œë¹„ë¡œ ì´ë™ë©ë‹ˆë‹¤.");
 						Thread.sleep(1000);
 						second--;
 					} catch (Exception e) {
@@ -100,7 +97,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 	void goLobby() {
 
 		ModalFrame.this.dispose();
-		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ÀÌ°Ô ¸ÔÈ÷³ª ?
+		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì´ê²Œ ë¨¹íˆë‚˜ ?
 		ModalFrame.this.frame.dispose();
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -111,7 +108,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 		new Lobby_Main(frame.cn);
 
 		DDongData data = new DDongData();
-		data.type = "·Îºñ";
+		data.type = "ë¡œë¹„";
 		data.data = null;
 		frame.cn.send(data);
 
@@ -124,7 +121,7 @@ public class ModalFrame extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) { // °­Á¦ Á¾·á½Ã.....
+	public void windowClosing(WindowEvent e) { // ê°•ì œ ì¢…ë£Œì‹œ.....
 		// TODO Auto-generated method stub
 		frame.updateRoomDb();
 

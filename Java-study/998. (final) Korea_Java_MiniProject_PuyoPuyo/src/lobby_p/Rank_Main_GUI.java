@@ -1,4 +1,4 @@
-// 200729 ¼öÁ¤¿Ï·á
+// 200729 ìˆ˜ì •ì™„ë£Œ
 package lobby_p;
 
 import java.awt.Font;
@@ -29,7 +29,7 @@ class User implements Comparable<User>{
    }
 
 
-   void rankCalc(TreeSet<User> you){ // ¼øÀ§ ¸Ş±â´Â °÷
+   void rankCalc(TreeSet<User> you){ // ìˆœìœ„ ë©”ê¸°ëŠ” ê³³
 
       rank = 1;
 
@@ -42,7 +42,7 @@ class User implements Comparable<User>{
       dto.setId(id);
       dto.setRank(rank);
 
-      new RankDAO().modifyRank(dto); // ¼øÀ§¸Ş±â°í ¼øÀ§°ª DB¿¡ ÀúÀå
+      new RankDAO().modifyRank(dto); // ìˆœìœ„ë©”ê¸°ê³  ìˆœìœ„ê°’ DBì— ì €ì¥
    }
 
 
@@ -54,7 +54,7 @@ class User implements Comparable<User>{
 
 
    @Override
-   public int compareTo(User you) { // Á¡¼ö Á¦ÀÏ ³ôÀº ¼øÀ¸·Î Ãâ·Â
+   public int compareTo(User you) { // ì ìˆ˜ ì œì¼ ë†’ì€ ìˆœìœ¼ë¡œ ì¶œë ¥
 
       int res = you.score - score;
 
@@ -77,16 +77,16 @@ public class Rank_Main_GUI extends JPanel {
       setBounds(0,0, 636,902);
       setLayout(null);
 
-      // == DB¿¡¼­ Á¡¼ö¸¦ °¡Á®¿Í ¼øÀ§¸¦ ¸Ş±ä´Ù ========
+      // == DBì—ì„œ ì ìˆ˜ë¥¼ ê°€ì ¸ì™€ ìˆœìœ„ë¥¼ ë©”ê¸´ë‹¤ ========
       String id;
       Integer score;
 
-      TreeSet<User> userInfo = new TreeSet<User>(); // À¯ÀúµéÀÇ Á¤º¸¸¦ ´ãÀ» treeset, À¯Àúµé Á¡¼öºñ±³ÇØ¼­ ·©Å· 
+      TreeSet<User> userInfo = new TreeSet<User>(); // ìœ ì €ë“¤ì˜ ì •ë³´ë¥¼ ë‹´ì„ treeset, ìœ ì €ë“¤ ì ìˆ˜ë¹„êµí•´ì„œ ë­í‚¹ 
 
       RankDTO dto = new RankDTO();
       RankDAO dao = new RankDAO();
 
-      for (RankDTO info : new RankDAO().list()) { // DB¿¡ ÀÖ´Â Á¤º¸¸¦ ¼øÀ§ºñ±³¸¦ À§ÇØ TreeSet¿¡ ÀúÀå
+      for (RankDTO info : new RankDAO().list()) { // DBì— ìˆëŠ” ì •ë³´ë¥¼ ìˆœìœ„ë¹„êµë¥¼ ìœ„í•´ TreeSetì— ì €ì¥
 
          id = info.getId();
          score = info.getScore();
@@ -95,15 +95,15 @@ public class Rank_Main_GUI extends JPanel {
       }
 
 
-      int cnt = 0; // Å×ÀÌºí¿¡ µé¾î°¥ ³»¿ë ¹è¿­ ÁÙ¼ö Ã¼Å©¸¦ À§ÇØ »ı¼º
+      int cnt = 0; // í…Œì´ë¸”ì— ë“¤ì–´ê°ˆ ë‚´ìš© ë°°ì—´ ì¤„ìˆ˜ ì²´í¬ë¥¼ ìœ„í•´ ìƒì„±
 
-      Object [] index = {"RANK", "ID", "SCORE"}; // ·©Å·Å×ÀÌºí ÄÃ·³
-      Object [][] userL = new Object[userInfo.size()][3]; // À¯ÀúÀÇ ·©Å·, Á¡¼ö¸¦ ·©Å·¼øÀ¸·Î ´ãÀ» ¹è¿­
+      Object [] index = {"RANK", "ID", "SCORE"}; // ë­í‚¹í…Œì´ë¸” ì»¬ëŸ¼
+      Object [][] userL = new Object[userInfo.size()][3]; // ìœ ì €ì˜ ë­í‚¹, ì ìˆ˜ë¥¼ ë­í‚¹ìˆœìœ¼ë¡œ ë‹´ì„ ë°°ì—´
       Object [][] myRankL = new Object[1][1];
 
-      for (User chk : userInfo) { // ¼øÀ§¸¦ ¸Ş±â°í ¼øÀ§ ¼ø¼­´ë·Î Ãâ·Â ÈÄ ¹è¿­¿¡ ´ã¾ÆÁØ´Ù
+      for (User chk : userInfo) { // ìˆœìœ„ë¥¼ ë©”ê¸°ê³  ìˆœìœ„ ìˆœì„œëŒ€ë¡œ ì¶œë ¥ í›„ ë°°ì—´ì— ë‹´ì•„ì¤€ë‹¤
 
-         chk.rankCalc(userInfo); // ·©Å· °è»ê ÈÄ ¼ø¼­´ë·Î ´ã¾Æ ÁØ´Ù
+         chk.rankCalc(userInfo); // ë­í‚¹ ê³„ì‚° í›„ ìˆœì„œëŒ€ë¡œ ë‹´ì•„ ì¤€ë‹¤
 
          userL[cnt][0] = chk.rank;
          userL[cnt][1] = chk.id;
@@ -113,13 +113,13 @@ public class Rank_Main_GUI extends JPanel {
       }
 
 
-      JLabel totRank = new JLabel("ÀüÃ¼¼øÀ§");
+      JLabel totRank = new JLabel("ì „ì²´ìˆœìœ„");
       totRank.setBounds(29, 20, 110, 30);
-      totRank.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.PLAIN, 25));
+      totRank.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.PLAIN, 25));
       add(totRank);
 
       JTable rankT = new JTable(userL, index);
-      rankT.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.PLAIN, 13));
+      rankT.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.PLAIN, 13));
       rankT.setEnabled(false);
       JScrollPane sp2 = new JScrollPane(rankT);
       sp2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

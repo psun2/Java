@@ -1,9 +1,9 @@
 package game_p;
 
-public class PuyoTimer extends Thread { // Å¸ÀÌ¸Ó ¾²·¹µå // Á¡¼öµµ °°ÀÌ °ü¸®
+public class PuyoTimer extends Thread { // íƒ€ì´ë¨¸ ì“°ë ˆë“œ // ì ìˆ˜ë„ ê°™ì´ ê´€ë¦¬
 
-	MePuyoPanel panel; // ÇÁ·¹ÀÓ¿¡ ÀÖ´Â Á¤º¸¸¦ ¾÷µ¥ÀÌÆ® ÇÏ±â À§ÇØ ¹Ş¾Æ¿È
-	int second; // ÃÊ
+	MePuyoPanel panel; // í”„ë ˆì„ì— ìˆëŠ” ì •ë³´ë¥¼ ì—…ë°ì´íŠ¸ í•˜ê¸° ìœ„í•´ ë°›ì•„ì˜´
+	int second; // ì´ˆ
 	boolean first;
 
 	public PuyoTimer(MePuyoPanel panel) {
@@ -21,19 +21,19 @@ public class PuyoTimer extends Thread { // Å¸ÀÌ¸Ó ¾²·¹µå // Á¡¼öµµ °°ÀÌ °ü¸®
 
 			try {
 
-				if (panel.meInfo.endGame) // °ÔÀÓÀÌ ³¡³¯¶§±îÁö °è¼Ó µ·´Ù
+				if (panel.meInfo.endGame) // ê²Œì„ì´ ëë‚ ë•Œê¹Œì§€ ê³„ì† ëˆë‹¤
 					return;
 
 				if (!first) {
 
-					if (second % 30 == 0) { // 30ÃÊ¸¶´Ù ¼Óµµ°¡ 2¾¿ Áõ°¡
+					if (second % 30 == 0) { // 30ì´ˆë§ˆë‹¤ ì†ë„ê°€ 2ì”© ì¦ê°€
 
 						panel.step += 2;
 					}
 				}
-				panel.info.score.setText("Á¡¼ö : " + (panel.score + panel.combo) + "Á¡");
-				panel.info.combo.setText("¿¬¼â : " + panel.comboCnt + "¿¬¼â");
-				panel.info.second.setText("°æ°ú ½Ã°£ : " + second + "s");
+				panel.info.score.setText("ì ìˆ˜ : " + (panel.score + panel.combo) + "ì ");
+				panel.info.combo.setText("ì—°ì‡„ : " + panel.comboCnt + "ì—°ì‡„");
+				panel.info.second.setText("ê²½ê³¼ ì‹œê°„ : " + second + "s");
 
 				// updateInfo();
 				sleep(1000);

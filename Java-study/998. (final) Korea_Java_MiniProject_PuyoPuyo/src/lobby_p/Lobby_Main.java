@@ -36,8 +36,8 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 	public ClientNetWork cn;
 	DDongData dData;
 
-	JTextArea textArea; // ´ëÈ­ ³»¿ëµéÀÌ ÀÔ·ÂµÇ´Â Ã¢
-	JTextField wrArea; // ¸Ş¼¼Áö ÀÔ·ÂÃ¢
+	JTextArea textArea; // ëŒ€í™” ë‚´ìš©ë“¤ì´ ì…ë ¥ë˜ëŠ” ì°½
+	JTextField wrArea; // ë©”ì„¸ì§€ ì…ë ¥ì°½
 
 	RoomList roomList;
 
@@ -52,7 +52,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 		setSize(806, 700);
 		setLocationRelativeTo(null);
-		setTitle("Á©¸®Á©¸®"); // Å¸ÀÌÆ²
+		setTitle("ì ¤ë¦¬ì ¤ë¦¬"); // íƒ€ì´í‹€
 		setIconImage(new ImageIcon("./img/logo.png").getImage());
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.white);
@@ -60,43 +60,43 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 		setContentPane(contentPane);
 
 		
-		// == È­¸é À­ºÎºĞ =====================
+		// == í™”ë©´ ìœ—ë¶€ë¶„ =====================
 
-		// -- ¹æ ¸®½ºÆ® -------
+		// -- ë°© ë¦¬ìŠ¤íŠ¸ -------
 		roomList = new RoomList();
 
-		// -- ¹æ ¸®½ºÆ® ³¡ -------
+		// -- ë°© ë¦¬ìŠ¤íŠ¸ ë -------
 
-		// -- Á¢¼ÓÀ¯Àú ¸®½ºÆ® -------
+		// -- ì ‘ì†ìœ ì € ë¦¬ìŠ¤íŠ¸ -------
 		userList = new UserList();
-		// -- Á¢¼ÓÀ¯Àú ¸®½ºÆ® ³¡ -------
+		// -- ì ‘ì†ìœ ì € ë¦¬ìŠ¤íŠ¸ ë -------
 
-		// == È­¸é À­ºÎºĞ ³¡ =====================
+		// == í™”ë©´ ìœ—ë¶€ë¶„ ë =====================
 
 		
 		
-		// == È­¸é ¾Æ·§ºÎºĞ =====================
+		// == í™”ë©´ ì•„ë«ë¶€ë¶„ =====================
 
-		// -- Ã¤ÆÃÃ¢ -------
+		// -- ì±„íŒ…ì°½ -------
 		JPanel chatArea = new ChatUser();
 		chatArea.setBounds(20, 455, 570, 200);
 		chatArea.setBackground(Color.MAGENTA);
 		contentPane.add(chatArea);
-		// -- Ã¤ÆÃÃ¢ ³¡ -------
+		// -- ì±„íŒ…ì°½ ë -------
 
-		// -- ·©Å· ¹öÆ° -------
-		JButton rankBtn = new JButton("·©Å·");
-		rankBtn.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.BOLD, 16));
+		// -- ë­í‚¹ ë²„íŠ¼ -------
+		JButton rankBtn = new JButton("ë­í‚¹");
+		rankBtn.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.BOLD, 16));
 		rankBtn.setBounds(605, 455, 180, 115);
 		rankBtn.setBackground(Color.PINK);
 		contentPane.add(rankBtn);
 
 		rankBtn.addActionListener(new RankBtnAction());
-		// -- ·©Å· ¹öÆ° ³¡ -------
+		// -- ë­í‚¹ ë²„íŠ¼ ë -------
 
-		// -- ³ª°¡±â ¹öÆ° -------
-		JButton exitBtn = new JButton("°ÔÀÓÁ¾·á");
-		exitBtn.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.BOLD, 16));
+		// -- ë‚˜ê°€ê¸° ë²„íŠ¼ -------
+		JButton exitBtn = new JButton("ê²Œì„ì¢…ë£Œ");
+		exitBtn.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.BOLD, 16));
 		exitBtn.setBounds(605, 579, 180, 75);
 		exitBtn.setBackground(Color.lightGray);
 		contentPane.add(exitBtn);
@@ -109,15 +109,15 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 				new LobbyDAO().delete(cn.id);
 
 				dData = new DDongData();
-				dData.type = "·Îºñ";
+				dData.type = "ë¡œë¹„";
 				cn.send(dData);
 
 				System.exit(0);
 			}
 		});
-		// -- ³ª°¡±â ¹öÆ° -------
+		// -- ë‚˜ê°€ê¸° ë²„íŠ¼ -------
 
-		// == È­¸é ¾Æ·§ºÎºĞ ³¡ =====================
+		// == í™”ë©´ ì•„ë«ë¶€ë¶„ ë =====================
 
 		LobbyDAO dao = new LobbyDAO();
 
@@ -164,12 +164,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 				roombtn.setBounds(btnX, btnY, 184, 140);
 				roombtn.setBackground(Color.yellow);
 				roombtn.setName(Integer.toString(roomN));
-				roomTitle = "<html>NO. " + roomN + " (0 / 2)<br><br> >> ¹æ¸¸µé±â << </html>";
+				roomTitle = "<html>NO. " + roomN + " (0 / 2)<br><br> >> ë°©ë§Œë“¤ê¸° << </html>";
 				roombtn.setLabel(roomTitle);
-				roombtn.setFont(new Font("µ¸¿ò", Font.BOLD, 14));
+				roombtn.setFont(new Font("ë‹ì›€", Font.BOLD, 14));
 				this.add(roombtn);
 
-				// ¹æ¹öÆ°ÀÌ ´­·ÈÀ»¶§
+				// ë°©ë²„íŠ¼ì´ ëˆŒë ¸ì„ë•Œ
 				roombtn.addActionListener(new ActionListener() {
 
 					@Override
@@ -183,7 +183,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 								&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
 
 							roombtn.setBackground(Color.cyan);
-							roomTitle = "<html>NO. " + roomN + " (1 / 2)<br><br> >> ÀÔÀåÇÏ±â </html>";
+							roomTitle = "<html>NO. " + roomN + " (1 / 2)<br><br> >> ì…ì¥í•˜ê¸° </html>";
 							roombtn.setLabel(roomTitle);
 
 							dto.setNo(roomN);
@@ -193,12 +193,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 							new LobbyDAO().delete(cn.id);
 
-							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ¿©±â¼­ °ÔÀÓ»ı¼º
+							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ì—¬ê¸°ì„œ ê²Œì„ìƒì„±
 							goGame.cn = cn;
 							cn.ddInter = goGame;
 
 							dData = new DDongData();
-							dData.type = "°ÔÀÓ"; //
+							dData.type = "ê²Œì„"; //
 							cn.send(dData);
 
 							dispose();
@@ -207,7 +207,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 								&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
 
 							roombtn.setBackground(Color.MAGENTA);
-							roomTitle = "<html>NO. " + roomN + "(2 / 2)<br><br> - ÀÔÀåºÒ°¡ - </html>";
+							roomTitle = "<html>NO. " + roomN + "(2 / 2)<br><br> - ì…ì¥ë¶ˆê°€ - </html>";
 							roombtn.setLabel(roomTitle);
 
 							dto.setNo(roomN);
@@ -217,12 +217,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 							new LobbyDAO().delete(cn.id);
 
-							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ¿©±â¼­ °ÔÀÓ»ı¼º
+							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ì—¬ê¸°ì„œ ê²Œì„ìƒì„±
 							goGame.cn = cn;
 							cn.ddInter = goGame;
 
 							dData = new DDongData();
-							dData.type = "°ÔÀÓ"; // °ÔÀÓ¹æ¿¡¼­ DB¾÷µ¥ÀÌÆ® ½ÃÁ¡À» ¾Ë·ÁÁÖ±â À§ÇØ¼­ »ç¿ë
+							dData.type = "ê²Œì„"; // ê²Œì„ë°©ì—ì„œ DBì—…ë°ì´íŠ¸ ì‹œì ì„ ì•Œë ¤ì£¼ê¸° ìœ„í•´ì„œ ì‚¬ìš©
 							cn.send(dData);
 
 							dispose();
@@ -231,7 +231,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 								&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
 
 							roombtn.setBackground(Color.MAGENTA);
-							roomTitle = "<html>NO. " + roomN + "(2 / 2)<br><br> - ÀÔÀåºÒ°¡ - </html>";
+							roomTitle = "<html>NO. " + roomN + "(2 / 2)<br><br> - ì…ì¥ë¶ˆê°€ - </html>";
 							roombtn.setLabel(roomTitle);
 
 							dto.setNo(roomN);
@@ -241,12 +241,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 							new LobbyDAO().delete(cn.id);
 
-							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ¿©±â¼­ °ÔÀÓ»ı¼º
+							WaitRoomFrame goGame = new WaitRoomFrame(cn.id, roomN); // ì—¬ê¸°ì„œ ê²Œì„ìƒì„±
 							goGame.cn = cn;
 							cn.ddInter = goGame;
 
 							dData = new DDongData();
-							dData.type = "°ÔÀÓ"; //
+							dData.type = "ê²Œì„"; //
 							cn.send(dData);
 
 							dispose();
@@ -254,48 +254,48 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
 								&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
 
-							JOptionPane.showMessageDialog(null, "¹æÀÌ ²Ë Ã¡½À´Ï´Ù.\n´Ù¸¥¹æÀ» ÀÌ¿ëÇØ ÁÖ¼¼¿ä!!");
+							JOptionPane.showMessageDialog(null, "ë°©ì´ ê½‰ ì°¼ìŠµë‹ˆë‹¤.\në‹¤ë¥¸ë°©ì„ ì´ìš©í•´ ì£¼ì„¸ìš”!!");
 						}
 
 					}
-				}); // ¾×¼Ç¸®½º³Ê ³¡
-			} // for¹® ³¡
+				}); // ì•¡ì…˜ë¦¬ìŠ¤ë„ˆ ë
+			} // forë¬¸ ë
 
-		} // public RoomList() ³¡
+		} // public RoomList() ë
 
-		void roomBtn() { // ¹æ¹öÆ°
+		void roomBtn() { // ë°©ë²„íŠ¼
 
-			userList.init(); // ·ÎºñÀ¯Àú¸®½ºÆ®ÀÎµ¥ ¹æ¹öÆ° °»½ÅµÇ¸é¼­ °°ÀÌ µÇ°Ô ¸¸µé±â
+			userList.init(); // ë¡œë¹„ìœ ì €ë¦¬ìŠ¤íŠ¸ì¸ë° ë°©ë²„íŠ¼ ê°±ì‹ ë˜ë©´ì„œ ê°™ì´ ë˜ê²Œ ë§Œë“¤ê¸°
 
 			for (int i = 1; i < 19; i++) {
 
 				Integer roomN = i;
-				// ¹æÀÌ ¾÷µ¥ÀÌÆ® µÆÀ»¶§ ÀÛµ¿ µÉ ¾ÆÀÌ
+				// ë°©ì´ ì—…ë°ì´íŠ¸ ëì„ë•Œ ì‘ë™ ë  ì•„ì´
 				if (new GameRoomDAO().detailroom(roomN).getUser1() == null
 						&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
 
 					((JButton) this.getComponent(i - 1)).setBackground(Color.yellow);
-					roomTitle = "<html>NO. " + roomN + " (0 / 2)<br><br> >> ¹æ¸¸µé±â << </html>";
+					roomTitle = "<html>NO. " + roomN + " (0 / 2)<br><br> >> ë°©ë§Œë“¤ê¸° << </html>";
 					((JButton) this.getComponent(i - 1)).setLabel(roomTitle);
 
 				} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
 						&& new GameRoomDAO().detailroom(roomN).getUser2() == null) {
 
 					((JButton) this.getComponent(i - 1)).setBackground(Color.cyan);
-					roomTitle = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> ÀÔÀåÇÏ±â</html>";
+					roomTitle = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> ì…ì¥í•˜ê¸°</html>";
 					((JButton) this.getComponent(i - 1)).setLabel(roomTitle);
 
 				} else if (new GameRoomDAO().detailroom(roomN).getUser1() != null
 						&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
 
 					((JButton) this.getComponent(i - 1)).setBackground(Color.MAGENTA);
-					roomTitle = "<html>NO. " + roomN + " (2 / 2)<br><br> - ÀÔÀåºÒ°¡ - </html>";
+					roomTitle = "<html>NO. " + roomN + " (2 / 2)<br><br> - ì…ì¥ë¶ˆê°€ - </html>";
 					((JButton) this.getComponent(i - 1)).setLabel(roomTitle);
 				} else if (new GameRoomDAO().detailroom(roomN).getUser1() == null
 						&& new GameRoomDAO().detailroom(roomN).getUser2() != null) {
 
 					((JButton) this.getComponent(i - 1)).setBackground(Color.cyan);
-					roomTitle = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> ÀÔÀåÇÏ±â</html>";
+					roomTitle = "<html>NO. " + roomN + "  (1 / 2)<br><br> >> ì…ì¥í•˜ê¸°</html>";
 					((JButton) this.getComponent(i - 1)).setLabel(roomTitle);
 				}
 			}
@@ -318,9 +318,9 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			setLayout(null);
 			contentPane.add(this);
 
-			JLabel lobbyList = new JLabel("·Îºñ Á¢¼Ó À¯Àú");
+			JLabel lobbyList = new JLabel("ë¡œë¹„ ì ‘ì† ìœ ì €");
 			lobbyList.setBounds(0, 0, 180, 25);
-			lobbyList.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.PLAIN, 20));
+			lobbyList.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.PLAIN, 20));
 			lobbyList.setHorizontalAlignment(JLabel.CENTER);
 			add(lobbyList);
 		}
@@ -345,7 +345,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 
 			lobbyT = new JTable(lobbyL, index);
 			lobbyT.setEnabled(false);
-			lobbyT.setFont(new Font("ÈŞ¸ÕµÕ±ÙÇìµå¶óÀÎ", Font.PLAIN, 13));
+			lobbyT.setFont(new Font("íœ´ë¨¼ë‘¥ê·¼í—¤ë“œë¼ì¸", Font.PLAIN, 13));
 			sp2 = new JScrollPane(lobbyT);
 			sp2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			sp2.setBounds(0, 30, 180, 390);
@@ -354,8 +354,8 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 		}
 	}
 
-	// == ·©Å·¹öÆ° ¸®½º³Ê ===
-	class RankBtnAction implements ActionListener { // ·©Å· ¹öÆ° ¸®½º³Ê
+	// == ë­í‚¹ë²„íŠ¼ ë¦¬ìŠ¤ë„ˆ ===
+	class RankBtnAction implements ActionListener { // ë­í‚¹ ë²„íŠ¼ ë¦¬ìŠ¤ë„ˆ
 
 		public RankBtnAction() {
 
@@ -367,41 +367,41 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 			JFrame rankPop = new JFrame();
 			rankPop.setSize(520, 570);
 			rankPop.setLocationRelativeTo(null);
-			rankPop.setTitle("·©Å·");
+			rankPop.setTitle("ë­í‚¹");
 			rankPop.setIconImage(new ImageIcon("./img/logo.png").getImage());
 			rankPop.getContentPane().add(new Rank_Main_GUI());
 			rankPop.setVisible(true);
 		}
 	}
-	// == ·©Å·¹öÆ° ¸®½º³Ê ³¡ ===
+	// == ë­í‚¹ë²„íŠ¼ ë¦¬ìŠ¤ë„ˆ ë ===
 
 	class ChatUser extends JPanel {
 
-		public ChatUser() { // »ı¼ºÀÚ
+		public ChatUser() { // ìƒì„±ì
 
 			try {
 
 				setBounds(0, 0, 570, 100);
 				setLayout(null);
 
-				// chatArea - ´ëÈ­Ã¢
-				textArea = new JTextArea(); // ´ëÈ­Ã¢
-				textArea.setEnabled(false); // ´ëÈ­°¡ ÀÔ·ÂµÇ´Â °ø°£ÀÌ¹Ç·Î ÅØ½ºÆ®¸¦ ÀÔ·ÂÇÏÁö ¸øÇÏ°Ô ¸·´Â´Ù
+				// chatArea - ëŒ€í™”ì°½
+				textArea = new JTextArea(); // ëŒ€í™”ì°½
+				textArea.setEnabled(false); // ëŒ€í™”ê°€ ì…ë ¥ë˜ëŠ” ê³µê°„ì´ë¯€ë¡œ í…ìŠ¤íŠ¸ë¥¼ ì…ë ¥í•˜ì§€ ëª»í•˜ê²Œ ë§‰ëŠ”ë‹¤
 				JScrollPane js = new JScrollPane(textArea);
 				js.setBounds(0, 0, 570, 165);
 				textArea.setBackground(new Color(250, 250, 250));
-				textArea.setFont(new Font("µ¸¿ò", Font.BOLD, 15));
+				textArea.setFont(new Font("ë‹ì›€", Font.BOLD, 15));
 				textArea.setForeground(Color.black);
 				add(js);
-				// == ´ëÈ­Ã¢ swing ==============
+				// == ëŒ€í™”ì°½ swing ==============
 
-				// wrArea - ¸Ş¼¼Áö ÀÔ·ÂÃ¢
+				// wrArea - ë©”ì„¸ì§€ ì…ë ¥ì°½
 				wrArea = new JTextField();
 				wrArea.setBounds(0, 165, 570, 35);
 				// wrArea.setBackground(Color.magenta);
-				wrArea.setFont(new Font("µ¸¿ò", Font.BOLD, 16));
+				wrArea.setFont(new Font("ë‹ì›€", Font.BOLD, 16));
 				add(wrArea);
-				// == ¸Ş¼¼Áö ÀÔ·ÂÃ¢ swing ==============
+				// == ë©”ì„¸ì§€ ì…ë ¥ì°½ swing ==============
 
 				wrArea.addActionListener(new ActionListener() {
 
@@ -411,12 +411,12 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 						try {
 
 							dData = new DDongData();
-							dData.type = "Ã¤ÆÃ";
+							dData.type = "ì±„íŒ…";
 							dData.data = wrArea.getText();
 							cn.send(dData);
 
-							wrArea.setText(""); // ¸Ş¼¼Áö¸¦ ÀÔ·ÂÈÄ ¸Ş¼¼Áö Ã¢À» ºñ¿öÁØ´Ù
-							wrArea.setFocusable(true); // Ä¿¼­µµ ¸Ç¾ÕÀ¸·Î º¸³»ÁØ´Ù
+							wrArea.setText(""); // ë©”ì„¸ì§€ë¥¼ ì…ë ¥í›„ ë©”ì„¸ì§€ ì°½ì„ ë¹„ì›Œì¤€ë‹¤
+							wrArea.setFocusable(true); // ì»¤ì„œë„ ë§¨ì•ìœ¼ë¡œ ë³´ë‚´ì¤€ë‹¤
 
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
@@ -429,20 +429,20 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} // == ChatUser_test() ³¡ =====================
+		} // == ChatUser_test() ë =====================
 	}
 
 	@Override
 	public void reciver(DDongData dd) {
 
-		if (dd.type.equals("Ã¤ÆÃ")) {
+		if (dd.type.equals("ì±„íŒ…")) {
 
-			textArea.append(" [" + dd.src + "]  " + dd.data + "\n"); // ¿©±â¼­ ¿¡·¯³ª´Âµğ
-			// ÀĞ¾î ¿Â ³»¿ëÀ» ´ëÈ­Ã¢¿¡ ÀÔ·ÂÇØÁÖ°í ÁÙ¹Ù²ŞÀ» ÇØÁØ´Ù
+			textArea.append(" [" + dd.src + "]  " + dd.data + "\n"); // ì—¬ê¸°ì„œ ì—ëŸ¬ë‚˜ëŠ”ë””
+			// ì½ì–´ ì˜¨ ë‚´ìš©ì„ ëŒ€í™”ì°½ì— ì…ë ¥í•´ì£¼ê³  ì¤„ë°”ê¿ˆì„ í•´ì¤€ë‹¤
 			textArea.setCaretPosition(textArea.getDocument().getLength());
-			// ½ºÅ©·ÑÀ» ¸Ç ¸¶Áö¸· ´ëÈ­ÂÊ¿¡ À§Ä¡ÇØÁØ´Ù
+			// ìŠ¤í¬ë¡¤ì„ ë§¨ ë§ˆì§€ë§‰ ëŒ€í™”ìª½ì— ìœ„ì¹˜í•´ì¤€ë‹¤
 
-		} else if (dd.type.equals("·Îºñ") || dd.type.equals("°ÔÀÓ")) {
+		} else if (dd.type.equals("ë¡œë¹„") || dd.type.equals("ê²Œì„")) {
 
 			if (dd.dst == null)
 				roomList.roomBtn();
@@ -471,7 +471,7 @@ public class Lobby_Main extends JFrame implements DDongInter, WindowListener {
 		new LobbyDAO().delete(cn.id);
 
 		dData = new DDongData();
-		dData.type = "·Îºñ";
+		dData.type = "ë¡œë¹„";
 		cn.send(dData);
 	}
 

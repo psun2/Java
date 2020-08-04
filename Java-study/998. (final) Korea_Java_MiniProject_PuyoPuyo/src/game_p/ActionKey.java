@@ -17,7 +17,7 @@ public class ActionKey implements KeyListener {
 
 	boolean retateChk, keyChk;
 
-	public ActionKey(MePuyoPanel panel) { // »ý¼º½Ã ¸ÞÀÎ ÆÐ³Î
+	public ActionKey(MePuyoPanel panel) { // ìƒì„±ì‹œ ë©”ì¸ íŒ¨ë„
 		// TODO Auto-generated constructor stub
 		this.panel = panel;
 		this.retateChk = false;
@@ -31,13 +31,13 @@ public class ActionKey implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) { // Å° ÀÌº¥Æ®
+	public void keyPressed(KeyEvent e) { // í‚¤ ì´ë²¤íŠ¸
 		// TODO Auto-generated method stub
 
-		if (panel.me.stopChk || panel.you.stopChk) // »Ñ¿ä°¡ ÇÏ³ª¶óµµ ½ºÅ¾µÇ¸é Å°¸¦ »ç¿ëÇÏÁö ¸øÇÔ
+		if (panel.me.stopChk || panel.you.stopChk) // ë¿Œìš”ê°€ í•˜ë‚˜ë¼ë„ ìŠ¤íƒ‘ë˜ë©´ í‚¤ë¥¼ ì‚¬ìš©í•˜ì§€ ëª»í•¨
 			return;
 
-		meX = panel.meLb.getX(); // ÇÁ·¹ÀÓÀ» ÅëÇØ x°ª°ú y°ªÀ» ¼³Á¤
+		meX = panel.meLb.getX(); // í”„ë ˆìž„ì„ í†µí•´ xê°’ê³¼ yê°’ì„ ì„¤ì •
 		meY = panel.meLb.getY();
 
 		youX = panel.youLb.getX();
@@ -49,9 +49,9 @@ public class ActionKey implements KeyListener {
 
 		case KeyEvent.VK_LEFT:
 
-			// System.out.println("¿ÞÂÊ");
+			// System.out.println("ì™¼ìª½");
 
-			if (retateChk) // µ¹¸®¸é¼­ ¾çÂÊÀ¸·Î ¿Í¸® °¡¸® Ä¥¶§ ¹ö±×°¡ »ý±ä´Ù°íÇÔ...
+			if (retateChk) // ëŒë¦¬ë©´ì„œ ì–‘ìª½ìœ¼ë¡œ ì™€ë¦¬ ê°€ë¦¬ ì¹ ë•Œ ë²„ê·¸ê°€ ìƒê¸´ë‹¤ê³ í•¨...
 				return;
 
 			if (meX == 0 || youX == 0)
@@ -60,7 +60,7 @@ public class ActionKey implements KeyListener {
 			if (inspectLeft())
 				return;
 
-			if (keyChk) { // Å°ÀÇ °ãÄ§À¸·Î ÇÑÅ°°¡ ´­¸±¶© ´Ù¸¥Å°¸¦ ¸ø ´©¸£°Ô ¼³Á¤
+			if (keyChk) { // í‚¤ì˜ ê²¹ì¹¨ìœ¼ë¡œ í•œí‚¤ê°€ ëˆŒë¦´ë• ë‹¤ë¥¸í‚¤ë¥¼ ëª» ëˆ„ë¥´ê²Œ ì„¤ì •
 				keyChk = false;
 				meX -= Puyo.PUYOSIZE;
 				youX -= Puyo.PUYOSIZE;
@@ -72,9 +72,9 @@ public class ActionKey implements KeyListener {
 
 		case KeyEvent.VK_RIGHT:
 
-			// System.out.println("¿À¸¥ÂÊ");
+			// System.out.println("ì˜¤ë¥¸ìª½");
 
-			if (retateChk) // µ¹¸®¸é¼­ ¾çÂÊÀ¸·Î ¿Í¸® °¡¸® Ä¥¶§ ¹ö±×°¡ »ý±ä´Ù°íÇÔ...
+			if (retateChk) // ëŒë¦¬ë©´ì„œ ì–‘ìª½ìœ¼ë¡œ ì™€ë¦¬ ê°€ë¦¬ ì¹ ë•Œ ë²„ê·¸ê°€ ìƒê¸´ë‹¤ê³ í•¨...
 				return;
 
 			if (meX + Puyo.PUYOSIZE == panel.getSize().width || youX + Puyo.PUYOSIZE == panel.getSize().width)
@@ -83,7 +83,7 @@ public class ActionKey implements KeyListener {
 			if (inspectRight())
 				return;
 
-			if (keyChk) { // Å°ÀÇ °ãÄ§À¸·Î ÇÑÅ°°¡ ´­¸±¶© ´Ù¸¥Å°¸¦ ¸ø ´©¸£°Ô ¼³Á¤
+			if (keyChk) { // í‚¤ì˜ ê²¹ì¹¨ìœ¼ë¡œ í•œí‚¤ê°€ ëˆŒë¦´ë• ë‹¤ë¥¸í‚¤ë¥¼ ëª» ëˆ„ë¥´ê²Œ ì„¤ì •
 				keyChk = false;
 				meX += Puyo.PUYOSIZE;
 				youX += Puyo.PUYOSIZE;
@@ -96,11 +96,11 @@ public class ActionKey implements KeyListener {
 		case KeyEvent.VK_UP:
 
 			if (fix()) {
-				// System.out.println("Å°¹ö±× ÁøÀÔ");
+				// System.out.println("í‚¤ë²„ê·¸ ì§„ìž…");
 				return;
 			}
 
-			if (keyChk) { // Å°ÀÇ °ãÄ§À¸·Î ÇÑÅ°°¡ ´­¸±¶© ´Ù¸¥Å°¸¦ ¸ø ´©¸£°Ô ¼³Á¤
+			if (keyChk) { // í‚¤ì˜ ê²¹ì¹¨ìœ¼ë¡œ í•œí‚¤ê°€ ëˆŒë¦´ë• ë‹¤ë¥¸í‚¤ë¥¼ ëª» ëˆ„ë¥´ê²Œ ì„¤ì •
 
 				keyChk = false;
 
@@ -116,13 +116,13 @@ public class ActionKey implements KeyListener {
 		case KeyEvent.VK_DOWN:
 
 			int speed = 10;
-			// ³Ê¹« Âª°Ô ÀâÀ¸¸é ¹Ù´ÚÀ» ¶Õ°í µé¾î°¡´Â ¹ö±× ·Î ÀÎÇØ ³Ë³ËÇÏ°Ô ÇÑ»Ñ¿äÀÇ Å©±â Á¤µµ¸¦ Àâ¾Æ ¸®ÅÏ
-			// °¡·Î ¸ð¾ç ÀÏ¶§
+			// ë„ˆë¬´ ì§§ê²Œ ìž¡ìœ¼ë©´ ë°”ë‹¥ì„ ëš«ê³  ë“¤ì–´ê°€ëŠ” ë²„ê·¸ ë¡œ ì¸í•´ ë„‰ë„‰í•˜ê²Œ í•œë¿Œìš”ì˜ í¬ê¸° ì •ë„ë¥¼ ìž¡ì•„ ë¦¬í„´
+			// ê°€ë¡œ ëª¨ì–‘ ì¼ë•Œ
 
 			if (fix())
 				return;
 
-			if (keyChk) { // Å°ÀÇ °ãÄ§À¸·Î ÇÑÅ°°¡ ´­¸±¶© ´Ù¸¥Å°¸¦ ¸ø ´©¸£°Ô ¼³Á¤
+			if (keyChk) { // í‚¤ì˜ ê²¹ì¹¨ìœ¼ë¡œ í•œí‚¤ê°€ ëˆŒë¦´ë• ë‹¤ë¥¸í‚¤ë¥¼ ëª» ëˆ„ë¥´ê²Œ ì„¤ì •
 				keyChk = false;
 				meY += speed;
 				youY += speed;
@@ -132,11 +132,11 @@ public class ActionKey implements KeyListener {
 			break;
 		}
 
-		// me¿Í you Áß ´©°¡ º®ÂÊ¿¡ ÀÖ´ÂÁö ¾Ë¾Æ¾ßÇÔ
-		// ¿À¸¥ÂÊ º® : x ÁÂÇ¥°¡ ´õ Å­
-		// ¿ÞÂÊ º® : x ÁÂÇ¥°¡ ´õ ÀÛÀ½
+		// meì™€ you ì¤‘ ëˆ„ê°€ ë²½ìª½ì— ìžˆëŠ”ì§€ ì•Œì•„ì•¼í•¨
+		// ì˜¤ë¥¸ìª½ ë²½ : x ì¢Œí‘œê°€ ë” í¼
+		// ì™¼ìª½ ë²½ : x ì¢Œí‘œê°€ ë” ìž‘ìŒ
 
-		// ¼¼·Î¹æÇâÀÏ¶© ´©°¡ ´©±ºÁö »ó°ü¾øÀ½
+		// ì„¸ë¡œë°©í–¥ì¼ë• ëˆ„ê°€ ëˆ„êµ°ì§€ ìƒê´€ì—†ìŒ
 
 		panel.meLb.setLocation(meX, meY);
 		fixBug();
@@ -168,21 +168,21 @@ public class ActionKey implements KeyListener {
 
 	}
 
-	boolean inspectLeft() { // ³ªÀÇ ¸É¹ö¸¦ ±âÁØÀ¸·Î ¿À¸¥ÂÊ°ú ¿ÞÂÊ ¿ä¼Òµé¸¸ µû·Î ºÁ¾ß ÇÏ°Ú±¸³ª...
+	boolean inspectLeft() { // ë‚˜ì˜ ë§´ë²„ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¥¸ìª½ê³¼ ì™¼ìª½ ìš”ì†Œë“¤ë§Œ ë”°ë¡œ ë´ì•¼ í•˜ê² êµ¬ë‚˜...
 
 		boolean result = false;
 
-		// me ¿Í you°¡ ¿ÞÂÊÀ¸·Î ¿òÁ÷ÀÌ·Á ÇÒ¶§ ±×¿·¿¡ ¿ä¼Ò°¡ ÀÖ³ª ¾ø³ª¸¦ Ã¼Å©
-		// me ¿Í you °¡ ¼¼·Î¹æÇâÀÏ¶§ µÑ ÁßÇÏ³ª¶ó°í ¿·¿¡ ¿ä¼Ò°¡ ÀÖÀ¸¸é ¸ø ¿òÁ÷ÀÓ
+		// me ì™€ youê°€ ì™¼ìª½ìœ¼ë¡œ ì›€ì§ì´ë ¤ í• ë•Œ ê·¸ì˜†ì— ìš”ì†Œê°€ ìžˆë‚˜ ì—†ë‚˜ë¥¼ ì²´í¬
+		// me ì™€ you ê°€ ì„¸ë¡œë°©í–¥ì¼ë•Œ ë‘˜ ì¤‘í•˜ë‚˜ë¼ê³  ì˜†ì— ìš”ì†Œê°€ ìžˆìœ¼ë©´ ëª» ì›€ì§ìž„
 		for (JLabel puyo : panel.puyoLbs) {
-			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // ºñ±³ ´ë»ó¿¡¼­ ³ª¿Í ³Ê´Â Á¦¿Ü
+			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // ë¹„êµ ëŒ€ìƒì—ì„œ ë‚˜ì™€ ë„ˆëŠ” ì œì™¸
 				if (panel.meLb.getX() > puyo.getX() || panel.youLb.getX() > puyo.getX()) {
 					if (panel.meLb.getY() >= puyo.getY() || panel.youLb.getY() >= puyo.getY()) {
-						// ³ª ¶Ç´Â ³ÊÀÇ y °ªÀÌ ¿·ÀÇ ¿ä¼ÒÀÇ y°ª¿¡ Æ÷ÇÔµÉ¶§ ¿·¿¡ ¿ä¼Ò°¡ ÀÖÀ½À» ¾Ë ¼ö ÀÖÀ½
+						// ë‚˜ ë˜ëŠ” ë„ˆì˜ y ê°’ì´ ì˜†ì˜ ìš”ì†Œì˜ yê°’ì— í¬í•¨ë ë•Œ ì˜†ì— ìš”ì†Œê°€ ìžˆìŒì„ ì•Œ ìˆ˜ ìžˆìŒ
 						if (panel.meLb.getX() <= puyo.getX() + Puyo.PUYOSIZE
 								|| panel.youLb.getX() <= puyo.getX() + Puyo.PUYOSIZE) {
-							// me ¶Ç´Â youÀÇ x°ªÀÌ ¿· ¿ä¼ÒÀÇ x °ªÀ» Ä§¹ü ÇÏ·Á ÇÒ¶§....
-							result = true; // true°¡ µÇ¸é ¿·À¸·Î °¡Áö ¸øÇÏ°Ô ÇÔ
+							// me ë˜ëŠ” youì˜ xê°’ì´ ì˜† ìš”ì†Œì˜ x ê°’ì„ ì¹¨ë²” í•˜ë ¤ í• ë•Œ....
+							result = true; // trueê°€ ë˜ë©´ ì˜†ìœ¼ë¡œ ê°€ì§€ ëª»í•˜ê²Œ í•¨
 						}
 					}
 				}
@@ -194,21 +194,21 @@ public class ActionKey implements KeyListener {
 
 	}
 
-	boolean inspectRight() { // ³ªÀÇ ¸É¹ö¸¦ ±âÁØÀ¸·Î ¿À¸¥ÂÊ°ú ¿ÞÂÊ ¿ä¼Òµé¸¸ µû·Î ºÁ¾ß ÇÏ°Ú±¸³ª...
+	boolean inspectRight() { // ë‚˜ì˜ ë§´ë²„ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¥¸ìª½ê³¼ ì™¼ìª½ ìš”ì†Œë“¤ë§Œ ë”°ë¡œ ë´ì•¼ í•˜ê² êµ¬ë‚˜...
 
 		boolean result = false;
 
-		// me ¿Í you°¡ ¿ÞÂÊÀ¸·Î ¿òÁ÷ÀÌ·Á ÇÒ¶§ ±×¿·¿¡ ¿ä¼Ò°¡ ÀÖ³ª ¾ø³ª¸¦ Ã¼Å©
-		// me ¿Í you °¡ ¼¼·Î¹æÇâÀÏ¶§ µÑ ÁßÇÏ³ª¶ó°í ¿·¿¡ ¿ä¼Ò°¡ ÀÖÀ¸¸é ¸ø ¿òÁ÷ÀÓ
+		// me ì™€ youê°€ ì™¼ìª½ìœ¼ë¡œ ì›€ì§ì´ë ¤ í• ë•Œ ê·¸ì˜†ì— ìš”ì†Œê°€ ìžˆë‚˜ ì—†ë‚˜ë¥¼ ì²´í¬
+		// me ì™€ you ê°€ ì„¸ë¡œë°©í–¥ì¼ë•Œ ë‘˜ ì¤‘í•˜ë‚˜ë¼ê³  ì˜†ì— ìš”ì†Œê°€ ìžˆìœ¼ë©´ ëª» ì›€ì§ìž„
 		for (JLabel puyo : panel.puyoLbs) {
-			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // ºñ±³ ´ë»ó¿¡¼­ ³ª¿Í ³Ê´Â Á¦¿Ü
+			if (!panel.meLb.equals(puyo) && !panel.youLb.equals(puyo)) { // ë¹„êµ ëŒ€ìƒì—ì„œ ë‚˜ì™€ ë„ˆëŠ” ì œì™¸
 				if (panel.meLb.getX() < puyo.getX() || panel.youLb.getX() < puyo.getX()) {
 					if (panel.meLb.getY() >= puyo.getY() || panel.youLb.getY() >= puyo.getY()) {
-						// ³ª ¶Ç´Â ³ÊÀÇ y °ªÀÌ ¿·ÀÇ ¿ä¼ÒÀÇ y°ª¿¡ Æ÷ÇÔµÉ¶§ ¿·¿¡ ¿ä¼Ò°¡ ÀÖÀ½À» ¾Ë ¼ö ÀÖÀ½
+						// ë‚˜ ë˜ëŠ” ë„ˆì˜ y ê°’ì´ ì˜†ì˜ ìš”ì†Œì˜ yê°’ì— í¬í•¨ë ë•Œ ì˜†ì— ìš”ì†Œê°€ ìžˆìŒì„ ì•Œ ìˆ˜ ìžˆìŒ
 						if (panel.meLb.getX() + Puyo.PUYOSIZE >= puyo.getX()
 								|| panel.youLb.getX() + Puyo.PUYOSIZE >= puyo.getX()) {
-							// me ¶Ç´Â youÀÇ x°ªÀÌ ¿· ¿ä¼ÒÀÇ x °ªÀ» Ä§¹ü ÇÏ·Á ÇÒ¶§....
-							result = true; // true°¡ µÇ¸é ¿·À¸·Î °¡Áö ¸øÇÏ°Ô ÇÔ
+							// me ë˜ëŠ” youì˜ xê°’ì´ ì˜† ìš”ì†Œì˜ x ê°’ì„ ì¹¨ë²” í•˜ë ¤ í• ë•Œ....
+							result = true; // trueê°€ ë˜ë©´ ì˜†ìœ¼ë¡œ ê°€ì§€ ëª»í•˜ê²Œ í•¨
 						}
 					}
 				}
@@ -222,52 +222,52 @@ public class ActionKey implements KeyListener {
 
 	void rotate() {
 
-		// ¹ö±× Àâ´Â ·ÎÁ÷
-		// °¡·Î»óÅÂ ÀÏ¶§ ³Ê¹« ¹Ø¿¡¼­ ¹æÇâÅ°·Î È¸Àü ½ÃÅ°¸é ÀÌ»óÇÏ°Ô ½×ÀÌ´Â Çö»ó ÇØ°á
+		// ë²„ê·¸ ìž¡ëŠ” ë¡œì§
+		// ê°€ë¡œìƒíƒœ ì¼ë•Œ ë„ˆë¬´ ë°‘ì—ì„œ ë°©í–¥í‚¤ë¡œ íšŒì „ ì‹œí‚¤ë©´ ì´ìƒí•˜ê²Œ ìŒ“ì´ëŠ” í˜„ìƒ í•´ê²°
 
-		if (youX == meX) { // me ¿Í you°¡ yÅöÀ¸·Î ÀÏÁ÷¼± Áï ¼¼·Î ¹æÇâ ÀÏ¶§
+		if (youX == meX) { // me ì™€ youê°€ yíˆ­ìœ¼ë¡œ ì¼ì§ì„  ì¦‰ ì„¸ë¡œ ë°©í–¥ ì¼ë•Œ
 
-			if (youY < meY) { // you°¡ me º¸´Ù À§¿¡ Á¸Àç ÇÒ¶§
+			if (youY < meY) { // youê°€ me ë³´ë‹¤ ìœ„ì— ì¡´ìž¬ í• ë•Œ
 				if (searchRight()) {
 					return;
 				}
-				// youÀÇ x °¡ meÀÇ ¿À¸¥ÂÊÀ¸·Î...
-				// youÀÇ y °¡ me¿Í °°À½...
+				// youì˜ x ê°€ meì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ...
+				// youì˜ y ê°€ meì™€ ê°™ìŒ...
 				youX = meX + Puyo.PUYOSIZE;
 				youY = meY;
 
-			} else { // you°¡ me º¸´Ù ¾Æ·¡ Á¸Àç ÇÒ¶§
+			} else { // youê°€ me ë³´ë‹¤ ì•„ëž˜ ì¡´ìž¬ í• ë•Œ
 				if (searchLeft()) {
 					return;
 				}
-				// youÀÇ x °¡ meÀÇ ¿ÞÂÊÀ¸·Î...
-				// youÀÇ y °¡ me¿Í °°À½...
+				// youì˜ x ê°€ meì˜ ì™¼ìª½ìœ¼ë¡œ...
+				// youì˜ y ê°€ meì™€ ê°™ìŒ...
 				youX = meX - Puyo.PUYOSIZE;
 				youY = meY;
 
 			}
 
-		} else { // me ¿Í you°¡ xÅöÀ¸·Î ÀÏÁ÷¼± Áï °¡·Î ¹æÇâ ÀÏ¶§
-			// y°¡ °°°í xÃà¸¸ °í·Á ÇØÁÙ °æ¿ì
+		} else { // me ì™€ youê°€ xíˆ­ìœ¼ë¡œ ì¼ì§ì„  ì¦‰ ê°€ë¡œ ë°©í–¥ ì¼ë•Œ
+			// yê°€ ê°™ê³  xì¶•ë§Œ ê³ ë ¤ í•´ì¤„ ê²½ìš°
 
-			// meÀÇ ¹Ø¿¡ ¹«¾ùÀÎ°¡ Á¸Àç ÇÏ¸é È¸Àü ¸ø½ÃÅ°°Ô ¸¸µé¸é µÇ°Ù³×...
+			// meì˜ ë°‘ì— ë¬´ì—‡ì¸ê°€ ì¡´ìž¬ í•˜ë©´ íšŒì „ ëª»ì‹œí‚¤ê²Œ ë§Œë“¤ë©´ ë˜ê²Ÿë„¤...
 			for (MyLabel puyo : panel.puyoLbs) {
 				if (meX == puyo.getX() && meY + (Puyo.PUYOSIZE * 2) == puyo.getY()) {
-					// System.out.println("¿©±â°¡ ¾ðÁ¦ ÁøÀÔÇÔ ?????????????");
+					// System.out.println("ì—¬ê¸°ê°€ ì–¸ì œ ì§„ìž…í•¨ ?????????????");
 					return;
 				}
 			}
 
-			if (youX < meX) { // you°¡ me ÀÇ ¿ÞÂÊ¿¡ Á¸Àç ÇÒ¶§
-				// you ¸¦ me ÀÇ À§·Î ÀÌµ¿
-				// youÀÇ x°¡ me ¿Í °°°í
-				// youÀÇ y°¡ meÀÇ À§¿¡ ÀÖÀ½
+			if (youX < meX) { // youê°€ me ì˜ ì™¼ìª½ì— ì¡´ìž¬ í• ë•Œ
+				// you ë¥¼ me ì˜ ìœ„ë¡œ ì´ë™
+				// youì˜ xê°€ me ì™€ ê°™ê³ 
+				// youì˜ yê°€ meì˜ ìœ„ì— ìžˆìŒ
 				youX = meX;
 				youY = meY - Puyo.PUYOSIZE;
-			} else { // you°¡ me ÀÇ ¿À¸¥ÂÊ¿¡ Á¸Àç ÇÒ¶§
-				// you¸¦ me ÀÇ ¾Æ·¡·Î ÀÌµ¿
-				// youÀÇ x°¡ me ¿Í °°°í
-				// youÀÇ y°¡ meÀÇ ¾Æ·¡¿¡ ÀÖÀ½
+			} else { // youê°€ me ì˜ ì˜¤ë¥¸ìª½ì— ì¡´ìž¬ í• ë•Œ
+				// youë¥¼ me ì˜ ì•„ëž˜ë¡œ ì´ë™
+				// youì˜ xê°€ me ì™€ ê°™ê³ 
+				// youì˜ yê°€ meì˜ ì•„ëž˜ì— ìžˆìŒ
 				youX = meX;
 				youY = meY + Puyo.PUYOSIZE;
 			}
@@ -276,10 +276,10 @@ public class ActionKey implements KeyListener {
 
 	}
 
-	boolean searchRight() { // (¼¼·Î¹æÇâÀÇ »Ñ¿ä) ¿À¸¥ÂÊÀ¸·Î È¸Àü½Ã => Áï you°¡ meÀÇ À§¿¡ ÀÖÀ»¶§
+	boolean searchRight() { // (ì„¸ë¡œë°©í–¥ì˜ ë¿Œìš”) ì˜¤ë¥¸ìª½ìœ¼ë¡œ íšŒì „ì‹œ => ì¦‰ youê°€ meì˜ ìœ„ì— ìžˆì„ë•Œ
 
-		// ¿À¸¥ÂÊ¿¡ º® ¶Ç´Â ´Ù¸¥ »Ñ¿ä°¡ ÀÖ´Ù¸é...
-		// me ¸¦ ±âÁØÀ¸·Î you °¡ È¸ÀüÇÔ youÀÇ ÁÂÇ¥¸¸ÀÌ °í·Á´ë»ó
+		// ì˜¤ë¥¸ìª½ì— ë²½ ë˜ëŠ” ë‹¤ë¥¸ ë¿Œìš”ê°€ ìžˆë‹¤ë©´...
+		// me ë¥¼ ê¸°ì¤€ìœ¼ë¡œ you ê°€ íšŒì „í•¨ youì˜ ì¢Œí‘œë§Œì´ ê³ ë ¤ëŒ€ìƒ
 
 		boolean result = false;
 
@@ -298,10 +298,10 @@ public class ActionKey implements KeyListener {
 
 	}
 
-	boolean searchLeft() { // (¼¼·Î¹æÇâÀÇ »Ñ¿ä) ¿ÞÂÊÀ¸·Î µ¹°æ¿ì => Áï you°¡ meÀÇ ¾Æ·¡ ÀÖÀ»¶§
+	boolean searchLeft() { // (ì„¸ë¡œë°©í–¥ì˜ ë¿Œìš”) ì™¼ìª½ìœ¼ë¡œ ëŒê²½ìš° => ì¦‰ youê°€ meì˜ ì•„ëž˜ ìžˆì„ë•Œ
 
-		// ¿ÞÂÊ¿¡ º® ¶Ç´Â ´Ù¸¥ »Ñ¿ä°¡ ÀÖ´Ù¸é...
-		// me ¸¦ ±âÁØÀ¸·Î you °¡ È¸ÀüÇÔ youÀÇ ÁÂÇ¥¸¸ÀÌ °í·Á´ë»ó
+		// ì™¼ìª½ì— ë²½ ë˜ëŠ” ë‹¤ë¥¸ ë¿Œìš”ê°€ ìžˆë‹¤ë©´...
+		// me ë¥¼ ê¸°ì¤€ìœ¼ë¡œ you ê°€ íšŒì „í•¨ youì˜ ì¢Œí‘œë§Œì´ ê³ ë ¤ëŒ€ìƒ
 
 		boolean result = false;
 
@@ -322,7 +322,7 @@ public class ActionKey implements KeyListener {
 
 	void fixBug() {
 
-		if (meX == youX) { // ¼¼·Î ¹æÇâÀÏ¶§ Æ² ¾îÁüÀ» Àâ¾ÆÁÜ.... // me ¸¦ ±âÁØÀ¸·Î ÇÏ±â ¶§¹® youÀÇ X ´Â me ÀÇ xe´Ù
+		if (meX == youX) { // ì„¸ë¡œ ë°©í–¥ì¼ë•Œ í‹€ ì–´ì§ì„ ìž¡ì•„ì¤Œ.... // me ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•˜ê¸° ë•Œë¬¸ youì˜ X ëŠ” me ì˜ xeë‹¤
 			youX = panel.meLb.getX();
 
 		} else {

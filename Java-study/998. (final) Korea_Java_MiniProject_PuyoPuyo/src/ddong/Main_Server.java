@@ -62,7 +62,7 @@ public class Main_Server {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Á¢¼Ó½ÇÆĞ");
+			System.out.println("ì ‘ì†ì‹¤íŒ¨");
 		}
 
 	}
@@ -79,7 +79,7 @@ public class Main_Server {
 				ois = new ObjectInputStream(soc.getInputStream());
 
 			} catch (Exception e) {
-				System.out.println("¸®½Ã¹ö¸¦ ¸ø¹Ş¾Ò½À´Ï´Ù.");
+				System.out.println("ë¦¬ì‹œë²„ë¥¼ ëª»ë°›ì•˜ìŠµë‹ˆë‹¤.");
 				e.printStackTrace();
 			}
 		}
@@ -87,37 +87,37 @@ public class Main_Server {
 		@Override
 		public void run() {
 			try {
-				// ·Î±×ÀÎÀ» ¼º°øÇÏ¸é mapÀ» ÅëÇØ À¯Àú Á¤º¸ , µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù.
+				// ë¡œê·¸ì¸ì„ ì„±ê³µí•˜ë©´ mapì„ í†µí•´ ìœ ì € ì •ë³´ , ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤.
 
 				DDongData data = (DDongData) ois.readObject();
 				userid = (String) data.src;
-				System.out.println(userid + ":" + "Á¢¼ÓÇÕ´Ï´Ù");
+				System.out.println(userid + ":" + "ì ‘ì†í•©ë‹ˆë‹¤");
 				userdata.put(userid, oos);
 
 				while (ois != null) {
 
 					DDongData dataois = (DDongData) ois.readObject();
 
-					if (dataois.type.equals("Ã¤ÆÃ") && dataois.dst == null) {
+					if (dataois.type.equals("ì±„íŒ…") && dataois.dst == null) {
 						sendtoChat(dataois);
-					} else if (dataois.type.equals("·Îºñ") || dataois.type.equals("°ÔÀÓ") || dataois.type.equals("°ÔÀÓÅë½Å")) {
+					} else if (dataois.type.equals("ë¡œë¹„") || dataois.type.equals("ê²Œì„") || dataois.type.equals("ê²Œì„í†µì‹ ")) {
 						sendAll(dataois);
-					} else if (dataois.type.equals("°ÔÀÓÁß")) {
+					} else if (dataois.type.equals("ê²Œì„ì¤‘")) {
 						sendSelect(dataois);
 					}
 
 				}
 
 			} catch (Exception e) {
-				System.out.println("À¯Àú°¡ ³ª°©´Ï´Ù");
+				System.out.println("ìœ ì €ê°€ ë‚˜ê°‘ë‹ˆë‹¤");
 			} finally {
 				userdata.remove(userid);
-				System.out.println(userid + "¼­¹ö¿¡¼­Á×À½");
+				System.out.println(userid + "ì„œë²„ì—ì„œì£½ìŒ");
 
 			}
 		}
 
-		// Ã¤ÆÃ
+		// ì±„íŒ…
 		public void sendtoChat(DDongData dataois) {
 			for (ObjectOutputStream ost : userdata.values()) {
 
@@ -139,7 +139,7 @@ public class Main_Server {
 					return;
 				}
 
-				userdata.get(dataois.dst).writeObject(dataois);// ¿©±â ¿¡·¯
+				userdata.get(dataois.dst).writeObject(dataois);// ì—¬ê¸° ì—ëŸ¬
 				userdata.get(dataois.dst).flush();
 				userdata.get(dataois.dst).reset();
 
@@ -148,7 +148,7 @@ public class Main_Server {
 
 		}
 
-		// ·ë¸Ş¼¼Áö
+		// ë£¸ë©”ì„¸ì§€
 		public void sendAll(DDongData dataois) {
 			try {
 				for (ObjectOutputStream ooo : userdata.values()) {

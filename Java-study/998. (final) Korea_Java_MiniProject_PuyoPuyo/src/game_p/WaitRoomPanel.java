@@ -30,7 +30,7 @@ public class WaitRoomPanel extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) { // °ÔÀÓÀÌ ³¡³µÀ»½Ã Åõ¸íµµ¸¦ ¼³Á¤
+	public void paint(Graphics g) { // ê²Œì„ì´ ëë‚¬ì„ì‹œ íˆ¬ëª…ë„ë¥¼ ì„¤ì •
 		super.paint(g);
 		if (!this.chk)
 			return;
