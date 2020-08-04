@@ -8,4 +8,7 @@ public class Clone_URL {
 	
 	// https://www.youtube.com/watch?v=0gMYlUppe-c&list=PLRx0vPvlEmdBtvcSqVkjeL1MwSfRLENYc
 
+	
+	// 2020-08-04
+	// 4강부터 gogo
 }
