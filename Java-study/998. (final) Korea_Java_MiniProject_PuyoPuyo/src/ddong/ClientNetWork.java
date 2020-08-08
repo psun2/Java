@@ -77,6 +77,9 @@ public class ClientNetWork {
             try {
                DDongData data = (DDongData) ois.readObject(); // 여기서 에러나서 리시브가 안된다
              
+               // ddinter 라는 interface 는 DDongdata 를 받고,
+               // 받을 DDongdata 를 client 의 receiver에서 받는 data로 교체
+               // 각 패키지에서 implements 를 받아 사용
                ddInter.reciver(data);
 
             } catch (Exception e) {
