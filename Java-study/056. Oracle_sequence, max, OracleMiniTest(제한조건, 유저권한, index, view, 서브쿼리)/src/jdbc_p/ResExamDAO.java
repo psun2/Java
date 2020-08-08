@@ -211,9 +211,7 @@ public class ResExamDAO {
 	public int delete(Integer id) {
 
 		int res = 0;
-
-		this.sql = "delete exam where id = " + id + "";
-		// this.sql = "delete from exam where id = " + id + "";
+		this.sql = "delete from exam where id = " + id + "";
 		System.out.println(sql);
 
 		try {
@@ -237,8 +235,8 @@ public class ResExamDAO {
 		int res = 0;
 
 		this.sql = "update exam set id = " + dto.id + ", pid = '" + dto.pid + "', title = '" + dto.title
-				+ "', regdate = '" + dto.getRegdateStr() + "', kor = " + dto.kor + ", eng = " + dto.eng
-				+ " where id = " + dto.id + "";
+				+ "', regdate = '" + dto.getRegdateStr() + "', kor = " + dto.kor + ", eng = " + dto.eng + " where id = "
+				+ dto.id + "";
 		System.out.println(sql);
 
 		try {
