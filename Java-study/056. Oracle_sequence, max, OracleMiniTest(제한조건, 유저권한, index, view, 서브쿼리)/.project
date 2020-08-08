@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>056. Oracle_sequence, OracleMiniTest(제한조건, 유저권한, index, view, 서브쿼리)</name>
+	<name>056. Oracle_sequence, max, OracleMiniTest(제한조건, 유저권한, index, view, 서브쿼리)</name>
 	<comment></comment>
 	<projects>
 	</projects>
