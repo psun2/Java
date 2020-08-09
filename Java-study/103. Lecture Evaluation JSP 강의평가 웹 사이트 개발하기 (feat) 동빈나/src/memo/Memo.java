@@ -1,7 +1,7 @@
-package MEMO;
+package memo;
 
 public class Memo {
-
+	
 //	MySql 5.7 command line client
 //
 //	system 비밀번호 입력
@@ -19,8 +19,10 @@ public class Memo {
 
 //	insert : insert into 테이블명 values (값);
 	
+	// https://ndb796.tistory.com/35
 	// https://www.youtube.com/watch?v=hke9FKluXow&list=PLRx0vPvlEmdAdWCQeUPnyMZ4PsW3dGuFB&index=1
 
 	// 2020-08-08 3강 까지 완료
+	// 2020-08-09 5강 까지 완료
 
 }
