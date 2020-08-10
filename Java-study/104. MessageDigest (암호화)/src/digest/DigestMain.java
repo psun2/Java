@@ -80,6 +80,7 @@ public class DigestMain {
 
 			StringBuffer tempBuffer = new StringBuffer();
 			StringBuffer resultString = new StringBuffer();
+			StringBuffer resultHex = new StringBuffer();
 			StringBuffer result = new StringBuffer();
 
 			for (byte b : chars) {
@@ -88,12 +89,15 @@ public class DigestMain {
 
 				resultString.append(Integer.toString(b));
 
+				resultHex.append(Integer.toHexString(b));
+
 				// 한번더 암호화를 하기 위해 16진수로 변경
 				result.append(Integer.toHexString(0xff & b));
 			}
 
 			System.out.println("tempBuffer : " + tempBuffer);
 			System.out.println("resultString : " + resultString);
+			System.out.println("resultHex : " + resultHex);
 			System.out.println("result : " + result);
 
 		} catch (Exception e) {
