@@ -89,7 +89,7 @@ public class DigestMain {
 				resultString.append(Integer.toString(b));
 
 				// 한번더 암호화를 하기 위해 16진수로 변경
-				result.append(Integer.toHexString(b));
+				result.append(Integer.toHexString(0xff & b));
 			}
 
 			System.out.println("tempBuffer : " + tempBuffer);
