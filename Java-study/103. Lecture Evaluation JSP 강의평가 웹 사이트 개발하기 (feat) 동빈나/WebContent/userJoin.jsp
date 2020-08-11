@@ -38,7 +38,6 @@
 		script.close();
 		return;
 	}
-
 	%>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.jsp">강의평가 웹 사이트</a>
@@ -62,9 +61,11 @@
 						if (userID == null) {
 						%>
 						<a class="dropdown-item" href="userLogin.jsp"> 로그인 </a> <a
-							class="dropdown-item" href="userJoin.jsp"> 회원가입 </a> <a
-							<%} else { // 로그인이 된 상태 라면%> class="dropdown-item"
-							href="userLogout.jsp"> 로그아웃 </a>
+							class="dropdown-item" href="userJoin.jsp"> 회원가입 </a>
+						<%
+							} else { // 로그인이 된 상태 라면
+						%>
+						<a class="dropdown-item" href="userLogout.jsp"> 로그아웃 </a>
 						<%
 							}
 						%>
