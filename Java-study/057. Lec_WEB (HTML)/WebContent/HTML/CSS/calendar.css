@@ -1,0 +1,213 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nanum Gothic', sans-serif, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  padding: 20px 20px;
+}
+
+body * {
+  color: darkgray;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn {
+  background-color: #fcfcfc;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 20px 10px;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn.select {
+  background-color: #318bcf;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn:hover {
+  background-color: #318bcf;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn .nav__link {
+  text-decoration: unset;
+  widows: 100%;
+  height: 100%;
+  font-size: 20px;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn .nav__link.select {
+  color: #fcfcfc;
+}
+
+.calendar__nav .nav__list .nav__item .nav__btn:hover .nav__link {
+  color: #fcfcfc;
+}
+
+.calendar__nav .nav__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar__date .data__title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.calendar__date .data__title .date__now {
+  color: #318bcf;
+}
+
+.calendar__date .date__detail {
+  border: 1px solid lightgray;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.date__detail .date__list {
+  display: flex;
+  padding: 10px;
+}
+
+.date__detail .date__list .date__item {
+  margin-right: 20px;
+}
+
+.calendar__date .date__calendar {
+  border: 1px solid lightgray;
+}
+
+.calendar__date .date__calendar .date__column {
+  display: flex;
+}
+.calendar__date .date__calendar .date__column .date__date {
+  border: 1px solid lightgray;
+  width: 200px;
+  height: 50px;
+}
+
+.calendar__date .date__calendar .date__column .date__date.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar__date .date__calendar .date__column .date__date span {
+  color: #0f1015;
+}
+.calendar__date .date__calendar .date__column .date__date.select {
+  background-color: #d1fdfd;
+}
+.calendar__date .date__calendar .date__column .date__date.empty {
+  background-color: #fafafa;
+}
+
+.calendar__content .content__title {
+  margin-bottom: 5px;
+}
+
+.calendar__content .content__title .title__emphasis {
+  color: #ff0101;
+}
+.calendar__content .content__title .title__emphasis.bold {
+  font-weight: bold;
+  color: #0f1015;
+}
+
+.calendar__content .content__box {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 20px;
+}
+
+.calendar__content .content__list {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar__content .content__list .content__item {
+  color: #0f1015;
+}
+
+.calendar__content .content__list .content__item:nth-child(1) {
+  width: 50px;
+  text-align: center;
+}
+.calendar__content .content__list .content__item:nth-child(2) {
+  width: 460px;
+  text-align: center;
+}
+.calendar__content .content__list .content__item:nth-child(2) .content__icon i {
+  color: #ff0101;
+  margin-left: 10px;
+}
+
+.calendar__content .content__list .content__item:nth-child(4) {
+  width: 200px;
+  text-align: center;
+}
+
+.calendar__content .content__summary {
+  border-top: 1px solid darkgray;
+}
+
+/* 버튼의 모든 스타일 제거 */
+button {
+  all: unset;
+}
+
+.calendar__content .content__btns {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.calendar__content .content__btns .content__btn {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  text-align: center;
+}
+.calendar__content .content__btns .content__btn.gr {
+  border: 1px solid lightgray;
+}
+
+.calendar__content .content__btns .content__btn.select {
+  background-color: #318bcf;
+  color: #fcfcfc;
+}
+
+.calendar__content .content__btns .content__btn:hover {
+  background-color: #318bcf;
+  color: #fcfcfc;
+}
+
+.calendar__content .content__search {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar__content .search__select {
+  width: 100px;
+  height: 30px;
+}
+.calendar__content .search__input {
+  width: 500px;
+  height: 30px;
+  padding: 10px;
+}
+.calendar__content .search__btn {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  background-color: #318bcf;
+  color: #fcfcfc;
+}
