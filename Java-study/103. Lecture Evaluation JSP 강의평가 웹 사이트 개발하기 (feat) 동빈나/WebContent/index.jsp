@@ -4,6 +4,11 @@
 <!-- 로그인 상태에 따라서 사용자에게 보여지는 화면이 달라짐 -->
 <%@ page import="java.io.PrintWriter"%>
 <%@ page import="user.UserDAO"%>
+<%@ page import="evaluation.EvaluationDTO"%>
+<%@ page import="evaluation.EvaluationDAO"%>
+<%@ page import="java.util.ArrayList"%>
+
+<%@ page import="java.net.URLEncoder"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +30,40 @@
 </head>
 <body>
 	<%
-		String userID = null;
+		request.setCharacterEncoding("UTF-8");
+	// default 값
+	String lectureDivide = "전체";
+	String searchType = "최신순";
+	String search = "";
+	int pageNumber = 0;
+
+	// 사용자가 특정한 검색어로 검색을 했는지 판단
+	if (request.getParameter("lectureDivide") != null) {
+		lectureDivide = request.getParameter("lectureDivide");
+	}
+	if (request.getParameter("searchType") != null) {
+		searchType = request.getParameter("searchType");
+	}
+	if (request.getParameter("search") != null) {
+		search = request.getParameter("search");
+	}
+	if (request.getParameter("pageNumber") != null) {
+
+		try {
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("검색 페이지 번호 오류");
+		}
+
+	}
+
+	System.out.println(lectureDivide);
+	System.out.println(searchType);
+	System.out.println(search);
+	System.out.println(pageNumber);
+
+	String userID = null;
 
 	// 로그인 상태라면
 	if (session.getAttribute("userID") != null) {
@@ -92,9 +130,25 @@
 			</ul>
 
 			<!-- form을 이용한 검색창 생성 -->
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="검색 내용을 입력하세요." aria-label="Search">
+			<form action="./index.jsp" method="get"
+				class="form-inline my-2 my-lg-0">
+				<input type="text" name="search" class="form-control mr-sm-2"
+					type="search" placeholder="검색 내용을 입력하세요." aria-label="Search">
+
+				<!-- 
+					get 방식
+					검색전 : http://localhost:8080/103._Lecture_Evaluation/index.jsp
+					검색후 : http://localhost:8080/103._Lecture_Evaluation/index.jsp?search=asdasdad
+					? 이하의 문자열을 queryString 이라 합니다.
+					
+					
+					post 방식
+					검색 전 / 후 의 queryString 의 변화가 없습니다.
+					현재까지 잘 모르겠지만, post 방식은 name attribute만 넘어가는 것 같습니다.
+					해당 action 페이지에서
+					request.getParameter로 받아 오는 걸로 생각 됩니다.
+					 -->
+
 				<!-- 실제로 검색이 되게 하는 전송 버튼 -->
 				<button class="btn btn-outline-success my-2 my-sm-0" type="Submit">검색</button>
 			</form>
@@ -107,9 +161,21 @@
 		<form method="get" action="index.jsp" class="form-inline mt-3">
 			<select name="LectureDivide" class="form-control mx-1 mt-2">
 				<option value="전체">전체</option>
-				<option value="전공">전공</option>
-				<option value="교양">교양</option>
-				<option value="기타">기타</option>
+				<option value="전공"
+					<%if (lectureDivide.equals("전공"))
+	out.println("selected");%>>전공</option>
+				<option value="교양"
+					<%if (lectureDivide.equals("교양"))
+	out.println("selected");%>>교양</option>
+				<option value="기타"
+					<%if (lectureDivide.equals("기타"))
+	out.println("selected");%>>기타</option>
+			</select> <select name="searchType" class="form-control mx-1 mt-2">
+				<option value="최신순">최신순</option>
+				<option value="추천순"
+					<%if (searchType.equals("추천순"))
+	out.println("selected");%>>추천순</option>
+
 			</select>
 			<!-- input태그를 이용하여 사용자가 실제로 어떠한 입력을 하여 검색 할 수 있게 함. -->
 			<input type="text" name="search" class="form-control mx-1 mt-2"
@@ -123,6 +189,17 @@
 				data-toggle="modal" href="#reportModal">신고</a>
 		</form>
 
+		<!-- 사용자가 검색을 한 내용이 list 에 담겨서 출력이 되도록 만들어 주는 부분 -->
+		<%
+			ArrayList<EvaluationDTO> evaluationList = new ArrayList<EvaluationDTO>();
+		evaluationList = new EvaluationDAO().getList(lectureDivide, searchType, search, pageNumber);
+		if (evaluationList != null)
+			for (int i = 0; i < evaluationList.size(); i++) {
+				if (i == 5)
+			break;
+				EvaluationDTO evaluation = evaluationList.get(i);
+		%>
+
 		<!-- 실제로 사용자가 강의평가를 등록했을시 어떻게 출력이 될지 card 생성 -->
 		<div class="card bg-light mt-3">
 			<!-- card-header -->
@@ -131,10 +208,11 @@
 					<!-- text-left: 왼쪽 정렬 -->
 					<!-- 강의에서 나머지 4만큼이라 했으므로, 최대 12가 되는 것 같습니다. -->
 					<div class="col-8 text-left">
-						컴퓨터개론&nbsp;<small>교수이름</small>
+						<%=evaluation.getLectureName()%>
+						&nbsp;<small><%=evaluation.getProfessorName()%></small>
 					</div>
 					<div class="col-4 text-right">
-						종합<span style="color: red;">A</span>
+						종합<span style="color: red;"><%=evaluation.getTotalScore()%></span>
 					</div>
 				</div>
 			</div>
@@ -142,15 +220,18 @@
 			<div class="card-body">
 				<h5 class="card-title">
 					<!-- &nbsp; : 띄어쓰기 -->
-					정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
+					<%=evaluation.getEvaluationTitle()%>&nbsp;<small>(<%=evaluation.getLectureYear()%>년
+						<%=evaluation.getSemesterDivide()%>)
+					</small>
 				</h5>
-				<p class="card-text">강의가 많이 널널해서, 솔찍히 많이 배운 건 없는 것 같지만학점도 잘 나오고
-					너무 좋은 것 같습니다.</p>
+				<p class="card-text"><%=evaluation.getEvaluationContent()%></p>
 				<div class="row">
 					<div class="col-9 text-left">
-						성적<span style="color: red;">A</span> 널널<span style="color: red;">A</span>
-						강의<span style="color: red;">B</span> <span style="color: green;">(추천:
-							15)</span>
+						성적<span style="color: red;"><%=evaluation.getCreditScore()%></span>
+						널널<span style="color: red;"><%=evaluation.getComfortableScore()%></span>
+						강의<span style="color: red;"><%=evaluation.getLectureScore()%></span>
+						<span style="color: green;">(추천: <%=evaluation.getLikeCount()%>)
+						</span>
 					</div>
 					<div class="col-3 text-right">
 						<a onclick="return confirm('추천하시겠습니까?')"
@@ -162,87 +243,41 @@
 			</div>
 		</div>
 
-		<!-- 실제로 사용자가 강의평가를 등록했을시 어떻게 출력이 될지 card 생성 -->
-		<div class="card bg-light mt-3">
-			<!-- card-header -->
-			<div class="card-header bg-light">
-				<div class="row">
-					<!-- text-left: 왼쪽 정렬 -->
-					<!-- 강의에서 나머지 4만큼이라 했으므로, 최대 12가 되는 것 같습니다. -->
-					<div class="col-8 text-left">
-						컴퓨터그래픽스&nbsp;<small>교수이름</small>
-					</div>
-					<div class="col-4 text-right">
-						종합<span style="color: red;">A</span>
-					</div>
-				</div>
-			</div>
-			<!-- card-body -->
-			<div class="card-body">
-				<h5 class="card-title">
-					<!-- &nbsp; : 띄어쓰기 -->
-					정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
-				</h5>
-				<p class="card-text">강의가 많이 널널해서, 솔찍히 많이 배운 건 없는 것 같지만학점도 잘 나오고
-					너무 좋은 것 같습니다.</p>
-				<div class="row">
-					<div class="col-9 text-left">
-						성적<span style="color: red;">A</span> 널널<span style="color: red;">A</span>
-						강의<span style="color: red;">B</span> <span style="color: green;">(추천:
-							15)</span>
-					</div>
-					<div class="col-3 text-right">
-						<a onclick="return confirm('추천하시겠습니까?')"
-							href="./likeAction.jsp?evaluationID=">추천</a> <a
-							onclick="return confirm('삭제하시겠습니까?')"
-							href="./deleteAction.jsp?evaluationID=">삭제</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- 실제로 사용자가 강의평가를 등록했을시 어떻게 출력이 될지 card 생성 -->
-		<div class="card bg-light mt-3">
-			<!-- card-header -->
-			<div class="card-header bg-light">
-				<div class="row">
-					<!-- text-left: 왼쪽 정렬 -->
-					<!-- 강의에서 나머지 4만큼이라 했으므로, 최대 12가 되는 것 같습니다. -->
-					<div class="col-8 text-left">
-						JS&nbsp;<small>교수이름</small>
-					</div>
-					<div class="col-4 text-right">
-						종합<span style="color: red;">A</span>
-					</div>
-				</div>
-			</div>
-			<!-- card-body -->
-			<div class="card-body">
-				<h5 class="card-title">
-					<!-- &nbsp; : 띄어쓰기 -->
-					정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
-				</h5>
-				<p class="card-text">강의가 많이 널널해서, 솔찍히 많이 배운 건 없는 것 같지만학점도 잘 나오고
-					너무 좋은 것 같습니다.</p>
-				<div class="row">
-					<div class="col-9 text-left">
-						성적<span style="color: red;">A</span> 널널<span style="color: red;">A</span>
-						강의<span style="color: red;">B</span> <span style="color: green;">(추천:
-							15)</span>
-					</div>
-					<div class="col-3 text-right">
-						<a onclick="return confirm('추천하시겠습니까?')"
-							href="./likeAction.jsp?evaluationID=">추천</a> <a
-							onclick="return confirm('삭제하시겠습니까?')"
-							href="./deleteAction.jsp?evaluationID=">삭제</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		<%
+			}
+		%>
 
 	</section>
 
+	<!-- 페이징 네이션 : 여러개의 페이지가 있는 구성요소 작업 -->
+	<ul class="pagingnation justify-content-center mt-3">
+		<li class="page-item">
+			<%
+				if (pageNumber <= 0) {
+			%> <a class="page-link disabled">이전</a> <%
+ 	} else {
+ %> <!-- 현재 사용자가 검색했던 lectureDivide 값은 그대로 유지한채 이전페이지로 이동 --> <a
+			class="page-link"
+			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>search=<%=URLEncoder.encode(search, "UTF-8")%>pageNumber=<%=pageNumber - 1%>">이전</a>
+			<%
+				}
+			%>
+		</li>
 
+		<!-- 다음페이지 이동 버튼 -->
+		<li>
+			<%
+				if (evaluationList.size() < 6) {
+			%> <a class="page-link disabled">다음</a> <%
+ 	} else {
+ %> <!-- 현재 사용자가 검색했던 lectureDivide 값은 그대로 유지한채 이전페이지로 이동 --> <a
+			class="page-link"
+			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>search=<%=URLEncoder.encode(search, "UTF-8")%>pageNumber=<%=pageNumber + 1%>">다음</a>
+			<%
+				}
+			%>
+		</li>
+	</ul>
 
 	<!-- Modal 생성 -->
 	<!-- modal 같은 경우 header, body, footer 로 나뉩니다. -->
@@ -263,17 +298,17 @@
 					<form action="./evaluationRegisterAction.jsp" method="post">
 						<div class="form-row">
 							<div class="form-group col-sm-6">
-								<label>강의명</label> <input type="text" name="LectureName"
+								<label>강의명</label> <input type="text" name="lectureName"
 									class="form-control" maxlength="20">
 							</div>
 							<div class="form-group col-sm-6">
-								<label>교수명</label> <input type="text" name="ProfessorName"
+								<label>교수명</label> <input type="text" name="professorName"
 									class="form-control" maxlength="20">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-sm-4">
-								<label>수강연도</label> <select name="LectureYear"
+								<label>수강연도</label> <select name="lectureYear"
 									class="form-control">
 									<option value="2011">2011</option>
 									<option value="2012">2012</option>
@@ -300,7 +335,7 @@
 								</select>
 							</div>
 							<div class="form-group col-sm-4">
-								<label>강의 구분</label> <select name="LectureDivide"
+								<label>강의 구분</label> <select name="lectureDivide"
 									class="form-control">
 									<option value="전공" selected>전공</option>
 									<option value="교양">교양</option>
@@ -310,14 +345,15 @@
 						</div>
 						<!-- 실제로 사용자가 강의를 평가 할 수 있도록 강의 평가 공간을 만듬 -->
 						<div class="form-group">
-							<label>제목</label> <input type="text" name="evaluationTime"
+							<label>제목</label> <input type="text" name="evaluationTitle"
 								class="form-control" maxlength="30" />
 						</div>
 						<!-- 내용을 사용자가 담을 수 있도록 하는 공간 -->
 						<div class="form-group">
 							<label>내용</label>
 							<textarea name="evaluationContent" class="form-control"
-								maxlength="2048" style="height: 180px;">
+								maxlength="2048" style="height: 180px;"
+								placeholder="신고내용을 입력해 주세요.">
 						</textarea>
 						</div>
 						<!-- 하나의 행을 여러개로 나눌때 form-row를 사용합니다. -->
@@ -352,7 +388,7 @@
 								</select>
 							</div>
 							<div class="form-group col-sm-3">
-								<label>강의</label> <select name="LectureScore"
+								<label>강의</label> <select name="lectureScore"
 									class="form-control">
 									<option value="A" selected>A</option>
 									<option value="B">B</option>

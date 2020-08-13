@@ -72,10 +72,26 @@
 					</div></li>
 			</ul>
 
-			<!-- form을 이용한 검색창 생성 -->
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
+				<!-- form을 이용한 검색창 생성 -->
+			<form action="./index.jsp" method="get"
+				class="form-inline my-2 my-lg-0">
+				<input type="text" name="search" class="form-control mr-sm-2" type="search"
 					placeholder="검색 내용을 입력하세요." aria-label="Search">
+					
+					<!-- 
+					get 방식
+					검색전 : http://localhost:8080/103._Lecture_Evaluation/index.jsp
+					검색후 : http://localhost:8080/103._Lecture_Evaluation/index.jsp?search=asdasdad
+					? 이하의 문자열을 queryString 이라 합니다.
+					
+					
+					post 방식
+					검색 전 / 후 의 queryString 의 변화가 없습니다.
+					현재까지 잘 모르겠지만, post 방식은 name attribute만 넘어가는 것 같습니다.
+					해당 action 페이지에서
+					request.getParameter로 받아 오는 걸로 생각 됩니다.
+					 -->
+					
 				<!-- 실제로 검색이 되게 하는 전송 버튼 -->
 				<button class="btn btn-outline-success my-2 my-sm-0" type="Submit">검색</button>
 			</form>
