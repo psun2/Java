@@ -192,6 +192,7 @@
 		<!-- 사용자가 검색을 한 내용이 list 에 담겨서 출력이 되도록 만들어 주는 부분 -->
 		<%
 			ArrayList<EvaluationDTO> evaluationList = new ArrayList<EvaluationDTO>();
+		System.out.println("evaluationList : " + evaluationList);
 		evaluationList = new EvaluationDAO().getList(lectureDivide, searchType, search, pageNumber);
 		if (evaluationList != null)
 			for (int i = 0; i < evaluationList.size(); i++) {
@@ -235,9 +236,9 @@
 					</div>
 					<div class="col-3 text-right">
 						<a onclick="return confirm('추천하시겠습니까?')"
-							href="./likeAction.jsp?evaluationID=">추천</a> <a
-							onclick="return confirm('삭제하시겠습니까?')"
-							href="./deleteAction.jsp?evaluationID=">삭제</a>
+							href="./likeAction.jsp?evaluationID=<%=evaluation.getEvaluationID()%>">추천</a>
+						<a onclick="return confirm('삭제하시겠습니까?')"
+							href="./deleteAction.jsp?evaluationID=<%=evaluation.getEvaluationID()%>">삭제</a>
 					</div>
 				</div>
 			</div>
@@ -250,7 +251,7 @@
 	</section>
 
 	<!-- 페이징 네이션 : 여러개의 페이지가 있는 구성요소 작업 -->
-	<ul class="pagingnation justify-content-center mt-3">
+	<ul class="pagination justify-content-center mt-3">
 		<li class="page-item">
 			<%
 				if (pageNumber <= 0) {
@@ -258,21 +259,21 @@
  	} else {
  %> <!-- 현재 사용자가 검색했던 lectureDivide 값은 그대로 유지한채 이전페이지로 이동 --> <a
 			class="page-link"
-			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>search=<%=URLEncoder.encode(search, "UTF-8")%>pageNumber=<%=pageNumber - 1%>">이전</a>
+			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=<%=pageNumber - 1%>">이전</a>
 			<%
 				}
 			%>
 		</li>
 
 		<!-- 다음페이지 이동 버튼 -->
-		<li>
+		<li class="page-item">
 			<%
 				if (evaluationList.size() < 6) {
 			%> <a class="page-link disabled">다음</a> <%
  	} else {
  %> <!-- 현재 사용자가 검색했던 lectureDivide 값은 그대로 유지한채 이전페이지로 이동 --> <a
 			class="page-link"
-			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>search=<%=URLEncoder.encode(search, "UTF-8")%>pageNumber=<%=pageNumber + 1%>">다음</a>
+			href="./index.jsp?LectureDivide=<%=URLEncoder.encode(lectureDivide, "UTF-8")%>&searchType=<%=URLEncoder.encode(searchType, "UTF-8")%>&search=<%=URLEncoder.encode(search, "UTF-8")%>&pageNumber=<%=pageNumber + 1%>">다음</a>
 			<%
 				}
 			%>
@@ -351,10 +352,7 @@
 						<!-- 내용을 사용자가 담을 수 있도록 하는 공간 -->
 						<div class="form-group">
 							<label>내용</label>
-							<textarea name="evaluationContent" class="form-control"
-								maxlength="2048" style="height: 180px;"
-								placeholder="신고내용을 입력해 주세요.">
-						</textarea>
+							<textarea name="evaluationContent" class="form-control" maxlength="2048" style="height: 180px;"></textarea>
 						</div>
 						<!-- 하나의 행을 여러개로 나눌때 form-row를 사용합니다. -->
 						<div class="form-row">

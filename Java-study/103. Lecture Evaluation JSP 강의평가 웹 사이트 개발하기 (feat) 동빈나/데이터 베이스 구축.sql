@@ -50,8 +50,9 @@ desc evaluation;
 # 좋아요 정보를 담고 있는 테이블 생성
 create table likey( # 좋아요를 누른 사용자 의 정보를 담는 테이블
 userID varchar(20),
-evaluationID varchar(20),
-userIP varchar(50)
+evaluationID int,
+userIP varchar(50),
+primary key(userID, evaluationID)
 );
 
 # 테이블 요소 확인
