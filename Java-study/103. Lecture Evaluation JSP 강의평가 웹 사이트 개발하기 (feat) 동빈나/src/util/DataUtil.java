@@ -10,11 +10,11 @@ public class DataUtil {
 		Connection con = null;
 		String dbURL = "jdbc:mysql://localhost:3306/LectureEvaluation";
 		String dbID = "root";
-		String dbPaswword = "root";
+		String dbPassword = "root";
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(dbURL, dbID, dbPaswword);
+			return DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

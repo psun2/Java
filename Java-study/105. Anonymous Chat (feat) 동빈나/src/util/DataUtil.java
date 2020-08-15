@@ -8,7 +8,7 @@ public class DataUtil {
 	public static Connection getConnection() {
 
 		Connection con = null;
-		String dbURL = "jdbc:mysql://locahost:3306/ANONYMOUSCHAT;";
+		String dbURL = "jdbc:mysql://localhost:3306/ANONYMOUSCHAT";
 		String dbID = "root";
 		String dbPassword = "root";
 		try {
@@ -19,6 +19,7 @@ public class DataUtil {
 			e.printStackTrace();
 		}
 
+		System.out.println("데이타 유틸에서의 con : " + con);
 		return con;
 
 	}

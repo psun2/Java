@@ -17,13 +17,16 @@ public class ChatDAO {
 	public ChatDAO() {
 		// TODO Auto-generated constructor stub
 		this.con = DataUtil.getConnection();
+		System.out.println("null은 아니겟지 ? " + con);
 	}
 
 	// 채팅메시지를 담고 있어 채팅을 뿌려주는 역할
 	public ArrayList<ChatDTO> getChatList(String nowTime) {
 
+		System.out.println("nowTime : " + nowTime);
+
 		ArrayList<ChatDTO> chatList = null;
-		this.sql = "SELECT * FROM CAHT WHERE CHATTIME > ? ORDER BY CHATTIME";
+		this.sql = "SELECT * FROM CHAT WHERE CHATTIME > ? ORDER BY CHATTIME DESC";
 
 		try {
 			this.psmt = con.prepareStatement(sql);
@@ -35,8 +38,20 @@ public class ChatDAO {
 			while (rs.next()) {
 				ChatDTO chatDTO = new ChatDTO();
 				chatDTO.setChatName(rs.getString("chatName"));
-				chatDTO.setChatContent(rs.getString("chatContent"));
-				chatDTO.setChatTime(rs.getDate("chatTime"));
+				chatDTO.setChatContent(rs.getString("chatContent").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+						.replaceAll("\n", "<br/>").replaceAll("\r", "<br/>").replaceAll(" ", "&nbsp;"));
+
+				System.out.println("rs.getString(\"chatTime\") : " + rs.getString("chatTime"));
+				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
+				String timeType = "오전";
+				if (chatTime >= 12) {
+					timeType = "오후";
+					chatTime -= 12;
+				}
+				System.out.println("시간변환 : " + rs.getString("chatTime").substring(0, 11) + " " + timeType + " "
+						+ chatTime + ":" + rs.getString("chatTime").substring(14, 16) + "");
+				chatDTO.setChatTime(rs.getString("chatTime").substring(0, 11) + " " + timeType + " " + chatTime + ":"
+						+ rs.getString("chatTime").substring(14, 16) + "");
 				chatList.add(chatDTO);
 			}
 
@@ -48,19 +63,24 @@ public class ChatDAO {
 			close();
 		}
 
+		System.out.println("chatList DAO : " + chatList);
 		return chatList;
 
 	}
 
 	public int submit(String chatName, String chatContent) {
 
-		this.sql = "INSET INTO CHAT VALUES (?, ?, now())";
+		System.out.println(chatName);
+		System.out.println(chatContent);
+
+		this.sql = "INSERT INTO CHAT VALUES (?, ?, now())";
 		// now() : 데이터 베이스에 현재시각을 삽입 하겠다는 의미입니다.
 
 		try {
 			this.psmt = con.prepareStatement(sql);
 			psmt.setString(1, chatName);
 			psmt.setString(2, chatContent);
+			System.out.println("submit 성공");
 			return psmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -70,6 +90,7 @@ public class ChatDAO {
 		} finally {
 			close();
 		}
+		System.out.println("submit 실패");
 		return -1; // 데이터베이스 오류
 	}
 
