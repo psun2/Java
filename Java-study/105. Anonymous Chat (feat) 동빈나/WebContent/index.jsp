@@ -14,13 +14,19 @@
 <!-- 커스텀 css -->
 <link rel="stylesheet" href="./css/custom.css" />
 <!-- 제이쿼리 -->
-<script defer src="./js/jquery-3.5.1.min.js"></script>
+<!-- <script defer src="./js/jquery-3.5.1.min.js"></script> 
+defer로 제이쿼리가 로딩할떄까지 딜레이를 주면
+209 line 은 제이쿼리가 로딩되기 전에 실행하므로, 참조 오류가 발생
+ -->
+<script src="./js/jquery-3.5.1.min.js"></script>
 <!-- popper -->
 <script defer src="./js/popper.min.js"></script>
 <!-- 부트스트랩 -->
 <script defer src="./js/bootstrap.min.js"></script>
 <!-- 상대방이 메시지를 받았나 알 수 있는 자바스크립트 import -->
-<script defer type="text/javascript">
+<script type="text/javascript">
+	var lastID = 0;
+
 	function submitFunction() {
 		// chatName 의 input의 값을 가져 옵니다.
 		var chatName = $('#chatName').val();
@@ -32,8 +38,8 @@
 			url : "./chatSubmitServlet",
 			data : {
 				// 파라미터이름: 실제로 보내는 값 
-				chatName : chatName,
-				chatContent : chatContent
+				chatName : encodeURIComponent(chatName),
+				chatContent : encodeURIComponent(chatContent)
 			},
 			success : function(result) {
 				if (result == 1) {
@@ -70,9 +76,11 @@
 				// 파라미터이름: 실제로 보내는 값 
 				listType : type
 			},
-			
+
 			success : function(data) {
 
+				if (data == "")
+					return;
 				console.log(data);
 
 				// 제이슨 형태로 파싱 과정
@@ -86,7 +94,8 @@
 					addChat(result[i][0].value, result[i][1].value,
 							result[i][2].value);
 				}
-
+				lastID = Number(parsed.last);
+				// alert(lastID);
 			}
 		});
 
@@ -106,8 +115,8 @@
 								+ '</span>' + '</h4>' + '<p>' + chatContent
 								+ '</p>' + '</div>' + '</div>' + '</div>'
 								+ '</div>' + '<hr/>'
-
 				);
+								$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
 	}
 	//<!-- 한명의 사용자가 채팅을 작성하는 부분 -->
 	//<div class="row">
@@ -128,7 +137,16 @@
 	//</div>
 	//</div>
 	//<hr/>
-//<!-- 한명의 사용자가 채팅을 작성하는 부분 끝 -->
+	//<!-- 한명의 사용자가 채팅을 작성하는 부분 끝 -->
+
+	// 서버와 통신을 하여, 새로운메시지가 도착했으면 로딩하는 함수
+	function getInfiniteChat() {
+		setInterval(function() {
+			console.log(lastID);
+			chatListFunction(lastID);
+			console.log('getInfiniteChat 실행');
+		}, 1000);
+	}
 </script>
 
 </head>
@@ -149,7 +167,7 @@
 						<div id="chat" class="panel-collapse collapse in">
 							<!-- overflow-y : 글이 늘어날때마다 y축으로 스크롤바가 생기면서 늘어 납니다. -->
 							<div id="chatList" class="portlet-body chat-widget"
-								style="overflow-y: auto; width: auto; height: 300px">
+								style="overflow-y: auto; width: auto; height: 600px">
 								<div class="row">
 									<div class="col-lg-12">
 										<p class="text-center text-muted small"><%=new SimpleDateFormat("yyyy-MM-dd-E요일", Locale.KOREAN).format(new Date())%></p>
@@ -197,5 +215,16 @@
 	</div>
 	<button type="button" class="btn btn-default pull-right"
 		onclick="chatListFunction('today');">추가(새로고침)</button>
+	<button type="button" class="btn btn-default pull-right"
+		onclick="chatListFunction('ten');">최근 10개까지 메시지 표시</button>
+	<script type="text/javascript">
+		// 처음 페이지가 로딩이 되었을때 서버로 부터 열개만큼의 메시지만 볼 수 있도록
+		// 로딩 합니다.
+		$(document).ready(function() {
+			console.log('악');
+			chatListFunction('ten');
+			getInfiniteChat();
+		});
+	</script>
 </body>
 </html>

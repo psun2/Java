@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class ChatDTO {
 
+	private int chatID;
 	private String chatName, chatContent, chatTime;
 	// private Date chatTime;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -20,6 +21,22 @@ public class ChatDTO {
 		this.chatName = chatName;
 		this.chatContent = chatContent;
 		this.chatTime = chatTime;
+	}
+
+	public ChatDTO(int chatID, String chatName, String chatContent, String chatTime) {
+		super();
+		this.chatID = chatID;
+		this.chatName = chatName;
+		this.chatContent = chatContent;
+		this.chatTime = chatTime;
+	}
+
+	public int getChatID() {
+		return chatID;
+	}
+
+	public void setChatID(int chatID) {
+		this.chatID = chatID;
 	}
 
 	public String getChatName() {

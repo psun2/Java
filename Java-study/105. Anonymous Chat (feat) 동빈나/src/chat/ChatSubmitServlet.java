@@ -1,6 +1,7 @@
 package chat;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,9 +53,11 @@ public class ChatSubmitServlet extends HttpServlet {
 		// 어떠한 메세지를 파라미터로 받아서 처리 할 수 있도록 합니다.
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		String chatName = request.getParameter("chatName");
+		// String chatName = request.getParameter("chatName");
+		String chatName = URLDecoder.decode(request.getParameter("chatName"), "UTF-8");
 		System.out.println(chatName);
-		String chatContent = request.getParameter("chatContent");
+		// String chatContent = request.getParameter("chatContent");
+		String chatContent = URLDecoder.decode(request.getParameter("chatContent"), "UTF-8");
 		System.out.println(chatContent);
 
 		if (chatName == null || chatName.equals("") || chatContent == null || chatContent.equals("")) {
