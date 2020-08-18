@@ -23,5 +23,6 @@ public class Memo {
 
 	// JSP Ajax 회원가입 기능 구현하기 5강 - 회원가입 중복 체크 및 프로젝트 완료
 	// https://www.youtube.com/watch?v=PGXqDZPqlWo
+	// 2020-08-18 5강 까지 완료
 
 }

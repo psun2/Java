@@ -1,0 +1,29 @@
+package user;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+// @webServlet("/UserRegisterCheckServlet") // import javax.servlet.annotation.WebServlet;
+@WebServlet("/UserRegisterCheckServlet")
+public class UserRegisterCheckServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
+		String userID = request.getParameter("userID");
+		
+		// int 형식으로 넘어오기 때문에 공백 문자열을 더해 문자열로 만들어 줍니다.
+		response.getWriter().write(new UserDAO().registerCheck(userID)+"");
+
+	}
+}
