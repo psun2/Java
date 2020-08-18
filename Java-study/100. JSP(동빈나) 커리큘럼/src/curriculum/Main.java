@@ -2,12 +2,12 @@ package curriculum;
 
 public class Main {
 
-	// JSP 강의평가 웹 사이트 개발하기
+	// JSP 강의평가 웹 사이트 개발하기 ✔`
 	// https://www.youtube.com/watch?v=hke9FKluXow&list=PLRx0vPvlEmdAdWCQeUPnyMZ4PsW3dGuFB&index=1
 
 //--------------------------------------------------------------------------------------------------------------	
 
-	// ajax 익명 채팅사이트 개발
+	// ajax 익명 채팅사이트 개발 ✔
 	// https://www.youtube.com/watch?v=_eC_lbmoizg&list=PLRx0vPvlEmdAVcSdYgqjJ64A7ggHhorU_
 
 //--------------------------------------------------------------------------------------------------------------	
