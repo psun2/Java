@@ -1,0 +1,36 @@
+/* theory */
+
+-- 확장(변환)함수, 그룹함수
+--▶ 그룹함수
+--전체 데이터를 그룹별로 구분하여 통계적인 결과를 구하기 위해서 사용하는 함수
+--
+--▷ sum() avg() max() min()
+-- 합계 평균 최대값 최소값 등을 계산할 경우 null 값을 nvl() 함수로 제거해야 한다.
+-- 그룹함수는 null값을 제외하고 계산한다.
+-- select sum( salary ) from employees;
+--select sum( salary ) from employees where salary>=15000; ->조건을 넣을 수도 있음
+-- select avg( salary ) from employees;
+-- select max( salary ) from employees;
+-- select min( salary ) from employees;
+-- max() min()은 문자 타입, 날짜 타입도 적용 가능하다.
+--▷ count()
+-- null은 제외하고 중복도 개수로 센다.
+-- select count( commission_pct ) from employees;
+-- select count( distinct commission_pct ) from employees;
+-- select count( * ) from employees;     전체행의 수
+--▷group by
+-- select department_id, avg( salary ) from employees group by department_id;
+-- select job_id, avg( salary ) from employees group by job_id;
+-- 주의 select 뒤에는 그룹으로 묶을 수 있는 컬럼만 올 수 있다.
+-- 
+-- select job_id, avg( salary ), max( salary ), min( salary ) from employees group by job_id;
+-- 
+--select job_id,count(*),avg(salary),max(first_name) from employees where salary >=10000 group by job_id;
+-- 
+-- having
+-- group by 적용 뒤에 나온 결과에 특정 조건을 부여한다.
+-- select job_id, avg( salary ), max( salary ), min( salary ) from employees 
+-- group by job_id having avg(salary)>=5000;
+-- 
+--select p_id,name,kor,class from exam,student where kor=(select max(kor)from exam,student where p_id=id and class =1) and p_id=id and class =1
+--//1반의 국어점수가 가장높은 사람의 아이디, 이름 , 국어점수

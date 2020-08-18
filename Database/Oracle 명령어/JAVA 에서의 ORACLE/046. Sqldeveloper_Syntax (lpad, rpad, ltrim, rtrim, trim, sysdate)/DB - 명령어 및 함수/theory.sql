@@ -1,0 +1,45 @@
+--select 일반 함수
+
+--▷ lpad()
+-- 오른쪽 정렬 후 왼쪽에 문자를 채운다.
+-- select lpad( 'Hello World', 20, '#' ) from dual;
+---- 20: byte 수 , 한글은 2byte
+--
+--▷ rpad()
+-- 왼쪽 정렬 후 오른쪽에 문자를 채운다.
+-- select rpad( 'Hello World', 20, '#' ) from dual;
+--▷ ltrim()
+-- select ltrim( 'aaaHello Worldaaa', 'a' ) from dual;  Hello Worldaaa 앞의 특정 문자 제거
+-- select ltrim( '   Hello World   ' ) from dual;   Hello World 문자열 앞뒤 공백 제거
+--▷ rtrim()
+-- select rtrim( 'aaaHello Worldaaa', 'a' ) from dual;  aaaHello World 뒤의 특정 문자 제거
+-- select rtrim( '   Hello World   ' ) from dual;   Hello World 문자열 뒤 공백 제거
+--▷ trim()
+-- select last_name, trim( 'A' from last_name) from employees;   앞뒤의 특정 문자 제거
+
+--▶ 날짜 관련 함수
+--▷ sysdate
+-- 시스템에 저장된 현재 날짜를 반환
+-- select sysdate from dual;
+-- select sysdate + 1 from dual;
+-- select sysdate - 1 from dual;
+-- select last_name, sysdate-hire_date from employees;    근무한 날짜
+-- sysdate는 연월일시분초가 구해지는데 입사일자는 0시 0분 00초로 저장되어 있다.
+-- 
+--▷ months_between()
+-- 날짜와 날짜 사이의 개월수를 구한다.
+-- select last_name, months_between( sysdate, hire_date ) from employees;
+--▷ add_months()
+-- 특정 개월 수를 더한 날짜를 구한다.
+-- select last_name, add_months( hire_date, 6 ) from employees;
+--▷ last_day()
+-- 해당 날짜의 마지막 날짜를 반환하는 함수
+-- select hire_date, last_day( hire_date ) from employees;
+--▷ next_day()
+-- 해당 날짜를 기준으로 명시된 요일에 해당하는 날짜를 반환
+-- 일 월 ~ 토  SUN MON ~ SAT  1 2 ~ 7 로 표현가능하다.
+-- select hire_date, next_day( hire_date, '월' ) from employees;
+-- 한글이 인식 안되는 경우
+-- alter session set nls_language=korean;
+-- select hire_date, next_day( add_months( hire_date, 6 ), '월' ) from employees;
+-- 입사일의 6개월 후 첫 번재 월요일

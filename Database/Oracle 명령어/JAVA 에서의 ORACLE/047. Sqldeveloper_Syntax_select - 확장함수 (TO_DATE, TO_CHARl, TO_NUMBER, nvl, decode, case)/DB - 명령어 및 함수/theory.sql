@@ -1,0 +1,88 @@
+/* theory */
+
+--▶ 형 변환 함수
+-- 
+--            <- TO_NUMBER   
+--                 TO_CHAR ->
+-- Number                         character 
+-- 
+--  date                            character 
+--timestamp    
+--            <- TO_DATE 
+--            <- TO_timestamp
+--                 TO_CHAR ->
+-- 
+--
+--▷ TO_DATE
+-- 문자열을 날짜로
+-- to_date( ‘날짜’, ‘형식’ )   
+-- select sysdate, sysdate - to_date( '10/1/1', 'yy/mm/dd' ) from dual;
+-- 형식
+-- YYYY    네 자리 연도
+-- YY   두 자리 연도
+-- MM   월을 숫자로
+-- MON   월을 알파벳으로
+-- DAY   요일 표현
+-- DY   요일 약어 표현
+-- AM 또는 PM  오전 오후
+-- HH 또는 HH12  12시간
+-- HH24   24시간
+-- MI   분
+-- SS   초
+--
+--
+--▷ TO_CHAR
+--         to_char(데이터, '포맷형식')   ===> 포맷형식이 데이터 보다 길이가 길어야 한다. 짧을 경우 ##으로 표현됨
+-- 날짜나 숫자를 문자로 변환
+-- select to_char( sysdate, 'yy/mm/dd hh24:mi:ss' ) from dual;
+-- select to_char( sysdate, 'yy"年" mm"月" dd"日" (dy) hh:mi') from dual;
+----문자열을 결합할 경우"" 로 묶어서 표현
+-- 
+-- 9   한 자리의 숫자 표현   ( 1111, ‘99999’ ) 1111 
+-- 0   앞 부분을 0으로 표현  ( 1111, ‘099999’ ) 001111
+-- $   달러 기호를 앞에 표현  ( 1111, ‘$99999’ ) $1111
+-- .   소수점을 표시   ( 1111, ‘99999.99’ ) 1111.00
+-- ,   특정 위치에 , 표시   ( 1111, ‘99,999’ ) 1,111
+-- MI   오른쪽에 ? 기호 표시  ( 1111, ‘99999MI’ ) 1111-
+-- PR   음수값을 <>로 표현   ( -1111, ‘99999PR’ ) <1111>
+-- EEEE   과학적 표현   ( 1111, ‘9.999EEEE’ ) 1.11E+03
+-- V   10을 n승 곱한값으로 표현  ( 1111, ‘999V99’ ) 111100
+-- B   공백을 0으로 표현   ( 1111, ‘B9999.99’ ) 1111.00
+-- L   지역통화    ( 1111, ‘L9999’ )
+-- select to_char( salary, '0999999' ) from employees;
+-- select to_char( -salary, '999999PR' ) from employees;
+-- select to_char( 1111, '99.99EEEE' ) from dual;   1.11E+03
+-- select to_char( 1111, 'B9999.99' ) from dual;   표현식이 작으면 #으로 표현
+-- select to_char( 1111, 'L99999' ) from dual;   \1111
+
+--▷ TO_NUMBER
+-- 문자를 숫자로 변환
+-- select to_number('123,456.78','99999,999.999999')+100 from dual;
+--         select sysdate, to_number(to_char(sysdate,'yyyy'),'9999')-1988 from dual
+--
+--▷ nvl()
+-- null을 0 또는 다른 값으로 변환하는 함수--컬럼의 자료형이 일치해야만 사용 가능
+-- select salary, salary*12*nvl(commission_pct, 0 ) from employees;
+-- select last_name, manager_id, nvl( to_char( manager_id, 9999 ), 'CEO' ) from employees;
+--
+--
+--▷ decode() 
+-- switch~ case문과 같이 여러 경우를 선택할 수 있도록 하는 함수
+-- select last_name, department_id, decode( department_id, 90, '경영지원실', 60, '프로그래머', 100, '인사부' )  
+--from employees;
+--
+--
+--▷ case()
+--          if문처럼
+-- decode() 함수와 동일하나 decode() 함수는 조건이 동일한 경우만 가능하지만
+-- case() 함수는 다양한 비교연산자로 조건을 제시할 수 있다.
+--
+--select last_name, department_id, 
+--case 
+--  when department_id=90 then '경영지원실' 
+--  when department_id=60 then '프로그래머' 
+--  when department_id=100 then '인사부' 
+--  else '생산부'
+--end 
+--as 소속
+-- from employees;
