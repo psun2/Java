@@ -12,6 +12,8 @@ public class Main {
 
 //--------------------------------------------------------------------------------------------------------------	
 
+	// JSP Ajax 회원가입 기능 ✔
+
 	// JSP Ajax 회원가입 기능 구현하기 1강 - 프로젝트 소개 및 회원가입 화면 디자인
 	// https://www.youtube.com/watch?v=XxeLEMC5jzA&t=11s
 
@@ -29,11 +31,6 @@ public class Main {
 
 //--------------------------------------------------------------------------------------------------------------	
 
-	// 나만의 알고리즘 채점 사이트 만들기
-	// https://www.youtube.com/watch?v=hYr8ZHv40Nk&list=PLRx0vPvlEmdCSBgU29ZEmxqTr4ge-MoN_
-
-//--------------------------------------------------------------------------------------------------------------	
-
 	// JSP 파일 업로드 강좌
 	// https://www.youtube.com/watch?v=UQVyytDtLzQ&list=PLRx0vPvlEmdBMeD6NZawEmwHKjzD6ZGqp
 
@@ -46,5 +43,15 @@ public class Main {
 
 	// JSP Ajax 고급 회원제 채팅 사이트 개발하기
 	// https://www.youtube.com/watch?v=88eNrWzLk-A&list=PLRx0vPvlEmdAlUbX_TGDxaSxKCvfl2isa
+
+//--------------------------------------------------------------------------------------------------------------	
+
+	// 나만의 알고리즘 채점 사이트 만들기 - 선행학습 : 도커
+	// https://www.youtube.com/watch?v=HbKCxBFT2wk&list=PLRx0vPvlEmdChjc6N3JnLaX-Gihh5pHcx
+
+//--------------------------------------------------------------------------------------------------------------	
+
+	// 나만의 알고리즘 채점 사이트 만들기
+	// https://www.youtube.com/watch?v=hYr8ZHv40Nk&list=PLRx0vPvlEmdCSBgU29ZEmxqTr4ge-MoN_
 
 }
