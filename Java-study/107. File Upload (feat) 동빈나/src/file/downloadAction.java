@@ -22,7 +22,10 @@ public class downloadAction extends HttpServlet {
 		// fileDownload.jsp
 		// String directory = application.getRealPath("/upload/");
 		// request.getContextPath()
-		String directory = this.getServletContext().getRealPath("/upload/");
+		// String directory = this.getServletContext().getRealPath("/upload/"); // 업로드와
+		// 같은 이유로 경로 변경
+
+		String directory = "D:/Study/Java/Java-study/107. File Upload (feat) 동빈나/WebContent/upload/";
 		File file = new File(directory + "/" + fileName);
 
 		// 어떠한 데이터의 정보를 주고 받을 지 를 담슴니다.
@@ -57,6 +60,8 @@ public class downloadAction extends HttpServlet {
 		while ((data = (fileInputStream.read(buffer, 0, buffer.length))) != -1) {
 			servletOutputStream.write(buffer, 0, data);
 		}
+
+		new FileDAO().hit(fileName);
 
 		servletOutputStream.flush();
 		servletOutputStream.close();

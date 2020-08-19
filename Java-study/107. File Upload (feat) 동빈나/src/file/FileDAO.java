@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class FileDAO {
 
@@ -25,7 +26,7 @@ public class FileDAO {
 
 	public int upload(String fileName, String fileRealName) {
 
-		String sql = "INSERT INTO FILE VALUES(?, ?)";
+		String sql = "INSERT INTO FILE VALUES(?, ?, 0)";
 
 		try {
 			this.psmt = con.prepareStatement(sql);
@@ -38,6 +39,51 @@ public class FileDAO {
 			close();
 		}
 		return -1;
+	}
+
+	public int hit(String fileRealName) {
+
+		String sql = "UPDATE FILE  SET downloadCount = downloadCount + 1 WHERE fileRealName = ?";
+
+		try {
+			this.psmt = con.prepareStatement(sql);
+			psmt.setString(1, fileRealName);
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return -1;
+	}
+
+	public ArrayList<FileDTO> getList() {
+
+		ArrayList<FileDTO> list = null;
+
+		String sql = "SELECT * FROM FILE";
+
+		try {
+
+			this.psmt = con.prepareStatement(sql);
+			this.rs = psmt.executeQuery();
+			list = new ArrayList<FileDTO>();
+
+			while (rs.next()) {
+
+				list.add(new FileDTO(rs.getString("fileName"), rs.getString("fileRealName"),
+						rs.getInt("downloadCount")));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return list;
+		
 	}
 
 	void close() {

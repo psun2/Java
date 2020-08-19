@@ -1,5 +1,8 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page import="java.io.File"%>
+<%@ page import="file.FileDTO"%>
+<%@ page import="file.FileDAO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,12 +14,21 @@
 <body>
 	<%
 		// 실제 물리적인 서버의 경로에 있는 업로드 폴더를 가져옵니다.(접근) 
-	String directory = application.getRealPath("/upload/");
-	String[] files = new File(directory).list();
+	// String directory = application.getRealPath("/upload/"); // 업로드와 같은 이유로 경로 변경
+	// String directory = "D:/Study/Java/Java-study/107. File Upload (feat) 동빈나/WebContent/upload";
+	// String[] files = new File(directory).list();
 
-	for (String file : files) {
+	// for (String file : files) {
+	// 	out.write("<a href=\"" + request.getContextPath() + "/downloadAction?file="
+	// 	+ java.net.URLEncoder.encode(file, "UTF-8") + "\">" + file + "</a><br>");
+	// }
+
+	ArrayList<FileDTO> fileList = new FileDAO().getList();
+
+	for (FileDTO file : fileList) {
 		out.write("<a href=\"" + request.getContextPath() + "/downloadAction?file="
-		+ java.net.URLEncoder.encode(file, "UTF-8") + "\">" + file + "</a><br>");
+		+ java.net.URLEncoder.encode(file.getFileRealName(), "UTF-8") + "\">" + file.getFileName() + "(다운로드 횟수: "
+		+ file.getdownloadCount() + ")</a><br>");
 	}
 	%>
 </body>
