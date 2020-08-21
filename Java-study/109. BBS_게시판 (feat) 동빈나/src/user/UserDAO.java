@@ -14,7 +14,7 @@ public class UserDAO {
 
 	public UserDAO() {
 		// TODO Auto-generated constructor stub
-		this.con = new DataUtil().getConnection();
+		this.con = DataUtil.getConnection();
 	}
 
 	public int login(String userID, String userPassword) {
@@ -45,7 +45,7 @@ public class UserDAO {
 
 	public int join(UserDTO user) {
 
-		String sql = "INSET INTO USER VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
 
 		try {
 
@@ -56,7 +56,7 @@ public class UserDAO {
 			psmt.setString(4, user.getUserGender());
 			psmt.setString(5, user.getUserEmail());
 			return psmt.executeUpdate(); // 회원가입 완료
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

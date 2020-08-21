@@ -24,44 +24,52 @@
 </head>
 <body>
 	<%
-	
-	if(userID == null || userID.equals("") )
-	
-		UserDAO userDAO = new UserDAO();
-	int result = userDAO.login(user.getUserID(), user.getUserPassword());
-
-	if (result == 1) {
+		String userID = null;
+	if (session.getAttribute("userID") != null) {
+		userID = (String) session.getAttribute("userID");
+	}
+	if (userID != null) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
+		script.println("alert('이미 로그인이 되어있습니다.');");
 		script.println("location.href = 'main.jsp';");
 		script.println("</script>");
 		script.close();
 		return;
-	} else if (result == 0) {
+	}
+
+	if (user.getUserID() == null || user.getUserID().equals("") || user.getUserPassword() == null
+			|| user.getUserPassword().equals("") || user.getUserName() == null || user.getUserName().equals("")
+			|| user.getUserGender() == null || user.getUserGender().equals("") || user.getUserEmail() == null
+			|| user.getUserEmail().equals("")) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('비밀번호가 틀렸습니다.');");
-		// history.back() : 이전페이지로 사용자를 돌려 보냅니다.
+		script.println("alert('입력이 안 된 사항이 있습니다.');");
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();
-		return;
-	} else if (result == -1) {
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('아이디가 존재하지 않습니다.');");
-		script.println("history.back();");
-		script.println("</script>");
-		script.close();
-		return;
-	} else if (result == -2) {
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('데이터베이스 오류가 발생했습니다.');");
-		script.println("history.back();");
-		script.println("</script>");
-		script.close();
-		return;
+	} else {
+
+		UserDAO userDAO = new UserDAO();
+		int result = userDAO.join(user);
+		// join 함수는 UserDTO를 받는데 12 ~ 18 Line 에서 이미 UserDTO를 셋팅을 했습니다.
+		System.out.println("데이터베이스 반환 값 : " + result);
+
+		if (result == -1) { // 회원가입 실패
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 존재하는 아이디 입니다.');");
+			script.println("history.back();");
+			script.println("</script>");
+			script.close();
+		} else { // 회원가입 성공
+			session.setAttribute("userID", user.getUserID()); // 로그인이 되어 있는 상태인  세션값 부여
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("location.href = 'main.jsp';");
+			script.println("</script>");
+			script.close();
+		}
 	}
 	%>
 </body>

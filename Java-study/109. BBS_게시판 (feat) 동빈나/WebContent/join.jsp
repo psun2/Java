@@ -33,7 +33,7 @@
 				<li><a href="main.jsp">메인</a></li>
 				<li><a href="bbs.jsp">게시판</a></li>
 			</ul>
-			<ul class="nav navbar navbar-right">
+			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdwon-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">접속하기<span class="caret"></span></a>
