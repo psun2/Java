@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="107. File Upload (feat) 동빈나">
+    <wb-module deploy-name="109. BBS_게시판 (feat) 동빈나">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="107._File_Upload"/>
-        <property name="java-output-path" value="/107. File Upload (feat) 동빈나/build/classes"/>
+        <property name="context-root" value="109._BBS"/>
+        <property name="java-output-path" value="/109. BBS_게시판 (feat) 동빈나/build/classes"/>
     </wb-module>
 </project-modules>
