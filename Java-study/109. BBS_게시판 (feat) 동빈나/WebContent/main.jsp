@@ -13,6 +13,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script defer src="./js/bootstrap.js"></script>
+<!-- custom scc -->
+<link rel="stylesheet" href="./css/custom.css">
 <title>JSP 게시판 웹 사이트</title>
 </head>
 <body>
@@ -73,5 +75,45 @@
 	</nav>
 	<!-- 네비게이션 끝 -->
 
+	<div class="container">
+		<div class="jumbotron">
+			<div class="container">
+				<h1>웹 사이트 소개</h1>
+				<p>이 웹사이트는 부트스트랩으로 만든 JSP 웹 사이트 입니다. 최소한의 간단한 로직만을 이용해서 개발했습니다.
+					디자인 템플릿으로는 부트스트랩을 이용했습니다.</p>
+				<p>
+					<a class="btn btn-primary btn-pull" href="#" role="button">자세히
+						알아보기</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-silde-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-silde-to="1"></li>
+				<li data-target="#myCarousel" data-silde-to="2"></li>
+			</ol>
+			<!-- 실질적으로 이미지가 들어가는곳 생성 -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="https://placeimg.com/940/270/1" />
+				</div>
+				<div class="item">
+					<img src="https://placeimg.com/940/270/2" />
+				</div>
+				<div class="item">
+					<img src="https://placeimg.com/940/270/3" />
+				</div>
+			</div>
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</div>
+	</div>
 </body>
 </html>

@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+* {
+	font-family: 'Nanum Gothic', -apple-system, BlinkMacSystemFont,
+		'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+		'Helvetica Neue', sans-serif;
+	/* -apple-system 이란 구글 폰트가 없을시 설정된 앞에 font 가 없으면 차례로 다음 font를 쓴다고 합니다.*/
+}
+
+h1 {
+	font-family: 'Hanna', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		Roboto, Oxtgen, Ubntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+		sans-serif;
+}

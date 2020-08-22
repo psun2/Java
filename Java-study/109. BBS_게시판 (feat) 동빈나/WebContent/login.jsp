@@ -12,6 +12,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script defer src="./js/bootstrap.js"></script>
+<!-- custom scc -->
+<link rel="stylesheet" href="./css/custom.css">
 <title>JSP 게시판 웹 사이트</title>
 </head>
 <body>

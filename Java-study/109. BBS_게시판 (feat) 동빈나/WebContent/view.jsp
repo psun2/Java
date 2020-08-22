@@ -3,7 +3,6 @@
 <%@ page import="java.io.PrintWriter"%>
 <%@ page import="bbs.BbsDTO"%>
 <%@ page import="bbs.BbsDAO"%>
-<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,13 +18,6 @@
 <!-- custom scc -->
 <link rel="stylesheet" href="./css/custom.css">
 <title>JSP 게시판 웹 사이트</title>
-
-<style type="text/css">
-a, a:hover {
-	color: inherit;
-	text-decoration: none;
-}
-</style>
 </head>
 <body>
 	<%
@@ -33,10 +25,22 @@ a, a:hover {
 	if (session.getAttribute("userID") != null)
 		userID = (String) session.getAttribute("userID");
 
-	// 기본 default 값
-	int pageNumber = 1;
-	if (request.getParameter("pageNumber") != null)
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	int bbsID = 0;
+
+	if (request.getParameter("bbsID") != null)
+		bbsID = Integer.parseInt(request.getParameter("bbsID"));
+
+	if (bbsID == 0) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글 입니다.');");
+		script.println("location.href = 'bbs.jsp';");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+
+	BbsDTO bbs = new BbsDAO().getBbs(bbsID);
 	%>
 	<!-- 네이게이션 -->
 	<nav class="navbar navbar-default">
@@ -73,7 +77,7 @@ a, a:hover {
 			<%
 				} else { // 로그인이 되어 있는 사람들이 볼 화면
 			%>
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar navbar-right">
 				<li class="dropdown"><a href="#" class="dropdwon-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">회원관리<span class="caret"></span></a>
@@ -98,55 +102,45 @@ a, a:hover {
 				style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+						<th colspan="3"
+							style="background-color: #eeeeee; text-align: center;">게시판 글
+							보기</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						BbsDAO bbsDAO = new BbsDAO();
-					ArrayList<BbsDTO> list = bbsDAO.getList(pageNumber);
-					for (int i = 0; i < list.size(); i++) {
-					%>
 					<tr>
-						<td><%=list.get(i).getBbsID()%></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-		.replaceAll("\n", "<br>").replaceAll("\r", "<br>")%></a></td>
-						<td><%=list.get(i).getUserID()%></td>
-						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시"
-		+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
+						<td style="width: 20%; border: 1px solid #dddddd;">글 제목</td>
+						<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+		.replaceAll("(\n|\r)", "<br>")%></td>
 					</tr>
-					<%
-						}
-					%>
+					<tr>
+						<td style="border: 1px solid #dddddd;">작성자</td>
+						<td colspan="2"><%=bbs.getUserID()%></td>
+					</tr>
+					<tr>
+						<td style="border: 1px solid #dddddd;">작성일자</td>
+						<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시"
+		+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
+					</tr>
+					<tr>
+						<td style="border: 1px solid #dddddd;">내용</td>
+						<td colspan="2" style="min-height: 200px; text-align: left"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+		.replaceAll("[\n]", "<br>")%></td>
+					</tr>
 				</tbody>
 			</table>
-
-			<!-- 다음페이지를 보여 줍니다. -->
+			<a href="bbs.jsp" class="btn btn-primary">목록</a>
 			<%
-				if (pageNumber != 1) {
+				// 글의 작성자가 본인이라면 글의 수정을 가능하게 해 줍니다.
+			if (userID != null && userID.equals(bbs.getUserID())) {
 			%>
-
-			<a href="bbs.jsp?pageNumber=<%=pageNumber - 1%>"
-				class="btn btn-success btn-arraw-left">이전</a>
-
-			<%
-				}
-			// 다음페이지의 존재 여부를 알기 위하여 pageNumber + 1 을 해줍니다.
-			if (bbsDAO.nextPage(pageNumber + 1)) {
-			%>
-
-			<a href="bbs.jsp?pageNumber=<%=pageNumber + 1%>"
-				class="btn btn-success btn-arraw-left">다음</a>
-
+			<a href="update.jsp?bbsID=<%=bbs.getBbsID()%>"
+				class="btn btn-primary">수정</a> <a
+				href="deleteAction.jsp?bbsID=<%=bbs.getBbsID()%>"
+				class="btn btn-primary" onclick="return confirm('정말로 삭제하시겠습니까?');">삭제</a>
 			<%
 				}
 			%>
-
-			<!-- 오른쪽에 고정된 글쓰기 버튼 -->
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
 	</div>
 </body>
