@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="111. JSP에서 DB연동 하기 - JNDI, DBCP(커넥션풀) 이용">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="111._s"/>
+        <property name="java-output-path" value="/111. JSP에서 DB연동 하기 - JNDI, DBCP(커넥션풀) 이용/build/classes"/>
+    </wb-module>
+</project-modules>
