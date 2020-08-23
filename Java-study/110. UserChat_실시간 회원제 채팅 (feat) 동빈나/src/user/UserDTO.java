@@ -1,15 +1,15 @@
 package user;
 
-public class userDTO {
+public class UserDTO {
 
 	private String userID, userPassword, userName, userGender, userEmail, userProfile;
 	private int userAge;
 
-	public userDTO() {
+	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public userDTO(String userID, String userPassword, String userName, int userAge, String userGender,
+	public UserDTO(String userID, String userPassword, String userName, int userAge, String userGender,
 			String userEmail, String userProfile) {
 		super();
 		this.userID = userID;
