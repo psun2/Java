@@ -6,7 +6,7 @@ USE USERCHAT;
 
 # 테이블 생성
 CREATE TABLE USER (
-usrID VARCHAR(20),
+userID VARCHAR(20),
 userPassword VARCHAR(20),
 userName VARCHAR(20),
 userAge INT,

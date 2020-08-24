@@ -40,7 +40,6 @@ public class UserRegisterServlet extends HttpServlet {
 				request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
 				// 설정한 세션 정보를 join.jsp로 보내줍니다.
 				response.sendRedirect("join.jsp");
-				System.out.println("null 보다 userRegister의 코드가 먼저 뜨잔아 ?");
 				return;
 			}
 		}

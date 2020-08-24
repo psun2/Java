@@ -6,60 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 css -->
-<link rel="stylesheet" href="./css/bootstrap.css" />
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.css" />
 <!-- 커스텀 css -->
-<link rel="stylesheet" href="./css/custom.css" />
+<link rel="stylesheet" href="./bootstrap/css/custom.css" />
 <title>JSP Ajax 실시간 회원제 채팅 서비스</title>
-<!-- Ajax를 위한 제이쿼리 -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- join.js -->
+<script src="./join.js"></script>
 <!-- 부트스트랩 js -->
-<script src="./js/bootstrap.js"></script>
-
-<!-- onclick 과 onkeyup 을 위한 자바스크립트 코드 -->
-<script type="text/javascript">
-	// 아이디 중복체크
-	function registerCheckFunction() {
-		console.log('registerCheckFunction 실행');
-		var userID = $("#userID").val(); // input 의 value 를 가져옵니다.
-
-		// ajax 를 이용한 비동기 통신
-		$.ajax({
-			type : 'POST',
-			url : './UserRegisterCheckServlet',
-			// 속성이름 : 값(var userID)
-			data : {
-				userID : userID
-			},
-			// 성공시 success 실행
-			success : function(result) {
-				if (result == 1) { // 중복 확인결과 사용 할 수  있을때
-					$('#checkMessage').html('사용할 수 있는 아이디입니다.');
-					// .attr() : 속성 부여 
-					$('#checkType')
-							.attr('class', 'modal-content panel-success');
-				} else { // 중복 된 아이디 인 경우
-					$('#checkMessage').html('사용할 수 없는 아이디입니다.');
-					// .attr() : 속성 부여 
-					$('#checkType')
-							.attr('class', 'modal-content panel-warning');
-				}
-				$('#checkModal').modal("show"); // 모달이 보여지는 역할을 합니다.
-			}
-		});
-	}
-
-	// 비밀번호 일치 체크
-	function passwordCheckFunction() {
-		var userPassword1 = $('#userPassword1').val();
-		var userPassword2 = $('#userPassword2').val();
-
-		if (userPassword1 != userPassword2) {
-			$('#passwordCheckMessage').html('비밀번호가 서로 일치하지 않습니다.');
-		} else {
-			$('#passwordCheckMessage').html('');
-		}
-	}
-</script>
+<script src="./bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
 	<%
@@ -182,8 +136,8 @@
 					</tr>
 					<tr>
 						<td style="text-align: left" colspan="3"><h5
-								style="color: red;" id="passwordCheckMessage"></h5> <input
-							class="btn btn-primary pull-right" type="submit" value="등록" /> <!-- <button type="submit" class="btn btn-primary pull-right">등록</button>  -->
+								style="color: red;" id="passwordCheckMessage"></h5> <!-- <input class="btn btn-primary pull-right" type="submit" value="등록" /> -->
+							<button type="submit" class="btn btn-primary pull-right">회원가입</button>
 						</td>
 					</tr>
 				</tbody>
