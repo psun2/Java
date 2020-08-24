@@ -68,6 +68,14 @@
 	String userID = null;
 	if (session.getAttribute("userID") != null)
 		userID = (String) session.getAttribute("userID");
+
+	// userID 가 null 이  아니라면 또 다시 회원가입 불가능
+	if (userID != null) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "현재 로그인이 되어 있는 상태입니다.");
+		response.sendRedirect("index.jsp");
+		return;
+	}
 	%>
 	<!-- 네비게이션 -->
 	<nav class="navbar navbar-default">
@@ -98,19 +106,6 @@
 						<li><a href="join.jsp">회원가입</a></li>
 					</ul></li>
 			</ul>
-			<%
-				} else {
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true">회원관리
-						<span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="logout.jsp">로그아웃</a></li>
-					</ul></li>
-			</ul>
-
 			<%
 				}
 			%>

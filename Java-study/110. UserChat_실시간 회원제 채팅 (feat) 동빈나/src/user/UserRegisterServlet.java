@@ -87,6 +87,8 @@ public class UserRegisterServlet extends HttpServlet {
 		System.out.println("result : " + result);
 		switch (result) {
 		case 1:
+			// 회원가입 성공시 로그인 상태로 되어 있기 위해 session을 잡아줍니다.
+			request.getSession().setAttribute("userID", userID);
 			request.getSession().setAttribute("messageType", "성공 메시지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
 			// 회원가입에 성공했으므로, 설정한 세션 정보를 index.jsp로 보내줍니다.

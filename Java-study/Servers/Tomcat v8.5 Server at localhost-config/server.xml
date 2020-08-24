@@ -153,7 +153,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="110. UserChat_실시간 회원제 채팅 (feat) 동빈나" path="/110. UserChat_실시간 회원제 채팅 (feat) 동빈나" reloadable="true" source="org.eclipse.jst.jee.server:110. UserChat_실시간 회원제 채팅 (feat) 동빈나"/><Context docBase="113. 110 refactoring - 회원가입부분" path="/113._110_refactoring" reloadable="true" source="org.eclipse.jst.jee.server:113. 110 refactoring - 회원가입부분"/><Context docBase="106. Register_회원가입 (feat) 동빈나" path="/106. Register_회원가입 (feat) 동빈나" reloadable="true" source="org.eclipse.jst.jee.server:106. Register_회원가입 (feat) 동빈나"/></Host>
+      <Context docBase="110. UserChat_실시간 회원제 채팅 (feat) 동빈나" path="/110. UserChat_실시간 회원제 채팅 (feat) 동빈나" reloadable="true" source="org.eclipse.jst.jee.server:110. UserChat_실시간 회원제 채팅 (feat) 동빈나"/></Host>
     </Engine>
   </Service>
 </Server>

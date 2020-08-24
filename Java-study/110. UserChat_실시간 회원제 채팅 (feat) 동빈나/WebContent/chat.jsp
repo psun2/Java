@@ -3,6 +3,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- 바디 태그의 맨 윗부분에 있었는데, submit 함수로 인하여 userID의 선언이 더 아래있으므로 submitFunction에서 참조를 못하여,
+	head태그로 이동
+	결론 : 헤드 태그에서도 자바 코드 사용 가능!
+	 -->
+<%
+	// 메인페이지로 삼기 위한 세션 작업 (로그인 처리)
+String userID = null;
+if (session.getAttribute("userID") != null)
+	userID = (String) session.getAttribute("userID");
+
+System.out.println("userID : " + userID);
+
+String toID = null;
+if (request.getParameter("toID") != null)
+	toID = (String) request.getParameter("toID");
+
+// userID 가 null 이라면 로그인이 되어있지 않은 상태
+if (userID == null) {
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "현재 로그인이 되어 있지 않는 상태입니다.");
+	response.sendRedirect("index.jsp");
+	return;
+}
+if (toID == null) {
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "대화 상대가 지정 되어 있지 않는 상태입니다.");
+	response.sendRedirect("index.jsp");
+	return;
+}
+%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 css -->
@@ -14,14 +44,46 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script src="./js/bootstrap.js"></script>
+
+<!-- 실제로 전송을 하기 위한 자바스크립트 -->
+<script type="text/javascript">
+	function autoClosingAlert(selector, delay) {
+		var alert = $(selector).alert();
+		alert.show();
+		window.setTimeout(() => {
+			alert.hide();
+		}, delay);
+		// 원 코드
+		// window.setTimeout(function() {alert.hide()}, delay);
+	}
+	function submitFunction() {
+		var fromID = '<%=userID%>';
+		var toID = '<%=toID%>';
+		var chatContent = $('#chatContent').val();
+		$.ajax({
+			type: "POST",
+			url: "./chatSubmitServlet",
+			data: {
+				fromID: encodeURIComponent(fromID),
+				toID: encodeURIComponent(toID),
+				chatContent: encodeURIComponent(chatContent),				
+			},
+			success:function (result) {
+				if(result == 1) {
+					autoClosingAlert('#successMessage', 2000);
+				} else if(result == 0) {
+					autoClosingAlert('#dangerMessage', 2000);					
+				} else {					
+					autoClosingAlert('#warningMessage', 2000);
+				}
+			} 
+		});
+			// 메시지를 보낸후 textarea 의 값을 초기화
+			$('#chatContent').val('');
+	}
+</script>
 </head>
 <body>
-	<%
-		// 메인페이지로 삼기 위한 세션 작업 (로그인 처리)
-	String userID = null;
-	if (session.getAttribute("userID") != null)
-		userID = (String) session.getAttribute("userID");
-	%>
 	<!-- 네비게이션 -->
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -39,21 +101,9 @@
 				<li class="active"><a href="index.jsp">메인</a></li>
 			</ul>
 			<%
-				if (userID == null) { // 로그인 상태가 아니라면
+				if (userID != null) { // 로그인 상태라면
 			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true">접속하기
-						<span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul></li>
-			</ul>
-			<%
-				} else {
-			%>
+
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true">회원관리
@@ -69,6 +119,50 @@
 			%>
 		</div>
 	</nav>
+
+	<!-- https://www.bootdey.com/ -->
+	<!-- 채팅창 구현 -->
+	<div class="container bootstrap snippet">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="portlet portlet-default">
+					<div class="portlet-heading">
+						<div class="portlet-title">
+							<h4>
+								<i class="fa fa-circle text-green"></i> 실시간 채팅창
+							</h4>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div id="chat" class="panel-collapse collapse in">
+						<div id="chatList" class="portlet-body chat-widget"
+							style="overflow-y: auto; width: auto; height: 600px;"></div>
+						<div class="portlet-footer">
+							<!-- 이름은 자신의 아이디 이므로 
+							<div class="row">
+								<div class="form-group col-xs-4">
+									<input style="height: 40px;" type="text" id="chatName"
+										class="form-control" placeholder="이름" maxlength="8" />
+								</div>
+							</div>	
+							-->
+							<div class="row" style="height: 90px;">
+								<div class="form-group col-xs-10">
+									<textarea style="height: 80px;" id="chatContent"
+										class="form-control" placeholder="메시지를 입력하세요." maxlength="100"></textarea>
+								</div>
+								<div class="form-group col-xs-2">
+									<button type="button" class="btn btn-dafault pull-right"
+										onclick="submitFunction();">전송</button>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 알림창 구현 -->
 	<div class="alert alert-success" id="successMessage"
