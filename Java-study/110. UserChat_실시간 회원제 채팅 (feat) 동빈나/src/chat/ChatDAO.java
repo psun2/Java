@@ -62,8 +62,8 @@ public class ChatDAO {
 					timeType = "오후";
 					chatTime -= 12; // 24시간제라서 12를 빼줍니다.
 				}
-				chat.setChatTime(rs.getNString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
-						+ rs.getNString(5).substring(14, 16) + "");
+				chat.setChatTime(rs.getString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
+						+ rs.getString(5).substring(14, 16) + "");
 
 //				chat.setChatID(rs.getInt("chatID"));
 //				chat.setFromID(rs.getString("fromID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
@@ -80,6 +80,8 @@ public class ChatDAO {
 //					timeType = "오후";
 //					chatTime -= 12; // 24시간제라서 12를 빼줍니다.
 //				}
+//				chat.setChatTime(rs.getString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
+//						+ rs.getNString(5).substring(14, 16) + "");
 
 				chatList.add(chat);
 				System.out.println(chat);
@@ -108,7 +110,7 @@ public class ChatDAO {
 	}
 
 	// 대화 내역 중 최근 대화 몇개만을 뽑아서 반환합니다.
-	public ArrayList<ChatDTO> getChatListByResect(String fromID, String toID, int number) {
+	public ArrayList<ChatDTO> getChatListByRecent(String fromID, String toID, int number) {
 
 		ArrayList<ChatDTO> chatList = null;
 
