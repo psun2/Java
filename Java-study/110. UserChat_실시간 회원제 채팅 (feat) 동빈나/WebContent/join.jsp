@@ -42,6 +42,7 @@
 					// .attr() : 속성 부여 
 					$('#checkType')
 							.attr('class', 'modal-content panel-warning');
+					// .attr => js 의 setAttribute() 와 사용법 동일
 				}
 				$('#checkModal').modal("show"); // 모달이 보여지는 역할을 합니다.
 			}
