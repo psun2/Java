@@ -25,7 +25,8 @@ public class downloadAction extends HttpServlet {
 		// String directory = this.getServletContext().getRealPath("/upload/"); // 업로드와
 		// 같은 이유로 경로 변경
 
-		String directory = "D:/Study/Java/Java-study/107. File Upload (feat) 동빈나/WebContent/upload/";
+		// String directory = "D:/Study/Java/Java-study/107. File Upload_파일 업,다운로드 (feat) 동빈나/upload/";
+		String directory = "D:/Java/Java-study/107. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
 		File file = new File(directory + "/" + fileName);
 
 		// 어떠한 데이터의 정보를 주고 받을 지 를 담슴니다.

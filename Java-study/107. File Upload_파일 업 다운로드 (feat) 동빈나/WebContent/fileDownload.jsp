@@ -24,6 +24,8 @@
 	// }
 
 	ArrayList<FileDTO> fileList = new FileDAO().getList();
+	System.out.println(fileList);
+	System.out.println(request.getContextPath());
 
 	for (FileDTO file : fileList) {
 		out.write("<a href=\"" + request.getContextPath() + "/downloadAction?file="
