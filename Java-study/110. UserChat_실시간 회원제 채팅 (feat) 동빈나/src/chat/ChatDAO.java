@@ -147,8 +147,8 @@ public class ChatDAO {
 					timeType = "오후";
 					chatTime -= 12; // 24시간제라서 12를 빼줍니다.
 				}
-				chat.setChatTime(rs.getNString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
-						+ rs.getNString(5).substring(14, 16) + "");
+				chat.setChatTime(rs.getString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
+						+ rs.getString(5).substring(14, 16) + "");
 
 //				chat.setChatID(rs.getInt("chatID"));
 //				chat.setFromID(rs.getString("fromID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
@@ -165,6 +165,8 @@ public class ChatDAO {
 //					timeType = "오후";
 //					chatTime -= 12; // 24시간제라서 12를 빼줍니다.
 //				}
+//				chat.setChatTime(rs.getString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
+//						+ rs.getString(5).substring(14, 16) + "");
 
 				chatList.add(chat);
 				System.out.println(chat);

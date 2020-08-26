@@ -44,7 +44,8 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
+				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%
 				if (userID == null) { // 로그인 상태가 아니라면
@@ -55,7 +56,7 @@
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
+						<li class="active"><a href="login.jsp">로그인</a></li>
 						<li><a href="join.jsp">회원가입</a></li>
 					</ul></li>
 			</ul>

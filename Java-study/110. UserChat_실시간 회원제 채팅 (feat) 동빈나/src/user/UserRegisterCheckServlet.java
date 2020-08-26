@@ -24,6 +24,9 @@ public class UserRegisterCheckServlet extends HttpServlet {
 		// 요청
 		String userID = request.getParameter("userID");
 
+		if (userID == null || userID.equals(""))
+			response.getWriter().write("-1");
+
 		// 사용자에대한 응답
 		response.getWriter().write(new UserDAO().registerCheck(userID) + "");
 		// + "" : new userDAO().registerCheck(userID) 의 반환값인 int형을 문자열로 바꾸어주기위해 빈 문자열을

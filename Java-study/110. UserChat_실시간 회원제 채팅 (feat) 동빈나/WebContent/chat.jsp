@@ -97,6 +97,10 @@ if (toID == null) {
 					var parsed = JSON.parse(data);
 					var result = parsed.result;
 					for(var i = 0; i < result.length; i++) {
+						if(result[i][0].value == fromID ) {
+							// 메시지를 보낸 사람이 나의 아이디 와 같다면...
+							result[i][0].value = '나';
+						}
 						addChat(result[i][0].value, result[i][2].value,result[i][3].value);
 					}
 					lastID = Number(parsed.last);
@@ -153,7 +157,8 @@ if (toID == null) {
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
+				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%
 				if (userID != null) { // 로그인 상태라면
