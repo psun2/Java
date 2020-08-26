@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+</head>
+<body>
+	<div></div>
+	<p></p>
+	<!--
+            div>ul>li
+            > : 자식
+        -->
+	<div>
+		<ul>
+			<li></li>
+		</ul>
+	</div>
+	<div>
+		<ul>
+			<li>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+				Ratione doloribus dolores, reiciendis veritatis maiores provident
+				fuga commodi culpa reprehenderit non nulla explicabo nemo
+				accusantium itaque natus consequuntur illum iste rerum.</li>
+		</ul>
+	</div>
+	<!--
+            div+p+bq
+            + : 형제
+        -->
+	<div></div>
+	<p></p>
+	<blockquote></blockquote>
+	<!--
+            div+div>p>span+em>lorem
+        -->
+	<div></div>
+	<div>
+		<p>
+			<span></span> <em>Lorem ipsum dolor sit amet,
+				consectetur adipisicing elit. Commodi corporis, autem ut iure ab
+				necessitatibus consequuntur quisquam modi, ipsam quod sequi.
+				Officiis distinctio commodi quia incidunt libero asperiores delectus
+				optio!</em>
+		</p>
+	</div>
+	<!--
+            div+div>p>span+em^bq
+            ^ : 한단계가 올라 갑니다.
+            즉, em의 부모인 p 와 동격이 됩니다.
+        -->
+	<div></div>
+	<div>
+		<p>
+			<span></span> <em></em>
+		</p>
+		<blockquote></blockquote>
+	</div>
+	<!--
+                div+div>p>span+em^bq
+                ^ : 한단계가 올라 갑니다.
+            즉, em의 부모인 p 와 동격이 됩니다.
+        -->
+	<div></div>
+	<div>
+		<p>
+			<span></span> <em></em>
+		</p>
+	</div>
+	<blockquote></blockquote>
+	<!-- 
+      ul>li*5
+      *5 : 다섯element가 들어 갑니다.
+     -->
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<!--
+      div>header+footer>p
+    -->
+	<div>
+		<header></header>
+		<footer>
+			<p></p>
+		</footer>
+	</div>
+	<!--
+      div>header>ul>li*2>a^^^footer>p
+    -->
+	<div>
+		<header>
+			<ul>
+				<li><a href=""></a></li>
+				<li><a href=""></a></li>
+			</ul>
+		</header>
+		<footer>
+			<p></p>
+		</footer>
+	</div>
+	<!--
+      div>(header>ul>li*2>a)+footer>p
+      () : 그룹핑
+    -->
+	<div>
+		<header>
+			<ul>
+				<li><a href=""></a></li>
+				<li><a href=""></a></li>
+			</ul>
+		</header>
+		<footer>
+			<p></p>
+		</footer>
+	</div>
+	<!-- 
+      (div>dl>(dt+dd)*3)+footer>p
+     -->
+	<div>
+		<dl>
+			<dt></dt>
+			<dd></dd>
+			<dt></dt>
+			<dd></dd>
+			<dt></dt>
+			<dd></dd>
+		</dl>
+	</div>
+	<footer>
+		<p></p>
+	</footer>
+
+	<!-- id, class -->
+	<!-- div#header -->
+	<div id="header"></div>
+	<div id="aaa"></div>
+	<p id="bbb"></p>
+	<blockquote id="tttt"></blockquote>
+
+	<!-- div.header -->
+	<div class="header"></div>
+	<div class="page"></div>
+	<p class="aaa"></p>
+
+	<!-- div.c1.c2.c3 -->
+	<div class="c1 c2 c3"></div>
+
+	<!-- p#footer.c1.c2.c3 -->
+	<p id="footer" class="c1 c2 c3"></p>
+
+	<!-- 
+      ul#nav>(li>span.info)*2+li*2
+     -->
+	<ul id="nav">
+		<li>Hello world <span class="info"></span></li>
+		<li><span class="info"></span></li>
+		<li></li>
+		<li></li>
+	</ul>
+
+	<!-- 
+      p{Click }+a{here}+{ to continue}
+     -->
+	<p>Click</p>
+	<a href="">here</a> to continue
+</body>
+</html>

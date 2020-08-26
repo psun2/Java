@@ -1,0 +1,103 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- TBL_DEPT Table Create SQL
+CREATE TABLE TBL_DEPT
+(
+    dept_uid     NUMBER          NOT NULL, 
+    dept_name    VARCHAR2(20)    NOT NULL, 
+    CONSTRAINT TBL_DEPT_PK PRIMARY KEY (dept_uid)
+)
+/
+
+CREATE SEQUENCE TBL_DEPT_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER TBL_DEPT_AI_TRG
+BEFORE INSERT ON TBL_DEPT 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT TBL_DEPT_SEQ.NEXTVAL
+    INTO :NEW.dept_uid
+    FROM DUAL;
+END;
+/
+
+--DROP TRIGGER TBL_DEPT_AI_TRG;
+/
+
+--DROP SEQUENCE TBL_DEPT_SEQ;
+/
+
+COMMENT ON TABLE TBL_DEPT IS '부서테이블'
+/
+
+COMMENT ON COLUMN TBL_DEPT.dept_uid IS '부서고유번호'
+/
+
+COMMENT ON COLUMN TBL_DEPT.dept_name IS '부서명'
+/
+
+
+-- TBL_DEPT Table Create SQL
+CREATE TABLE TBL_EMP
+(
+    emp_uid         NUMBER          NOT NULL, 
+    emp_name        VARCHAR2(20)    NOT NULL, 
+    emp_phone       VARCHAR2(40)    NULL, 
+    emp_age         NUMBER          NULL, 
+    emp_hiredate    DATE            NULL, 
+    dept_uid        NUMBER          NULL, 
+    CONSTRAINT TBL_EMP_PK PRIMARY KEY (emp_uid)
+)
+/
+
+CREATE SEQUENCE TBL_EMP_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER TBL_EMP_AI_TRG
+BEFORE INSERT ON TBL_EMP 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT TBL_EMP_SEQ.NEXTVAL
+    INTO :NEW.emp_uid
+    FROM DUAL;
+END;
+/
+
+--DROP TRIGGER TBL_EMP_AI_TRG;
+/
+
+--DROP SEQUENCE TBL_EMP_SEQ;
+/
+
+COMMENT ON TABLE TBL_EMP IS '직원테이블'
+/
+
+COMMENT ON COLUMN TBL_EMP.emp_uid IS '직원고유번호'
+/
+
+COMMENT ON COLUMN TBL_EMP.emp_name IS '직원이름'
+/
+
+COMMENT ON COLUMN TBL_EMP.emp_phone IS '직원연락처'
+/
+
+COMMENT ON COLUMN TBL_EMP.emp_age IS '직원나이'
+/
+
+COMMENT ON COLUMN TBL_EMP.emp_hiredate IS '직원입사일'
+/
+
+COMMENT ON COLUMN TBL_EMP.dept_uid IS '부서고유번호'
+/
+
+ALTER TABLE TBL_EMP
+    ADD CONSTRAINT FK_TBL_EMP_dept_uid_TBL_DEPT_d FOREIGN KEY (dept_uid)
+        REFERENCES TBL_DEPT (dept_uid)
+/
+
+
