@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
+<%
+	// 메인페이지로 삼기 위한 세션 작업 (로그인 처리)
+String userID = null;
+if (session.getAttribute("userID") != null)
+	userID = (String) session.getAttribute("userID");
+%>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,14 +22,38 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script src="./js/bootstrap.js"></script>
+
+<script type="text/javascript">
+	function getUnread() {
+		$.ajax({
+		type:"POST",
+		url:"./chatUnread",
+		data:{
+			userID: encodeURIComponent('<%=userID%>')
+			},
+		success: function(result) {
+			if(result >= 1)
+				showUnread(result);
+			else showUnread('');
+		}
+		});
+	}
+	
+	// 반복적으로 현재 자신이 읽지 않은 메시지를 서버로 부터 받아서 보여 줍니다.
+	function getInfiniteUnread() {
+		setInterval(function(){
+			getUnread();
+		}, 1000);
+	}
+	
+	
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
+</script>
 </head>
 <body>
-	<%
-		// 메인페이지로 삼기 위한 세션 작업 (로그인 처리)
-	String userID = null;
-	if (session.getAttribute("userID") != null)
-		userID = (String) session.getAttribute("userID");
-	%>
+
 	<!-- 네비게이션 -->
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -40,6 +70,8 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 			<%
 				if (userID == null) { // 로그인 상태가 아니라면
@@ -137,6 +169,17 @@ else
 		// 실제보 보여주게 함.
 		$('#messageModal').modal("show");
 	</script>
+	<%
+		if (userID != null) {
+	%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		getInfiniteUnread();
+	});
+	</script>
+	<%
+		}
+	%>
 	<%
 		// 모달을 띄운뒤 세션을 파괴합니다.
 	session.removeAttribute("messageType");

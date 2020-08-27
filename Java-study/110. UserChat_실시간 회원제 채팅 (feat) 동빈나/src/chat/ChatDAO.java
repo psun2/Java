@@ -119,16 +119,36 @@ public class ChatDAO {
 		ResultSet rs = null;
 
 		// 본인이 보냈거나, 받았을때 두 경우에 어떠한 경우에라도 해당이 된다면
-		String sql = "SELECT * FROM CHAT WHERE  ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ? )) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT) ORDER BY chatTime";
+		// (기존) String sql = "SELECT * FROM CHAT WHERE ((fromID = ? AND toID = ?) OR
+		// (fromID = ? AND toID = ? )) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT)
+		// ORDER BY chatTime";
+
+		// 메시지 읽음 처리 구현
+		// 추가된 부분 : WHERE (fromID = ? AND toID = ?) OR (fromID = ? AND toID = ? )
+		// 메시지 100개를 가져올때 최근 100개가 아닌, 해당 사용자들끼리의 메시지를 가져오기위함 입니다.
+		String sql = "SELECT * FROM CHAT WHERE  ((fromID = ? AND toID = ?) OR (fromID = ? AND toID = ? )) AND chatID > (SELECT MAX(chatID) - ? FROM CHAT WHERE (fromID = ? AND toID = ?) OR (fromID = ? AND toID = ? )) ORDER BY chatTime";
 
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(sql);
+
+			// (기존)
+//			psmt.setString(1, fromID);
+//			psmt.setString(2, toID);
+//			psmt.setString(3, toID);
+//			psmt.setString(4, fromID);
+//			psmt.setInt(5, number);
+
+			// (메시지 읽음처리 구현 sql 문의 바뀜에 따라 setting 할 String이 늘었습니다.)
 			psmt.setString(1, fromID);
 			psmt.setString(2, toID);
 			psmt.setString(3, toID);
 			psmt.setString(4, fromID);
 			psmt.setInt(5, number);
+			psmt.setString(6, fromID);
+			psmt.setString(7, toID);
+			psmt.setString(8, toID);
+			psmt.setString(9, fromID);
 			rs = psmt.executeQuery();
 
 			chatList = new ArrayList<ChatDTO>();
@@ -202,7 +222,9 @@ public class ChatDAO {
 		ResultSet rs = null;
 
 		// 본인이 보냈거나, 받았을때 두 경우에 어떠한 경우에라도 해당이 된다면
-		String sql = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW())";
+		String sql = "INSERT INTO CHAT VALUES (NULL, ?, ?, ?, NOW(), 0)";
+		// 맨마지막의 0 : 첫 메시지 상태 일땐 읽지 않음 상태이므로, 0을 넣어줍니다.
+		// 해당 유저가 읽었다면 1로 바꾸어 줍니다.
 		System.out.println("dataSource : " + dataSource);
 		try {
 
@@ -230,6 +252,73 @@ public class ChatDAO {
 			}
 		}
 		return -1; // 리스트 반환
+	}
+
+	// 메시지 읽음처리 구현
+	public int readChat(String fromID, String toID) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+
+		String sql = "UPDATE CHAT SET chatRead = 1 WHERE (fromID = ? AND toID = ?)";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, toID);
+			psmt.setString(2, fromID);
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	// 현재 모든 채팅중 읽지 않은 메시지의 갯수를 가져오는 함수
+	public int getAllUnreadChat(String userID) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT COUNT(chatID) FROM CHAT WHERE toID = ? AND chatRead = 0";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) // 읽지 않은 메시지가 있는 경우
+				return rs.getInt("COUNT(chatID)");
+			else // 읽지 않은 메시지가 없는 경우
+				return 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
 	}
 
 }

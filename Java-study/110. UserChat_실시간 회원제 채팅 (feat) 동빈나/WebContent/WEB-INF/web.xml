@@ -23,7 +23,7 @@
 		<url-pattern>/userRegister</url-pattern>
 	</servlet-mapping>
 
-<!-- 메시지 전송 -->
+	<!-- 메시지 전송 -->
 	<servlet>
 		<servlet-name>ChatSubmitServlet</servlet-name>
 		<servlet-class>chat.ChatSubmitServlet</servlet-class>
@@ -33,7 +33,7 @@
 		<url-pattern>/chatSubmitServlet</url-pattern>
 	</servlet-mapping>
 
-<!-- 채팅내용 불러오기 -->
+	<!-- 채팅내용 불러오기 -->
 	<servlet>
 		<servlet-name>ChatListServlet</servlet-name>
 		<servlet-class>chat.ChatListServlet</servlet-class>
@@ -43,7 +43,7 @@
 		<url-pattern>/chatListServlet</url-pattern>
 	</servlet-mapping>
 
-<!-- 로그인 -->
+	<!-- 로그인 -->
 	<servlet>
 		<servlet-name>UserLoginServlet</servlet-name>
 		<servlet-class>user.UserLoginServlet</servlet-class>
@@ -51,5 +51,15 @@
 	<servlet-mapping>
 		<servlet-name>UserLoginServlet</servlet-name>
 		<url-pattern>/userLogin</url-pattern>
+	</servlet-mapping>
+
+	<!-- 읽지않은 메시지 갯수 servlet -->
+	<servlet>
+		<servlet-name>ChatUnreadServlet</servlet-name>
+		<servlet-class>chat.ChatUnreadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatUnreadServlet</servlet-name>
+		<url-pattern>/chatUnread</url-pattern>
 	</servlet-mapping>
 </web-app>

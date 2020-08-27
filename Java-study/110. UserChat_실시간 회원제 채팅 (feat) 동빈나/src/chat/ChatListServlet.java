@@ -49,7 +49,7 @@ public class ChatListServlet extends HttpServlet {
 		// JSON 형태 사용
 		result.append("{\"result\":[");
 		ChatDAO chatDAO = new ChatDAO();
-		ArrayList<ChatDTO> chatList = chatDAO.getChatListByRecent(fromID, toID, 10);
+		ArrayList<ChatDTO> chatList = chatDAO.getChatListByRecent(fromID, toID, 100); // 최근 100개까지 채팅데이터를 가져 올 수 있습니다.
 		if (chatList.size() == 0)
 			return "";
 		for (int i = 0; i < chatList.size(); i++) {
@@ -64,6 +64,10 @@ public class ChatListServlet extends HttpServlet {
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 		System.out.println(result.toString());
+		
+		// 반환전 즉 반환되면 읽음으로서 읽음처리 실행
+		chatDAO.readChat(fromID, toID);
+		
 		return result.toString();
 	}
 
@@ -87,6 +91,10 @@ public class ChatListServlet extends HttpServlet {
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 		System.out.println(result.toString());
+		
+		// 반환전 즉 반환되면 읽음으로서 읽음처리 실행
+		chatDAO.readChat(fromID, toID);
+		
 		return result.toString();
 	}
 

@@ -233,7 +233,7 @@ if (toID == null) {
 	</div>
 	<div class="alert alert-danger" id="dangerMessage"
 		style="display: none;">
-		<strong>이름과 내용을 모두 입력해주세요.</strong>
+		<strong>내용이 입력되지 않았습니다.</strong>
 	</div>
 	<div class="alert alert-warning" id="warningMessage"
 		style="display: none;">
