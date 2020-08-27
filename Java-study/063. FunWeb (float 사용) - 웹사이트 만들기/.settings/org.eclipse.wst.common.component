@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="063. FunWeb (float 사용) - 웹사이트 만들기">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="060._FunWeb_(float_사용)_-_웹사이트_만들기"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="060. Calendal 페이지 만들기 (Html15_FormPractice2 - 과제)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="060._Calendal_페이지_만들기_(Html15_FormPractice2_-_과제)"/>
+    </wb-module>
+</project-modules>

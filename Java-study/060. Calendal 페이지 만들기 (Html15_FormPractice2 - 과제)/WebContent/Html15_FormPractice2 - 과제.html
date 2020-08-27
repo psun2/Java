@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./reset.css" />
+<link rel="stylesheet" href="./calendar.css" />
+
+<script defer src="https://kit.fontawesome.com/5d1d5aa1e7.js"
+	crossorigin="anonymous"></script>
+<title>캘린더 페이지 만들기 과제</title>
+</head>
+<!-- 
+	https://docs.google.com/presentation/d/1Kog-oX2aVR2fMGYBOIjWYV1TrLYgVrh5lw-0m99_1c0/edit#slide=id.p
+	
+	최대한 비슷하게 만들어 보세요.
+	
+	샘플:
+	http://bitsoul.cafe24.com/web/orderform/
+ -->
+<body>
+	<section>
+		<nav class="calendar__nav">
+			<ul class="nav__list">
+				<li class="nav__item">
+					<button type="button" class="nav__btn">
+						<a href="#" class="nav__link">정책차림표</a>
+					</button>
+				</li>
+				<li class="nav__item">
+					<button type="button" class="nav__btn">
+						<a href="#" class="nav__link">미리보는 지원사업</a>
+					</button>
+				</li>
+				<li class="nav__item">
+					<button type="button" class="nav__btn">
+						<a href="#" class="nav__link">마감임박 지원사업</a>
+					</button>
+				</li>
+				<li class="nav__item">
+					<button type="button" class="nav__btn select">
+						<a href="#" class="nav__link select">접수중인 지원사업</a>
+					</button>
+				</li>
+			</ul>
+		</nav>
+
+		<article class="calendar__date">
+			<div class="data__title">
+				<span class="date__entity">&lt;</span> <span class="date__now">&nbsp;2015-06-17&nbsp;</span>
+				<span class="date__entity">&gt;</span>
+			</div>
+			<div class="date__detail">
+				<ul class="date__list">
+					<li class="date__item"><input type="radio" id="all"
+						name="itemSelect" checked /> <label for="all">전체</label></li>
+					<li class="date__item"><input type="radio"
+						id="start-up venture" name="itemSelect" /> <label
+						for="start-up venture">창업º벤처</label></li>
+					<li class="date__item"><input type="radio" id="business"
+						name="itemSelect" /> <label for="business">소상공인</label></li>
+					<li class="date__item"><input type="radio" id="export"
+						name="itemSelect" /> <label for="export">소상공인</label></li>
+					<li class="date__item"><input type="radio" id="R&D"
+						name="itemSelect" /> <label for="R&D">R&D</label></li>
+					<li class="date__item"><input type="radio" id="finance"
+						name="itemSelect" /> <label for="finance">창업º세제</label></li>
+					<li class="date__item"><input type="radio" id="manpower"
+						name="itemSelect" /> <label for="manpower">인력</label></li>
+				</ul>
+				<div class="date__calendar">
+					<div class="date__column">
+						<div class="date__date day">
+							<span>일</span>
+						</div>
+						<div class="date__date day">
+							<span>월</span>
+						</div>
+						<div class="date__date day">
+							<span>화</span>
+						</div>
+						<div class="date__date day">
+							<span>수</span>
+						</div>
+						<div class="date__date day">
+							<span>목</span>
+						</div>
+						<div class="date__date day">
+							<span>금</span>
+						</div>
+						<div class="date__date day">
+							<span>토</span>
+						</div>
+					</div>
+					<div class="date__column">
+						<div class="date__date empty"></div>
+						<div class="date__date">
+							<span>1</span>
+						</div>
+						<div class="date__date">
+							<span>2</span>
+						</div>
+						<div class="date__date">
+							<span>3</span>
+						</div>
+						<div class="date__date">
+							<span>4</span>
+						</div>
+						<div class="date__date">
+							<span>5</span>
+						</div>
+						<div class="date__date">
+							<span>6</span>
+						</div>
+					</div>
+					<div class="date__column">
+						<div class="date__date select">
+							<span>7</span>
+						</div>
+						<div class="date__date">
+							<span>8</span>
+						</div>
+						<div class="date__date">
+							<span>9</span>
+						</div>
+						<div class="date__date">
+							<span>10</span>
+						</div>
+						<div class="date__date">
+							<span>11</span>
+						</div>
+						<div class="date__date">
+							<span>12</span>
+						</div>
+						<div class="date__date">
+							<span>13</span>
+						</div>
+					</div>
+					<div class="date__column">
+						<div class="date__date">
+							<span>14</span>
+						</div>
+						<div class="date__date">
+							<span>15</span>
+						</div>
+						<div class="date__date">
+							<span>16</span>
+						</div>
+						<div class="date__date">
+							<span>17</span>
+						</div>
+						<div class="date__date">
+							<span>18</span>
+						</div>
+						<div class="date__date">
+							<span>19</span>
+						</div>
+						<div class="date__date">
+							<span>20</span>
+						</div>
+					</div>
+					<div class="date__column">
+						<div class="date__date">
+							<span>21</span>
+						</div>
+						<div class="date__date">
+							<span>22</span>
+						</div>
+						<div class="date__date">
+							<span>23</span>
+						</div>
+						<div class="date__date">
+							<span>24</span>
+						</div>
+						<div class="date__date">
+							<span>25</span>
+						</div>
+						<div class="date__date">
+							<span>26</span>
+						</div>
+						<div class="date__date">
+							<span>27</span>
+						</div>
+					</div>
+					<div class="date__column">
+						<div class="date__date">
+							<span>28</span>
+						</div>
+						<div class="date__date">
+							<span>29</span>
+						</div>
+						<div class="date__date">
+							<span>30</span>
+						</div>
+						<div class="date__date empty"></div>
+						<div class="date__date empty"></div>
+						<div class="date__date empty"></div>
+						<div class="date__date empty"></div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<article class="calendar__content">
+			<h1 class="content__title">
+				<span class="title__emphasis">* 2015년 6 월 7일, 전체&nbsp;</span> 검색결과,
+				<span class="title__emphasis bold">진행중인 사업</span>은 <span
+					class="title__emphasis"> 총 614 건</span> 입니다.
+			</h1>
+			<div class="content__box">
+				<div class="content__nav">
+					<ul class="content__list">
+						<li class="content__item">번호</li>
+						<li class="content__item">지원사업명</li>
+						<li class="content__item">주관부처</li>
+						<li class="content__item">신청기간</li>
+						<li class="content__item">조회</li>
+					</ul>
+				</div>
+				<div class="content__summary">
+					<ul class="content__list">
+						<li class="content__item">1</li>
+						<li class="content__item">2015년 창조경제 벤처창업대전 정부포상 및 전시회 참가
+							신청... <span class="content__icon"><i
+								class="fas fa-mouse-pointer"></i></span>
+						</li>
+						<li class="content__item">중소기업청</li>
+						<li class="content__item">2015.05.04 ~ 2015.06.30</li>
+						<li class="content__item">731</li>
+					</ul>
+				</div>
+				<div class="content__summary">
+					<ul class="content__list">
+						<li class="content__item">10</li>
+						<li class="content__item">2015년 창조경제 벤처창업대전 정부포상 및 전시회 참가
+							신청... <span class="content__icon"><i
+								class="fas fa-mouse-pointer"></i></span>
+						</li>
+						<li class="content__item">중소기업청</li>
+						<li class="content__item">2015.05.04 ~ 2015.06.30</li>
+						<li class="content__item">731</li>
+					</ul>
+				</div>
+				<div class="content__summary">
+					<ul class="content__list">
+						<li class="content__item">614</li>
+						<li class="content__item">2015년 창조경제 벤처창업대전 정부포상 및 전시회 참가
+							신청... <span class="content__icon"><i
+								class="fas fa-mouse-pointer"></i></span>
+						</li>
+						<li class="content__item">중소기업청</li>
+						<li class="content__item">2015.05.04 ~ 2015.06.30</li>
+						<li class="content__item">731</li>
+					</ul>
+				</div>
+				<div class="content__summary">
+					<ul class="content__list">
+						<li class="content__item">614</li>
+						<li class="content__item">2015년 창조경제 벤처창업대전 정부포상 및 전시회 참가
+							신청... <span class="content__icon"><i
+								class="fas fa-mouse-pointer"></i></span>
+						</li>
+						<li class="content__item">중소기업청</li>
+						<li class="content__item">2015.05.04 ~ 2015.06.30</li>
+						<li class="content__item">731</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content__btns">
+				<button type="button" class="content__btn gr">&lt;&lt;</button>
+				<button type="button" class="content__btn gr">&lt;</button>
+				<button type="button" class="content__btn select">1</button>
+				<button type="button" class="content__btn">2</button>
+				<button type="button" class="content__btn">3</button>
+				<button type="button" class="content__btn">4</button>
+				<button type="button" class="content__btn">5</button>
+				<button type="button" class="content__btn gr">&gt;</button>
+				<button type="button" class="content__btn gr">&gt;&gt;</button>
+			</div>
+
+			<div class="content__search">
+				<select name="contentSearch" class="search__select">
+					<option value="keyword">키워드</option>
+				</select> <input type="text" name="searchInput" class="search__input" />
+				<button type="button" class="search__btn">검색</button>
+			</div>
+		</article>
+	</section>
+</body>
+</html>
