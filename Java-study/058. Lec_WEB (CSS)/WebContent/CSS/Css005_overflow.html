@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>overflow</title>
-<!-- 
+  <head>
+    <meta charset="UTF-8" />
+    <title>overflow</title>
+    <!-- 
 'content' 가 element box 를 벗어난 경우 어떻게 처리할지 명시
 overflow 는 height 값을 가진 block 속성 element 에 대해서만 동작함!
 
@@ -24,72 +24,73 @@ y축(수직) overflow 값에 대해서만 설정할때는 overflow-y
 
 
  -->
-<style>
-div.ex1 {
-  background-color: lightblue;
-  width: 110px;
-  height: 110px;
-  /* TODO */
-}
+    <style>
+      div.ex1 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        /* TODO: */
+        overflow: scroll;
+      }
 
-div.ex2 {
-  background-color: lightblue;
-  width: 110px;
-  height: 110px;
-  /* TODO */
-}
+      div.ex2 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        /* TODO: */
+        overflow: hidden;
+      }
 
-div.ex3 {
-  background-color: lightblue;
-  width: 110px;
-  height: 110px;
-  /* TODO */
-}
+      div.ex3 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        /* TODO: */
+        overflow: auto;
+      }
 
-div.ex4 {
-  background-color: lightblue;
-  width: 110px;
-  height: 110px;
-  /* TODO */
-}
-</style>
-</head>
-<body>
+      div.ex4 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        /* TODO: */
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>The overflow Property</h1>
 
-<h1>The overflow Property</h1>
+    <p>
+      The overflow property specifies whether to clip content or to add
+      scrollbars when an element's content is too big to fit in a specified
+      area.
+    </p>
 
-<p>The overflow property specifies whether to clip content or to add scrollbars when an element's content is too big to fit in a specified area.</p>
+    <h2>overflow: scroll:</h2>
+    <div class="ex1">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    </div>
 
-<h2>overflow: scroll:</h2>
-<div class="ex1">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
+    <h2>overflow: hidden:</h2>
+    <div class="ex2">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    </div>
 
-<h2>overflow: hidden:</h2>
-<div class="ex2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
+    <h2>overflow: auto:</h2>
+    <div class="ex3">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    </div>
 
-<h2>overflow: auto:</h2>
-<div class="ex3">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
+    <h2>overflow: visible (default):</h2>
+    <div class="ex4">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+      nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    </div>
 
-<h2>overflow: visible (default):</h2>
-<div class="ex4">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
