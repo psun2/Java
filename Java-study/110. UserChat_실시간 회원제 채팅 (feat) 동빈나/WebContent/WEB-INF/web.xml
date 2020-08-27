@@ -62,4 +62,14 @@
 		<servlet-name>ChatUnreadServlet</servlet-name>
 		<url-pattern>/chatUnread</url-pattern>
 	</servlet-mapping>
+
+	<!-- 특정한 사용자와 최근에 주고 받은 메시지 함 서블릿 -->
+	<servlet>
+		<servlet-name>ChatBoxServlet</servlet-name>
+		<servlet-class>chat.ChatBoxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatBoxServlet</servlet-name>
+		<url-pattern>/chatBox</url-pattern-asdasdasd>
+	</servlet-mapping>
 </web-app>

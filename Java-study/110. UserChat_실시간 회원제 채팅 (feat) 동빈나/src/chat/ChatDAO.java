@@ -214,6 +214,91 @@ public class ChatDAO {
 		return chatList; // 리스트 반환
 	}
 
+	// 메시지 함을 반환하는 함수
+	// 특정한 사용자가 최근에 추고받은 모든 메시지 리스트를 출력
+	public ArrayList<ChatDTO> getBox(String userID) {
+
+		ArrayList<ChatDTO> chatList = null;
+
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE toID = ? AND fromID = ? GROUP BY fromID, toID )";
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+
+			psmt.setString(1, userID);
+			psmt.setString(1, userID);
+
+			rs = psmt.executeQuery();
+
+			chatList = new ArrayList<ChatDTO>();
+			while (rs.next()) {
+				ChatDTO chat = new ChatDTO();
+
+				chat.setChatID(rs.getInt("chatID"));
+				chat.setFromID(rs.getString("fromID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
+				chat.setToID(rs.getString("toID").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
+				chat.setChatContent(rs.getString("chatContent").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
+				chat.setChatTime(rs.getString("chatTime").replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>"));
+				int chatTime = Integer.parseInt(rs.getString("chatTime").substring(11, 13));
+				String timeType = "오전";
+				if (chatTime > 12) {
+					timeType = "오후";
+					chatTime -= 12; // 24시간제라서 12를 빼줍니다.
+				}
+				chat.setChatTime(rs.getString(5).substring(0, 11) + " " + timeType + " " + chatTime + ":"
+						+ rs.getString(5).substring(14, 16) + "");
+
+				chatList.add(chat);
+				System.out.println(chat);
+
+			}
+
+			for (int i = 0; i < chatList.size(); i++) {
+				ChatDTO x = chatList.get(i);
+				for (int j = 0; j < chatList.size(); j++) {
+					ChatDTO y = chatList.get(j);
+					if (x.getFromID().equals(y.getToID()) && x.getToID().equals(y.getToID())) {
+						if (x.getChatID() < y.getChatID()) {
+							chatList.remove(x);
+							i--;
+							break;
+						} else {
+							chatList.remove(y);
+							j--;
+						}
+					}
+				}
+			}
+
+			return chatList;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return chatList; // 리스트 반환
+	}
+
 	// 채팅을 보내는 메소드 입니다. (채팅 전송기능)
 	public int submit(String fromID, String toID, String chatContent) {
 
