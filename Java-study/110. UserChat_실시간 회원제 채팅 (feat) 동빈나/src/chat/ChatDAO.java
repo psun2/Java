@@ -218,19 +218,21 @@ public class ChatDAO {
 	// 특정한 사용자가 최근에 추고받은 모든 메시지 리스트를 출력
 	public ArrayList<ChatDTO> getBox(String userID) {
 
+		System.out.println("진입");
+
 		ArrayList<ChatDTO> chatList = null;
 
 		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE toID = ? AND fromID = ? GROUP BY fromID, toID )";
+		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE toID = ? OR fromID = ? GROUP BY fromID, toID )";
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(sql);
 
 			psmt.setString(1, userID);
-			psmt.setString(1, userID);
+			psmt.setString(2, userID);
 
 			rs = psmt.executeQuery();
 
@@ -265,7 +267,7 @@ public class ChatDAO {
 				ChatDTO x = chatList.get(i);
 				for (int j = 0; j < chatList.size(); j++) {
 					ChatDTO y = chatList.get(j);
-					if (x.getFromID().equals(y.getToID()) && x.getToID().equals(y.getToID())) {
+					if (x.getFromID().equals(y.getToID()) && x.getToID().equals(y.getFromID())) {
 						if (x.getChatID() < y.getChatID()) {
 							chatList.remove(x);
 							i--;
@@ -278,6 +280,8 @@ public class ChatDAO {
 				}
 			}
 
+			System.out.println("반환 : " + chatList);
+
 			return chatList;
 
 		} catch (Exception e) {
@@ -285,6 +289,7 @@ public class ChatDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				System.out.println("finally반환 : " + chatList);
 				if (rs != null && !rs.isClosed())
 					rs.close();
 				if (psmt != null && !psmt.isClosed())
@@ -296,6 +301,7 @@ public class ChatDAO {
 				e2.printStackTrace();
 			}
 		}
+		System.out.println("finally 밑 반환 : " + chatList);
 		return chatList; // 리스트 반환
 	}
 
@@ -381,6 +387,43 @@ public class ChatDAO {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) // 읽지 않은 메시지가 있는 경우
+				return rs.getInt("COUNT(chatID)");
+			else // 읽지 않은 메시지가 없는 경우
+				return 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	public int getUnreadChat(String fromID, String toID) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT COUNT(chatID) FROM CHAT WHERE fromID = ? AND toID = ? AND chatRead = 0";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, fromID);
+			psmt.setString(2, toID);
 			rs = psmt.executeQuery();
 
 			if (rs.next()) // 읽지 않은 메시지가 있는 경우

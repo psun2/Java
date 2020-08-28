@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.UserDAO;
+
 @WebServlet("/ChatSubmitServlet")
 public class ChatSubmitServlet extends HttpServlet {
 
@@ -27,6 +29,8 @@ public class ChatSubmitServlet extends HttpServlet {
 		if (fromID == null || fromID.equals("") || toID == null || toID.equals("") || chatContent == null
 				|| chatContent.equals("")) {
 			response.getWriter().write("0"); // 오류 발생시
+		} else if (fromID.equals(toID)) { // 받는 사람이 자기 자신일때, 오류를 보냄으로써 자기 자신에게 메시지를 보낼수 없게 합니다.
+			response.getWriter().write("-1"); // 이쪽 메시지 처리하는것은 구현 안함
 		} else {
 			fromID = URLDecoder.decode(fromID, "UTF-8");
 			toID = URLDecoder.decode(toID, "UTF-8");

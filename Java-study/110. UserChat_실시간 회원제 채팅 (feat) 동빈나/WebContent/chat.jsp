@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLDecoder"%>
+<%@ page import="user.UserDAO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,6 +32,21 @@ if (toID == null) {
 	session.setAttribute("messageType", "오류 메시지");
 	session.setAttribute("messageContent", "대화 상대가 지정 되어 있지 않는 상태입니다.");
 	response.sendRedirect("index.jsp");
+	return;
+}
+if (userID.equals(URLDecoder.decode(toID, "UTF-8"))) { // 자기 자신에게 쪽지 보낼때 생성할 오류 메시지
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "자기 자신에게는 쪽지를 보낼수 없습니다.");
+	response.sendRedirect("find.jsp");
+	return;
+}
+
+String checkUser = new UserDAO().registerCheck(toID) +"";
+
+if(checkUser.equals("1")) {
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "존재하지 않는 사용자에게는 쪽지를 보낼수 없습니다.");
+	response.sendRedirect("find.jsp");
 	return;
 }
 %>
@@ -111,12 +128,18 @@ if (toID == null) {
 	}
 
 	function addChat (chatName, chatContent, chatTime) {
+		let src = './images/yellow-48.png';
+		if(chatName != '나')
+			src = 'https://placeimg.com/64/64/any';	
+		
 		$('#chatList').append(
 		'<div class="row">' + 
 		'<div class="col-lg-12">'+
 		'<div class="media">' + 
 		'<a class="pull-left" href="#">'+
-		'<img class="media-object img-circle" style="width:30px; height:30px;" src="https://placeimg.com/64/64/any" alt="">' + 
+		'<img class="media-object img-circle" style="width:30px; height:30px;"'+
+		' src='+src+
+		' alt="프로필사진">' +  
 		'</a>'+
 		'<div class="media-body">' + 
 		'<h4 class="media-heading">' + 
@@ -143,6 +166,34 @@ if (toID == null) {
 		}, 1000); 
 	}
 </script>
+<script type="text/javascript">
+	function getUnread() {
+		$.ajax({
+		type:"POST",
+		url:"./chatUnread",
+		data:{
+			userID: encodeURIComponent('<%=userID%>')
+			},
+			success : function(result) {
+				if (result >= 1)
+					showUnread(result);
+				else
+					showUnread('');
+			}
+		});
+	}
+
+	// 반복적으로 현재 자신이 읽지 않은 메시지를 서버로 부터 받아서 보여 줍니다.
+	function getInfiniteUnread() {
+		setInterval(function() {
+			getUnread();
+		}, 1000);
+	}
+
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
+</script>
 </head>
 <body>
 	<!-- 네비게이션 -->
@@ -161,6 +212,8 @@ if (toID == null) {
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 			<%
 				if (userID != null) { // 로그인 상태라면
@@ -300,9 +353,11 @@ else
 	<script type="text/javascript">
 	// (document).ready : 성공적으로 웹문서가 다 불러 와졌을때를 의미합니다.
 	$(document).ready(() => {
+		getUnread();
 		// 맨 초기 에는 ten 즉 10개 만큼 불러와 사용자의 화면에 뿌려 줍니다.
-		chatListFunction('ten');
+		chatListFunction('0');
 		getInfiniteChat();
+		getInfiniteUnread();
 	});
 	</script>
 </body>

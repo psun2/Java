@@ -70,6 +70,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ChatBoxServlet</servlet-name>
-		<url-pattern>/chatBox</url-pattern-asdasdasd>
+		<url-pattern>/chatBox</url-pattern>
 	</servlet-mapping>
 </web-app>

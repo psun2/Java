@@ -7,6 +7,13 @@
 String userID = null;
 if (session.getAttribute("userID") != null)
 	userID = (String) session.getAttribute("userID");
+
+if (userID == null) {
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "현재 로그인이 되어 있지 않는 상태입니다.");
+	response.sendRedirect("index.jsp");
+	return;
+}
 %>
 <head>
 <meta charset="UTF-8">
@@ -50,6 +57,72 @@ if (session.getAttribute("userID") != null)
 	function showUnread(result) {
 		$('#unread').html(result);
 	}
+	
+	function chatBoxFunction() {
+		const userID = '<%=userID%>';
+		$.ajax({
+		type:"POST",
+		url:"./chatBox",
+		data:{
+			userID: encodeURIComponent(userID)
+			},
+			success : function(data) {
+				console.log(data);
+				if(data=="") return;
+				console.log(data);
+				$('#boxTable').html('');
+				const parsed = JSON.parse(data); // 문자열로 넘어온 데이터를 JSON 형태로 파싱
+				const result = parsed.result;
+				// console.log(`result : ${result}`);
+				for(let i = 0; i < result.length; i++) {
+					if(result[i][0].value === userID) {
+						result[i][0].value = result[i][1].value;
+					} else {
+						result[i][1].value = result[i][0].value;
+					}
+					
+					// 우리의 화면에 각각의 메시지 목록을 출력해주는 함수입니다.
+					addBox(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value);
+				}
+			}
+		});
+	}
+	
+	// 우리의 화면에 각각의 메시지 목록을 출력해주는 함수입니다.
+	function addBox(lastID, toID, chatContent, chatTime, unread) {
+		console.log('<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">');
+		console.log('<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">'+
+				'<td style="width:150px;">' +
+				'<h5>' + lastID + '</h5>'+
+				'</td>' + 
+				'<td>'+
+				'<h5>' + chatContent + 
+				'<span class="label label-info">' + unread + '</spna>' +
+				'</h5>'+
+				'<div class="pull-right">' + chatTime + '</div>'+
+				'</td>'+
+				'</tr>');
+		$('#boxTable').append(
+				'<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">'+
+				'<td style="width:150px;">' +
+				'<h5>' + lastID + '</h5>'+
+				'</td>' + 
+				'<td>'+
+				'<h5>' + chatContent + '&nbsp;&nbsp;&nbsp;&nbsp;'+
+				'<span class="label label-info">' + unread + '</spna>' +
+				'</h5>'+
+				'<div class="pull-right">' + chatTime + '</div>'+
+				'</td>'+
+				'</tr>');
+	}
+	
+	
+	// 3초에 한번씩 현재 사용자의 메시지함 갱신
+	getInfiniteBox = () => {
+		setInterval(() => {
+			chatBoxFunction();
+		}, 3000);
+	}
 </script>
 </head>
 <body>
@@ -68,9 +141,9 @@ if (session.getAttribute("userID") != null)
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
-				<li><a href="box.jsp">메세지함<span id="unread"
+				<li class="active"><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
 			</ul>
 			<%
@@ -104,6 +177,23 @@ if (session.getAttribute("userID") != null)
 			%>
 		</div>
 	</nav>
+
+	<!-- 메시지함 디자인 구현 -->
+	<div class="container">
+		<table class="table" style="margin: 0 auto;">
+			<thead>
+				<tr>
+					<th><h4>주고받은 메시지 목록</h4></th>
+				</tr>
+			</thead>
+			<div style="overflow-y: auto; width: 100%; max-height: 450px;">
+				<table class="table table-bordered table-hover"
+					style="text-align: center; border: 1px solid #dddddd">
+					<tbody id="boxTable"></tbody>
+				</table>
+			</div>
+		</table>
+	</div>
 
 	<!-- 알림창 구현 -->
 	<div class="alert alert-success" id="successMessage"
@@ -169,7 +259,6 @@ else
 		// 실제보 보여주게 함.
 		$('#messageModal').modal("show");
 	</script>
-
 	<%
 		// 모달을 띄운뒤 세션을 파괴합니다.
 	session.removeAttribute("messageType");
@@ -183,6 +272,10 @@ else
 		$(document).ready(function() {
 			getUnread();
 			getInfiniteUnread();
+			
+			// 페이지가 로드됨가 동시에 메시지함 출력 (window.onload addEventListener('load'))
+			chatBoxFunction();
+			getInfiniteBox();
 		});
 	</script>
 	<%

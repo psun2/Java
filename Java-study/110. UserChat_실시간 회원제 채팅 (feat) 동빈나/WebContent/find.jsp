@@ -70,6 +70,34 @@ if (userID == null) {
 		$('#friendResult').html('');
 	}
 </script>
+<script type="text/javascript">
+	function getUnread() {
+		$.ajax({
+		type:"POST",
+		url:"./chatUnread",
+		data:{
+			userID: encodeURIComponent('<%=userID%>')
+			},
+			success : function(result) {
+				if (result >= 1)
+					showUnread(result);
+				else
+					showUnread('');
+			}
+		});
+	}
+
+	// 반복적으로 현재 자신이 읽지 않은 메시지를 서버로 부터 받아서 보여 줍니다.
+	function getInfiniteUnread() {
+		setInterval(function() {
+			getUnread();
+		}, 1000);
+	}
+
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
+</script>
 </head>
 <body>
 
@@ -89,6 +117,8 @@ if (userID == null) {
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li class="active"><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -224,5 +254,17 @@ else
 			</div>
 		</div>
 	</div>
+	<%
+		if (userID != null) {
+	%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		getUnread();
+		getInfiniteUnread();
+	});
+	</script>
+	<%
+		}
+	%>
 </body>
 </html>
