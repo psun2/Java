@@ -114,6 +114,7 @@
 			%>
 		</div>
 	</nav>
+	
 	<div class="container">
 		<form method="post" action="./userRegister">
 			<table class="table table-bordered table-hover"

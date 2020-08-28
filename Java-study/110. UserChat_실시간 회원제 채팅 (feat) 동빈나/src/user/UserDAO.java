@@ -144,4 +144,86 @@ public class UserDAO {
 		return -1; // 데이터베이스 오류
 	}
 
+	// 한명의 유저 정보를 가져옴
+	public UserDTO getUser(String userID) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		UserDTO user = null;
+
+		String sql = "SELECT * FROM USER WHERE userID = ?";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				user = new UserDTO();
+				user.setUserID(userID);
+				user.setUserPassword(rs.getString("userPassword"));
+				user.setUserName(rs.getString("userName"));
+				user.setUserAge(rs.getInt("userAge"));
+				user.setUserGender(rs.getString("userGender"));
+				user.setUserEmail(rs.getString("userEmail"));
+				user.setUserProfile(rs.getString("userProfile"));
+			}
+
+			return user;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return user; // 데이터베이스 오류
+	}
+
+	// 회원정보 수정
+	public int update(String userID, String userPassword, String userName, String userAge, String userGender,
+			String userEmail) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+
+		String sql = "UPDATE SET USER userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userPassword);
+			psmt.setString(2, userName);
+			psmt.setInt(3, Integer.parseInt(userAge));
+			psmt.setString(4, userGender);
+			psmt.setString(5, userEmail);
+			psmt.setString(6, userID);
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
 }

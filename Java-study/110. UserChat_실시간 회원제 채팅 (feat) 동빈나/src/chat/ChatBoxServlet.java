@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/ChatBoxServlet")
 public class ChatBoxServlet extends HttpServlet {
@@ -29,6 +30,15 @@ public class ChatBoxServlet extends HttpServlet {
 		else {
 			// 아이디 정보가 도착했다면 특정한 사용자의 메시지 리스트를 출력 할수 있도록 합니다.
 			try {
+				// 본인 말고 다른사람의 메시지 함은 볼수 없게 막습니다
+				HttpSession session = request.getSession();
+				if (!userID.equals((String) session.getAttribute("userID"))) {
+					// 로그인 되어있는 아이디와 현재 서블릿으로 넘어온 아이디가 같은지 검증
+					session.setAttribute("messageType", "오류 메시지");
+					session.setAttribute("messageContent", "접근할 수 없습니다.");
+					response.sendRedirect("index.jsp");
+					return;
+				}
 				userID = URLDecoder.decode(userID, "UTF-8");
 				response.getWriter().write(getBox(userID));
 			} catch (Exception e) {
@@ -50,7 +60,8 @@ public class ChatBoxServlet extends HttpServlet {
 			String unread = "";
 			if (userID.equals(chatList.get(i).getToID())) {
 				unread = chatDAO.getUnreadChat(chatList.get(i).getFromID(), chatList.get(i).getToID()) + "";
-				if(unread.equals("0")) unread = ""; // 않 읽은 메시지가 없을때 공백 출력		
+				if (unread.equals("0"))
+					unread = ""; // 않 읽은 메시지가 없을때 공백 출력
 			}
 			result.append("[{\"value\":\"" + chatList.get(i).getFromID() + "\"},");
 			result.append("{\"value\":\"" + chatList.get(i).getToID() + "\"},");

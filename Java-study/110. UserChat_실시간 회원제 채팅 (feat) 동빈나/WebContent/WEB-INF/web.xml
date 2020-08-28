@@ -72,4 +72,14 @@
 		<servlet-name>ChatBoxServlet</servlet-name>
 		<url-pattern>/chatBox</url-pattern>
 	</servlet-mapping>
+
+	<!-- 회원정보 수정 -->
+	<servlet>
+		<servlet-name>UserUpdateSetvlet</servlet-name>
+		<servlet-class>user.UserUpdateSetvlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserUpdateServlet</servlet-name>
+		<url-pattern>/userUpdate</url-pattern>
+	</servlet-mapping>
 </web-app>
