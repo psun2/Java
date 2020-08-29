@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="069. String 과 Array 의 내장 함수를 이용한 다양한 과제(배열의 내장함수 포함)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="069. String 과 Array 의 내장 함수를 이용한 다양한 과제(배열의 내장함수 포함)"/>
+    </wb-module>
+</project-modules>

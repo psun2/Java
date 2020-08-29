@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>JS연습:연속되지 않은 문자</title>
+  </head>
+
+  <body>
+    <h3>
+      uniqueInOrder <br />
+      연속되지 않은 문자들 출력
+    </h3>
+    문자열 입력:<input
+      type="text"
+      id="txt"
+      size="60"
+      value="alll good tree"
+    /><br />
+    <br />
+    <input
+      type="button"
+      value="결과"
+      onclick="document.getElementById('result').innerHTML =  uniqueInOrder(document.getElementById('txt').value)"
+    />
+    <!-- 이런식으로 매개변수(argument) 넘겨줄수 있다-->
+    <h3 id="result"></h3>
+  </body>
+
+  <script>
+    // 연속되지 않을 문자열 출력
+
+    var uniqueInOrder = function (iterable) {
+      // TODO
+      // return recursion(iterable.trim().split(''));
+
+      let arr = iterable.trim().split('');
+
+      arr = arr.filter((item, index) =>
+        item === ' ' ? item : arr.indexOf(item) === index,
+      );
+
+      return arr;
+    }; // end function;
+
+    const second = (iterable) => {
+    	console.log('second 진입');
+      let arr = iterable.trim().split('');
+
+      arr = arr.reduce((acc, cur, idx, src) => {
+        if (cur === ' ') acc.push(cur);
+        else if (src.indexOf(cur) === idx) acc.push(cur);
+
+        return acc;
+      }, []);
+      console.log('reduce : ', arr);
+    };
+    second(document.getElementById('txt').value);
+    
+    // map은 배열의 길이를 건드리지 못함,
+    // 즉.... 원본배열의 데이터 값을 어떻게 활욜 할때 사용 하는 함수입니다.
+    // 그러므로 이 예제에서는 map의 사용이 불가 합니다.
+    const useMap = (iterable) => {
+    	console.log('useMap 진입');
+    	let arr = iterable.trim().split('');
+    	let newArr = arr.map((cur, idx, src) => {
+    		if (cur === ' ') return cur
+    		else if(src.indexOf(cur) === idx)
+    			return cur;
+    		else
+    			return;
+    	});
+    	console.log('map : ', newArr);
+    }
+    useMap(document.getElementById('txt').value);
+  </script>
+</html>
