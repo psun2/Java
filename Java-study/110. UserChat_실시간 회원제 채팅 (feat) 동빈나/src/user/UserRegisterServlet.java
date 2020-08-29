@@ -68,7 +68,7 @@ public class UserRegisterServlet extends HttpServlet {
 
 		// 모든 조건문을 거쳐 return 을 하지 않았으므로, 함수는 살아있는 상태고 회원가입이 가능한 상태 입니다.
 		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail,
-				userProfile);
+				"");
 
 		// 원 코드
 //		if(result == 1) {
@@ -96,7 +96,7 @@ public class UserRegisterServlet extends HttpServlet {
 			break;
 		default:
 			request.getSession().setAttribute("messageType", "오류 메시지");
-			request.getSession().setAttribute("messageContent", "이미 존재하는 회원입니다..");
+			request.getSession().setAttribute("messageContent", "이미 존재하는 회원입니다.");
 			// 설정한 세션 정보를 join.jsp로 보내줍니다.
 			response.sendRedirect("join.jsp");
 			break;

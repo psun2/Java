@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="user.UserDAO"%>
+<%@page import="user.UserDTO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <%
@@ -7,12 +9,16 @@
 String userID = null;
 if (session.getAttribute("userID") != null)
 	userID = (String) session.getAttribute("userID");
+
+// 회원정보 수정은 로그인이 되어있는 사용자만 수정 할 수 있습니다.
 if (userID == null) {
 	session.setAttribute("messageType", "오류 메시지");
-	session.setAttribute("messageContent", "현재 로그인이 되어있지 않습니다.");
+	session.setAttribute("messageContent", "현재 로그인이 되어 있지 않는 상태입니다.");
 	response.sendRedirect("index.jsp");
 	return;
 }
+
+UserDTO user = new UserDAO().getUser(userID);
 %>
 <head>
 <meta charset="UTF-8">
@@ -22,54 +28,13 @@ if (userID == null) {
 <!-- 커스텀 css -->
 <!-- ?after 추가로 인하여 캐쉬를 삭제해야 보였던 css가 매번 보이게 됩니다. -->
 <!-- reason: 브라우저는 css를 캐쉬에 저장하므로, 캐쉬에 저장된 기억의 css 파일을 불러와서 바뀐 css가 적용되지 않았던 문제 해결 -->
-<link rel="stylesheet" href="./css/custom.css?after" />
+<link type="text/css" rel="stylesheet" href="./css/custom.css" />
 <title>JSP Ajax 실시간 회원제 채팅 서비스</title>
 <!-- Ajax를 위한 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script src="./js/bootstrap.js"></script>
 
-<!-- findFunction 구현(친구찾기) -->
-<script type="text/javascript">
-	function friendFunction() {
-		var friendID = $('#findID').val();
-		$.ajax({
-			type : "POST",
-			url : './UserRegisterCheckServlet',
-			data : {
-				userID : friendID
-			},
-			success : function(result) {
-				if (result == 0) { // 친구 찾기에 성공 한 경우
-					$('#checkMessage').html('친구찾기에 성공했습니다.');
-					$('#checkType')
-							.attr('class', 'modal-content panel-success');
-					getFriend(friendID);
-				} else { // 친구찾기에 실패한 경우
-					$('#checkMessage').html('친구를 찾을 수 없습니다.');
-					$('#checkType')
-							.attr('class', 'modal-content panel-warning');
-					failFriend();
-				}
-			}
-		});
-		$('#checkModal').modal("show");
-	}
-
-	function getFriend(friendID) {
-		$('#friendResult').html(
-				'<thead>' + '<tr>' + '<th><h4>검색결과</h4></th>' + '</tr>'
-						+ '</thead>' + '<tbody>' + '<tr>'
-						+ '<td style="text-align:center;"><h3>' + friendID
-						+ '</h3>' + '<a href="chat.jsp?toID='
-						+ encodeURIComponent(friendID) + '"'
-						+ 'class="btn btn-primary pull-right">' + '메시지 보내기</a>'
-						+ '</td>' + '</tr>' + '</tbody>');
-	}
-	function failFriend() {
-		$('#friendResult').html('');
-	}
-</script>
 <script type="text/javascript">
 	function getUnread() {
 		$.ajax({
@@ -97,6 +62,18 @@ if (userID == null) {
 	function showUnread(result) {
 		$('#unread').html(result);
 	}
+
+	// 비밀번호 일치 체크
+	function passwordCheckFunction() {
+		var userPassword1 = $('#userPassword1').val();
+		var userPassword2 = $('#userPassword2').val();
+
+		if (userPassword1 != userPassword2) {
+			$('#passwordCheckMessage').html('비밀번호가 서로 일치하지 않습니다.');
+		} else {
+			$('#passwordCheckMessage').html('');
+		}
+	}
 </script>
 </head>
 <body>
@@ -116,53 +93,63 @@ if (userID == null) {
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
-				<li class="active"><a href="find.jsp">친구찾기</a></li>
+				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
 			</ul>
-
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true">회원관리
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li class="active"><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
 		</div>
 	</nav>
 
-	<!-- 친구찾기 페이지 구현 -->
+	<!-- 회원정보 수정 -->
 	<div class="container">
-		<table class="table table-bordered table-hover"
-			style="text-align: center; border: 1px solid #dddddd">
-			<thead>
-				<tr>
-					<th colspan="2"><h4>검색으로 친구찾기</h4></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="width: 100px;"><h5>친구 아이디</h5></td>
-					<td><input class="form-control" type="text" id="findID"
-						maxlength="20" placeholder="찾을 아이디를 입력하세요." /></td>
-				</tr>
-				<tr>
-					<td colspan="2"><button class="btn btn-primary pull-right"
-							onclick="friendFunction();">친구찾기</button></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<!-- 검색 결과 -->
-	<div class="container">
-		<table id="friendResult" class="table table-bordered table-hover"
-			style="border: 1px solid #dddddd">
-		</table>
+		<!-- enctype="multipart/form-data" : 파일 전송시 form 태그의 Attribute로 사용 합니다. -->
+		<!-- 아직까진 자세한 기능을 모르겠습니다. -->
+		<form method="post" action="./userProfile"
+			enctype="multipart/form-data">
+			<table class="table table-bordered table-hover"
+				style="text-align: center; border: 1px soild #dddddd;">
+				<thead>
+					<tr>
+						<th colspan="2"><h4>프로필 사진 수정 양식</h4></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 110px;"><h5>아이디</h5></td>
+						<td>
+							<h5><%=user.getUserID()%>
+							</h5> <input type="hidden" name="userID" value="<%=user.getUserID()%>">
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 110px;"><h5>사진 업로드</h5></td>
+						<td colspan="2">
+							<!-- span : 파일등록 양식 --> 
+							<span class="btn btn-default btn-file">
+								이미지를 업로드 하세요. <input type="file" name="userProfile" />
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left" colspan="3"><h5
+								style="color: red;"></h5> <input
+							class="btn btn-primary pull-right" type="submit" value="등록" /> <!-- <button type="submit" class="btn btn-primary pull-right">등록</button>  -->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 	</div>
 
 	<!-- 알림창 구현 -->
@@ -229,41 +216,21 @@ else
 		// 실제보 보여주게 함.
 		$('#messageModal').modal("show");
 	</script>
+
 	<%
 		// 모달을 띄운뒤 세션을 파괴합니다.
 	session.removeAttribute("messageType");
 	session.removeAttribute("messageContent");
 	}
 	%>
-	<!-- check 모달을 띄우기 위한 화면 -->
-	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="vertical-alignment-helper">
-			<div class="modal-dialog vertical-align-center">
-				<div id="checkType" class="modal-content panel-info">
-					<div class="modal-header panel-heading">
-						<button type="button" class="close" data-dismiss="madal">
-							<!-- &times; : X 모양의 이미지 (?) 입니다. -->
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title">확인 메시지</h4>
-					</div>
-					<div id="checkMessage" class="modal-body">요안에 들어가는건가 ?</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<%
 		if (userID != null) {
 	%>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		getUnread();
-		getInfiniteUnread();
-	});
+		$(document).ready(function() {
+			getUnread();
+			getInfiniteUnread();
+		});
 	</script>
 	<%
 		}

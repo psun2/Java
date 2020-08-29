@@ -195,8 +195,15 @@ public class UserDAO {
 			String userEmail) {
 		Connection con = null;
 		PreparedStatement psmt = null;
-
-		String sql = "UPDATE SET USER userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
+		
+		System.out.println(userID);
+		System.out.println(userPassword);
+		System.out.println(userName);
+		System.out.println(userAge);
+		System.out.println(userGender);
+		System.out.println(userEmail);
+		
+		String sql = "UPDATE USER SET userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
 
 		try {
 			con = dataSource.getConnection();
@@ -209,6 +216,37 @@ public class UserDAO {
 			psmt.setString(6, userID);
 			return psmt.executeUpdate();
 
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	// 프로필 사진 변경 및 등록
+	public int profile(String userID, String userProfile) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		
+		String sql = "UPDATE USER SET userProfile = ? WHERE userID = ?";
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userProfile);
+			psmt.setString(2, userID);
+			return psmt.executeUpdate();
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

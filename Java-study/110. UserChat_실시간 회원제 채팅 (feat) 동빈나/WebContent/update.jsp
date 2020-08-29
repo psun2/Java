@@ -62,7 +62,7 @@ UserDTO user = new UserDAO().getUser(userID);
 	function showUnread(result) {
 		$('#unread').html(result);
 	}
-	
+
 	// 비밀번호 일치 체크
 	function passwordCheckFunction() {
 		var userPassword1 = $('#userPassword1').val();
@@ -92,7 +92,7 @@ UserDTO user = new UserDAO().getUser(userID);
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
@@ -103,7 +103,8 @@ UserDTO user = new UserDAO().getUser(userID);
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="update.jsp">회원정보수정</a></li>
+						<li class="active"><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
@@ -123,11 +124,9 @@ UserDTO user = new UserDAO().getUser(userID);
 				<tbody>
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td><input class="form-control" type="text" id="userID"
-							name="userID" maxlength="20" placeholder="아이디를 입력하세요." /></td>
 						<td>
-							<h5><%=user.getUserID()%>>
-							</h5> <input type="hidden" name="userID" value=<%=user.getUserID()%>>
+							<h5><%=user.getUserID()%>
+							</h5> <input type="hidden" name="userID" value="<%=user.getUserID()%>">
 						</td>
 					</tr>
 					<tr>
@@ -147,7 +146,7 @@ UserDTO user = new UserDAO().getUser(userID);
 						<td style="width: 110px;"><h5>이름</h5></td>
 						<td colspan="2"><input class="form-control" type="text"
 							id="userName" name="userName" maxlength="20"
-							placeholder="이름을 입력하세요." value="<%=user.getUserName()%>>" /></td>
+							placeholder="이름을 입력하세요." value="<%=user.getUserName()%>" /></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>나이</h5></td>
@@ -161,12 +160,16 @@ UserDTO user = new UserDAO().getUser(userID);
 							<div class="form-group"
 								style="text-align: center; margin: 0 auto">
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-primary active">남자<input
+									<label
+										class="btn btn-primary <%if (user.getUserGender().equals("남자"))
+	out.print("active");%>">남자<input
 										type="radio" name="userGender" autocomplete="off" value="남자"
 										<%if (user.getUserGender().equals("남자"))
-	out.println("checked");%> />
-									</label> <label class="btn btn-primary">여자<input type="radio"
-										name="userGender" autocomplete="off" value="여자"
+	out.print("checked");%> />
+									</label> <label
+										class="btn btn-primary <%if (user.getUserGender().equals("여자"))
+	out.print("active");%>">여자<input
+										type="radio" name="userGender" autocomplete="off" value="여자"
 										<%if (user.getUserGender().equals("여자"))
 	out.print("checked");%> />
 									</label>

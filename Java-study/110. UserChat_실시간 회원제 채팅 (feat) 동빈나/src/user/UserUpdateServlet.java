@@ -31,7 +31,6 @@ public class UserUpdateServlet extends HttpServlet {
 		String userAge = request.getParameter("userAge");
 		String userGender = request.getParameter("userGender");
 		String userEmail = request.getParameter("userEmail");
-		String userProfile = request.getParameter("userProfile");
 
 		// 프로필 사진은 사용자에 따라 등록 또는 미등록을 할 수 있으므로, 필수요소에서 빼도록 하겠습니다.
 		String[] infos = { userID, userPassword1, userPassword2, userName, userAge, userGender, userEmail };
@@ -41,7 +40,7 @@ public class UserUpdateServlet extends HttpServlet {
 				request.getSession().setAttribute("messageType", "오류 메시지");
 				request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
 				// 설정한 세션 정보를 join.jsp로 보내줍니다.
-				response.sendRedirect("join.jsp");
+				response.sendRedirect("update.jsp");
 				System.out.println("null 보다 userRegister의 코드가 먼저 뜨잔아 ?");
 				return;
 			}
@@ -66,7 +65,7 @@ public class UserUpdateServlet extends HttpServlet {
 			// 로그인 되어있는 아이디와 현재 서블릿으로 넘어온 아이디가 같은지 검증
 			session.setAttribute("messageType", "오류 메시지");
 			session.setAttribute("messageContent", "접근할 수 없습니다.");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("update.jsp");
 			return;
 		}
 
@@ -75,13 +74,12 @@ public class UserUpdateServlet extends HttpServlet {
 			request.getSession().setAttribute("messageType", "오류 메시지");
 			request.getSession().setAttribute("messageContetn", "비밀번호가 서로 다릅니다.");
 			// 설정한 세션 정보를 join.jsp로 보내줍니다.
-			response.sendRedirect("join.jsp");
+			response.sendRedirect("update.jsp");
 			return;
 		}
 
 		// 모든 조건문을 거쳐 return 을 하지 않았으므로, 함수는 살아있는 상태고 회원가입이 가능한 상태 입니다.
-		int result = new UserDAO().register(userID, userPassword1, userName, userAge, userGender, userEmail,
-				userProfile);
+		int result = new UserDAO().update(userID, userPassword1, userName, userAge, userGender, userEmail);
 
 		// 원 코드
 //		if(result == 1) {
@@ -103,15 +101,15 @@ public class UserUpdateServlet extends HttpServlet {
 			// 회원가입 성공시 로그인 상태로 되어 있기 위해 session을 잡아줍니다.
 			request.getSession().setAttribute("userID", userID);
 			request.getSession().setAttribute("messageType", "성공 메시지");
-			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
+			request.getSession().setAttribute("messageContent", "회원정보 수정에 성공했습니다.");
 			// 회원가입에 성공했으므로, 설정한 세션 정보를 index.jsp로 보내줍니다.
 			response.sendRedirect("index.jsp");
 			break;
 		default:
 			request.getSession().setAttribute("messageType", "오류 메시지");
-			request.getSession().setAttribute("messageContent", "이미 존재하는 회원입니다..");
+			request.getSession().setAttribute("messageContent", "데이터베이스 오류가 발생했습니다.");
 			// 설정한 세션 정보를 join.jsp로 보내줍니다.
-			response.sendRedirect("join.jsp");
+			response.sendRedirect("update.jsp");
 			break;
 		}
 
