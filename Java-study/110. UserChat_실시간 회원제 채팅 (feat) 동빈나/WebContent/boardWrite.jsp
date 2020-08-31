@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="user.UserDAO"%>
+<%@page import="user.UserDTO"%>
 <!DOCTYPE html>
 <html lang="ko">
 <%
@@ -7,6 +9,16 @@
 String userID = null;
 if (session.getAttribute("userID") != null)
 	userID = (String) session.getAttribute("userID");
+
+// 회원정보 수정은 로그인이 되어있는 사용자만 수정 할 수 있습니다.
+if (userID == null) {
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "현재 로그인이 되어 있지 않는 상태입니다.");
+	response.sendRedirect("index.jsp");
+	return;
+}
+
+UserDTO user = new UserDAO().getUser(userID);
 %>
 <head>
 <meta charset="UTF-8">
@@ -16,7 +28,7 @@ if (session.getAttribute("userID") != null)
 <!-- 커스텀 css -->
 <!-- ?after 추가로 인하여 캐쉬를 삭제해야 보였던 css가 매번 보이게 됩니다. -->
 <!-- reason: 브라우저는 css를 캐쉬에 저장하므로, 캐쉬에 저장된 기억의 css 파일을 불러와서 바뀐 css가 적용되지 않았던 문제 해결 -->
-<link rel="stylesheet" href="./css/custom.css?after" />
+<link type="text/css" rel="stylesheet" href="./css/custom.css" />
 <title>JSP Ajax 실시간 회원제 채팅 서비스</title>
 <!-- Ajax를 위한 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -50,6 +62,18 @@ if (session.getAttribute("userID") != null)
 	function showUnread(result) {
 		$('#unread').html(result);
 	}
+
+	// 비밀번호 일치 체크
+	function passwordCheckFunction() {
+		var userPassword1 = $('#userPassword1').val();
+		var userPassword2 = $('#userPassword2').val();
+
+		if (userPassword1 != userPassword2) {
+			$('#passwordCheckMessage').html('비밀번호가 서로 일치하지 않습니다.');
+		} else {
+			$('#passwordCheckMessage').html('');
+		}
+	}
 </script>
 </head>
 <body>
@@ -68,45 +92,85 @@ if (session.getAttribute("userID") != null)
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
-							<li><a href="boardView.jsp">자유게시판</a></li>
+				<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
-			<%
-				if (userID == null) { // 로그인 상태가 아니라면
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true">접속하기
-						<span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul></li>
-			</ul>
-			<%
-				} else {
-			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true">회원관리
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li class="active"><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
-
-			<%
-				}
-			%>
 		</div>
 	</nav>
+
+	<!-- 글 쓰기 페이지 -->
+	<div class="container">
+		<!-- enctype="multipart/form-data" : 파일 전송시 form 태그의 Attribute로 사용 합니다. -->
+		<!-- 아직까진 자세한 기능을 모르겠습니다. -->
+		<form method="post" action="./boardWrite"
+			enctype="multipart/form-data">
+			<table class="table table-bordered table-hover"
+				style="text-align: center; border: 1px soild #dddddd;">
+				<thead>
+					<tr>
+						<th colspan="2"><h4>게시물 작성 양식</h4></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 110px;"><h5>아이디</h5></td>
+						<td>
+							<h5><%=user.getUserID()%>
+							</h5> <input type="hidden" name="userID" value="<%=user.getUserID()%>">
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 110px;"><h5>글 제목</h5></td>
+						<td><input class="form-control" type="text" maxlength="50"
+							name="boardTitle" placeholder="글 제목을 입력하세요."></td>
+					</tr>
+					<tr>
+						<td style="width: 110px;"><h5>글 내용</h5></td>
+						<td><textarea class="form-control" rows="10"
+								name="boardContent" maxlength="2048" placeholder="글 내용을 입력하세요."></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 110px;"><h5>파일 업로드</h5></td>
+						<td colspan="2">
+							<!-- span : 파일등록 양식 --> <input type="file" name="boardFile"
+							class="file" />
+							<div class="input-group col-xs-12">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-picture"></i></span> <input type="text"
+									class="form-control input-lg" disabled
+									placeholder="파일을 업로드 하세요." /> <span class="input-group-btn">
+									<button class="browse btn btn-primary input-lg" type="button">
+										<i class="glyphicon glyphicon-search"></i> 파일찾기
+									</button>
+								</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left" colspan="3"><h5
+								style="color: red;"></h5> <input
+							class="btn btn-primary pull-right" type="submit" value="등록" /> <!-- <button type="submit" class="btn btn-primary pull-right">등록</button>  -->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
 
 	<!-- 알림창 구현 -->
 	<div class="alert alert-success" id="successMessage"
@@ -191,5 +255,36 @@ else
 	<%
 		}
 	%>
+
+	<script type="text/javascript">
+		// 파일 찾기 버튼 기능 구현
+
+		$(document).on('click', '.browse', function() {
+			console.log($(this));
+			console.log($(this).parent());
+			console.log($(this).parent().parent());
+			console.log($(this).parent().parent().parent());
+			console.log($(this).parent().parent().parent().find('.file'));
+			var file = $(this).parent().parent().parent().find('.file');
+
+			// console.log(file.trigger('click'));
+			file.trigger('click');
+		});
+
+		// 파일 교체를 위한 change 이벤트
+		$(document).on(
+				'change',
+				'.file',
+				function() {
+					console.log($(this));
+					console.log($(this).parent());
+					console.log($(this).parent().find('.form-control'));
+					console.log($(this).parent().find('.form-control').val(
+							$(this).val().replace(/c:\\fakepath\\/i, '')));
+
+					$(this).parent().find('.form-control').val(
+							$(this).val().replace(/c:\\fakepath\\/i, ''));
+				});
+	</script>
 </body>
 </html>

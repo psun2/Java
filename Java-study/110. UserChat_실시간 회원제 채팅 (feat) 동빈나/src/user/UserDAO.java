@@ -1,5 +1,6 @@
 package user;
 
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -195,14 +196,14 @@ public class UserDAO {
 			String userEmail) {
 		Connection con = null;
 		PreparedStatement psmt = null;
-		
+
 		System.out.println(userID);
 		System.out.println(userPassword);
 		System.out.println(userName);
 		System.out.println(userAge);
 		System.out.println(userGender);
 		System.out.println(userEmail);
-		
+
 		String sql = "UPDATE USER SET userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
 
 		try {
@@ -237,16 +238,16 @@ public class UserDAO {
 	public int profile(String userID, String userProfile) {
 		Connection con = null;
 		PreparedStatement psmt = null;
-		
+
 		String sql = "UPDATE USER SET userProfile = ? WHERE userID = ?";
-		
+
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, userProfile);
 			psmt.setString(2, userID);
 			return psmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -262,6 +263,57 @@ public class UserDAO {
 			}
 		}
 		return -1; // 데이터베이스 오류
+	}
+
+	// 프로필 사진의 경로를 가지고 옵니다.
+	public String getProfile(String userID) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT userProfile FROM USER WHERE userID = ?";
+
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			String URL = "http://localhost:8080/";
+			URL += "110.%20UserChat_실시간%20회원제%20채팅%20(feat)%20동빈나";
+//			URL += URLEncoder.encode("110. UserChat_실시간 회원제 채팅 (feat) 동빈나", "UTF-8");
+
+			if (rs.next()) {
+				// 사용자의 프로필이 공백인 경우 즉, 가입후 프로필 사진을 업데이트를 안 한 경우
+				if (rs.getString("userProfile").equals("")) {
+					URL += "/images/yellow-48.png";
+					// return "http://localhost:8080/110. UserChat_실시간 회원제 채팅 (feat)
+					// 동빈나/images/yellow-48.png";
+					return URL;
+				}
+
+				// 공백이 아닌 경우 즉 사용자가 프로필 파일을 업로드 한 경우
+				URL += "/upload/" + rs.getString("userProfile");
+				return URL;
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (con != null && !con.isClosed())
+					con.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		return "https://placeimg.com/64/64/any"; // 데이터베이스 오류
 	}
 
 }

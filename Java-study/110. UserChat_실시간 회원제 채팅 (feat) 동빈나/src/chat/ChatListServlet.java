@@ -26,6 +26,18 @@ public class ChatListServlet extends HttpServlet {
 		String toID = request.getParameter("toID");
 		String listType = request.getParameter("listType");
 
+		System.out.println("chatListServlet fromID : " + fromID);
+		System.out.println("chatListServlet toID : " + toID);
+		System.out.println("chatListServlet listType : " + listType);
+
+		fromID = URLDecoder.decode(fromID, "UTF-8");
+		toID = URLDecoder.decode(toID, "UTF-8");
+		listType = URLDecoder.decode(listType, "UTF-8");
+
+		System.out.println("chatListServlet fromID : " + fromID);
+		System.out.println("chatListServlet toID : " + toID);
+		System.out.println("chatListServlet listType : " + listType);
+
 		if (fromID == null || fromID.equals("") || toID == null || toID.equals("") || listType == null
 				|| listType.equals("")) {
 			response.getWriter().write(""); // 오류 발생
@@ -42,7 +54,7 @@ public class ChatListServlet extends HttpServlet {
 //					session.setAttribute("messageType", "오류 메시지");
 //					session.setAttribute("messageContent", "접근할 수 없습니다.");
 //					response.sendRedirect("index.jsp");
-					
+
 					// 서블릿은 위와 같은 문법을 사용 할 수 없다고 합니다.
 					// 그러므로 공백을 출력 해서 요청을 받을때 공백을 출력 해서 아무 행동도 일어나지 않게 합니다.
 					response.getWriter().write("");
@@ -79,10 +91,10 @@ public class ChatListServlet extends HttpServlet {
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 		System.out.println(result.toString());
-		
+
 		// 반환전 즉 반환되면 읽음으로서 읽음처리 실행
 		chatDAO.readChat(fromID, toID);
-		
+
 		return result.toString();
 	}
 
@@ -106,10 +118,10 @@ public class ChatListServlet extends HttpServlet {
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 		System.out.println(result.toString());
-		
+
 		// 반환전 즉 반환되면 읽음으로서 읽음처리 실행
 		chatDAO.readChat(fromID, toID);
-		
+
 		return result.toString();
 	}
 

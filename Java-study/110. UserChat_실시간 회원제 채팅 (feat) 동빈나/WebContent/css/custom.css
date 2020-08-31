@@ -260,7 +260,7 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
+a:hover, a:focus, a:active, a:visited {
 	color: #bbbbbb;
 	text-decoration: none;
 	cursor: pointer;
@@ -323,11 +323,11 @@ a:hover {
 }
 
 @media ( max-width : 767px) { /* 작은 화면일때 드랍다운 아이템에 마우스를 올렸을 때 */
-	.navbar-default .navbar-nav .open . dropdown-menu>li>a {
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
 		color: #fcfcfc;
 	}
-	.navbar-default .navbar-nav .open . dropdown-menu>li>a:hover,
-		.navbar-default .navbar-nav .open . dropdown-menu>li>a:focus {
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,
+		.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
 		color: #eeeeee;
 	}
 }
@@ -374,4 +374,9 @@ a:hover {
 	background-color: #fcfcfc;
 	cursor: inherit;
 	display: block;
+}
+
+.file {
+	visibility: hidden;
+	position: absolute;
 }

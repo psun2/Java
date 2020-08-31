@@ -95,6 +95,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread"
+						class="label label-info"></span></a></li>
+				<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if (userID == null) { // 로그인 상태가 아니라면
@@ -114,7 +117,7 @@
 			%>
 		</div>
 	</nav>
-	
+
 	<div class="container">
 		<form method="post" action="./userRegister">
 			<table class="table table-bordered table-hover"

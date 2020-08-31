@@ -92,4 +92,30 @@
 		<servlet-name>UserProfileServlet</servlet-name>
 		<url-pattern>/userProfile</url-pattern>
 	</servlet-mapping>
+
+	<!-- 친구찾기 기능에서 사진까지 출력 하는 서블릿 -->
+	<!--
+	// 자바스크립트 ajax의 
+	// url 의 이름과 servlet class 의 webServlet annotation(javax.servlet.annotation.WebServlet)의 이름이 같으면
+	// 굳이 xml파일에서 mapping 을 사용 안하더라도 정상적 인식이 가능합니다.
+	
+	<servlet>
+		<servlet-name>UserFindServlet</servlet-name>
+		<servlet-class>user.UserFindServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserFindServlet</servlet-name>
+		<url-pattern>/userFind</url-pattern>
+	</servlet-mapping>
+	-->
+
+	<!-- 글쓰기 servlet -->
+	<servlet>
+		<servlet-name>BoardWriteServlet</servlet-name>
+		<servlet-class>board.BoardWriteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BoardWriteServlet</servlet-name>
+		<url-pattern>/boardWrite</url-pattern>
+	</servlet-mapping>
 </web-app>

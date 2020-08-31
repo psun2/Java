@@ -35,32 +35,39 @@ if (userID == null) {
 		var friendID = $('#findID').val();
 		$.ajax({
 			type : "POST",
-			url : './UserRegisterCheckServlet',
+			url : './UserFindServlet',
+			// url 의 이름과 servlet class 의 webServlet annotation(javax.servlet.annotation.WebServlet)의 이름이 같으면
+			// 굳이 xml파일에서 mapping 을 사용 안하더라도 정상적 인식이 가능합니다.
 			data : {
 				userID : friendID
 			},
 			success : function(result) {
-				if (result == 0) { // 친구 찾기에 성공 한 경우
+				if(result === -1) { // 오류가 발생한 경우
+					$('checkMessage').html('친구를 찾을 수 없습니다.');
+					$('checkType').attr('class', 'modal-content panel-warning');
+					failFriend();
+				} else { // 친구 찾기에 성공 한 경우
 					$('#checkMessage').html('친구찾기에 성공했습니다.');
 					$('#checkType')
 							.attr('class', 'modal-content panel-success');
-					getFriend(friendID);
-				} else { // 친구찾기에 실패한 경우
-					$('#checkMessage').html('친구를 찾을 수 없습니다.');
-					$('#checkType')
-							.attr('class', 'modal-content panel-warning');
-					failFriend();
-				}
+					
+					var data = JSON.parse(result);
+					var profile = data.userProfile;
+					
+					getFriend(friendID, profile);
+				} 
+					$('#checkModal').modal("show");
 			}
 		});
-		$('#checkModal').modal("show");
 	}
 
-	function getFriend(friendID) {
+	function getFriend(friendID, userProfile) {
 		$('#friendResult').html(
 				'<thead>' + '<tr>' + '<th><h4>검색결과</h4></th>' + '</tr>'
 						+ '</thead>' + '<tbody>' + '<tr>'
-						+ '<td style="text-align:center;"><h3>' + friendID
+						+ '<td style="text-align:center;">'
+						+'<img class="media-object img-circle" style="max-width:300px; margin:0px auto;" src="'+userProfile + '"/>'
+						+ '<h3>' + friendID
 						+ '</h3>' + '<a href="chat.jsp?toID='
 						+ encodeURIComponent(friendID) + '"'
 						+ 'class="btn btn-primary pull-right">' + '메시지 보내기</a>'
@@ -119,6 +126,7 @@ if (userID == null) {
 				<li class="active"><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
+							<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -127,8 +135,8 @@ if (userID == null) {
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
@@ -260,10 +268,10 @@ else
 		if (userID != null) {
 	%>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		getUnread();
-		getInfiniteUnread();
-	});
+		$(document).ready(function() {
+			getUnread();
+			getInfiniteUnread();
+		});
 	</script>
 	<%
 		}

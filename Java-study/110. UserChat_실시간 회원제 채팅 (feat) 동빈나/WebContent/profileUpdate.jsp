@@ -96,6 +96,7 @@ UserDTO user = new UserDAO().getUser(userID);
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
+							<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -135,10 +136,18 @@ UserDTO user = new UserDAO().getUser(userID);
 					<tr>
 						<td style="width: 110px;"><h5>사진 업로드</h5></td>
 						<td colspan="2">
-							<!-- span : 파일등록 양식 --> 
-							<span class="btn btn-default btn-file">
-								이미지를 업로드 하세요. <input type="file" name="userProfile" />
-						</span>
+							<!-- span : 파일등록 양식 --> <input type="file" name="userProfile"
+							class="file" />
+							<div class="input-group col-xs-12">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-picture"></i></span> <input type="text"
+									class="form-control input-lg" disabled
+									placeholder="이미지를 업로드 하세요." /> <span class="input-group-btn">
+									<button class="browse btn btn-primary input-lg" type="button">
+										<i class="glyphicon glyphicon-search"></i> 파일찾기
+									</button>
+								</span>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -235,5 +244,31 @@ else
 	<%
 		}
 	%>
+
+	<script type="text/javascript">
+	// 파일 찾기 버튼 기능 구현
+	
+	$(document).on('click', '.browse', function () {
+		console.log($(this));
+		console.log($(this).parent());
+		console.log($(this).parent().parent());
+		console.log($(this).parent().parent().parent());
+		console.log($(this).parent().parent().parent().find('.file'));
+		var file = $(this).parent().parent().parent().find('.file');
+		
+		// console.log(file.trigger('click'));
+		file.trigger('click');
+	});
+	
+	// 파일 교체를 위한 change 이벤트
+	$(document).on('change', '.file', function (){
+		console.log($(this));
+		console.log($(this).parent());
+		console.log($(this).parent().find('.form-control'));
+		console.log($(this).parent().find('.form-control').val($(this).val().replace(/c:\\fakepath\\/i, '')));
+		
+		$(this).parent().find('.form-control').val($(this).val().replace(/c:\\fakepath\\/i, ''));
+	});
+	</script>
 </body>
 </html>

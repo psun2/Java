@@ -82,17 +82,20 @@ if (userID == null) {
 					}
 					
 					// 우리의 화면에 각각의 메시지 목록을 출력해주는 함수입니다.
-					addBox(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value);
+					addBox(result[i][0].value, result[i][1].value, result[i][2].value, result[i][3].value, result[i][4].value, result[i][5].value);
 				}
 			}
 		});
 	}
 	
 	// 우리의 화면에 각각의 메시지 목록을 출력해주는 함수입니다.
-	function addBox(lastID, toID, chatContent, chatTime, unread) {
+	function addBox(lastID, toID, chatContent, chatTime, unread, profile) {
 		console.log('<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">');
 		console.log('<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">'+
 				'<td style="width:150px;">' +
+				'<img class="media-object img-circle" style="margin: 0px auto; max-width:40px; max-height:40px;" src="'+
+				profile +
+				'" alt="프로필사진"/>' +
 				'<h5>' + lastID + '</h5>'+
 				'</td>' + 
 				'<td>'+
@@ -105,6 +108,9 @@ if (userID == null) {
 		$('#boxTable').append(
 				'<tr onclick="location.href=\'chat.jsp?toID='+ encodeURIComponent(toID) + '\'">'+
 				'<td style="width:150px;">' +
+				'<img class="media-object img-circle" style="margin: 0px auto; max-width:40px; max-height:40px;" src="'+
+				profile +
+				'" alt="프로필사진"/>' +
 				'<h5>' + lastID + '</h5>'+
 				'</td>' + 
 				'<td>'+
@@ -145,6 +151,7 @@ if (userID == null) {
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li class="active"><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
+						<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if (userID == null) { // 로그인 상태가 아니라면
@@ -168,8 +175,8 @@ if (userID == null) {
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>

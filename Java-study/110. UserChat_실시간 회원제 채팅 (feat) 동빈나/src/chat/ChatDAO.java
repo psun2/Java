@@ -218,7 +218,9 @@ public class ChatDAO {
 	// 특정한 사용자가 최근에 추고받은 모든 메시지 리스트를 출력
 	public ArrayList<ChatDTO> getBox(String userID) {
 
-		System.out.println("진입");
+		System.out.println("getBox 진입");
+		System.out.println(userID);
+		System.out.println("------------------------------");
 
 		ArrayList<ChatDTO> chatList = null;
 

@@ -23,12 +23,15 @@
 	String userID = null;
 	if (session.getAttribute("userID") != null)
 		userID = (String) session.getAttribute("userID");
+	
+	System.out.println("login.jsp userID : " + userID);
 
 	// userID 가 null 이  아니라면 또 다시 회원가입 불가능
 	if (userID != null) {
 		session.setAttribute("messageType", "오류 메시지");
 		session.setAttribute("messageContent", "현재 로그인이 되어 있는 상태입니다.");
 		response.sendRedirect("index.jsp");
+		
 		return;
 	}
 	%>
@@ -48,6 +51,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메세지함<span id="unread"
+						class="label label-info"></span></a></li>
+					<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if (userID == null) { // 로그인 상태가 아니라면

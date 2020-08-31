@@ -21,6 +21,8 @@ public class UserLoginServlet extends HttpServlet {
 
 		String userID = request.getParameter("userID");
 		String userPassword = request.getParameter("userPassword");
+		
+		System.out.println("userLoginServlet : " + userID);
 
 		if (userID == null || userID.equals("") || userPassword == null || userPassword.equals("")) {
 			request.getSession().setAttribute("messageType", "오류 메시지");

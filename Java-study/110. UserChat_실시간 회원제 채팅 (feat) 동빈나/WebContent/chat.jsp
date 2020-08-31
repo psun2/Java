@@ -41,14 +41,20 @@ if (userID.equals(URLDecoder.decode(toID, "UTF-8"))) { // 자기 자신에게 �
 	return;
 }
 
-String checkUser = new UserDAO().registerCheck(toID) +"";
+String checkUser = new UserDAO().registerCheck(toID) + "";
 
-if(checkUser.equals("1")) {
+if (checkUser.equals("1")) {
 	session.setAttribute("messageType", "오류 메시지");
 	session.setAttribute("messageContent", "존재하지 않는 사용자에게는 쪽지를 보낼수 없습니다.");
 	response.sendRedirect("find.jsp");
 	return;
 }
+
+// 자신의 프로필 사진 경로
+String fromProfile = new UserDAO().getProfile(userID);
+
+// 상대방의 프로필 사진 경로
+String toProfile = new UserDAO().getProfile(toID);
 %>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +63,7 @@ if(checkUser.equals("1")) {
 <!-- 커스텀 css -->
 <!-- ?after 추가로 인하여 캐쉬를 삭제해야 보였던 css가 매번 보이게 됩니다. -->
 <!-- reason: 브라우저는 css를 캐쉬에 저장하므로, 캐쉬에 저장된 기억의 css 파일을 불러와서 바뀐 css가 적용되지 않았던 문제 해결 -->
-<link rel="stylesheet" href="./css/custom.css?after" />
+<link type="text/css" rel="stylesheet" href="./css/custom.css?after" />
 <title>JSP Ajax 실시간 회원제 채팅 서비스</title>
 <!-- Ajax를 위한 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -112,6 +118,7 @@ if(checkUser.equals("1")) {
 				listType: type
 				},
 				success: function(data) {
+		console.log('chatListFunction success : ', data);
 					if(data == "") return;
 					var parsed = JSON.parse(data);
 					var result = parsed.result;
@@ -127,19 +134,52 @@ if(checkUser.equals("1")) {
 		});
 	}
 
+	// 내가 만들어 본 프로필 사진이 변경 되는 코드
+	// function addChat (chatName, chatContent, chatTime) {
+		// let src = './images/yellow-48.png';
+		// if(chatName !== '나')
+			// src = 'https://placeimg.com/64/64/any';	
+		
+		// $('#chatList').append(
+		// '<div class="row">' + 
+		// '<div class="col-lg-12">'+
+		// '<div class="media">' + 
+		// '<a class="pull-left" href="#">'+
+		// '<img class="media-object img-circle" style="width:30px; height:30px;"'+
+		// ' src='+src+
+		// ' alt="프로필사진">' +  
+		// '</a>'+
+		// '<div class="media-body">' + 
+		// '<h4 class="media-heading">' + 
+		// chatName + 
+		// '<span class="small pull-right">' + 
+		// chatTime + 
+		// '</span>' + 
+		// '</h4>' + 
+		// '<p>' + 
+		// chatContent + 
+		// '</p>' + 
+		// '</div>' + 
+		// '</div>' + 
+		// '</div>' + 
+		// '</div>' +
+		// '<hr>'
+		// );
+	// $('#chatList').scrollTop($('#chatList')[0].scrollHeight);
+	// }
+	
 	function addChat (chatName, chatContent, chatTime) {
-		let src = './images/yellow-48.png';
-		if(chatName != '나')
-			src = 'https://placeimg.com/64/64/any';	
+		console.log('chatName : ', chatName);
+		
+		// 실제로 자기 자신인지 체크를 한번 해줍니다.
+		if(chatName === '나') {
 		
 		$('#chatList').append(
 		'<div class="row">' + 
 		'<div class="col-lg-12">'+
 		'<div class="media">' + 
 		'<a class="pull-left" href="#">'+
-		'<img class="media-object img-circle" style="width:30px; height:30px;"'+
-		' src='+src+
-		' alt="프로필사진">' +  
+		'<img class="media-object img-circle" style="width:30px; height:30px;" src="<%= fromProfile%>" alt="프로필 사진"/>'+  
 		'</a>'+
 		'<div class="media-body">' + 
 		'<h4 class="media-heading">' + 
@@ -157,6 +197,32 @@ if(checkUser.equals("1")) {
 		'</div>' +
 		'<hr>'
 		);
+		
+		}  else {
+			$('#chatList').append(
+					'<div class="row">' + 
+					'<div class="col-lg-12">'+
+					'<div class="media">' + 
+					'<a class="pull-left" href="#">'+
+					'<img class="media-object img-circle" style="width:30px; height:30px;" src="<%= toProfile%>" alt="프로필 사진"'+  
+					'</a>'+
+					'<div class="media-body">' + 
+					'<h4 class="media-heading">' + 
+					chatName + 
+					'<span class="small pull-right">' + 
+					chatTime + 
+					'</span>' + 
+					'</h4>' + 
+					'<p>' + 
+					chatContent + 
+					'</p>' + 
+					'</div>' + 
+					'</div>' + 
+					'</div>' + 
+					'</div>' +
+					'<hr>'
+					);	
+		}
 	$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
 	}
 	
@@ -214,6 +280,7 @@ if(checkUser.equals("1")) {
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메세지함<span id="unread"
 						class="label label-info"></span></a></li>
+				<li><a href="boardView.jsp">자유게시판</a></li>
 			</ul>
 			<%
 				if (userID != null) { // 로그인 상태라면
@@ -225,8 +292,8 @@ if(checkUser.equals("1")) {
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
