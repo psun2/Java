@@ -25,13 +25,13 @@ if (request.getParameter("toID") != null)
 if (userID == null) {
 	session.setAttribute("messageType", "오류 메시지");
 	session.setAttribute("messageContent", "현재 로그인이 되어 있지 않는 상태입니다.");
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("login.jsp");
 	return;
 }
 if (toID == null) {
 	session.setAttribute("messageType", "오류 메시지");
 	session.setAttribute("messageContent", "대화 상대가 지정 되어 있지 않는 상태입니다.");
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("find.jsp");
 	return;
 }
 if (userID.equals(URLDecoder.decode(toID, "UTF-8"))) { // 자기 자신에게 쪽지 보낼때 생성할 오류 메시지

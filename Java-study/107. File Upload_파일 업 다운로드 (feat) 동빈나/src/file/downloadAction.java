@@ -3,6 +3,7 @@ package file;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -25,8 +26,9 @@ public class downloadAction extends HttpServlet {
 		// String directory = this.getServletContext().getRealPath("/upload/"); // 업로드와
 		// 같은 이유로 경로 변경
 
-		// String directory = "D:/Study/Java/Java-study/107. File Upload_파일 업,다운로드 (feat) 동빈나/upload/";
-		String directory = "D:/Java/Java-study/107. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
+		// String directory = "D:/Study/Java/Java-study/107. File Upload_파일 업,다운로드
+		// (feat) 동빈나/upload/";
+		String directory = "D:/Study/Java/Java-study/107. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
 		File file = new File(directory + "/" + fileName);
 
 		// 어떠한 데이터의 정보를 주고 받을 지 를 담슴니다.
@@ -43,13 +45,21 @@ public class downloadAction extends HttpServlet {
 		if (request.getHeader("user-agent").indexOf("MSIE") == -1) {
 			// 인터넷 익스플로러 접속자가 아니라면 utf-8 인코딩을 적용한 방식으로 얻어서 8859_1 형식으로 변환해 줍니다.
 			// 8859_1 : 데이터의 깨짐을 방지합니다.
-			downloadName = new String(fileName.getBytes("UTF-8"), "8859_1");
+			System.out.println("-1");
+			System.out.println("fileName : " + fileName);
+			downloadName = new String(fileName.getBytes("UTF-8"), "ISO8859_1");
+			// downloadName = fileName; // 인코딩 에러
+			System.out.println("downloadName : " + downloadName);
 		} else {
-			downloadName = new String(fileName.getBytes("EUC-KR"), "8859_1");
+			System.out.println("else");
+			System.out.println("fileName : " + fileName);
+			downloadName = new String(fileName.getBytes("EUC-KR"), "ISO8859_1");
+			System.out.println("downloadName : " + downloadName);
 		}
 		System.out.println(downloadName);
+		System.out.println(URLDecoder.decode(downloadName, "UTF-8"));
 
-		response.setHeader("Content-Disposition", "attachment;fileName=\"" + downloadName + "\";");
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + downloadName + "\";");
 
 		FileInputStream fileInputStream = new FileInputStream(file);
 
