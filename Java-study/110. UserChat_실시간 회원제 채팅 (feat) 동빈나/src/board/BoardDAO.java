@@ -353,4 +353,34 @@ public class BoardDAO {
 
 		return -1; // 데이터베이스 오류
 	}
+
+	// 게시글 삭제
+	public int delete(String boardID) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		String sql = "DELETE FROM BOARD WHERE boardID = ?";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(boardID));
+
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		return -1; // 데이터베이스 오류
+	}
 }

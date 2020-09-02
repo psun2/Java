@@ -29,7 +29,7 @@ ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 <!-- 커스텀 css -->
 <!-- ?after 추가로 인하여 캐쉬를 삭제해야 보였던 css가 매번 보이게 됩니다. -->
 <!-- reason: 브라우저는 css를 캐쉬에 저장하므로, 캐쉬에 저장된 기억의 css 파일을 불러와서 바뀐 css가 적용되지 않았던 문제 해결 -->
-<link rel="stylesheet" href="./css/custom.css?after" />
+<link type="text/css" rel="stylesheet" href="./css/custom.css?after" />
 <title>JSP Ajax 실시간 회원제 채팅 서비스</title>
 <!-- Ajax를 위한 제이쿼리 -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -132,13 +132,13 @@ ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 					</th>
 				</tr>
 				<tr>
-					<th style="background-color: #fafafa; color: #000000; width: 70px;"><h5>번호</h5></th>
-					<th style="background-color: #fafafa; color: #000000;"><h5>제목</h5></th>
-					<th style="background-color: #fafafa; color: #000000;"><h5>작성자</h5></th>
+					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>번호</h5></th>
+					<th style="background-color: #fafafa; color: #000000; min-width: 200px;"><h5>제목</h5></th>
+					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>작성자</h5></th>
 					<th
-						style="background-color: #fafafa; color: #000000; wdith: 100px;"><h5>작성
+						style="background-color: #fafafa; color: #000000; max-width: 180px;"><h5>작성
 							날짜</h5></th>
-					<th style="background-color: #fafafa; color: #000000; width: 70px;"><h5>조회수</h5></th>
+					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>조회수</h5></th>
 				</tr>
 			</thead>
 			<tbody>

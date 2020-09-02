@@ -128,5 +128,14 @@
 		<servlet-name>BoardUpdateServlet</servlet-name>
 		<url-pattern>/boardUpdate</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- 파일 삭제 -->
+	<servlet>
+		<servlet-name>BoardDeleteServlet</servlet-name>
+		<servlet-class>board.BoardDeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BoardDeleteServlet</servlet-name>
+		<url-pattern>/boardDelete</url-pattern>
+	</servlet-mapping>
 </web-app>
