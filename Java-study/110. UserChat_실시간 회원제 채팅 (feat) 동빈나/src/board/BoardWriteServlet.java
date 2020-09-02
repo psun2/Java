@@ -30,6 +30,7 @@ public class BoardWriteServlet extends HttpServlet {
 		int fileMaxSize = 10 * 1024 * 1024;
 
 		try {
+			// 파일을 직접적으로 업로드 하는 부분입니다.
 			multi = new MultipartRequest(request, savePath, fileMaxSize, "UTF-8", new DefaultFileRenamePolicy());
 		} catch (Exception e) {
 			// TODO: handle exception

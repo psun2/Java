@@ -313,4 +313,44 @@ public class BoardDAO {
 		}
 		return ""; // 데이터베이스 오류
 	}
+
+	// 게시글 수정 함수
+	public int update(String boardID, String boardTitle, String boardContent, String boardFile, String boardRealFile) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		System.out.println("update 함수 : " + boardTitle);
+		System.out.println("update 함수 : " + boardContent);
+		System.out.println("update 함수 : " + boardFile);
+		System.out.println("update 함수 : " + boardRealFile);
+		System.out.println("update 함수 : " + boardID);
+
+		String sql = "UPDATE BOARD SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, boardTitle);
+			psmt.setString(2, boardContent);
+			psmt.setString(3, boardFile);
+			psmt.setString(4, boardRealFile);
+			psmt.setInt(5, Integer.parseInt(boardID));
+
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		return -1; // 데이터베이스 오류
+	}
 }

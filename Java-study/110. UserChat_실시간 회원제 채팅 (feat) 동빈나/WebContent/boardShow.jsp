@@ -61,8 +61,7 @@ System.out.println("boardShow.jsp => board : " + board);
 		type:"POST",
 		url:"./chatUnread",
 		data:{
-			userID: encodeURIComponent('<%=userID%>
-	')
+			userID: encodeURIComponent('<%=userID%>')
 			},
 			success : function(result) {
 				if (result >= 1)
@@ -189,13 +188,18 @@ System.out.println("boardShow.jsp => board : " + board);
 
 					<td colspan="5" style="text-align: right;"><a
 						href="boardReply.jsp?boardID=<%=board.getBoardID()%>"
-						class="btn btn-primary">답변</a> <%
+						class="btn btn-primary">답변</a> 
+						<a href="boardUpdate.jsp?boardID=<%=board.getBoardID()%>"	class="btn btn-primary">수정</a>
+						<%
  	// 게시글 작성자 본인 이라면 ....
  if (userID.equals(board.getUserID())) {
- %> <a href="boardUpdate.jsp?boardID=<%=board.getBoardID()%>"
-						class="btn btn-primary">수정</a> <a
-						href="boardDelete.jsp?boardID=<%=board.getBoardID()%>"
-						class="btn btn-primary">삭제</a> <%
+ %>
+ 				<!-- 아래와 같은 방법은 글의  작성자가 아닐시 아에 수정 버튼이 안보입니다. (아래와 같은 방법이 더 효율 적이긴 하지만, 공부를 위해서) -->
+ 				<!-- 수정버튼을 열어 놓고 글의 작성자가 아닐시 글 수정을 못하게 만들겠습니다. -->
+				 <!-- <a href="boardUpdate.jsp?boardID=<%=board.getBoardID()%>"	class="btn btn-primary">수정</a>  --> 
+						<a href="boardDelete.jsp?boardID=<%=board.getBoardID()%>" class="btn btn-primary">삭제</a> 
+						
+<%
  	}
  %> <a href="boardView.jsp" class="btn btn-primary">목록</a></td>
 				</tr>

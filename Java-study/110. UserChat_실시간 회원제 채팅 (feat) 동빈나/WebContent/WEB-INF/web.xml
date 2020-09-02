@@ -118,4 +118,15 @@
 		<servlet-name>BoardWriteServlet</servlet-name>
 		<url-pattern>/boardWrite</url-pattern>
 	</servlet-mapping>
+
+	<!-- 게시글 수정 -->
+	<servlet>
+		<servlet-name>BoardUpdateServlet</servlet-name>
+		<servlet-class>board.BoardUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BoardUpdateServlet</servlet-name>
+		<url-pattern>/boardUpdate</url-pattern>
+	</servlet-mapping>
+
 </web-app>
