@@ -25,7 +25,7 @@ if (request.getParameter("boardID") != null)
 
 if (boardID == null || boardID.equals("")) {
 	session.setAttribute("messageType", "오류메시지");
-	session.setAttribute("messageContent", "게시물이 존재하지 않습니다.");
+	session.setAttribute("messageContent", "게시글이 존재하지 않습니다.");
 	response.sendRedirect("boardView.jsp");
 	return;
 }

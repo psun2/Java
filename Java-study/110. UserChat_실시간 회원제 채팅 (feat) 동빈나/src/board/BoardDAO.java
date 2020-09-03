@@ -383,4 +383,77 @@ public class BoardDAO {
 
 		return -1; // 데이터베이스 오류
 	}
+
+	// 답변 작성
+	public int reply(String userID, String boardTitle, String boardContent, String boardFile, String boardRealFile,
+			BoardDTO parent) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		String sql = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, NOW(), 0, ?, ?, ?, ?, ?";
+		// (SELECT MAX(boardID) + 1 FROM boardID), 1) : max로 가장 큰 값의 id 값을 뽑아와 + 1 씩 증가
+		// 만약 존재 하지 않는다면 default = 1
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userID);
+			psmt.setString(2, boardTitle);
+			psmt.setString(3, boardContent);
+			psmt.setString(4, boardFile);
+			psmt.setString(5, boardRealFile);
+			psmt.setInt(6, parent.getBoardGroup());
+			psmt.setInt(7, parent.getBoardSequence() + 1);
+			psmt.setInt(8, parent.getBoardLevel() + 1);
+
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 등록중 sql 문 오류 발생");
+			e.printStackTrace();
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+
+		}
+
+		return -1; // 데이터베이스 오류
+	}
+
+	// 답변 수정
+	public int replyUpdate(BoardDTO parent) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		String sql = "UPDATE BOARD SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, parent.getBoardGroup());
+			psmt.setInt(2, parent.getBoardSequence());
+
+			return psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+		return -1; // 데이터베이스 오류
+	}
 }

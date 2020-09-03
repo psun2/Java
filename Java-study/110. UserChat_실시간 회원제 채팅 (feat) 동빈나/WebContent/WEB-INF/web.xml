@@ -128,7 +128,7 @@
 		<servlet-name>BoardUpdateServlet</servlet-name>
 		<url-pattern>/boardUpdate</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 파일 삭제 -->
 	<servlet>
 		<servlet-name>BoardDeleteServlet</servlet-name>
@@ -137,5 +137,15 @@
 	<servlet-mapping>
 		<servlet-name>BoardDeleteServlet</servlet-name>
 		<url-pattern>/boardDelete</url-pattern>
+	</servlet-mapping>
+
+	<!-- 답변 등록 및 수정  -->
+	<servlet>
+		<servlet-name>BoardReplyServlet</servlet-name>
+		<servlet-class>board.BoardReplyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BoardReplyServlet</servlet-name>
+		<url-pattern>/boardReply</url-pattern>
 	</servlet-mapping>
 </web-app>
