@@ -80,15 +80,15 @@ public class BoardWriteServlet extends HttpServlet {
 
 		BoardDAO boardDAO = new BoardDAO();
 		int result = boardDAO.write(userID, boardTitle, boardContent, boardFile, boardRealFile);
-		
-		if(result == 1) {
 
-		session.setAttribute("messageType", "성공 메시지");
-		session.setAttribute("messageContent", "성공적으로 게시물이 작성되었습니다.");
-		response.sendRedirect("boardView.jsp");
-		return;
-		
-		} else if(result == -1) {			
+		if (result == 1) {
+
+			session.setAttribute("messageType", "성공 메시지");
+			session.setAttribute("messageContent", "성공적으로 게시물이 작성되었습니다.");
+			response.sendRedirect("boardView.jsp");
+			return;
+
+		} else if (result == -1) {
 			session.setAttribute("messageType", "오류 메시지");
 			session.setAttribute("messageContent", "데이터베이스 오류가 발생했습니다.");
 			response.sendRedirect("boardView.jsp");

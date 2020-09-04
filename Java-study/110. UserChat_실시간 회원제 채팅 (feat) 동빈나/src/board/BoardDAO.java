@@ -30,7 +30,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
-		String sql = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, NOW(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM BOARD), 0), 0, 0";
+		String sql = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, NOW(), 0, ?, ?, IFNULL((SELECT MAX(boardGroup) + 1 FROM BOARD), 0), 0, 0, 1";
 		// (SELECT MAX(boardID) + 1 FROM boardID), 1) : max로 가장 큰 값의 id 값을 뽑아와 + 1 씩 증가
 		// 만약 존재 하지 않는다면 default = 1
 
@@ -56,7 +56,14 @@ public class BoardDAO {
 				e1.printStackTrace();
 			}
 		} finally {
-
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		return -1; // 데이터베이스 오류
@@ -113,6 +120,7 @@ public class BoardDAO {
 				board.setBoardGroup(rs.getInt("boardGroup"));
 				board.setBoardSequence(rs.getInt("boardSequence"));
 				board.setBoardLevel(rs.getInt("boardLevel"));
+				board.setBoardAvailable(rs.getInt("boardAvailable"));
 			}
 
 			return board;
@@ -138,7 +146,8 @@ public class BoardDAO {
 	}
 
 	// 게시글 목록 반환
-	public ArrayList<BoardDTO> getList() {
+	public ArrayList<BoardDTO> getList(String pageNumber) {
+		// 마지막 강의로 인한 함수 변경(게시판의 페이징 처리)
 
 		ArrayList<BoardDTO> boardList = null;
 
@@ -146,12 +155,20 @@ public class BoardDAO {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT * FROM BOARD ORDER BY boardGroup DESC, boardSequence ASC";
+		// 마지막 강의로 인한 함수 변경(게시판의 페이징 처리)
+		// String sql = "SELECT * FROM BOARD ORDER BY boardGroup DESC, boardSequence
+		// ASC";
+		String sql = "SELECT * FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
 
 		try {
 
 			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement(sql);
+
+			// 마지막 강의로 인한 함수 변경(게시판의 페이징 처리)
+			psmt.setInt(1, Integer.parseInt(pageNumber) * 10);
+			psmt.setInt(2, (Integer.parseInt(pageNumber) - 1) * 10);
+
 			rs = psmt.executeQuery();
 
 			boardList = new ArrayList<BoardDTO>();
@@ -193,6 +210,7 @@ public class BoardDAO {
 				board.setBoardGroup(rs.getInt("boardGroup"));
 				board.setBoardSequence(rs.getInt("boardSequence"));
 				board.setBoardLevel(rs.getInt("boardLevel"));
+				board.setBoardAvailable(rs.getInt("boardAvailable"));
 
 				boardList.add(board);
 			}
@@ -217,6 +235,72 @@ public class BoardDAO {
 
 		return boardList; // 오류
 
+	}
+
+	// 다음 페이지의 존재 여부를 알려주는 함수
+	public boolean nextPage(String pageNumber) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM BOARD WHERE boardGroup >= ?";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(pageNumber) * 10);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		return false; // 데이터베이스 오류
+	}
+
+	// 페이지 네이션
+	public int targetPage(String pageNumber) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ?";
+
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, (Integer.parseInt(pageNumber) - 1) * 10);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("COUNT(boardGroup)") / 10;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		return 0; // 데이터베이스 오류
 	}
 
 	// 조회수 증가
@@ -360,7 +444,9 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
-		String sql = "DELETE FROM BOARD WHERE boardID = ?";
+		// 데이터베이스에서 실제로 지우는 것이 아닌 available 의 값을 0으로 바꿉니다.
+		// String sql = "DELETE FROM BOARD WHERE boardID = ?";
+		String sql = "UPDATE BOARD SET boardAvailable = 0 WHERE boardID = ?";
 
 		try {
 			conn = dataSource.getConnection();
@@ -391,7 +477,7 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 
-		String sql = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, NOW(), 0, ?, ?, ?, ?, ?";
+		String sql = "INSERT INTO BOARD SELECT ?, IFNULL((SELECT MAX(boardID) + 1 FROM BOARD), 1), ?, ?, NOW(), 0, ?, ?, ?, ?, ?, 1";
 		// (SELECT MAX(boardID) + 1 FROM boardID), 1) : max로 가장 큰 값의 id 값을 뽑아와 + 1 씩 증가
 		// 만약 존재 하지 않는다면 default = 1
 

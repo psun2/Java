@@ -19,7 +19,23 @@ if (userID == null) {
 	return;
 }
 
-ArrayList<BoardDTO> boardList = new BoardDAO().getList();
+//마지막 강의로 인한 함수 변경(게시판의 페이징 처리)
+String pageNumber = "1"; // 별다른 일이 없다면 게시판은 1페이지 부터 시작합니다.
+
+if (request.getParameter("pageNumber") != null)
+	pageNumber = request.getParameter("pageNumber");
+
+try {
+	Integer.parseInt(pageNumber);
+} catch (Exception e) {
+	e.printStackTrace();
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "페이지 번호가 잘못되었습니다.");
+	response.sendRedirect("boardView.jsp");
+	return;
+}
+
+ArrayList<BoardDTO> boardList = new BoardDAO().getList(pageNumber);
 %>
 <head>
 <meta charset="UTF-8">
@@ -132,13 +148,17 @@ ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 					</th>
 				</tr>
 				<tr>
-					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>번호</h5></th>
-					<th style="background-color: #fafafa; color: #000000; min-width: 200px;"><h5>제목</h5></th>
-					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>작성자</h5></th>
+					<th
+						style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>번호</h5></th>
+					<th
+						style="background-color: #fafafa; color: #000000; min-width: 200px;"><h5>제목</h5></th>
+					<th
+						style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>작성자</h5></th>
 					<th
 						style="background-color: #fafafa; color: #000000; max-width: 180px;"><h5>작성
 							날짜</h5></th>
-					<th style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>조회수</h5></th>
+					<th
+						style="background-color: #fafafa; color: #000000; max-width: 70px;"><h5>조회수</h5></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -148,15 +168,19 @@ ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 				<tr>
 					<td><%=board.getBoardID()%></td>
 					<td style="text-align: left;"><a
-						href="boardShow.jsp?boardID=<%=board.getBoardID()%>">
-					<%
-					for(int i = 0; i < board.getBoardLevel(); i++) {
-					%>
-					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-					<%
-					}
-					%>
-					<%=board.getBoardTitle()%></a></td>
+						href="boardShow.jsp?boardID=<%=board.getBoardID()%>"> <%
+ 	for (int i = 0; i < board.getBoardLevel(); i++) {
+ %> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+							<%
+								}
+							%> <%
+ 	if (board.getBoardAvailable() == 0) { // 삭제된 게시글
+ %> (삭제된 게시글 입니다.) <%
+ 	} else { // 삭제가 되지 않은 게시물
+ %> <%=board.getBoardTitle()%> <%
+ 	}
+ %>
+ 					</a></td>
 					<td><%=board.getUserID()%></td>
 					<td><%=board.getBoardDate()%></td>
 					<td><%=board.getBoardHit()%></td>
@@ -166,7 +190,70 @@ ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 				%>
 				<tr>
 					<td colspan="5"><a href="boardWrite.jsp"
-						class="btn btn-primary pull-right" type="submit">글쓰기</a></td>
+						class="btn btn-primary pull-right" type="submit">글쓰기</a>
+						
+						<!-- 부트스트랩 제공 페이지 네이션 -->
+						<ul class="pagination" style="margin: 0 auto;">
+						<%
+						int startPage = (Integer.parseInt(pageNumber) / 10) * 10 + 1;
+						if(Integer.parseInt(pageNumber) % 10 == 0)
+							startPage -= 10;
+						int targetPage = new BoardDAO().targetPage(pageNumber); // 몇페이지까지 존재하는지....
+						
+						if(startPage != 1) {
+						%>
+						<li><a href="boardView.jsp?pageNumber=<%=startPage - 1 %>"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+						<%
+						} else {
+						%>						
+						<li><span class="glyphicon glyphicon-chevron-left" style="color:#dddddd;"></span></li>
+						<%
+						}
+						for (int i = startPage; i < Integer.parseInt(pageNumber); i++) {
+						%>
+						<li><a href="boardView.jsp?pageNumber=<%=i %>"><%=i %></a></li>
+						<%
+						}
+						%>
+						<li class="active"><a href="boardView.jsp?pageNumber=<%=pageNumber %>"><%=pageNumber %></a></li>
+						<%
+						for(int i = Integer.parseInt(pageNumber) + 1; i <= targetPage + Integer.parseInt(pageNumber); i++){
+							if(i < startPage + 10 ) {
+						%>
+						<li><a href="boardView.jsp?pageNumber=<%=i %>"><%=i %></a></li>
+						<%
+							}
+						}
+						if(targetPage + Integer.parseInt(pageNumber) > startPage + 9) {
+						%>
+						<li><a href="boardView.jsp?pageNumber=<%=startPage + 10 %>"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+						<%
+						} else {
+						%>
+						<li><span class="glyphicon glyphicon-chevron-right" style="color:#dddddd;"></span></li>
+						<%
+						}
+						%>
+						</ul>
+				 
+				 <!-- custom pagination (우리가 만든 커스텀 페이지 네이션) -->
+					<%
+					// if(!pageNumber.equals("1")) {
+					%>
+					<!-- 
+					<a href="boardView.jsp?pageNumber=<%=Integer.parseInt(pageNumber) - 1 %>" class="btn btn-success">이전</a>
+					 -->
+					<%
+					// }
+					// if(new BoardDAO().nextPage(pageNumber)) {
+					%>					
+					<!--  
+					<a href="boardView.jsp?pageNumber=<%=Integer.parseInt(pageNumber) + 1 %>" class="btn btn-success">다음</a>
+					 -->
+					<%
+					// }
+					%>
+					</td>
 				</tr>
 			</tbody>
 		</table>

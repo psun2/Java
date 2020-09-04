@@ -3,14 +3,16 @@ package board;
 public class BoardDTO {
 
 	private String userID, boardTitle, boardContent, boardDate, boardFile, boardRealFile;
-	private int boardID, boardHit, boardGroup, boardSequence, boardLevel;
+	private int boardID, boardHit, boardGroup, boardSequence, boardLevel, boardAvailable;
+	// boardAvailable : 기존 게시글 작성시 1, 게시글 삭제시0 why? 답변 들여쓰기를 위한 변수 => 게시판에 삭제된 답변입니다 라고 화면 출력을 위한 변수
 
 	public BoardDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public BoardDTO(String userID, int boardID, String boardTitle, String boardContent, String boardDate, int boardHit,
-			String boardFile, String boardRealFile, int boardGroup, int boardSequence, int boardLevel) {
+			String boardFile, String boardRealFile, int boardGroup, int boardSequence, int boardLevel,
+			int boardAvailable) {
 		super();
 		this.userID = userID;
 		this.boardID = boardID;
@@ -23,6 +25,7 @@ public class BoardDTO {
 		this.boardGroup = boardGroup;
 		this.boardSequence = boardSequence;
 		this.boardLevel = boardLevel;
+		this.boardAvailable = boardAvailable;
 	}
 
 	public String getUserID() {
@@ -113,12 +116,20 @@ public class BoardDTO {
 		this.boardLevel = boardLevel;
 	}
 
+	public int getBoardAvailable() {
+		return boardAvailable;
+	}
+
+	public void setBoardAvailable(int boardAvailable) {
+		this.boardAvailable = boardAvailable;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDTO [userID=" + userID + ", boardID=" + boardID + ", boardTitle=" + boardTitle + ", boardContent="
 				+ boardContent + ", boardDate=" + boardDate + ", boardHit=" + boardHit + ", boardFile=" + boardFile
 				+ ", boardRealFile=" + boardRealFile + ", boardGroup=" + boardGroup + ", boardSequence=" + boardSequence
-				+ ", boardLevel=" + boardLevel + "]";
+				+ ", boardLevel=" + boardLevel + ", boardAvailable=" + boardAvailable + "]";
 	}
 
 }

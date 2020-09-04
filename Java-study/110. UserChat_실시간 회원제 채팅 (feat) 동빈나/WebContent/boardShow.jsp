@@ -24,7 +24,7 @@ if (request.getParameter("boardID") != null)
 	boardID = (String) request.getParameter("boardID");
 
 if (boardID == null || boardID.equals("")) {
-	session.setAttribute("messageType", "오류메시지");
+	session.setAttribute("messageType", "오류 메시지");
 	session.setAttribute("messageContent", "게시글이 존재하지 않습니다.");
 	response.sendRedirect("boardView.jsp");
 	return;
@@ -34,6 +34,14 @@ System.out.println("boardID : " + boardID);
 
 BoardDAO boardDAO = new BoardDAO();
 BoardDTO board = boardDAO.getBoard(boardID);
+
+// 삭제된 게시글 이라면 읽을 수 없도록 합니다.
+if (board.getBoardAvailable() == 0) { // 삭제된 게시글 
+	session.setAttribute("messageType", "오류 메시지");
+	session.setAttribute("messageContent", "삭제된 게시물 입니다.");
+	response.sendRedirect("boardView.jsp");
+	return;
+}
 
 // 해당 사용자가 클릭과 동시에 조회수가 1증가 합니다.
 boardDAO.hit(boardID);
@@ -168,7 +176,7 @@ System.out.println("boardShow.jsp => board : " + board);
 					<td><h5><%=board.getBoardDate()%>
 						</h5></td>
 					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>조회수</h5></td>
-					<td><h5><%=board.getBoardHit()%>
+					<td><h5><%=board.getBoardHit() + 1%>
 						</h5></td>
 				</tr>
 				<tr>
