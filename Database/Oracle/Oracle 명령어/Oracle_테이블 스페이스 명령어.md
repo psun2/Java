@@ -57,7 +57,7 @@ ALTER DATABASE DATAFILE 'C:\ORACLEXE\APP\ORACLE\ORADATA\KOREA\TP_BBB.DBF' RESIZE
 ## user 생성
 
 ```
-reate user 계정명 identified by 비밀번호
+create user 계정명 identified by 비밀번호
 default tablespace 사용 할 공간 파일명
 temporary tablespace temp;
 ```
