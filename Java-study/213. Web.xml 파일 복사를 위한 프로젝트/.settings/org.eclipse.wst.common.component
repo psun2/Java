@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="213. Web.xml 파일 복사를 위한 프로젝트">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="213._Web.xml_파일_복사를_위한_프로젝트"/>
+        <property name="java-output-path" value="/213. Web.xml 파일 복사를 위한 프로젝트/build/classes"/>
+    </wb-module>
+</project-modules>
