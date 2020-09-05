@@ -8,17 +8,28 @@
 </head>
 <body>
 	<%
-		InitialContext initCtx = new InitialContext();
+	InitialContext initCtx = new InitialContext();
+	System.out.println("InitialContext : " + initCtx);
+
 	Context envContext = (Context) initCtx.lookup("java:/comp/env");
-	DataSource ds = (DataSource) envContext.lookup("jdbc/110. UserChat_실시간 회원제 채팅 (feat) 동빈나");
-	Connection con = ds.getConnection();
-	Statement stmt = con.createStatement();
+	System.out.println("Context : " + envContext);
+	
+	DataSource ds = (DataSource) envContext.lookup("jdbc/211. UserChat_실시간 회원제 채팅 (feat) 동빈나");
+	System.out.println("DataSource : " + ds);
+	
+	Connection conn = ds.getConnection();
+	System.out.println("Connection : " + conn);
+	
+	Statement stmt = conn.createStatement();
+	System.out.println("Statement : " + stmt);
+	
 	ResultSet rs = stmt.executeQuery("SELECT VERSION()");
+	System.out.println("ResultSet : " + rs);
 	while (rs.next())
 		out.println("MySQL version : " + rs.getString("version()"));
 	rs.close();
 	stmt.close();
-	con.close();
+	conn.close();
 	initCtx.close();
 	%>
 </body>

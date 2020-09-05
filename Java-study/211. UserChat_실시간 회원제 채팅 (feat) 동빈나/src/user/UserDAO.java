@@ -18,7 +18,7 @@ public class UserDAO {
 		try {
 			InitialContext initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("jdbc/110. UserChat_실시간 회원제 채팅 (feat) 동빈나");
+			dataSource = (DataSource) envContext.lookup("jdbc/211. UserChat_실시간 회원제 채팅 (feat) 동빈나");
 			System.out.println(dataSource);
 		} catch (Exception e) {
 			// TODO: handle exception
