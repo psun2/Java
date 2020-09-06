@@ -1,0 +1,5 @@
+/**
+ * 
+ */
+
+location.href = "index.jsp";

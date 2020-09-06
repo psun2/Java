@@ -72,6 +72,7 @@ public class ChatListServlet extends HttpServlet {
 	}
 
 	public String getTen(String fromID, String toID) {
+		
 		StringBuffer result = new StringBuffer("");
 		// JSON 형태 사용
 		result.append("{\"result\":[");
@@ -99,6 +100,7 @@ public class ChatListServlet extends HttpServlet {
 	}
 
 	public String getID(String fromID, String toID, String chatID) {
+
 		StringBuffer result = new StringBuffer("");
 		// JSON 형태 사용
 		result.append("{\"result\":[");
@@ -117,6 +119,8 @@ public class ChatListServlet extends HttpServlet {
 				result.append(",");
 		}
 		result.append("], \"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
+		
+		System.out.println("\t\t\t\t\t\t\t\t\t\t sadasujdajfkalfjklahsjkrfhk");
 		System.out.println(result.toString());
 
 		// 반환전 즉 반환되면 읽음으로서 읽음처리 실행

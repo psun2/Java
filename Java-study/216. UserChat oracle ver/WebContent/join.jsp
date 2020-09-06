@@ -33,6 +33,14 @@
 
 	if (session.getAttribute("userID") != null)
 		userID = (String) session.getAttribute("userID");
+
+	// 현재 로그인 된상태로 회원가입을 하지 못 합니다.
+	if (userID != null) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "현재 로그인이 되어 있는 상태입니다.");
+		response.sendRedirect("index.jsp");
+		return;
+	}
 	%>
 
 	<!-- 네비게이션 -->
@@ -52,7 +60,8 @@
 				<li class="active"><a href="index.jsp">메인</a></li>
 			</ul>
 			<%
-				if (userID == null) { // 로그인을 하지 않은 상태 라면...
+				// 로그인이 된상태면 위에서 index 페이지로 돌려보내는데 굳이 필요가 있을까 .... ?
+			// if (userID == null) { // 로그인을 하지 않은 상태 라면...
 			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -62,20 +71,11 @@
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
+						<li class="active"><a href="join.jsp">회원가입</a></li>
 					</ul></li>
 			</ul>
 			<%
-				} else { // 로그인 상태시
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expended="false"> 회원관리<span class="caret"></span>
-				</a></li>
-			</ul>
-			<%
-				}
+				// }
 			%>
 		</div>
 	</nav>
@@ -170,11 +170,11 @@
 		aria-hidden="true">
 		<div class="vertical-alignment-helper">
 			<div class="modal-dialog vertical-align-center">
-				<div class="modal-content"
-					<%if (messageType.equals("오류 메시지"))
+				<div
+					class="modal-content <%if (messageType.equals("오류 메시지"))
 	out.println("panel-warning");
 else
-	out.println("panel-success");%>>
+	out.println("panel-success");%>">
 					<div class="modal-header panel-heading">
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>

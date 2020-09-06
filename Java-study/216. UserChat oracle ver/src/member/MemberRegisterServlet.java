@@ -69,6 +69,7 @@ public class MemberRegisterServlet extends HttpServlet {
 				userProfile);
 
 		if (result == 1) { // 회원가입 성공
+			request.getSession().setAttribute("userID", userID);
 			request.getSession().setAttribute("messageType", "성공 메시지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
 

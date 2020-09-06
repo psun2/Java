@@ -69,7 +69,10 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expended="false"> 회원관리<span class="caret"></span>
-				</a></li>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="logoutAction.jsp">로그아웃</a></li>
+					</ul></li>
 			</ul>
 			<%
 				}
@@ -77,5 +80,53 @@
 		</div>
 	</nav>
 
+	<!-- servlet session 값으로 확인하는 모달 -->
+	<%
+		String messageType = null;
+	if (session.getAttribute("messageType") != null)
+		messageType = (String) session.getAttribute("messageType");
+
+	String messageContent = null;
+	if (session.getAttribute("messageContent") != null)
+		messageContent = (String) session.getAttribute("messageContent");
+
+	if (messageType != null && messageContent != null) {
+	%>
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="vertical-alignment-helper">
+			<div class="modal-dialog vertical-align-center">
+				<div
+					class="modal-content <%if (messageType.equals("오류 메시지"))
+	out.println("panel-warning");
+else
+	out.println("panel-success");%>">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">
+							<%=messageType%>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<%=messageContent%>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		// join.jsp의 모달 창을 사용자에게 보여주는 역할을 합니다.
+		$('#messageModal').modal('show');
+	</script>
+	<%
+		session.removeAttribute("messageType");
+	session.removeAttribute("messageContent");
+	}
+	%>
 </body>
 </html>

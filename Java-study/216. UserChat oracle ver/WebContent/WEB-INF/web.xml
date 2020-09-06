@@ -27,7 +27,7 @@
 	</servlet-mapping>
 	
 	-->
-	
+
 	<!-- 회원가입 -->
 	<servlet>
 		<servlet-name>MemberRegisterServlet</servlet-name>
@@ -46,6 +46,36 @@
 	<servlet-mapping>
 		<servlet-name>MemberRegisterCheckServlet</servlet-name>
 		<url-pattern>/memberRegisterCheck</url-pattern>
+	</servlet-mapping>
+
+	<!-- 채팅 전송(submit) -->
+	<servlet>
+		<servlet-name>ChatSubmitServlet</servlet-name>
+		<servlet-class>chat.ChatSubmitServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatSubmitServlet</servlet-name>
+		<url-pattern>/chatSubmit</url-pattern>
+	</servlet-mapping>
+
+	<!-- 로그인 기능 -->
+	<servlet>
+		<servlet-name>MemberLoginServlet</servlet-name>
+		<servlet-class>member.MemberLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberLoginServlet</servlet-name>
+		<url-pattern>/memberLogin</url-pattern>
+	</servlet-mapping>
+
+	<!-- 채팅목록 불러오는 서블릿 -->
+	<servlet>
+		<servlet-name>ChatListServlet</servlet-name>
+		<servlet-class>chat.ChatListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatListServlet</servlet-name>
+		<url-pattern>/chatList</url-pattern>
 	</servlet-mapping>
 
 </web-app>

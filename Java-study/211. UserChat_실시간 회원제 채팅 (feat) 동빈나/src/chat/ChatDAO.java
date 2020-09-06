@@ -48,6 +48,7 @@ public class ChatDAO {
 
 			chatList = new ArrayList<ChatDTO>();
 			while (rs.next()) {
+
 				ChatDTO chat = new ChatDTO();
 				chat.setChatID(rs.getInt(1));
 				chat.setFromID(rs.getString(2).replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")

@@ -9,7 +9,7 @@ const registerCheckFunction = () => {
 	$.ajax({
 		type:'POST',
 		url:'./memberRegisterCheck',
-		data:{userID: userID},
+		data:{userID: encodeURIComponent(userID)},
 		success: (result) => {
 			console.log("result : ", result);
 			if(parseInt(result) === 1) {
