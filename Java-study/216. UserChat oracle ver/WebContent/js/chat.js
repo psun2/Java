@@ -68,6 +68,8 @@ const chatListFunction = (type) => {
 			
 			
 			for(let i = 0; i < result.length; i++) {
+				if(result[i][0].fromID === fromID)
+					result[i][0].fromID = result[i][0].fromID + ' (나)';
 				addChat(result[i][0].fromID, result[i][2].chatContent, result[i][3].time);
 				}
 			

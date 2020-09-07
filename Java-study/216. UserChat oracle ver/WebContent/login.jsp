@@ -54,7 +54,8 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="index.jsp">메인</a></li>
+				<li><a href="index.jsp">메인</a></li>
+				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%
 				// 로그인이 된상태면 위에서 index 페이지로 돌려보내는데 굳이 필요가 있을까 .... ?

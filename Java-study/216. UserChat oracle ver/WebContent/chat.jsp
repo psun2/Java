@@ -71,7 +71,7 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
-				<li class="active"><a href="chat.jsp">채팅</a></li>
+				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
 			<%
 				// 로그인이 된상태에서만 접근이 가능한데 굳이 if문이 필요 할 까 ?
@@ -213,5 +213,25 @@ else
 
 		start();
 	</script>
+	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
+	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="vertical-alignment-helper">
+			<div class="modal-dialog vertical-align-center">
+				<div id="checkType" class="modal-content panel-info">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">확인 메시지</h4>
+					</div>
+					<div id="checkMessage" class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

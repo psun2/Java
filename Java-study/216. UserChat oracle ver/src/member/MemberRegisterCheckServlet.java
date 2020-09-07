@@ -22,10 +22,17 @@ public class MemberRegisterCheckServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		String userID = URLDecoder.decode(request.getParameter("userID"), "UTF-8");
+		String userID = request.getParameter("userID");
 
-		// join.jsp 에 반환 (즉, 사용자에게 반환)
-		response.getWriter().write(new MemberDAO().registerCheck(userID) + "");
+		if (userID == null || userID.equals(""))
+			response.getWriter().write("-1");
+		else {
+			userID = URLDecoder.decode(userID, "UTF-8");
+		
+			// join.jsp 에 반환 (즉, 사용자에게 반환)
+			response.getWriter().write(new MemberDAO().registerCheck(userID) + "");
+		}
+
 	}
 
 }
