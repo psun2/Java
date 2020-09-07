@@ -24,7 +24,7 @@
 	// ▶ 서버의 실제 프로젝트 경로에서 자원을 찾을 때 가장 많이 사용합니다.
 	// 우리가 만들었던 upload폴더를 찾도록 합니다.
 	// String directory = application.getRealPath("/upload/"); // race coindition 경쟁상태 유발에 의한 취약점 발경
-	String directory = "D:/Java/Java-study/107. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
+	String directory = "D:/Java/Java-study/208. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
 
 	// 파일의 최대크기 (총 100mb 까지만 저장되게 만듬)
 	int maxSize = 1204 * 1204 * 100;
@@ -52,7 +52,7 @@
 			continue;
 
 		if (!fileName.endsWith(".doc") && !fileName.endsWith(".hwp") && !fileName.endsWith(".pdf")
-		&& !fileName.endsWith(".xls")) {
+		&& !fileName.endsWith(".xls")&& !fileName.endsWith(".png")) {
 			File file = new File(directory + fileName);
 			file.delete();
 			out.write("업로드할 수 없는 확장자 입니다.");
