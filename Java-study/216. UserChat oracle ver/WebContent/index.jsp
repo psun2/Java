@@ -36,8 +36,8 @@
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-targer="#bs-example-navbar-collpase-1"
-				aria-expended="false">
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
@@ -49,13 +49,14 @@
 				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
 			</ul>
+
 			<%
 				if (userID == null) { // 로그인을 하지 않은 상태 라면...
 			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expended="false"> 접속하기 <!-- <span class="caret"></span> : 이미지 입니다. (▼) -->
+					aria-expanded="false"> 접속하기 <!-- <span class="caret"></span> : 이미지 입니다. (▼) -->
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">

@@ -12,6 +12,8 @@
 
 @import './chat.css';
 
+@import './navigation.css';
+
 * {
 	font-family: 'Nanum Gothic' -apple-system, BlinkMacSystemFont,
 		'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
@@ -39,4 +41,35 @@ h3, h2, h1 {
 		Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
 		sans-serif;
 	/* -apple-system 이란 구글 폰트가 없을시 설정된 앞에 font 가 없으면 차례로 다음 font를 쓴다고 합니다.*/
+}
+
+/* 전체 링크 관련 영역 */
+a {
+	color: #0f0f0f;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #dddddd;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+	/* 작은 화면일 때 드랍다운 아이템에 마우스를 올렸을때 */
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+		color: #fcfcfc;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,
+		.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
+		color: #eeeeee;
+	}
+	.navbar-default .navbar-brand {
+		padding-top: 15px;
+	}
+	.navbar-nav>li>a {
+		padding-top: 0;
+		padding-bottom: 0;
+		line-height: 40px;
+	}
 }
