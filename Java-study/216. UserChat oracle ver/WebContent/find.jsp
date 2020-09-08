@@ -47,8 +47,8 @@
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-targer="#bs-example-navbar-collpase-1"
-				aria-expended="false">
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
@@ -63,7 +63,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expended="false"> 회원관리<span class="caret"></span>
+					aria-expanded="false"> 회원관리<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
@@ -71,6 +71,7 @@
 			</ul>
 		</div>
 	</nav>
+	<!-- // 네비게이션 -->
 
 	<!-- 친구찾기 view -->
 	<div class="container">
@@ -99,6 +100,7 @@
 			style="text-align: center; border: 1px solid #dddddd">
 		</table>
 	</div>
+	<!-- // 친구찾기 view -->
 
 	<!-- servlet session 값으로 확인하는 모달 -->
 	<%
@@ -148,6 +150,8 @@ else
 	session.removeAttribute("messageContent");
 	}
 	%>
+	<!-- // servlet session 값으로 확인하는 모달 -->
+	
 	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
 		aria-hidden="true">
@@ -168,5 +172,6 @@ else
 			</div>
 		</div>
 	</div>
+	<!-- // check Modal(비밀번호 일치, 아이디 중복여부) -->
 </body>
 </html>

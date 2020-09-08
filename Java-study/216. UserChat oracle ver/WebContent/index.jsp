@@ -81,6 +81,7 @@
 			%>
 		</div>
 	</nav>
+	<!-- //네비게이션 -->
 
 	<!-- servlet session 값으로 확인하는 모달 -->
 	<%
@@ -130,6 +131,7 @@ else
 	session.removeAttribute("messageContent");
 	}
 	%>
+	<!-- // servlet session 값으로 확인하는 모달 -->
 
 	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
@@ -151,5 +153,6 @@ else
 			</div>
 		</div>
 	</div>
+	<!-- // check Modal(비밀번호 일치, 아이디 중복여부) -->
 </body>
 </html>

@@ -51,7 +51,7 @@ public class ChatListServlet extends HttpServlet {
 		result.append("{\"result\":[");
 
 		ChatDAO chatDAO = new ChatDAO();
-		ArrayList<ChatDTO> chatList = chatDAO.getChatListByRecent(fromID, toID, 10);
+		ArrayList<ChatDTO> chatList = chatDAO.getChatListByRecent(fromID, toID, 100);
 
 		if (chatList.size() == 0)
 			return "";
@@ -69,6 +69,8 @@ public class ChatListServlet extends HttpServlet {
 		result.append("],\"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 
 		// System.out.println("result.toString() : " + result.toString());
+
+		chatDAO.readChat(fromID, toID); // 메시지를 읽을려고 가져 오는 서블릿이기 때문에 데이터 반환전에 읽음처리로 돌립니다.
 
 		return result.toString();
 
@@ -98,6 +100,8 @@ public class ChatListServlet extends HttpServlet {
 		result.append("],\"last\":\"" + chatList.get(chatList.size() - 1).getChatID() + "\"}");
 
 		// System.out.println("result.toString() : " + result.toString());
+
+		chatDAO.readChat(fromID, toID); // 메시지를 읽을려고 가져 오는 서블릿이기 때문에 데이터 반환전에 읽음처리로 돌립니다.
 
 		return result.toString();
 

@@ -44,8 +44,8 @@
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-targer="#bs-example-navbar-collpase-1"
-				aria-expended="false">
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
@@ -64,7 +64,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expended="false"> 접속하기 <!-- <span class="caret"></span> : 이미지 입니다. (▼) -->
+					aria-expanded="false"> 접속하기 <!-- <span class="caret"></span> : 이미지 입니다. (▼) -->
 						<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
@@ -77,6 +77,7 @@
 			%>
 		</div>
 	</nav>
+	<!-- // 네비게이션 -->
 
 	<!-- 로그인 view -->
 	<div class="container">
@@ -107,6 +108,8 @@
 			</table>
 		</form>
 	</div>
+	<!-- // 로그인 view -->
+	
 	<!-- servlet session 값으로 확인하는 모달 -->
 	<%
 		String messageType = null;
@@ -155,6 +158,7 @@ else
 	session.removeAttribute("messageContent");
 	}
 	%>
+	<!-- // servlet session 값으로 확인하는 모달 -->
 
 	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
@@ -176,5 +180,6 @@ else
 			</div>
 		</div>
 	</div>
+	<!-- // check Modal(비밀번호 일치, 아이디 중복여부) -->
 </body>
 </html>
