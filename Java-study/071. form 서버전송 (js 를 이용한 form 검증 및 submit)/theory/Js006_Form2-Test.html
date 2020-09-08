@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/5d1d5aa1e7.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Search</title>
+    <style>
+      .container {
+        display: flex;
+        width: 80%;
+        margin: 0 auto;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 300px;
+      }
+
+      .container > :last-child {
+        margin-left: 10px;
+      }
+
+      input {
+        height: 20px;
+      }
+
+      input:focus {
+        animation: animation 3s infinite linear;
+      }
+
+      @keyframes animation {
+        0% {
+          transform: none;
+        }
+        25% {
+          transform: translateY(-10px);
+        }
+        75% {
+          transform: translateY(10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form action="https://www.google.com/search" method="get">
+        <input type="text" name="q" placeholder="검색어를 입력해 주세요." />
+        <button type="submit">
+          <i class="fab fa-google fa-spin"></i>구글에서 검색하기
+        </button>
+      </form>
+      <form action="https://search.naver.com/search.naver" method="get">
+        <input type="text" name="query" placeholder="검색어를 입력해 주세요." />
+        <button type="submit">
+          <i class="fas fa-graduation-cap"></i>네이버에서 검색
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

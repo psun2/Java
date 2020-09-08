@@ -2,6 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form 데이터</title>
     <style>
       div#btnBox {
@@ -29,131 +30,126 @@
   <!-- 
 	※ 각 form element별 동작하는 것으로 JS 와 HTML 코드 작성하면서 확인 하기 
  -->
-
   <script>
     // TODO:
 
     // 입력값 보여주기
-    function showData() {
-      var result = '입력결과<br>';
+    const showData = () => {
+      let result = '입력결과<br />';
 
-      // form 객체 가져오기
-      // var frm = document.forms['myform1'];
-      var frm = document.forms.myform1;
-      console.log(frm);
+      // FIXME: form 객체 가져오기
+      let form = document.forms.myform1;
+      console.log(form);
+      form = document.forms['myform1'];
+      console.log(form);
 
       // FIXME: 1. 일반적인 input 값 .value 값
-      var username = frm['username'].value;
-      username = document.forms['myform1']['username'].value;
-      username = frm.username.value;
+      let username = document.forms['myform1']['username'].value;
+      console.log('username : ', username);
       username = document.forms.myform1.username.value;
-      username = document['forms']['myform1']['username'].value;
-      console.log(username);
+      console.log('username : ', username);
+      username = form['username'].value;
+      console.log('username : ', username);
+      username = form.username.value;
+      console.log('username : ', username);
       result += `이름: ${username}<br />`;
 
       // FIXME: 2. checkbox 의 값 .checked 로 판단.
-      var hobby = '';
-      if (frm['drive'].checked) {
-        hobby += frm['drive'].value + ',';
-      }
-      if (frm['music'].checked) {
-        hobby += frm['music'].value + ',';
-      }
-      if (frm['sports'].checked) {
-        hobby += frm['sports'].value + ',';
-      }
-
-      console.log(frm['drive'].checked);
-      console.log(frm['drive'].value);
-
+      let hobby = '';
+      if (form.drive.checked) hobby += form.drive.value;
+      if (form.music.checked) hobby += form.music.value;
+      if (form.sports.checked) hobby += form.sports.value;
       result += `취미: ${hobby}<br />`;
 
-      // FIXME: 3. checkbox 동일 name 이 여럿인 경우
-      var skill = '';
-
+      // FIXME: 3. checkbox 동일 name 이 여럿인 경우 (Array 반환)
+      let skill = '';
       // frm['skill'] <== skill 이라는 name을 갖고 있는 form element 들의 array
-      console.log('배열반환 : ', frm['skill']); // => name 이 같다면 배열 반환
-      console.log(frm['skill'][0].value);
-
-      frm['skill'].forEach((index) => {
-        if (index.checked) skill += index.value + ',';
+      console.log('name 이 같다면 배열 반환 : ', form.skill);
+      form.skill.forEach((index) => {
+        if (index.checked) skill += index.value + ', ';
       });
-
       result += `보유기술: ${skill}<br />`;
 
       // FIXME: 4. radio : 이 또한 동일 name 으로 구성. 3. 과 유사
-      var gender = '';
-
-      frm.gender.forEach((index) => {
-        if (index.checked) gender += index.value;
+      let gender = '';
+      form.gender.forEach((index) => {
+        index.checked ? (gender += index.value) : gender;
       });
-
       result += `성별: ${gender}<br />`;
 
       // FIXME: 5.<select> : 단일 .value 사용
-      result += `좋아하는차1: ${frm['cars'].value}<br />`;
+      let cars = '';
+      result += `좋아하는차1: ${form.cars.value}<br />`;
 
       // FIXME: 6.<select> : multiple 3. 과 비슷
       var cars2 = '';
-      console.log(frm['cars2']);
-      console.log(frm.cars2, typeof frm.cars2);
-      console.log(frm.cars2 instanceof Array);
-
-      Array.from(frm.cars2).forEach((index) => {
-        if (index.selected) cars2 += index.value + ',';
+      console.log(
+        '배열 반환이 아닌 select 의 option 들을 반환(1) : ',
+        form['cars2'],
+      );
+      console.log(
+        '배열 반환이 아닌 select 의 option 들을 반환(2) : ',
+        form.cars2,
+      );
+      console.log('Array.from() 을 사용하여 배열화 : ', Array.from(form.cars2));
+      // 방법1. select 태그를 이용한 for 문
+      // 어떠한 기준인지 모르겠으나 위 for 문과 아래의 for 문은 같은 결과를 반환하는데,
+      // 위의 for문에서의 car2의 length에서 오류 가 발생합니다.
+      //   for (let i = 0; i < form.casr2.length; i++) {
+      //     if (form.casr2[i].selected) cars2 += form.cars2[i].value + ',';
+      //   }
+      for (let i = 0; i < form['cars2'].length; i++) {
+        if (form['cars2'][i].selected) cars2 += form['cars2'][i].value + ', ';
+      }
+      Array.from(form.cars2).forEach((index) => {
+        if (index.selected) cars2 += index.value + ', ';
       });
-
-      // for (let i = 0; i < frm['cars2'].length; i++) {
-      //   if (frm['cars2'][i].selected) cars2 += frm['cars2'][i].value + ',';
-      // }
-
       result += `좋아하는차2: ${cars2}<br />`;
 
       // FIXME: 7.<textarea> : .innerHTML 혹은 .value 로 값을 가져올수 있다.
       // .value : '현재' 사용자가 입력한 값
       // .innerHTML : 'HTML' content의 값
+      result += `메모: ${form.message.value}<br />`; // 현재 focus를 두고 있는 textarea의 값
+      result += `메모: ${form.message.innerHTML}<br />`; // mark Up으로 등록되어있는 태크 안쪽의 값
 
-      // result += `메모: ${frm['message'].innerHTML}<br />`;
-      result += `메모: ${frm['message'].value}<br />`;
-
+      // 결과값 대입
       document.getElementById('result').innerHTML = result;
-    }
+    };
 
     // 입력값 셋팅
-    function setData() {
-      var frm = document.forms['myform1'];
+    const setData = () => {
+      const form = document.forms.myform1;
 
       // FIXME: input
-      frm['username'].value = '홍길동';
+      form.username.value = '홍길동';
 
       // FIXME: checkbox
-      frm['drive'].checked = false;
-      frm['music'].checked = true;
-      frm['sports'].checked = true;
+      form.drive.checked = false;
+      form.music.checked = true;
+      form.sports.checked = true;
 
       // FIXME: checkbox (동일 name)
-      frm['skill'][0].checked = false;
-      frm['skill'][1].checked = true;
-      frm['skill'][2].checked = true;
+      form.skill[0].checked = false;
+      form.skill[1].checked = true;
+      form.skill[2].checked = true;
 
       // FIXME: radio button
-      frm['gender'][0].checked = true;
+      form.gender[1].checked = true;
 
       // FIXME: select (단일)
-      frm['cars'].value = 'fiat'; // 해당 value 값으로 바꿔주면 알아서 바뀐다.
-      frm['cars'][1].selected = true; // 위와 같은 행동을 할 수 있습니다.
+      form.cars.value = 'fiat'; // 해당 value 값으로 바꿔주면 알아서 바뀐다.
+      form.cars[1].selected = true; // 위와 같은 행동을 할 수 있습니다.
 
       // FIXME: select (multiple)
-      frm['cars2'][0].selected = true;
-      frm['cars2'][1].selected = false;
-      frm['cars2'][2].selected = true;
-      frm['cars2'][3].selected = false;
+      form.cars2[0].selected = true;
+      form.cars2[1].selected = false;
+      form.cars2[2].selected = true;
+      form.cars2[3].selected = false;
 
       // FIXME: textarea : .value .innerHTML
-      frm['message'].value = '안녕하세요!';
-    }
+      form['message'].value = '안녕하세요!';
+    };
   </script>
-
   <body>
     <div id="btnBox">
       <button type="button" onclick="showData();">입력값 보여주기</button>
@@ -217,10 +213,8 @@ The cat was playing in the garden.</textarea
 <form name="myform2">
 별명:<br>
 <input type="text" name="nickname">
-
 <br><br>
 <input type="submit" value="제출">
-
 </form>
  -->
 

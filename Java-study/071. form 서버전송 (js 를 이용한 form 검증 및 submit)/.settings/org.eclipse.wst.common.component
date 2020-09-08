@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="071. form 서버전송 (js 를 이용한 form 검증 및 submit)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="071._form_서버전송_(js_를_이용한_form_검증_및_submit)"/>
+    </wb-module>
+</project-modules>
