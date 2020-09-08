@@ -2,8 +2,8 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form 검증2</title>
-    <!-- 여러개의 체크 박스의 경우, 그중에 몇개이상 체크해야 하는 경우라면? -->
     <style>
       table,
       th,
@@ -17,6 +17,7 @@
       }
     </style>
   </head>
+  <!-- 여러개의 체크 박스의 경우, 그중에 몇개이상 체크해야 하는 경우라면? -->
   <body>
     <form name="frm" action="https://www.w3schools.com/action_page.php">
       <table>
@@ -47,7 +48,6 @@
         </tr>
       </table>
       <br />
-
       <!--  TODO : onclick -->
       <button type="button" onclick="handleSubmit();">삭제하기</button>
       <br />
@@ -55,23 +55,23 @@
 
     <script>
       // TODO:
+
+      const form = document.forms.frm;
+
       const handleSubmit = () => {
-        const form = document.forms.frm;
         let count = 0;
         form.id.forEach((index) => {
           if (index.checked) count++;
         });
-
         if (count === 0) {
-          alert('삭제 할 항목이 없습니다.');
-          return;
+          alert('한개 이상 체크가 되어야 합니다.');
         } else {
           if (confirm('정말 삭제 하시겠습니까?')) form.submit();
           else {
             form.id.forEach((index) => {
               index.checked = false;
             });
-            alert('삭제 되지 않음.');
+            alert('삭제가 취소 되었습니다.');
           }
         }
       };
