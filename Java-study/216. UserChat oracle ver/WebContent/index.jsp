@@ -21,6 +21,9 @@
 
 <!-- 부트스트랩 동작을 위한 js -->
 <script src="./bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+<!-- 메시지함 box.js -->
+<script defer src="./js/box.js"></script>
 </head>
 <body>
 
@@ -48,6 +51,8 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메시지함 <span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 
 			<%
@@ -126,33 +131,25 @@ else
 		// join.jsp의 모달 창을 사용자에게 보여주는 역할을 합니다.
 		$('#messageModal').modal('show');
 	</script>
+
+	<%
+		if (userID != null) {
+	%>
+	<script type="text/javascript">
+		$(document).ready(() => {
+			setUserID('<%=userID%>');
+			getInfiniteUnread();
+		});
+	</script>
+	<%
+		}
+	%>
+
 	<%
 		session.removeAttribute("messageType");
 	session.removeAttribute("messageContent");
 	}
 	%>
-	<!-- // servlet session 값으로 확인하는 모달 -->
 
-	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
-	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="vertical-alignment-helper">
-			<div class="modal-dialog vertical-align-center">
-				<div id="checkType" class="modal-content panel-info">
-					<div class="modal-header panel-heading">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title">확인 메시지</h4>
-					</div>
-					<div id="checkMessage" class="modal-body"></div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- // check Modal(비밀번호 일치, 아이디 중복여부) -->
 </body>
 </html>

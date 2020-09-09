@@ -281,4 +281,148 @@ public class ChatDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
+
+	// 메시지함에 출력될 데이터 반환 함수
+	public ArrayList<ChatDTO> getBox(String userID) {
+		ArrayList<ChatDTO> chatList = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ? GROUP BY fromID, toID)";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			chatList = new ArrayList<ChatDTO>();
+			while (rs.next()) {
+				ChatDTO chat = new ChatDTO();
+
+				chat.setChatID(rs.getInt("chatID"));
+				chat.setFromID(crossSiteScriptingDefence(rs.getString("fromID")));
+				chat.setToID(crossSiteScriptingDefence(rs.getString("toID")));
+				chat.setChatContent(crossSiteScriptingDefence(rs.getString("chatContent")));
+
+				String time = rs.getString("time");
+
+				int integerTime = Integer.parseInt(conversionDate(time, 11, 13));
+
+				String timeType = "오전";
+				if (integerTime > 12) {
+					timeType = "오후";
+					integerTime -= 12;
+				}
+
+				chat.setTime(conversionDate(time, 0, 10) + " " + timeType + " " + integerTime
+						+ conversionDate(time, 13, 16));
+
+				System.out.println(chat);
+				chatList.add(chat);
+			}
+
+			// 겹치는 데이터 파기
+			for (int i = 0; i < chatList.size(); i++) {
+
+				ChatDTO temp = chatList.get(i);
+
+				for (int j = 0; j < chatList.size(); j++) {
+
+					ChatDTO temp2 = chatList.get(j);
+
+					if (temp.getFromID().equals(temp2.getToID()) && temp.getToID().equals(temp2.getFromID())) {
+						if (temp.getChatID() < temp2.getChatID()) {
+							chatList.remove(temp);
+							i--;
+							break;
+						} else {
+							chatList.remove(temp2);
+							j--;
+						}
+
+					}
+
+				}
+
+			}
+
+			return chatList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return chatList; // 데이터베이스 오류
+	}
+
+	// 메시지함에 출력될 데이터 반환 함수 (MyCreate 내가 생성 쿼리문)
+	public ArrayList<ChatDTO> getBox2(String userID) {
+		ArrayList<ChatDTO> chatList = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ?)";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			chatList = new ArrayList<ChatDTO>();
+			while (rs.next()) {
+				ChatDTO chat = new ChatDTO();
+
+				chat.setChatID(rs.getInt("chatID"));
+				chat.setFromID(crossSiteScriptingDefence(rs.getString("fromID")));
+				chat.setToID(crossSiteScriptingDefence(rs.getString("toID")));
+				chat.setChatContent(crossSiteScriptingDefence(rs.getString("chatContent")));
+
+				String time = rs.getString("time");
+
+				int integerTime = Integer.parseInt(conversionDate(time, 11, 13));
+
+				String timeType = "오전";
+				if (integerTime > 12) {
+					timeType = "오후";
+					integerTime -= 12;
+				}
+
+				chat.setTime(conversionDate(time, 0, 10) + " " + timeType + " " + integerTime
+						+ conversionDate(time, 13, 16));
+
+				System.out.println(chat);
+				chatList.add(chat);
+			}
+
+			return chatList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return chatList; // 데이터베이스 오류
+	}
+
 }
