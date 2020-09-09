@@ -1,0 +1,23 @@
+# Javascript Object prototype
+
+![1](./images/prototype1.png)
+![2](./images/prototype2.png)
+![3](./images/prototype3.png)
+![4](./images/prototype4.png)
+![5](./images/prototype5.png)
+![6](./images/prototype6.png)
+![7](./images/prototype7.png)
+![8](./images/prototype8.png)
+![9](./images/prototype9.png)
+![10](./images/prototype10.png)
+![11](./images/prototype11.png)
+![12](./images/prototype12.png)
+![13](./images/prototype13.png)
+![14](./images/prototype14.png)
+![15](./images/prototype15.png)
+![16](./images/prototype16.png)
+![17](./images/prototype17.png)
+![18](./images/prototype18.png)
+![19](./images/prototype19.png)
+
+> [참조](https://medium.com/@bluesh55/javascript-prototype-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-f8e67c286b67)

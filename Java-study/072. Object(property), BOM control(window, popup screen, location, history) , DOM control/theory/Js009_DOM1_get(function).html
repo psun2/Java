@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM:get함수들</title>
+  </head>
+  <!-- 
+■ DOM (Document Object Model)
+HTML 페이지가 로드 되면 
+브라우저는 이 HTML 페이지를 다루기위한
+DOM 을 생성합니다.
+■ DOM 은 'W3C 표준' 입니다.
+- 이는 모든 언어에 오픈된 규약입니다.
+	즉, JavaScript 외에 다른 언어로도
+	DOM 표준을 따르는 HTML문서를 다룰수 있다.
+	
+- 'W3C DOM 표준'은  크게 3파트로 구성
+	1. Core DOM
+	2. XML DOM
+	3. HTML DOM
+■ HTML DOM 표준의 목적은! 
+HTML element를 다루기 위한
+표준방법을 제시하는 겁니다.
+■ JavaScript 는 DOM 구조의 HTML페이지를
+다루기 위한 언어입니다.
+- JS는 DOM 안의 모든 element를 변경할수 있다.
+- JS는 DOM 안의 모든 attribute를 변경할수 있다.
+- JS는 DOM 안의 모든 CSS 를 변경할수 있다.
+- JS는 DOM 안의  element 나 attribute를 삭제할수 있다.
+- JS는 DOM 안에  element 나 attribute를 추가할수 있다
+- JS는 DOM 안의 event를 다룰수 있다.
+- JS는 DOM 안에 event를 추가할수 있다.    
+■ JavaScript 는 
+	window.document 객체를 통해 DOM 구조 다룹니다
+ -->
+  <body>
+    <!-- getElementById(아이디)  :  해당 '아이디' 값을 가진 element 한개 리턴 (여러개 있으면 첫번째만 리턴) -->
+    <h2>getElementById(아이디)</h2>
+    <p id="demo1">첫번째 demo 입니다 (아이디가 중복되는...)</p>
+    <p id="demo1">두번째 demo 입니다 (아이디가 중복되는...)</p>
+    <p id="demo3">세번째 demo 입니다</p>
+
+    <script>
+      //TODO:
+      // id 값이 중복되는 경우 첫번째 element 만 가져온다.
+      document.write(
+        '결과: ' +
+          document.getElementById('demo1').innerHTML +
+          ' <span style="color:red;"><b><u>(아이디가 겹치면 첫번째 요소가 선택됩니다.)</u></b></span>',
+      );
+      document.getElementById('demo3').innerHTML =
+        'demo3 의 id 값을 가진 element의 text node가 변경됩니다.';
+    </script>
+
+    <hr />
+
+    <!-- getElementsByTagName(태그) : '태그' 의 'element들' 을 배열로 리턴 -->
+    <h2>getElementsByTagName(태그)</h2>
+    <div>div 입니다</div>
+    <div>div 입니다</div>
+    <div>div 입니다</div>
+    <script>
+      // TODO:
+      // div element들을 찾아서 차례대로 "div1 입니다" "div2 입니다"..  로 내용 바꾸기
+      let elements = document.getElementsByTagName('div');
+
+      const length = elements.length;
+      for (let i = 0; i < length; i++) {
+        let element = elements[i];
+        element.innerHTML = `div [${i}] 입니다.`;
+      }
+    </script>
+
+    <hr />
+
+    <!-- getElementsByClassName(클래스) : '클래스' 의 'element들' 을 배열로 리턴 -->
+    <h2>getElementsByClassName(클래스)</h2>
+    <div class="c1 c2 c3">c1 c2 c3</div>
+    <div class="c3">c3</div>
+    <div class="c2 c3 c4">c2 c3 c4</div>
+    <div class="c4 c5 c6">c4 c5 c6</div>
+    <script>
+      // c3 class 를 갖고 있는 element 의
+      // 배경색을 노랑색으로 바꾸세요
+      // getElementsByClassName("c3")
+      // element.style.background
+      elements = document.getElementsByClassName('c3');
+      // Object 형태 반환
+
+      // FIXME: 배열 형태가 아닙니다.
+      // for in 사용 불가
+      // for (i in elements) {
+      //   let element = elements[i];
+      // }
+
+      for (value of elements) {
+        value.style.backgroundColor = 'yellow';
+      }
+
+      // for (let i = 0; i < length; i++) {
+      //   let element = elements[i];
+      //   element.style.backgroundColor = 'yellow';
+      // }
+    </script>
+
+    <hr />
+
+    <!-- getElementsByName(name) : 'name' 의 'form element들' 을 배열로 리턴 -->
+    <h2>getElementsByName(name)</h2>
+    <form>
+      name1: <input type="text" value="name1" name="name1" /><br />
+      name1: <input type="text" value="name1" name="name1" /><br />
+      name2: <input type="text" value="name2" name="name2" /><br />
+    </form>
+    <script>
+      // TODO:
+      // name=name1 인 element들을 찾아서
+      // 배경색을 노란색으로 하고 입력사이즈를 50으로 변경해보기
+
+      elements = document.getElementsByName('name1');
+      for (value of elements) {
+        value.style.backgroundColor = 'yellow';
+        // value.size = 50;
+        value.setAttribute('size', 50);
+      }
+    </script>
+
+    <hr />
+
+    <!-- querySelectorAll(selector) : 'CSS selector' 의 'element들' 을 배열로 리턴 -->
+    <h2>querySelectorAll(selector)</h2>
+    <p class="intro">class intro</p>
+    <p class="intro">class intro</p>
+    <p class="retro">class retro</p>
+    <script>
+      // TODO:
+      // p.intro selector 에 해당하는 element 들을 찾아서 배경색 하늘색으로
+      elements = document.querySelectorAll('p.intro');
+      for (value of elements) {
+        value.style.backgroundColor = 'skyblue';
+      }
+    </script>
+
+    <!-- 
+HTML DOM 구조에서 object collection 사용 가능
+document.anchors
+document.body
+document.documentElement
+document.embeds
+document.forms
+document.head
+document.images
+document.links
+document.scripts
+document.title
+ -->
+
+    <hr />
+
+    <!-- document.forms : document 의 모든 <form> element 들 -->
+    <h2>document.forms</h2>
+    <form name="frm1">
+      <input value="폼 1_1" name="input1_1" />
+      <input value="폼 1_2" name="input1_2" />
+    </form>
+    <form name="frm2">
+      <input value="폼 2_1" name="input2_1" />
+      <input value="폼 2_2" name="input2_2" />
+      <input value="폼 2_3" name="input2_3" />
+    </form>
+    <form name="frm3">
+      <input value="폼 3_1" name="input3_1" />
+      <input value="폼 3_2" name="input3_2" />
+      <input value="폼 3_3" name="input3_3" />
+      <input value="폼 3_4" name="input3_4" />
+    </form>
+    <p id="frm_result1"></p>
+    <p id="frm_result2"></p>
+
+    <script>
+      // TODO:
+      // form 들을 다 뒤져서 form element 들의 value 들을
+      let forms = document.forms['frm1'];
+      forms = document.forms.frm1;
+
+      // form.length 는 그 form 안의 form element들 개수
+      // form.elements[i] . 그 안의 각 element 들
+      // 아래와 같이 두 방법 모두 잘 작동 합니다.
+      let result = '';
+      //   for (var i = 0; i < frm1.length; i++) {
+      //     console.log(frm1.elements[i].name);
+      //     result += frm1.elements[i].value + '';
+      //   }
+      // 🔼🔽🔼🔽🔼🔽🔼🔽🔼🔽🔼🔽🔼🔽🔼🔽🔼🔽
+      // for (var i = 0; i < frm1.length; i++) {
+      //   console.log(frm1[i].name);
+      //   console.log(frm1[i].value);
+      //   result += frm1[i].value + ', ';
+      // }
+
+      for (value of forms) {
+        result += value.value + ' ';
+      }
+
+      document.getElementById('frm_result1').innerHTML = result;
+
+      document.getElementById('frm_result2').innerHTML =
+        document.forms['frm2']['input2_2'].value;
+    </script>
+
+    <hr />
+
+    <!-- document.images : document 의 모든 <img> element 들 -->
+    <h2>document.images</h2>
+    <img src="https://www.w3schools.com/js/pic_htmltree.gif" />
+    <img src="https://www.w3schools.com/js/pic_navigate.gif" />
+    <p id="demo4"></p>
+    <script>
+      // TODO:
+      //모든 이미지들의 테두리를 4px solid blue 로 만들기
+      const images = document.images;
+      for (value of images) {
+        value.style.border = '4px solid blue';
+      }
+
+      document.getElementById('demo4').innerHTML =
+        images.length + '개의 이미지';
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>
