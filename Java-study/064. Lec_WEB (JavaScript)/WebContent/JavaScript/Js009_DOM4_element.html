@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>DOM - Node</title>
-<style>
-div { padding: 3px; }
-p { background-color: cyan;}
-table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px;
-}
-td{
-	background-color: orange;
-}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM - Node (append, remove)</title>
+    <style>
+      div {
+        padding: 3px;
+      }
+      p {
+        background-color: cyan;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+      }
+      td {
+        background-color: orange;
+      }
 
-span, input{
-	display:inline-block; 
-	width:200px;
-}
-
-</style>
-</head>
-<!-- 
-
+      span,
+      input {
+        display: inline-block;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <!-- 
 	node 를 생성할수 있다.!
 	생성된 노드를 원하는 node 에 붙일수 있다.!
 	
@@ -37,8 +43,8 @@ span, input{
 	E.removeChild(A) :
 		E 의 child 중에 A 를 제거한다.
  -->
- 
- <!-- 
+
+  <!-- 
  	attribute 를 세팅할수도 있다
  	E.setAttribute("attribute 이름", "attribute 값");
  	
@@ -51,93 +57,123 @@ span, input{
  	attribute 를 갖고 있는지 여부, true/false 리턴
  	E.hasAttribute("attribute 이름");   
   -->
+  <body>
+    <h1>DOM - Node (append, remove)</h1>
 
-<body>
+    <div id="div1" style="background-color: yellow">
+      div1입니다
+      <p id="p1">p1 입니다</p>
+      <p id="p2">p2 입니다</p>
+    </div>
+    <script>
+      let para;
+      let node;
+      let parent, child;
+      let element = document.getElementById('div1');
 
-<div id="div1" style="background-color: yellow">
-	div1입니다
-	<p id="p1">p1 입니다</p>
-	<p id="p2">p2 입니다</p>
-</div>
+      // 단계별로 확인해보자
 
-<script>
-var para;
-var node;
-var parent, child;
-var element = document.getElementById("div1");
+      // appendChild()
+      // TODO:
+      para = document.createElement('p'); // <p> element node 생성
+      para.setAttribute('id', 'p3'); // attribute 추가
+      node = document.createTextNode('appendChild() 로 추가');
+      para.appendChild(node);
+      element.appendChild(para);
 
-// 단계별로 확인해보자
+      // prepend()
+      // TODO:
+      para = document.createElement('p'); // <p> element node 생성
+      node = document.createTextNode('prepend() 로 추가');
+      para.appendChild(node);
+      document.getElementById('p3').prepend(para);
 
-// appendChild()
-// TODO
+      // insertBefore()
+      // TODO:
+      para = document.createElement('p'); // <p> element node 생성
+      node = document.createTextNode('insertBefore() 로 추가');
+      para.appendChild(node);
+      child = document.getElementById('p1');
+      element.insertBefore(para, child);
 
-// insertBefore()
-// TODO
+      // removeChild()
+      // TODO:
+      parent = document.getElementById('div1');
+      child = document.getElementById('p2');
+      parent.removeChild(child);
+    </script>
 
-// removeChild()
-// TODO
+    <div>
+      <table id="table1">
+        <tr>
+          <th>이름</th>
+          <th>아이디</th>
+        </tr>
+        <tr>
+          <td>
+            <!-- this 는 그 element다 -->
+            <span onclick="doChange(this);"> 홍길동 </span>
+          </td>
+          <td>
+            <span onclick="doChange(this);"> Mr.Hong </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      // TODO:
+      // style 를 삽입하는 3가지 방법 property attribute
+      // document.getElementById('table1').style.border = '4px dashed red';
+      // document.getElementById('table1').style.setProperty('border', '4px dashed red');
+      document
+        .getElementById('table1')
+        .setAttribute('style', 'border:4px dashed red');
 
-</script>
+      const doEnter = (element) => {
+        if (window.event.keyCode === 13) doChange(element);
+      };
 
+      const doChange = (element) => {
+        console.log(element.nodeName);
+        const nodeName = element.nodeName.toLowerCase();
+        const parentElement = element.parentElement;
+        const parentNode = element.parentNode;
 
-<div>
-<table id="table1">
-<tr>
-	<th>이름</th>
-	<th>아이디</th>
-</tr>
-<tr>
-	<td><!-- this 는 그 element다 -->
-	<span onclick="TODO">
-	홍길동
-	</span>
-	</td>
-	<td>
-	<span onclick="TODO">
-	Mr.Hong
-	</span>
-	</td>
-</tr>
-</table>
-</div>
+        if (nodeName === 'span') {
+          const text = element.innerText.trim();
+          parentElement.removeChild(element);
+          const input = document.createElement('input');
+          input.setAttribute('value', text);
 
-<script>
+          input.addEventListener('focusout', () => {
+            // input === this
+            // arrow function 은 binding이 되지 않습니다.
+            // 그러므로 this 사용 불가
+            doChange(input);
+          });
 
-// TODO
+          input.addEventListener('keyup', function () {
+            console.log(this);
+            doEnter(this);
+          });
 
-</script>
+          parentElement.appendChild(input);
+          input.focus();
+        } else if (nodeName === 'input') {
+          const text = element.value;
+          parentElement.removeChild(element);
+          const span = document.createElement('span');
+          var textNode = document.createTextNode(text);
+          span.appendChild(textNode);
 
-<script>
+          span.addEventListener('click', () => {
+            doChange(span);
+          });
 
-// TODO
-
-</script>
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+          parentElement.appendChild(span);
+        }
+      };
+    </script>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>DOM Animation</title>
-<style>
-#container {
-  width: 400px;
-  height: 400px;
-  position: relative;
-  background: yellow;
-}
-#animate {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  background-color: red;
-}
-</style>
-</head>
-<!-- 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Animation</title>
+    <style>
+      #container {
+        width: 400px;
+        height: 400px;
+        position: relative;
+        background: yellow;
+      }
+      #animate {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <!-- 
 window 객체에 다음의 함수들이 있다.
-
 setInterval(함수, 시간간격) 
 	: '시간간격' 으로 함수 수행 , ms 단위
 	: 리턴값은 '애니메이션id' 객체 리턴
@@ -28,56 +28,67 @@ setInterval(함수, 시간간격)
 clearInterval('애니메이션id')
 	: ''애니메이션id' 의 애니메이션 종료
  -->
-<body>
-<button onclick="clock();">시간</button>
-<br><br>
-<p id="timeboard"></p>
-<script>
-var clockAnimId = undefined;
-function clock(){
+  <body>
+    <h1>DOM Animation</h1>
 
-	// TODO
+    <button onclick="clock();">시간</button>
+    <br /><br />
+    <p id="timeboard"></p>
+    <script>
+      let clockAnimId = undefined;
+      function clock() {
+        // TODO:
 
-}
+        if (!clockAnimId) {
+          // 애니메이션 시작
+          clockAnimId = setInterval(tick, 1000); // 1000ms 마다 tick() 호출
+        } else {
+          // 애니메이션 종료
+          clearInterval(clockAnimId);
+          clockAnimId = undefined;
+        }
+      }
 
-// TODO
+      // TODO:
+      function tick() {
+        const date = new Date();
+        document.getElementById(
+          'timeboard',
+        ).innerHTML = `${date.getFullYear()}/${
+          date.getMonth() + 1
+        }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        // getMonth() : 0 ~ 11 까지 출력 됩니다.
+      }
+    </script>
 
-</script>
+    <hr />
 
-<hr>
+    <button onclick="myMove()">Click Me</button>
+    <br /><br />
 
-<button onclick="myMove()">Click Me</button>
-<br><br>
+    <div id="container">
+      <div id="animate"></div>
+    </div>
 
-<div id ="container">
-<div id ="animate"></div>
-</div>
+    <script>
+      function myMove() {
+        // TODO:
+        const element = document.getElementById('animate');
+        let pos = 0;
 
-<script>
-function myMove() {
+        const id = setInterval(frame, 20);
 
-	// TODO
+        function frame() {
+          if (pos === 350) clearInterval(id);
 
-}
-</script>
+          pos++;
+          console.log(pos + 'px');
+          element.style.top = pos + 'px';
+          element.style.left = pos + 'px';
+        }
+      }
+    </script>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

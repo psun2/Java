@@ -1,86 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>DOM bubble/capture</title>
-</head>
-<style>
-ul, li {padding: 5px;margin: 3px;}
-ul{background-color: pink;}
-li{background-color: cyan;}
-</style>
-<!-- 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM eventListener</title>
+    <style>
+      ul,
+      li {
+        padding: 5px;
+        margin: 3px;
+      }
+      ul {
+        background-color: pink;
+      }
+      li {
+        background-color: cyan;
+      }
+    </style>
+  </head>
+  <!-- 
 element.addEventListener("이벤트", 함수, useCapture)
-
 https://javascript.info/bubbling-and-capturing
-
-
 window.event 객세 사용
 	event.stopPropagation();
-
-
 -->
-<body>
-<ul>
-  <li onclick="/*TODO*/">Coffee</li>
-  <li onclick="/*TODO*/">Tea
+  <body>
+    <h1>DOM eventListener</h1>
+
     <ul>
-      <li onclick="/*TODO*/">Black tea</li>
-      <li onclick="/*TODO*/">Green tea</li>
+      <li onclick="show(this);">Coffee</li>
+      <li onclick="show(this);">
+        Tea
+        <ul>
+          <li onclick="event.stopPropagation(); show(this);">Black tea</li>
+          <li onclick="show(this);">Green tea</li>
+        </ul>
+      </li>
+      <li>Milk</li>
     </ul>
-  </li>
-  <li>Milk</li>
-</ul>
+    <p id="result1"></p>
+    <script>
+      // TODO:
+      // text만 보이기 (innerHTML 과는 다르다)
+      function show(ele) {
+        // Green tea 의 경우 stopPropagation() 함수가 없어 부모의 이벤트가 마지막으로 수행됩니다.
+        // 그러므로 두번의 show 함수가 실행됩니다.
 
-<script>
+        console.log(ele);
 
-// TODO
+        document.getElementById(
+          'result1',
+        ).innerHTML += `${ele.childNodes[0].nodeValue}`;
 
-</script>
+        alert(ele.childNodes[0].nodeValue);
+      }
+    </script>
 
-<br>
-<ul id="ad">
-  <li>커피</li>
-  <li>차
-    <ul>
-      <li>홍차</li>
-      <li>녹차</li>
+    <br />
+
+    <ul id="ad">
+      <li>커피</li>
+      <li>
+        차
+        <ul>
+          <li>홍차</li>
+          <li>녹차</li>
+        </ul>
+      </li>
+      <li>우유</li>
     </ul>
-  </li>
-  <li>우유</li>
-</ul>
+    <script>
+      // TODO:
+      const li = document.querySelectorAll('ul#ad li');
+      // alert(li.length); // 5
 
-<script>
+      Array.from(li).map((index) => {
+        // FIXME: bubbling
+        // 자식의 이벤트를 먼저 동작하고 부모의 이벤트를 동작하는 것을 버블링이라 합니다.
+        // index.addEventListener('click', function () {
+        //   show(this);
+        // });
 
-// TODO
-
-</script>
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+        // FIXME: capture
+        // 버블링 과는 다르게 부모의 이벤트부터 시작하여 자식의 이벤트로 끝나는 것을
+        // 캡쳐라고 합니다.
+        index.addEventListener(
+          'click',
+          function () {
+            // event.stopPropagation();
+            show(this);
+          },
+          true,
+        );
+      });
+    </script>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

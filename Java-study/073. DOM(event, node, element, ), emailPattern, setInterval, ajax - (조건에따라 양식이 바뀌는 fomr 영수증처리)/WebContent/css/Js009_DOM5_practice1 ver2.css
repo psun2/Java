@@ -1,0 +1,175 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+:root {
+  --width: 70%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Hanna' -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.content__table {
+  border: 1px solid #ececec;
+}
+
+.content__table .table__head {
+  border-bottom: 1px solid #ececec;
+}
+
+.main .main__section .main__form .content__title {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.main .main__section .main__form .content__table .table__head {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.main .main__section .main__form .content__table {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content
+  .table__wrapper {
+  display: none;
+}
+
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content.active
+  .table__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content
+  .table__wrapper
+  .table__label {
+  min-width: 10%;
+  text-align: left;
+  padding: 10px 0;
+}
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content
+  .table__wrapper
+  .table__data {
+  text-align: left;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content
+  .table__wrapper
+  .table__data
+  input {
+  width: 50%;
+}
+
+.main
+  .main__section
+  .main__form
+  .content__table
+  .table__content:last-child
+  .table__wrapper
+  .table__data
+  input {
+  width: 100%;
+}
+
+.submitBtn {
+  text-align: center;
+}
+
+.submitBtn #submitBtn {
+  font-size: 20px;
+  padding: 5px 10px;
+  outline: none;
+  border: none;
+  background-color: #408aec;
+  color: #fcfcfc;
+}
+
+.submitBtn #submitBtn:active {
+  transform: scale(0.9);
+}
+
+.submitBtn #submitBtn:hover {
+  background-color: #3175ce;
+}
+
+.main__footer {
+  margin-top: 50px;
+}
+
+.alert {
+  display: none;
+}
+
+@media screen and (max-width: 1080px) {
+  .body {
+    background-color: #282828;
+  }
+  .formTable__form {
+    display: none;
+  }
+
+  .alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .alert .alert__background {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  .alert .alert__content {
+    background-color: #fcfcfc;
+    padding: 50px 100px;
+    text-align: center;
+    position: relative;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+}

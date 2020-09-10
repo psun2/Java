@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Node</title>
+  </head>
+  <!-- 
+DOM 에서 node 
+node type (종류) 와    nodeType 값
+	Element node		1       <h1 class="heading">W3Schools</h1>
+	Attribute node		2        class = "heading" (deprecated)
+	Text node			3        W3Schools
+	Comment node		8        
+	Document node		9        HTML 문서 자신, <html> 의 부모
+	DOCUMENT_TYPE_NODE	10       <!Doctype html>
+	
+	** 명심! Element node 가 text 를 갖고 있는 것이 아니다!!! 
+JS 로 DOM 의 node 간 navigate 할수 있다.
+- parentNode
+- childNodes[nodenumber]
+- firstChild
+- lastChild
+- nextSibling
+- previousSibling
+- attributes
+ -->
+  <body>
+    <h1>DOM Node</h1>
+
+    <h2>childNodes, nodeValue</h2>
+    <!-- childNodes 와 nodeValue -->
+    <h3 id="id01">My First Page</h3>
+    <p id="id02"></p>
+    text 노드 다!!!
+    <script>
+      // TODO:
+      // 아래와 같이 'Text node 의 값' 에 접근합니다.(3 가지)
+      document.getElementById('id02').innerHTML =
+        // 1
+        // document.getElementById('id01').innerHTML;
+
+        // 2
+        // document.getElementById('id01').firstChild.nodeValue;
+
+        // 3
+        document.getElementById('id01').childNodes[0].nodeValue;
+
+      console.log(document.getElementById('id01').innerHTML);
+      console.log(document.getElementById('id01').firstChild.nodeValue);
+      console.log(document.getElementById('id01').childNodes[0].nodeValue);
+
+      // nodeValue 는
+      // - Element node 의 nodeValue 는 undefined
+      // - Text node 의 nodeValue 는 text값
+      // - Attribute node 의 noveValue 는 attribute value
+    </script>
+
+    <br />
+    <hr />
+
+    <h2>document.body</h2>
+    <p onclick="alert(document.body.innerHTML);">클랙하면 body 의 컨텐츠가!</p>
+
+    <br />
+    <hr />
+
+    <h2>document.documentElement</h2>
+    <p onclick="alert(document.documentElement.innerHTML);">
+      클릭하면 document 의 컨텐츠가!
+    </p>
+
+    <br />
+    <hr />
+
+    <h2>nodeType</h2>
+    <p id="id03"></p>
+    <script>
+      // TODO:
+      document.getElementById('id03').innerHTML = document.getElementById(
+        'id01',
+      ).nodeType;
+    </script>
+
+    <!-- TODO: document.body 노드 밑의 
+	모든 child 노드의 nodeName, nodeType, nodeValue 을 출력해보세요
+	
+	hint) document.body.childNodes 사용
+ -->
+
+    <br />
+    <hr />
+
+    <h2>childNodes, nodeName, nodeType, nodeValue</h2>
+    <!-- body elment node 의 child 들의 nodeName, nodeType, nodeValue  -->
+    <p id="id04"></p>
+    <script>
+      // TODO:
+      // body 안에 있는 모든 자식 node 들의 name type value 를 출력하시오.
+      const childNode = document.body.childNodes; // 열거형 오브젝트로 반환
+      const childArr = Array.from(childNode);
+      childArr.forEach((index) => {
+        document.getElementById(
+          'id04',
+        ).innerHTML += `nodeName: ${index.nodeName} | nodeType: ${index.nodeType} | nodeValue: ${index.nodeValue} <br />`;
+      });
+      // textNode 의 value 가 없는 것은 enter 도 하나의 문자와 같습니다. 그러므로 엔터도 문자 로 취급합니다.
+    </script>
+
+    <br />
+    <hr />
+
+    <h2>attributes</h2>
+    <!-- 특정element.attributes : attribute node 만 추출한다 -->
+    <img
+      id="img01"
+      src="https://www.w3schools.com/html/img_girl.jpg"
+      alt="girl"
+      width="150"
+      height="200"
+    />
+    <p id="id05"></p>
+
+    <script>
+      // TODO:
+      // 특정 element의 attributeNode 출력하시오.
+      const attributeNodes = document.getElementById('img01').attributes;
+      const attributeArr = Array.from(attributeNodes);
+      attributeArr.forEach((index) => {
+        document.getElementById(
+          'id05',
+        ).innerHTML += `nodeName: ${index.nodeName} | nodeType: ${index.nodeType} | nodeValue: ${index.nodeValue} <br/ >`;
+      });
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

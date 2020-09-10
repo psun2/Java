@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/Js009_DOM5_practice1 ver2.css" />
+    <script defer src="./JS/Js009_DOM5_practice1 ver2.js"></script>
+    <title>영수증 확인 폼</title>
+  </head>
+  <body>
+    <main class="main">
+      <section class="main__section">
+        <form
+          name="form"
+          id="form"
+          class="main__form"
+          action="https://www.w3schools.com/action_page.php"
+        >
+          <div class="content__title">
+            <span
+              >영수증 확인을 위해 아래의 정보를 정확히 입력해 주시기
+              바랍니다.</span
+            >
+          </div>
+          <div class="content__table">
+            <div class="table__head">
+              <div class="table__title">
+                <input type="radio" name="check" checked />구매자명 + 금액
+              </div>
+              <div class="table__title">
+                <input type="radio" name="check" />이메일
+              </div>
+              <div class="table__title">
+                <input type="radio" name="check" />카드 번호
+              </div>
+            </div>
+            <div class="table__content active">
+              <div class="table__wrapper">
+                <div class="table__label">구매자명</div>
+                <div class="table__data">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="구매자명을 입력하세요."
+                  />
+                </div>
+              </div>
+              <div class="table__wrapper">
+                <div class="table__label">결제금액</div>
+                <div class="table__data">
+                  <input
+                    type="number"
+                    name="pay"
+                    placeholder="결제금액을 입력하세요."
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="table__content">
+              <div class="table__wrapper">
+                <div class="table__label">이메일</div>
+                <div class="table__data">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="이메일을 입력하세요."
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="table__content">
+              <div class="table__wrapper">
+                <div class="table__label">카드번호</div>
+                <div class="table__data">
+                  <input
+                    type="number"
+                    name="card"
+                    placeholder="카드번호를 입력하세요."
+                  />
+                </div>
+                <div><span> - </span></div>
+                <div class="table__data">
+                  <input
+                    type="number"
+                    name="card"
+                    placeholder="카드번호를 입력하세요."
+                  />
+                </div>
+                <div><span> - </span></div>
+                <div class="table__data">
+                  <input
+                    type="number"
+                    name="card"
+                    placeholder="카드번호를 입력하세요."
+                  />
+                </div>
+                <div><span> - </span></div>
+                <div class="table__data">
+                  <input
+                    type="number"
+                    name="card"
+                    placeholder="카드번호를 입력하세요."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="submitBtn">
+            <button type="submit" id="submitBtn">입력</button>
+          </div>
+        </form>
+      </section>
+      <section class="main__footer">
+        <div class="footer__title">[참고사항]</div>
+        <div class="footer__content">
+          구매자명과 금액은 결제결과 안내 메일에 기재된 내역 기준으로 입력하시기
+          바랍니다.
+        </div>
+      </section>
+    </main>
+    <div class="alert">
+      <div class="alert__background"></div>
+      <div class="alert__content">
+        브라우저의 가로넓이를 최소 1080px 이상 키워주시기 바랍니다.💨
+      </div>
+    </div>
+  </body>
+</html>
