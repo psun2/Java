@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery Selector</title>
+    <style>
+      div {
+        background: yellow;
+        border: 1px solid #aaa;
+        width: 80px;
+        height: 80px;
+        margin: 0 5px;
+        float: left;
+      }
+      div.colored {
+        background: green;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      // TODO
+    </script>
+  </head>
+  <body>
+    <h1>jQuery Selector</h1>
+
+    <button id="run">Run</button>
+
+    <div></div>
+    <div id="mover"></div>
+    <div></div>
+
+    <script>
+      // TODO:
+      function animateIt() {
+        // $('#mover').slideToggle(시간, 애니메이션이 끝나고 수행할 함수);
+        // $('#mover').slideToggle(4000);
+        $('#mover').slideToggle('slow', animateIt); // 재귀 호출이 아닙니다.
+        // 무한루프도 아닙니다.
+        // 함수가 끝나고 수행할 함수가 메모리 어딘가에 등록이 되어있는 것 입니다.
+      }
+      animateIt();
+
+      $('#run').click(function () {
+        $('div:animated').toggleClass('colored');
+      });
+
+      //개발자 도구에서 element 탭에서의 변화등을 확인해 볼 수 있습니다.
+    </script>
+  </body>
+</html>

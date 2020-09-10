@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="074. ajax-XMLHttpRequest(XML, JSON), jQuery(Event, chaning) - (서울시 공공데이터 api 를 활용한 XML데이터와 JSON 데이터 다루기)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="074. ajax-XMLHttpRequest(XML, JSON), jQuery(Event, chaning) - (서울시 공공데이터 api 를 활용한 XML데이터와 JSON 데이터 다루기)"/>
+    </wb-module>
+</project-modules>
