@@ -39,7 +39,13 @@ public class ChatListServlet extends HttpServlet {
 				response.getWriter().write(getTen(fromID, toID));
 
 			else
-				response.getWriter().write(getID(fromID, toID, listType));
+				try {
+					
+					response.getWriter().write(getID(fromID, toID, listType));
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.getWriter().write("");
+				}
 
 		}
 

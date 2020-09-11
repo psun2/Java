@@ -25,6 +25,9 @@
 
 <!-- submit 관련 script -->
 <script defer src="./js/chat.js"></script>
+
+<!-- 메시지함 box.js -->
+<script defer src="./js/box.js"></script>
 </head>
 <body>
 
@@ -72,6 +75,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메시지함 <span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 			<%
 				// 로그인이 된상태에서만 접근이 가능한데 굳이 if문이 필요 할 까 ?
@@ -217,7 +222,7 @@ else
 		start();
 	</script>
 	<!-- // servlet session 값으로 확인하는 모달 -->
-	
+
 	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
 		aria-hidden="true">
@@ -239,5 +244,18 @@ else
 		</div>
 	</div>
 	<!-- // check Modal(비밀번호 일치, 아이디 중복여부) -->
+
+	<%
+		if (userID != null) {
+	%>
+	<script type="text/javascript">
+		$(document).ready(() => {
+			setUserID('<%=userID%>');
+			getInfiniteUnread();
+		});
+	</script>
+	<%
+		}
+	%>
 </body>
 </html>

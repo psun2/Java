@@ -113,7 +113,7 @@ const addChat = (chatName, chatContent, chatTime) => {
 const getInfiniteChat = () => {
 	setInterval(() => {
 		chatListFunction(lastID);
-	}, 1000);
+	}, 4000);
 }
 
 const init = (paramFromID, paramToID) => {
@@ -125,7 +125,10 @@ const init = (paramFromID, paramToID) => {
 	console.log('toID : ', toID);
 	
 	$(document).ready(() => {
-		chatListFunction('ten');
+// document.write('<script defer src="./js/box.js"><script>');
+		chatListFunction('0');
 		getInfiniteChat();
+		getInfiniteUnread();
+
 	});
 }

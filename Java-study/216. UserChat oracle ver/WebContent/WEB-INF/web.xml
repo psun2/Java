@@ -87,5 +87,16 @@
 		<servlet-name>ChatUnreadServlet</servlet-name>
 		<url-pattern>/chatUnread</url-pattern>
 	</servlet-mapping>
-	
+
+	<!-- 메시지함 view 구성을 위한 메시지 반환 서블릿 -->
+	<servlet>
+		<servlet-name>ChatBoxServlet</servlet-name>
+		<servlet-class>chat.ChatBoxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatBoxServlet</servlet-name>
+		<url-pattern>/chatBox</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>

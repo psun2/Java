@@ -127,6 +127,14 @@ else
 			</div>
 		</div>
 	</div>
+
+
+	<%
+		session.removeAttribute("messageType");
+	session.removeAttribute("messageContent");
+	}
+	%>
+
 	<script>
 		// join.jsp의 모달 창을 사용자에게 보여주는 역할을 합니다.
 		$('#messageModal').modal('show');
@@ -138,17 +146,12 @@ else
 	<script type="text/javascript">
 		$(document).ready(() => {
 			setUserID('<%=userID%>');
+			getUnread();
 			getInfiniteUnread();
 		});
 	</script>
 	<%
 		}
-	%>
-
-	<%
-		session.removeAttribute("messageType");
-	session.removeAttribute("messageContent");
-	}
 	%>
 
 </body>

@@ -288,12 +288,14 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ? GROUP BY fromID, toID)";
+		String sql = "SELECT chat.*, TO_CHAR(chatTimeStamp, 'YYYY/MM/DD HH24:MI:SS') AS time FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ? GROUP BY fromID, toID)";
 
 		try {
 
 			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userID);
+			psmt.setString(2, userID);
 			rs = psmt.executeQuery();
 
 			chatList = new ArrayList<ChatDTO>();
@@ -372,7 +374,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ?)";
+		String sql = "SELECT chat.*, TO_CHAR(chatTimeStamp, 'YYYY/MM/DD HH24:MI:SS') AS time FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = ? OR toID = ?)";
 
 		try {
 

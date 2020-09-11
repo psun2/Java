@@ -24,6 +24,9 @@
 
 <!-- 친구찾기 비동기 ajax -->
 <script type="text/javascript" defer src="./js/find.js"></script>
+
+<!-- 메시지함 box.js -->
+<script defer src="./js/box.js"></script>
 </head>
 <body>
 
@@ -59,6 +62,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li class="active"><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메시지함 <span id="unread"
+						class="label label-info"></span></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -145,13 +150,28 @@ else
 		// join.jsp의 모달 창을 사용자에게 보여주는 역할을 합니다.
 		$('#messageModal').modal('show');
 	</script>
+
 	<%
 		session.removeAttribute("messageType");
 	session.removeAttribute("messageContent");
 	}
 	%>
 	<!-- // servlet session 값으로 확인하는 모달 -->
-	
+
+	<%
+		if (userID != null) {
+	%>
+	<script type="text/javascript">
+		$(document).ready(() => {
+			setUserID('<%=userID%>');
+			getUnread();
+			getInfiniteUnread();
+		});
+	</script>
+	<%
+		}
+	%>
+
 	<!-- check Modal(비밀번호 일치, 아이디 중복여부) -->
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog"
 		aria-hidden="true">
