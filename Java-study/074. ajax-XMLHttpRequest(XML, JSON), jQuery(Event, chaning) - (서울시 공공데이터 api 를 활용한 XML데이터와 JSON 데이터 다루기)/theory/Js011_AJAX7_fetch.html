@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Js011_AJAX7_fetch</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <!--
+  ■자치구단위 서울 생활인구 일별 집계표
+  http://data.seoul.go.kr/dataList/datasetView.do?infId=OA-15379&srvType=S&serviceKind=1&currentPageNo=1
+  
+  http://openapi.seoul.go.kr:8088/(인증키)/(요청파일타입)/SPOP_DAILYSUM_JACHI/(요청시작INDEX)/(요청종료INDEX)/(기준일ID)/(시군구코드)
+  
+  샘플url
+  
+  XML 버젼
+  http://openapi.seoul.go.kr:8088/(인증키)/xml/SPOP_DAILYSUM_JACHI/1/5/
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/20190101
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/20190101/11000
+  
+  JSON 버젼
+  http://openapi.seoul.go.kr:8088/(인증키)/json/SPOP_DAILYSUM_JACHI/1/5/
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/20190101
+  예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/20190101/11000
+  
+  
+  ※ 한번에 1000개 까지의 데이터만 볼수 있슴
+  
+   -->
+  <body>
+    <h1>Js011_AJAX7_fetch</h1>
+
+    <h1>자치구단위 서울 생활인구 일별 집계표</h1>
+    <form>
+      날짜:
+      <input
+        type="date"
+        id="stdr_de_id"
+        value="2019-01-01"
+        placeholder="yyyy-mm-dd"
+      /><br />
+      시작index <input type="number" id="start_index" value="1" /><br />
+      끝index <input type="number" id="end_index" value="5" /><br /><br />
+
+      <button type="button" onclick="loadData()">정보 가져오기</button>
+      <button type="button" onclick="removeTable()">지우기</button>
+    </form>
+
+    <br /><br />
+
+    <h2>AJAX + XML</h2>
+    <table id="demoXML"></table>
+    <hr />
+    <h2>AJAX + JSON</h2>
+    <table id="demoJSON"></table>
+
+    <script>
+      const api_key = '42424f4e48746a6434344575756f68';
+      let kind = undefined;
+      let url = undefined;
+      let startIndex = 0;
+      let endIndex = 0;
+      let date = undefined;
+
+      function createTableHead(tableID) {
+        const target = document.getElementById(tableID);
+        const head =
+          '<tr><th>날짜</th><th>구ID</th><th>총생활인구</th><th>일최대이동인구수</th></tr>';
+        target.innerHTML = head;
+        return target;
+      }
+
+      function getDate() {
+        date = new Date(document.getElementById('stdr_de_id').value.trim());
+        return `${date.getFullYear()}${
+          date.getMonth() + 1 < 10
+            ? '0' + (date.getMonth() + 1)
+            : date.getMonth() + 1
+        }${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}`;
+      }
+
+      function removeTable() {
+        document
+          .getElementById('demoXML')
+          .removeChild(document.getElementById('demoXML').childNodes[0]);
+        document
+          .getElementById('demoJSON')
+          .removeChild(document.getElementById('demoJSON').childNodes[0]);
+      }
+
+      function loadData() {
+        // TODO: XML;
+        kind = 'xml';
+        date = getDate();
+        startIndex = document.getElementById('start_index').value;
+        endIndex = document.getElementById('end_index').value;
+        url = `http://openapi.seoul.go.kr:8088/${api_key}/${kind}/SPOP_DAILYSUM_JACHI/${startIndex}/${endIndex}/`;
+        console.log(url);
+        fetch(url)
+          .then((response) => response.text())
+          .then((xmlText) =>
+            parseXML(
+              new window.DOMParser().parseFromString(xmlText, 'text/xml'),
+            ),
+          )
+          .catch((error) => console.error(error));
+
+        // TODO: JSON
+        kind = 'json';
+        date = getDate();
+        startIndex = document.getElementById('start_index').value;
+        endIndex = document.getElementById('end_index').value;
+        url = `http://openapi.seoul.go.kr:8088/${api_key}/${kind}/SPOP_DAILYSUM_JACHI/${startIndex}/${endIndex}/`;
+        console.log(url);
+        fetch(url)
+          .then((response) => response.json())
+          .then((json) => parseJSON(json))
+          .catch((error) => console.error(error));
+      }
+
+      function parseXML(xmlDOM) {
+        const tableID = 'demoXML';
+        const table = createTableHead(tableID);
+        const row = xmlDOM.getElementsByTagName('row');
+        const rowArr = Array.from(row);
+        rowArr.forEach((index) => {
+          const SIGNGU_CODE_SE = index.getElementsByTagName('SIGNGU_CODE_SE')[0]
+            .innerHTML;
+          const TOT_LVPOP_CO = index.getElementsByTagName('TOT_LVPOP_CO')[0]
+            .innerHTML;
+          const DAIL_MXMM_MVMN_LVPOP_CO = index.getElementsByTagName(
+            'DAIL_MXMM_MVMN_LVPOP_CO',
+          )[0].innerHTML;
+          table.innerHTML += `<tr><td>${date}</td><td>${SIGNGU_CODE_SE}</td><td>${TOT_LVPOP_CO}</td><td>${DAIL_MXMM_MVMN_LVPOP_CO}</td></tr>`;
+        });
+      }
+
+      function parseJSON(json) {
+        const tableID = 'demoJSON';
+        const table = createTableHead(tableID);
+        const data = json.SPOP_DAILYSUM_JACHI.row;
+
+        data.forEach((index) => {
+          const SIGNGU_CODE_SE = index.SIGNGU_CODE_SE;
+          const TOT_LVPOP_CO = index.TOT_LVPOP_CO;
+          const DAIL_MXMM_MVMN_LVPOP_CO = index.DAIL_MXMM_MVMN_LVPOP_CO;
+          table.innerHTML += `<tr><td>${date}</td><td>${SIGNGU_CODE_SE}</td><td>${TOT_LVPOP_CO}</td><td>${DAIL_MXMM_MVMN_LVPOP_CO}</td></tr>`;
+        });
+      }
+    </script>
+  </body>
+</html>
