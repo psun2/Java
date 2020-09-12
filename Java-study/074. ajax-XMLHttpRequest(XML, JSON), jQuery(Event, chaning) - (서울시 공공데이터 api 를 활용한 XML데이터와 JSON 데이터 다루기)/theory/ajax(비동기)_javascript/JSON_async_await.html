@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON_async_await</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <!--
+■자치구단위 서울 생활인구 일별 집계표
+http://data.seoul.go.kr/dataList/datasetView.do?infId=OA-15379&srvType=S&serviceKind=1&currentPageNo=1
+
+http://openapi.seoul.go.kr:8088/(인증키)/(요청파일타입)/SPOP_DAILYSUM_JACHI/(요청시작INDEX)/(요청종료INDEX)/(기준일ID)/(시군구코드)
+
+샘플url
+
+XML 버젼
+http://openapi.seoul.go.kr:8088/(인증키)/xml/SPOP_DAILYSUM_JACHI/1/5/
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/20190101
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/SPOP_DAILYSUM_JACHI/1/5/20190101/11000
+
+JSON 버젼
+http://openapi.seoul.go.kr:8088/(인증키)/json/SPOP_DAILYSUM_JACHI/1/5/
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/20190101
+예] http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/SPOP_DAILYSUM_JACHI/1/5/20190101/11000
+
+
+※ 한번에 1000개 까지의 데이터만 볼수 있슴
+
+ -->
+
+  <body>
+    <h1>JSON_async_await</h1>
+    <h1>자치구단위 서울 생활인구 일별 집계표</h1>
+    <form>
+      날짜:
+      <input
+        type="date"
+        id="stdr_de_id"
+        value="2019-01-01"
+        placeholder="yyyy-mm-dd"
+      /><br />
+      시작index <input type="number" id="start_index" value="1" /><br />
+      끝index <input type="number" id="end_index" value="5" /><br /><br />
+
+      <button type="button" id="getData">정보 가져오기</button>
+      <button type="button" id="removeData">지우기</button>
+    </form>
+    <br /><br />
+    <table id="result"></table>
+    <script>
+      const title = ['날짜', '구ID', '총생활인구', '일최대이동인구수'];
+      const API_KEY = '42424f4e48746a6434344575756f68';
+      const getBtn = document.getElementById('getData');
+      const removeBtn = document.getElementById('removeData');
+      const table = document.getElementById('result');
+
+      const removeData = () => {
+        const target = Array.from(table.children);
+        target.forEach((index) => {
+          index.remove();
+        });
+      };
+
+      const getDate = () => {
+        let date = new Date(document.getElementById('stdr_de_id').value.trim());
+
+        date = `${date.getFullYear()}${
+          date.getMonth() + 1 < 10
+            ? '0' + (date.getMonth() + 1)
+            : date.getMonth() + 1
+        }${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()} `;
+
+        return date;
+      };
+
+      const thead = () => {
+        const thead = document.createElement('thead');
+        const tr = document.createElement('tr');
+        title.forEach((index) => {
+          const th = document.createElement('th');
+          const span = document.createElement('span');
+          span.innerText = index;
+          th.appendChild(span);
+          tr.appendChild(th);
+        });
+        thead.appendChild(tr);
+        return thead;
+      };
+
+      const tbody = (data) => {
+        const date = getDate();
+        const tbody = document.createElement('tbody');
+        const arr = data.SPOP_DAILYSUM_JACHI.row;
+        arr.forEach((index) => {
+          const input = [
+            date,
+            index.SIGNGU_CODE_SE,
+            index.TOT_LVPOP_CO,
+            index.DAIL_MXMM_MVMN_LVPOP_CO,
+          ];
+          const tr = document.createElement('tr');
+          input.forEach((index) => {
+            const td = document.createElement('td');
+            const span = document.createElement('span');
+            span.innerText = index;
+            td.appendChild(span);
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        return tbody;
+      };
+
+      const parsedData = (data) => {
+        table.appendChild(thead());
+        table.appendChild(tbody(data));
+      };
+
+      async function getData() {
+        try {
+          const kind = 'json';
+          let startIndex = document.getElementById('start_index').value;
+          let endIndex = document.getElementById('end_index').value;
+          let url = `http://openapi.seoul.go.kr:8088/${API_KEY}/${kind}/SPOP_DAILYSUM_JACHI/${startIndex}/${endIndex}/`;
+          console.log(`URL : ${url}`);
+
+          const fetchURL = await fetch(url);
+          const fetchJSON = await fetchURL.json();
+          await parsedData(fetchJSON);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      const init = () => {
+        removeBtn.addEventListener('click', removeData);
+        getBtn.addEventListener('click', getData);
+      };
+      init();
+    </script>
+  </body>
+</html>
