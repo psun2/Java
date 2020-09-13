@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>async await</title>
+  </head>
+  <body>
+    <h1>async await</h1>
+
+    <h4 id="title">페이지 로딩과 동시에 async await 작업 진행중 입니다.....</h4>
+
+    <h3 id="start"></h3>
+
+    <h3 id="result"></h3>
+    <script>
+      // async / await
+      // es 8 문법
+      // 비동기 작업을 할때, promise를 쓸때
+      // 좀 더 편하게 쓰기 위한 문법.
+
+      // promise.all
+
+      // promise를 동시에 처리하기
+      // promise 를 만드는 함수
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      const getDog = async () => {
+        await sleep(1000);
+        return '강아지';
+      };
+
+      const getRabbit = async () => {
+        await sleep(5000);
+        return '토끼';
+      };
+
+      const getTurtle = async () => {
+        await sleep(10000);
+        return '거북이는 느려요';
+      };
+
+      async function process() {
+        const start = Date.now();
+        const result = await Promise.all([getDog(), getRabbit(), getTurtle()]);
+        console.log(result); //  ["강아지", "토끼", "거북이는 느려요"]
+        console.log(Date.now() - start + '초 걸렸습니다.');
+        resultPrint(start, result);
+      }
+
+      process();
+
+      function resultPrint(time, result) {
+        const end = Date.now();
+
+        result.forEach((index) => {
+          document.getElementById(
+            'result',
+          ).innerHTML += `${index} ${JSON.stringify(index)} <br /> `;
+        });
+
+        document.getElementById('result').innerHTML += `<br /> ${
+          Date.now() - time
+        } m/s 걸렸습니다.`;
+
+        document.getElementById(
+          'title',
+        ).innerHTML = `모든 작업이 끝났습니다. <hr/> 이전 예제는 16초가 소요된 반면 <br /> promise all 은 <br /> ${
+          (Date.now() - time) / 1000
+        } 초 가 걸림으로 써,  <br /> ${
+          16 - (Date.now() - time) / 1000
+        } 초 가 줄었습니다. <hr/>`;
+        document.getElementById('title').style.color = 'red';
+      }
+    </script>
+  </body>
+</html>

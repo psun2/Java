@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+  </head>
+  <body>
+    <h1>promise</h1>
+
+    <h4 id="title">페이지 로딩과 동시에 promise 작업 진행중 입니다.....</h4>
+
+    <h3 id="start"></h3>
+    <h3 id="result"></h3>
+    <script>
+      // promise
+      // es6
+      // 비동기 작업을 좀더 편하게 할 수 있도록 es6에 추가된 기능
+
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(1);
+        }, 1000);
+      });
+
+      let sum = 0;
+      const start = new Date();
+      document.getElementById('start').innerHTML = `작업 시작 : ${start}`;
+
+      // .then() 이전의 작업을 끝내고 실행할 callback
+      myPromise
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          console.log('result : ', result);
+          console.log('sum', sum);
+          return (sum += result);
+        })
+        .then((result) => {
+          const end = new Date();
+          console.log('작업 끝!');
+          console.log('result : ', result);
+          console.log('sum', sum);
+          console.log(end.getSeconds() - start.getSeconds());
+
+          document.getElementById('title').innerHTML =
+            '모든 작업이 끝났습니다.';
+          document.getElementById('title').style.color = 'red';
+
+          document.getElementById(
+            'result',
+          ).innerHTML = `작업 끝 : ${end} <br /> sum => ${sum} <br /> ${
+            end.getSeconds() - start.getSeconds()
+          } 초 걸렸습니다.`;
+        })
+        .catch((error) => console.error(error));
+    </script>
+  </body>
+</html>

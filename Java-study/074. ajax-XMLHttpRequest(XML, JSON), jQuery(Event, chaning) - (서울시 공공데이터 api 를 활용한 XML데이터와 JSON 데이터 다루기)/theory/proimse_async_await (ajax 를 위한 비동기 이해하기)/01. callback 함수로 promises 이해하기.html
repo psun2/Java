@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+  </head>
+  <body>
+    <h1>promise</h1>
+
+    <h4 id="title">페이지 로딩과 동시에 callback 작업 진행중 입니다.....</h4>
+
+    <h3 id="start"></h3>
+    <h3 id="result"></h3>
+    <script>
+      // promise
+      // es6
+      // 비동기 작업을 좀더 편하게 할 수 있도록 es6에 추가된 기능
+
+      // callback function이 많아 질수록 복잡해 지는 코드
+      //callback 지옥
+
+      function increaseAndPrint(n, callback) {
+        console.log(callback);
+        setTimeout(() => {
+          const increased = n + 1;
+          if (callback) callback(increased);
+          // callback 함수가 있다면.. 즉 undefined 가 아니라면...
+        }, 1000);
+      }
+
+      increaseAndPrint(1); // callback : undefined
+
+      const start = new Date();
+      document.getElementById('start').innerHTML = `작업 시작 : ${start}`;
+
+      increaseAndPrint(0, (n) => {
+        increaseAndPrint(n, (n) => {
+          increaseAndPrint(n, (n) => {
+            increaseAndPrint(n, (n) => {
+              increaseAndPrint(n, (n) => {
+                console.log('작업 끝!');
+                console.log(n);
+
+                const end = new Date();
+                document.getElementById('title').innerHTML =
+                  '모든 작업이 끝났습니다.';
+                document.getElementById('title').style.color = 'red';
+
+                document.getElementById(
+                  'result',
+                ).innerHTML = `작업 끝 : ${end} <br /> n => ${n} <br /> ${
+                  end.getSeconds() - start.getSeconds()
+                } 초 걸렸습니다.`;
+              });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

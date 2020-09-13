@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>async await</title>
+  </head>
+  <body>
+    <h1>async await</h1>
+
+    <h4 id="title">페이지 로딩과 동시에 async await 작업 진행중 입니다.....</h4>
+
+    <h3 id="start"></h3>
+    <h3 id="result"></h3>
+    <script>
+      // async / await
+      // es 8 문법
+      // 비동기 작업을 할때, promise를 쓸때
+      // 좀 더 편하게 쓰기 위한 문법.
+
+      // promise 를 만드는 함수
+      function increaseAndPrint(n) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            const value = n + 1;
+            if (value === 5) {
+              const error = new Error();
+              error.name = 'ValueIsFiveError';
+              reject(error);
+              return;
+            }
+            console.log(value);
+            resolve(value);
+          }, 1000);
+        });
+      }
+
+      let sum = 0;
+      const start = new Date();
+      document.getElementById('start').innerHTML = `작업 시작 : ${start}`;
+
+      async function increase() {
+        try {
+          let n = 0;
+
+          for (let index = 0; index < 4; index++) {
+            n = await increaseAndPrint(index);
+          }
+          result(n);
+        } catch (error) {
+          console.error(error);
+          const end = new Date();
+          console.log(end.getSeconds() - start.getSeconds());
+
+          document.getElementById('title').innerHTML = '에러발생.';
+          document.getElementById('title').style.color = 'red';
+
+          document.getElementById(
+            'result',
+          ).innerHTML = `작업 끝 : ${end} <br /> <br /> ${
+            end.getSeconds() - start.getSeconds()
+          } 초 걸렸습니다. <br /> <br /> Error : ${error.name}`;
+          document.getElementById('result').style.color = 'red';
+        }
+      }
+
+      increase();
+
+      function result(n) {
+        const end = new Date();
+        console.log('작업 끝!');
+        console.log(end.getSeconds() - start.getSeconds());
+
+        document.getElementById('title').innerHTML = '모든 작업이 끝났습니다.';
+        document.getElementById('title').style.color = 'red';
+
+        document.getElementById(
+          'result',
+        ).innerHTML = `작업 끝 : ${end} <br /> n => ${n} <br /> ${
+          end.getSeconds() - start.getSeconds()
+        } 초 걸렸습니다.`;
+      }
+    </script>
+  </body>
+</html>
