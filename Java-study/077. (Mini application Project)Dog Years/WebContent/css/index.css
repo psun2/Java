@@ -1,0 +1,100 @@
+.header {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header a:visited {
+  all: inherit;
+}
+
+.main {
+  max-width: 80%;
+  min-height: 50vh;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main .main__select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main .main__select .select__btns {
+  min-width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.main .main__select .select__btns button {
+  all: unset;
+  background-color: #3480eb;
+  color: #ecf0e6;
+}
+
+.main .main__select .select__btns .select__title {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.main .main__select .select__btns button:hover,
+.main .main__select .select__btns button:active {
+  background-color: #2570d8;
+}
+
+.main .main__select .select__btns button:active {
+  transform: scale(0.9);
+}
+
+.main .main__select .select__box {
+  width: 100%;
+  display: none;
+}
+
+.main .main__select .select__box.active {
+  display: block;
+}
+
+.main .main__select .select__box .box__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main .main__select .select__box .box__wrapper .box__input {
+  min-width: 50%;
+  margin: 0 10px;
+}
+
+.main .main__select .select__box .box__result .result {
+  color: #db1251;
+  font-size: 2rem;
+  line-height: 200%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  height: 30%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1a1a1c;
+  color: #fcfcfc;
+  text-align: center;
+}
+
+.footer .footer__contentBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
