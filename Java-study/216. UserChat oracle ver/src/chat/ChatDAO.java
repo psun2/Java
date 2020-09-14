@@ -281,6 +281,41 @@ public class ChatDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
+	
+	// 대화 상대별 안 읽은 메시지 출력 함수
+	public int getUnreadChat(String fromID, String toID) {
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(chatID) FROM CHAT WHERE fromID = ? AND toID = ? AND chatRead = 0";
+		
+		try {
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, fromID);
+			psmt.setString(2, toID);
+			rs = psmt.executeQuery();
+			
+			if (rs.next())
+				return rs.getInt("COUNT(chatID)"); // 읽음 처리가 안된 갯수 반환
+			return 0; // 모두 읽음
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
 
 	// 메시지함에 출력될 데이터 반환 함수
 	public ArrayList<ChatDTO> getBox(String userID) {

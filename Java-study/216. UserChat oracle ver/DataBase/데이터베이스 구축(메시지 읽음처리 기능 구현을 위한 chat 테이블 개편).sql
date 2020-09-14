@@ -1,6 +1,6 @@
--- µ¥ÀÌÅÍº£ÀÌ½º ±¸Ãà(¸Þ½ÃÁö ÀÐÀ½Ã³¸® ±â´É ±¸ÇöÀ» À§ÇÑ chat Å×ÀÌºí °³Æí)
+-- ë°ì´í„°ë² ì´ìŠ¤ êµ¬ì¶•(ë©”ì‹œì§€ ì½ìŒì²˜ë¦¬ ê¸°ëŠ¥ êµ¬í˜„ì„ ìœ„í•œ chat í…Œì´ë¸” ê°œíŽ¸)
 
--- ±âÁ¸ÀÇ chat Å×ÀÌºí »èÁ¦
+-- ê¸°ì¡´ì˜ chat í…Œì´ë¸” ì‚­ì œ
 DROP TABLE CHAT;
 
 CREATE TABLE CHAT (
@@ -13,13 +13,13 @@ chatTimeStamp TIMESTAMP,
 chatRead INT
 );
 
--- »ý¼ºµÈ Å×ÀÌºí ½ºÅ°¸¶ È®ÀÎ
+-- ìƒì„±ëœ í…Œì´ë¸” ìŠ¤í‚¤ë§ˆ í™•ì¸
 DESC CHAT;
 
--- chatID ¿Í °ü·ÃÇÑ sequence »ý¼º
+-- chatID ì™€ ê´€ë ¨í•œ sequence ìƒì„±
 CREATE SEQUENCE CHAT_chatID
 START WITH 1
 INCREMENT BY 1;
 
--- ÀÐÀ½Ã³¸® È®ÀÎ
+-- ì½ìŒì²˜ë¦¬ í™•ì¸
 SELECT * FROM CHAT;

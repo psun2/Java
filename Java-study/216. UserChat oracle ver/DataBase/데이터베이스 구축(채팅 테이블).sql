@@ -1,4 +1,4 @@
--- Ã¤ÆÃ °ü·Ã Å×ÀÌºí »ý¼º
+-- ì±„íŒ… ê´€ë ¨ í…Œì´ë¸” ìƒì„±
 CREATE TABLE CHAT (
 chatID INT CONSTRAINT chatID_PK PRIMARY KEY,
 fromID VARCHAR2(20),
@@ -8,57 +8,57 @@ chatTime DATE,
 chatTimeStamp TIMESTAMP
 );
 
--- Å×ÀÌºí »èÁ¦
+-- í…Œì´ë¸” ì‚­ì œ
 DROP TABLE CHAT;
 
--- chatID ¿Í °ü·ÃÇÑ sequence »ý¼º
+-- chatID ì™€ ê´€ë ¨í•œ sequence ìƒì„±
 CREATE SEQUENCE CHAT_chatID
 START WITH 1
 INCREMENT BY 1;
 
--- start with ¿À·ù·Î ÀÎÇÑ sequence »èÁ¦
+-- start with ì˜¤ë¥˜ë¡œ ì¸í•œ sequence ì‚­ì œ
 DROP SEQUENCE CHAT_chatID;
 
--- sequence Àç»ý¼º (START WITH Àº 0 ÀÌ µÉ ¼ö ¾øÀ½)
+-- sequence ìž¬ìƒì„± (START WITH ì€ 0 ì´ ë  ìˆ˜ ì—†ìŒ)
 CREATE SEQUENCE chatID
 START WITH 1
 INCREMENT BY 1;
 
--- start with ¿À·ù·Î ÀÎÇÑ sequence »èÁ¦
+-- start with ì˜¤ë¥˜ë¡œ ì¸í•œ sequence ì‚­ì œ
 DROP SEQUENCE chatID;
 
--- ¿¹Á¦ µ¥ÀÌÅÍ ¿¬½À
-INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTime2) values (chatID.nextval, '7777', '¿î¿µÀÚ', '¾È³ç?', SYSDATE, SYSDATE);
+-- ì˜ˆì œ ë°ì´í„° ì—°ìŠµ
+INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTime2) values (chatID.nextval, '7777', 'ìš´ì˜ìž', 'ì•ˆë…•?', SYSDATE, SYSDATE);
 
--- ¿¹Á¦ µ¥ÀÌÅÍ È®ÀÎ
+-- ì˜ˆì œ ë°ì´í„° í™•ì¸
 SELECT * FROM CHAT;
 
--- SQL Qurey ¹® Áõ¸í (getChatListByID)
-SELECT * FROM CHAT WHERE ((fromID  = '7777' AND toID = '¿î¿µÀÚ') OR (fromID = '¿î¿µÀÚ' AND toID = '7777')) AND chatID = 1 ORDER BY chatTime2;
+-- SQL Qurey ë¬¸ ì¦ëª… (getChatListByID)
+SELECT * FROM CHAT WHERE ((fromID  = '7777' AND toID = 'ìš´ì˜ìž') OR (fromID = 'ìš´ì˜ìž' AND toID = '7777')) AND chatID = 1 ORDER BY chatTime2;
 
--- SQL Qurey ¹® Áõ¸í (getChatListByRecent)
-SELECT * FROM CHAT WHERE ((fromID  = '7777' AND toID = '¿î¿µÀÚ') OR (fromID = '¿î¿µÀÚ' AND toID = '7777')) AND chatID = (SELECT MAX(chatID) - 1 FROM CHAT) ORDER BY chatTime2;
+-- SQL Qurey ë¬¸ ì¦ëª… (getChatListByRecent)
+SELECT * FROM CHAT WHERE ((fromID  = '7777' AND toID = 'ìš´ì˜ìž') OR (fromID = 'ìš´ì˜ìž' AND toID = '7777')) AND chatID = (SELECT MAX(chatID) - 1 FROM CHAT) ORDER BY chatTime2;
 
--- È®ÀÎÀÛ¾÷ÈÄ column¸í º¯°æ
+-- í™•ì¸ìž‘ì—…í›„ columnëª… ë³€ê²½
 ALTER TABLE CHAT RENAME COLUMN chatTime2 TO chatTimeStamp; 
 
--- ¿¹Á¦ µ¥ÀÌÅÍ ¿¬½À
-INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTimeStamp) values (chatID.nextval, '7777', '¿î¿µÀÚ', '¾È³ç2?', SYSDATE, SYSDATE);
+-- ì˜ˆì œ ë°ì´í„° ì—°ìŠµ
+INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTimeStamp) values (chatID.nextval, '7777', 'ìš´ì˜ìž', 'ì•ˆë…•2?', SYSDATE, SYSDATE);
 
--- SYSDATE ¿¬½À
+-- SYSDATE ì—°ìŠµ
 SELECT TO_CHAR(SYSDATE, 'HH24:MI:SS') FROM DUAL;
 
 SELECT TO_CHAR(SYSDATE, 'HH24:MI:SS') as CHATTIMESTAMP FROM DUAL;
 
-SELECT SYSDATE-1 FROM DUAL; -- (1ÀÏÀüÀÇ ³¯Â¥/½Ã°£À» ¹ÝÈ¯)
+SELECT SYSDATE-1 FROM DUAL; -- (1ì¼ì „ì˜ ë‚ ì§œ/ì‹œê°„ì„ ë°˜í™˜)
 
-SELECT SYSDATE+1 FROM DUAL; -- (1ÀÏÈÄÀÇ ³¯Â¥/½Ã°£À» ¹ÝÈ¯)
+SELECT SYSDATE+1 FROM DUAL; -- (1ì¼í›„ì˜ ë‚ ì§œ/ì‹œê°„ì„ ë°˜í™˜)
 
-SELECT TO_CHAR(SYSDATE, 'HH24:MI:SS') FROM DUAL; -- (½Ã°£¸¸ ¹ÝÈ¯ (24½Ã°£Æ÷¸ä), ex> 16:53:43);
+SELECT TO_CHAR(SYSDATE, 'HH24:MI:SS') FROM DUAL; -- (ì‹œê°„ë§Œ ë°˜í™˜ (24ì‹œê°„í¬ë©§), ex> 16:53:43);
 
-SELECT TO_CHAR(SYSDATE, 'HH:MI:SS') FROM DUAL; -- (½Ã°£¸¸ ¹ÝÈ¯, ex> 04:53:43);
+SELECT TO_CHAR(SYSDATE, 'HH:MI:SS') FROM DUAL; -- (ì‹œê°„ë§Œ ë°˜í™˜, ex> 04:53:43);
 
-SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') FROM DUAL; -- (³¯Â¥¸¸ ¹ÝÈ¯, ex> 20140416);
+SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') FROM DUAL; -- (ë‚ ì§œë§Œ ë°˜í™˜, ex> 20140416);
 
 SELECT * FROM chat, (select TO_CHAR(chatTimeStamp, 'YYYY/MM/DD HH24:MI:SS') AS time FROM chat) t1;
 

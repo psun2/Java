@@ -57,6 +57,13 @@
 		response.sendRedirect("find.jsp");
 		return;
 	}
+	
+	if(userID.equals(toID)) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "자신이게는 메시지를 보낼수 없습니다.");
+		response.sendRedirect("find.jsp");
+		return;
+	}
 	%>
 
 	<!-- 네비게이션 -->
@@ -88,6 +95,7 @@
 					aria-expanded="false"> 회원관리<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
+					<li><a href="update.jsp">회원정보수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>

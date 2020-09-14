@@ -137,4 +137,83 @@ public class MemberDAO {
 		return -1; // 데이터베이스 오류
 	}
 
+	// 한명의 회원을 가져오는함수
+	public MemberDTO getUser(String userID) {
+		MemberDTO member = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM MEMBER WHERE userID = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				member = new MemberDTO();
+				member.setUserID(rs.getString("userID"));
+				member.setUserName(rs.getString("userName"));
+				member.setUerAge(Integer.parseInt(rs.getString("userAge")));
+				member.setUserGender(rs.getString("userGender"));
+				member.setUserEmail(rs.getString("userEmail"));
+				member.setUserProfile(rs.getString("userProfile"));
+			}
+
+			return member;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return member; // 데이터베이스 오류
+	}
+
+	// 회원정보 수정함수
+	public int update(String userID, String userPassword, String userName, String userAge, String userGender,
+			String userEmail) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "UPDATE MEMBER SET userPassword = ?, userName = ?, userAge = ?, userGender = ?, userEmail = ? WHERE userID = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userPassword);
+			psmt.setString(2, userName);
+			psmt.setInt(3, Integer.parseInt(userAge));
+			psmt.setString(4, userGender);
+			psmt.setString(5, userEmail);
+			psmt.setString(6, userID);
+
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
 }

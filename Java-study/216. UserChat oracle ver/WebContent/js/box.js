@@ -31,28 +31,28 @@ const showUnread = (result) => {
 
 // 읽지 않은 메시지중 최신의 메시지만 데이터베이스에서 가져옵니다.
  function chatBoxFunction() {
-
  $.ajax({
- url:'./chatBox',
- type:'POST',
- data:{userID: encodeURIComponent(userID)},
- success: function(data) {
- if(data === '') return;
- $('#boxTable').html('');
- var parsed = JSON.parse(data);
- var result = parsed.result
- for(var i =0; i < result.length; i++) {
- if(result[i][0].fromID === userID)
- result[i][0].fromID = result[i][1].toID;
- else
- result[i][1].toID = result[i][0].fromID;
+	 url:'./chatBox',
+	 type:'POST',
+	 data:{userID: encodeURIComponent(userID)},
+	 success: function(data) {
+		 console.log(data);
+		 	if(data === '') return;
+		 	$('#boxTable').html('');
+		 	var parsed = JSON.parse(data);
+		 	var result = parsed.result;
+		 	for(var i =0; i < result.length; i++) {
+		 		if(result[i][0].fromID === userID)
+		 			result[i][0].fromID = result[i][1].toID;
+		 		else
+		 			result[i][1].toID = result[i][0].fromID;
 				
- addBox(result[i][0].fromID, result[i][1].toID, result[i][2].chatContent,
- result[i][3].chatTime)
- }
- }
- });
- }
+		 		addBox(result[i][0].fromID, result[i][1].toID, result[i][2].chatContent,
+		 				result[i][3].chatTime, result[i][4].chatUnread);
+		 	}
+	 }
+ 	});
+}
 
 // function chatBoxFunction() {
 // console.log(JSON.stringify({ userID: encodeURIComponent(userID) }));
@@ -79,7 +79,7 @@ const showUnread = (result) => {
 // }
 
 // 읽지 않은 데이터를 가져온뒤 document 에 뿌려주는 함수
-function addBox(lastID, toID, chatContent, chatTime) {
+function addBox(lastID, toID, chatContent, chatTime, chatUnread) {
 	$('#boxTable').append(
 			'<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' + 
 			'<td style="width:150px;"><h5>'+lastID+'</h5></td>' +
@@ -87,6 +87,7 @@ function addBox(lastID, toID, chatContent, chatTime) {
 			'<h5>' + 
 			chatContent +
 			'</h5>' +
+			'<span class="label label-info">' + chatUnread + '</span>' + 
 			'<div class="pull-right">' + chatTime + '</div>' +
 			'</td>' +
 			'</tr>'

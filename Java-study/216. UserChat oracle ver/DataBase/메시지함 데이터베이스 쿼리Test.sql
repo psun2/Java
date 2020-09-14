@@ -1,13 +1,13 @@
 -- query test
 SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = 'admin' OR toID = 'admin' GROUP BY fromID, toID);
---28	¿î¿µÀÚ	admin	sdaasd	20/09/08	20/09/08 15:09:17.000000000	1
---35	admin	¿î¿µÀÚ	¤±¤¤¤·¤±¤¤¤·¤±¤¤¤·	20/09/09	20/09/09 14:51:28.000000000	0
+--28	ìš´ì˜ìž	admin	sdaasd	20/09/08	20/09/08 15:09:17.000000000	1
+--35	admin	ìš´ì˜ìž	ã…ã„´ã…‡ã…ã„´ã…‡ã…ã„´ã…‡	20/09/09	20/09/09 14:51:28.000000000	0
 
 SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = 'admin' OR toID = 'admin');
---35	admin	¿î¿µÀÚ	¤±¤¤¤·¤±¤¤¤·¤±¤¤¤·	20/09/09	20/09/09 14:51:28.000000000	0
+--35	admin	ìš´ì˜ìž	ã…ã„´ã…‡ã…ã„´ã…‡ã…ã„´ã…‡	20/09/09	20/09/09 14:51:28.000000000	0
 
-SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = '¿î¿µÀÚ' OR toID = '¿î¿µÀÚ');
---35	admin	¿î¿µÀÚ	¤±¤¤¤·¤±¤¤¤·¤±¤¤¤·	20/09/09	20/09/09 14:51:28.000000000	0
+SELECT * FROM CHAT WHERE chatID IN (SELECT MAX(chatID) FROM CHAT WHERE fromID = 'ìš´ì˜ìž' OR toID = 'ìš´ì˜ìž');
+--35	admin	ìš´ì˜ìž	ã…ã„´ã…‡ã…ã„´ã…‡ã…ã„´ã…‡	20/09/09	20/09/09 14:51:28.000000000	0
 
 
 -- IN
@@ -30,8 +30,8 @@ SELECT *
 FROM TABLE 
 WHERE COLUMN NOT IN ('A' , 'B');
 
---À§ÀÇ Äõ¸®¸¦ º¸¸é
---IN¹®Àº 'A'¿Í 'B' °¡ Æ÷ÇÔµÇ´Â µ¥ÀÌÅÍ¸¸ ÃßÃâµÇ°í,
---NOT IN ¹®Àº 'A'¿Í 'B' °¡ Æ÷ÇÔµÇÁö ¾Ê´Â µ¥ÀÌÅÍ¸¸ ÃßÃâÀÌ µË´Ï´Ù.
---INÀÇ °æ¿ì OR°¡ NOT INÀÇ °æ¿ì AND Á¶°ÇÀÌ °É¸°´Ù´Â Â÷ÀÌ°¡ ÀÖÁÒ!
+--ìœ„ì˜ ì¿¼ë¦¬ë¥¼ ë³´ë©´
+--INë¬¸ì€ 'A'ì™€ 'B' ê°€ í¬í•¨ë˜ëŠ” ë°ì´í„°ë§Œ ì¶”ì¶œë˜ê³ ,
+--NOT IN ë¬¸ì€ 'A'ì™€ 'B' ê°€ í¬í•¨ë˜ì§€ ì•ŠëŠ” ë°ì´í„°ë§Œ ì¶”ì¶œì´ ë©ë‹ˆë‹¤.
+--INì˜ ê²½ìš° ORê°€ NOT INì˜ ê²½ìš° AND ì¡°ê±´ì´ ê±¸ë¦°ë‹¤ëŠ” ì°¨ì´ê°€ ìžˆì£ !
 

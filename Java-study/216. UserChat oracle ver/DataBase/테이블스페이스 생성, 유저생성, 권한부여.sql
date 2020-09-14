@@ -1,22 +1,22 @@
--- Å×ÀÌºí ½ºÆäÀÌ½º »ý¼º
+-- í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤ ìƒì„±
 CREATE TABLESPACE USERCHAT
 DATAFILE 'D:\Study\Java\Java-study\216. UserChat oracle ver\DataBase\UserChat.dbf'
 -- SIZE 50000000;
 -- SIZE 100000000;
 
--- »ý¼ºµÈ Å×ÀÌºí ½ºÆäÀÌ½º È®ÀÎ
+-- ìƒì„±ëœ í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤ í™•ì¸
 SELECT * FROM dba_tablespaces;
 
--- »ý¼ºµÈ Å×ÀÌºí ½ºÆäÀÌ½º »ó¼¼ È®ÀÎ
+-- ìƒì„±ëœ í…Œì´ë¸” ìŠ¤íŽ˜ì´ìŠ¤ ìƒì„¸ í™•ì¸
 SELECT file_name, file_id, tablespace_name, status FROM dba_data_files WHERE tablespace_name = 'USERCHAT';
 
--- °èÁ¤ »ý¼º
+-- ê³„ì • ìƒì„±
 CREATE USER USERCHAT IDENTIFIED BY oracle
 DEFAULT TABLESPACE USERCHAT
 TEMPORARY TABLESPACE temp;
 
--- »ý¼ºÇÑ À¯Àú È®ÀÎ
+-- ìƒì„±í•œ ìœ ì € í™•ì¸
 SELECT * FROM all_users;
 
--- »ý¼ºÇÑ À¯ÀúÀÇ ±ÇÇÑ ºÎ¿©
+-- ìƒì„±í•œ ìœ ì €ì˜ ê¶Œí•œ ë¶€ì—¬
 GRANT RESOURCE, CONNECT, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE TO USERCHAT; 

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/ChatListServlet")
 public class ChatListServlet extends HttpServlet {
@@ -32,6 +33,13 @@ public class ChatListServlet extends HttpServlet {
 		} else {
 
 			fromID = URLDecoder.decode(fromID, "UTF-8");
+			
+			HttpSession session = request.getSession();
+			if (!fromID.equals((String) session.getAttribute("userID"))) {
+				response.getWriter().write("");
+				return;
+			}
+			
 			toID = URLDecoder.decode(toID, "UTF-8");
 			listType = URLDecoder.decode(listType, "UTF-8");
 

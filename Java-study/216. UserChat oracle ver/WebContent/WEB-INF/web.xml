@@ -98,5 +98,14 @@
 		<url-pattern>/chatBox</url-pattern>
 	</servlet-mapping>
 
+	<!-- 회원정보 수정 servlet -->
+	<servlet>
+		<servlet-name>MemberUpdateServlet</servlet-name>
+		<servlet-class>member.MemberUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberUpdateServlet</servlet-name>
+		<url-pattern>/memberUpdate</url-pattern>
+	</servlet-mapping>
 
 </web-app>

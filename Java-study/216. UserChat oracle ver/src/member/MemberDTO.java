@@ -2,7 +2,7 @@ package member;
 
 public class MemberDTO {
 
-	private String userID, userPassword, userName, userGender, userEmail;
+	private String userID, userPassword, userName, userGender, userEmail, userProfile;
 	private int uerAge;
 
 	public MemberDTO() {
@@ -10,7 +10,7 @@ public class MemberDTO {
 	}
 
 	public MemberDTO(String userID, String userPassword, String userName, int uerAge, String userGender,
-			String userEmail) {
+			String userEmail, String userProfile) {
 		super();
 		this.userID = userID;
 		this.userPassword = userPassword;
@@ -18,6 +18,7 @@ public class MemberDTO {
 		this.uerAge = uerAge;
 		this.userGender = userGender;
 		this.userEmail = userEmail;
+		this.userProfile = userProfile;
 	}
 
 	public String getUserID() {
@@ -68,10 +69,19 @@ public class MemberDTO {
 		this.userEmail = userEmail;
 	}
 
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDTO [userID=" + userID + ", userPassword=" + userPassword + ", userName=" + userName + ", uerAge="
-				+ uerAge + ", userGender=" + userGender + ", userEmail=" + userEmail + "]";
+				+ uerAge + ", userGender=" + userGender + ", userEmail=" + userEmail + ", userProfile=" + userProfile
+				+ "]";
 	}
 
 }

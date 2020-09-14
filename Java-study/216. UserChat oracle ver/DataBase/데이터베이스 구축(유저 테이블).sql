@@ -1,4 +1,4 @@
--- À¯Àú Å×ÀÌºí »ý¼º
+-- ìœ ì € í…Œì´ë¸” ìƒì„±
 CREATE TABLE MEMBER (
 userID  VARCHAR2(20),
 userPassword VARCHAR2(20),
@@ -9,11 +9,11 @@ userEmail VARCHAR2(50),
 userProfile VARCHAR2(50)
 );
 
--- Å×ÀÌºí ½ºÅ°¸¶ È®ÀÎ
+-- í…Œì´ë¸” ìŠ¤í‚¤ë§ˆ í™•ì¸
 DESC MEMBER;
 
--- ¿ÀÅ¸·Î ÀÎÇÑ Å×ÀÌºí ÄÃ·³ ¼öÁ¤
+-- ì˜¤íƒ€ë¡œ ì¸í•œ í…Œì´ë¸” ì»¬ëŸ¼ ìˆ˜ì •
 ALTER TABLE MEMBER RENAME COLUMN userPasswrd to userPassword;
 
--- Å×ÀÌºí »èÁ¦
+-- í…Œì´ë¸” ì‚­ì œ
 DROP TABLE MEMBER;
