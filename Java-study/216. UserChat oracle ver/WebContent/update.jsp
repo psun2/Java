@@ -77,7 +77,7 @@
 				<li><a href="box.jsp">메시지함 <span id="unread"
 						class="label label-info"></span></a></li>
 			</ul>
-			
+
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -142,15 +142,21 @@
 							<div class="form-group"
 								style="text-align: center; margin: 0 auto;">
 								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-primary active"> <input
-										type="radio" autocomplete="off" name="userGender" value="남자"
+									<label
+										class="btn btn-primary <%if (member.getUserGender().equals("남자"))
+	out.print("active");%>">
+										<input type="radio" autocomplete="off" name="userGender"
+										value="남자"
 										<%if (member.getUserGender().equals("남자"))
-	out.println("checked");%> />
+	out.print("checked");%> />
 										남자
-									</label> <label class="btn btn-primary"> <input type="radio"
-										autocomplete="off" name="userGender" value="여자"
+									</label> <label
+										class="btn btn-primary <%if (member.getUserGender().equals("여자"))
+	out.print("active");%>">
+										<input type="radio" autocomplete="off" name="userGender"
+										value="여자"
 										<%if (member.getUserGender().equals("여자"))
-	out.println("checked");%> />
+	out.print("checked");%> />
 										여자
 									</label>
 								</div>
