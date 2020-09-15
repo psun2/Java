@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>filter</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      tr:nth-child(even) {
+        background-color: lightgrey;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <script>
+    /* filter() jQuery 기본 셀렉터 문법에서 사용하던 필터 구문을 사용할 수
+    있습니다. filter() 메서드는 두 가지 형식으로 사용할 수 있습니다.
+    $(셀렉터).filter(필터구문); $(셀렉터).filter(function(index, selector){ });
+    */
+
+    $(document).ready(function () {
+      //   $('#myInput').keyup(function () {});
+      $('#myInput').on('keyup', function () {
+        const value = $('#myInput').val().trim().toLowerCase();
+        $('#demo').text(value);
+        // $('#myTable tr').filter() // select 된 tr 들 중에서... 찾습니다.
+        // $('#myTable tr').find() // select 된 tr 의 하위요소 에서 찾습니다.
+        $('#myTable tr').filter(function () {
+          //   $(this).toggle();
+          //   $(this).toggle(false); // hide
+          //   $(this).toggle(true); // show
+          console.log($(this)); // => tr
+          console.log($(this).text()); // select 된 tr 안의 모든 텍스트
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+    });
+  </script>
+  <body>
+    <h1>filter 검색 기능 구현</h1>
+
+    <h2>테이블 filter</h2>
+
+    <input id="myInput" placeholder="검색.." />
+    <br />
+    <p id="demo"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        <tr>
+          <td>honggildong</td>
+          <td>hong@naver.com</td>
+        </tr>
+        <tr>
+          <td>james dean</td>
+          <td>james@daum.net</td>
+        </tr>
+        <tr>
+          <td>eun siri</td>
+          <td>eunsil@gmail.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
