@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RWD 연습</title>
+    <style>
+      /* TODO: */
+
+      :root {
+        --col-2: calc(16.66% - 5px);
+        --col-m-2: calc(16.66% - 6.66px);
+        --col-3: calc(25% - 5px);
+        --col-4: calc(33.33% - 5px);
+        --col-m-4: calc(33.33% - 6.66px);
+        --col-6: calc(50% - 6.66px);
+        --col-8: calc(66.66% - 5px);
+        --col-m-8: calc(66.66% - 6.66px);
+        --col-9: calc(75% - 5px);
+        --col-10: calc(83.33% - 5px);
+        --col-12: 100%;
+        --height: 300px;
+        --height-m: 150px;
+        --height-s: calc(100px - 6.66px);
+        --white: #fcfcfc;
+        --margin: 10px;
+      }
+
+      * {
+        height: 100px;
+        box-sizing: border-box;
+      }
+
+      div {
+        width: 100%;
+        margin: 10px 0;
+        float: left;
+        font-weight: bold;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .clear {
+        display: none;
+        clear: both;
+      }
+
+      div:first-child {
+        display: none;
+        color: var(--white);
+        background-color: #b4a7d6;
+      }
+      div:nth-child(2) {
+        color: var(--white);
+        background-color: #9900ff;
+      }
+      div:nth-child(3) {
+        background-color: #00ffff;
+      }
+
+      div:nth-child(4) {
+        height: var(--height);
+        background-color: var(--white);
+        border: 1px solid #1a1a1a;
+      }
+
+      div:nth-child(5) {
+        background-color: #fce5cd;
+        width: var(--col-m-4);
+      }
+      div:nth-child(6) {
+        background-color: #4db6ac;
+        margin-left: var(--margin);
+        margin-right: var(--margin);
+        width: var(--col-m-4);
+      }
+      div:nth-child(7) {
+        background-color: #f9cb9c;
+        width: var(--col-m-4);
+      }
+
+      div:nth-child(8) {
+        background-color: #ffd966;
+      }
+
+      @media screen and (min-width: 600px) {
+        div:first-child {
+          display: flex;
+          margin-right: var(--margin);
+          width: var(--col-2);
+        }
+
+        div:nth-child(2) {
+          width: var(--col-10);
+        }
+
+        div:nth-child(3) {
+          margin-right: var(--margin);
+          height: var(--height);
+          width: var(--col-m-2);
+        }
+        div:nth-child(4) {
+          margin-right: var(--margin);
+          height: var(--height);
+          width: var(--col-m-8);
+        }
+
+        div:nth-child(5) {
+          margin-bottom: 0;
+          height: var(--height-m);
+          width: var(--col-m-2);
+        }
+
+        div:nth-child(6) {
+          margin: 0;
+          margin-bottom: var(--margin);
+          height: var(--height-m);
+          width: var(--col-m-2);
+        }
+        div:nth-child(7) {
+          margin-right: var(--margin);
+          width: var(--col-3);
+        }
+
+        div:nth-child(8) {
+          width: var(--col-9);
+        }
+      }
+
+      @media screen and (min-width: 768px) {
+        div:first-child {
+          width: var(--col-4);
+        }
+
+        div:nth-child(2) {
+          width: var(--col-8);
+        }
+
+        div:nth-child(3) {
+          width: var(--col-m-2);
+        }
+        div:nth-child(4) {
+          width: var(--col-6);
+        }
+
+        div:nth-child(5) {
+          margin-bottom: 0;
+          height: var(--height-s);
+          width: var(--col-m-4);
+        }
+
+        div:nth-child(6) {
+          margin-top: 10px;
+          height: var(--height-s);
+          width: var(--col-m-4);
+        }
+        div:nth-child(7) {
+          margin-right: 0;
+          margin-top: 0;
+          height: var(--height-s);
+          width: var(--col-m-4);
+        }
+
+        div:nth-child(8) {
+          width: var(--col-12);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TODO: -->
+    <div id="A"></div>
+    <div id="B"></div>
+    <div id="C"></div>
+    <div id="D"></div>
+    <div id="E"></div>
+    <div id="F"></div>
+    <div id="G"></div>
+    <div id="H"></div>
+    <div class="clear"></div>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+    <script>
+      const div = document.querySelectorAll('div[id]');
+      let width = 0;
+      let currentData = null;
+      const data = {
+        mobile: [0, 12, 12, 12, 4, 4, 4, 12],
+        tablet: [2, 10, 2, 8, 2, 2, 3, 9],
+        pc: [4, 8, 2, 6, 4, 4, 4, 12],
+      };
+
+      const handleResize = () => {
+        width = document.documentElement.clientWidth;
+        choiceData();
+      };
+
+      const pushData = (data) => {
+        if (currentData === data) return;
+        let i = 0;
+        Array.from(div).forEach((index) => {
+          index.innerText = '';
+          index.innerText = `${index.id}: ${data[i]}`;
+          i++;
+        });
+        currentData = data;
+      };
+
+      const choiceData = () => {
+        if (width <= 600) {
+          pushData(data.mobile);
+        } else if (width > 600 && width <= 768) {
+          pushData(data.tablet);
+        } else {
+          pushData(data.pc);
+        }
+      };
+
+      const init = () => {
+        width = document.documentElement.clientWidth;
+        window.addEventListener('resize', handleResize);
+        choiceData();
+      };
+      init();
+    </script>
+  </body>
+</html>

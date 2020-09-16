@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>when & then</title>
-<style>
-.box1 {
-	width:150px;
-	height : 150px;
-	background-color:  #3f8d3f;
-	position: absolute;
-	left : 50px;
-	top : 0;
-}
-.box2 {
-	width:150px;
-	height:150px;
-	background-color:  #82d3f2;
-	position: absolute;
-	left :50px;
-	top :150px;
-}
-.box3 {
-	width:150px;
-	height:150px;
-	background-color:  yellow;
-	position: absolute;
-	left :50px;
-	top :300px;
-}
-</style>
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script>
-/*
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>when & then</title>
+    <style>
+      .box1 {
+        width: 150px;
+        height: 150px;
+        background-color: #3f8d3f;
+        position: absolute;
+        left: 50px;
+        top: 100px;
+      }
+      .box2 {
+        width: 150px;
+        height: 150px;
+        background-color: #82d3f2;
+        position: absolute;
+        left: 50px;
+        top: 250px;
+      }
+      .box3 {
+        width: 150px;
+        height: 150px;
+        background-color: yellow;
+        position: absolute;
+        left: 50px;
+        top: 400px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <script>
+    /*
 	$.when() 함수는 
 	thenable object 들 (다른말로 deferred object)들의
 	이벤트가 끝나면 리턴타입은 Promise 객체 리턴
@@ -43,39 +43,50 @@
 	deferred 들이 다 마무리 되면 콜백 함수 호출
 	https://api.jquery.com/deferred.then/
  */
-$(document).ready(function(){
-	$("#run").click(function(e){
-		  var $box1 = $(".box1");
-		  var $box2 = $(".box2");
-		  var $box3 = $(".box3");
 
-		  // TODO
-		  
-	});	
-});
-</script>
+    const jq = $.noConflict();
+    jq(document).ready(function ($) {
+      jq('#run').click(function () {
+        const $box1 = $('.box1');
+        const $box2 = $('.box2');
+        const $box3 = $('.box3');
 
-<body>
-<button id="run">run</button>
-<div class="box1"></div>
-<div class="box2"></div>
-<div class="box3"></div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+        $box1.animate({ left: '200px' }, 1000);
+        $box2.animate({ top: '100px' }, 1500);
+        // $box3.animate({ top: '250px' }, 1500);
+
+        // $box1 과 $box2 의 애니메이션이 다 끝나고 나서
+        // $box3 가 움직이게 하려면?
+
+        // 전제사항 :
+        // $box1 과 $box2 중 누가 먼저 끝날지는 모른다.
+        // $box1 와 $box2 가 언제 끝날지도 모른다.
+
+        // 방법1
+        // delay() (앞의 작업이 얼마나 걸리는지 안다면 delay를 걸어 해결한다)
+        // $box3.delay(1500).animate({ top: '250px' }, 1500);
+
+        // 방법2
+        // $when() 사용 => Promise 반환
+        $.when($box1, $box2).then(function () {
+          $box3.delay(1500).animate({ top: '250px' });
+        });
+        // $.when() 함수는
+        // thenable object 들 (다른말로 deferred object)들의
+        // 이벤트가 끝나면 리턴타입은 Promise 객체 리턴
+        // https://api.jquery.com/jquery.when/
+
+        // deferred.then() 함수
+        // deferred 들이 다 마무리 되면 콜백 함수 호출
+      });
+    });
+  </script>
+  <body>
+    <h1>when & then</h1>
+
+    <button id="run">run</button>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
