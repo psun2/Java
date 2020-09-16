@@ -108,4 +108,14 @@
 		<url-pattern>/memberUpdate</url-pattern>
 	</servlet-mapping>
 
+	<!-- 파일 업로드 servlet -->
+	<servlet>
+		<servlet-name>MemberProfileServlet</servlet-name>
+		<servlet-class>member.MemberProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberProfileServlet</servlet-name>
+		<url-pattern>/memberProfile</url-pattern>
+	</servlet-mapping>
+
 </web-app>
