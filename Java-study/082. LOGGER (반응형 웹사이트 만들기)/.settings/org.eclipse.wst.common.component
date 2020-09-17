@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="082. LOGGER (반응형 웹사이트 만들기)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="082._LOGGER_(반응형_웹사이트_만들기)"/>
+    </wb-module>
+</project-modules>

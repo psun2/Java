@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSON 데이터 다루기</title>
+    <style>
+      table,
+      td,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      table {
+        width: 100%;
+      }
+
+      td:nth-child(1),
+      td:nth-child(3),
+      td:nth-child(4) {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <script src="JS/Js006_Data.js"></script>
+
+  <body>
+    <div class="count"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>타이틀</th>
+          <th>월세</th>
+          <th>보증금</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- 스크립트 -->
+    <script>
+      // TODO
+      console.log(x);
+      console.log(x.items[0].item);
+
+      pushCount = (event) => {
+        const target = document.querySelector('.count');
+        const span = document.createElement('span');
+
+        span.innerText = `${x.items.length} 개의 매물이 있습니다.`;
+        target.append(span);
+      };
+
+      handleJSONDate = (event) => {
+        const target = document.querySelector('tbody');
+
+        returnTableDate = (data) => {
+          const td = document.createElement('td');
+          td.innerText = data;
+          if (parseInt(data) === 0) td.style.backgroundColor = 'yellow';
+          return td;
+        };
+
+        let num = 1;
+        x.items.forEach((index) => {
+          const tr = document.createElement('tr');
+          target.append(tr);
+
+          tr.append(returnTableDate(num));
+          tr.append(returnTableDate(index.item.title));
+          tr.append(returnTableDate(index.item.rent));
+          tr.append(returnTableDate(index.item.deposit));
+
+          num++;
+        });
+      };
+
+      init = () => {
+        window.addEventListener('load', pushCount);
+        window.addEventListener('load', handleJSONDate);
+      };
+      init();
+    </script>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

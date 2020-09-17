@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>async await</title>
+  </head>
+  <body>
+    <h1>async await</h1>
+
+    <h4 id="title">페이지 로딩과 동시에 async await 작업 진행중 입니다.....</h4>
+
+    <h3 id="start"></h3>
+    <hr />
+    <h3 id="pending">pending : 대기 상태<br /></h3>
+    <hr />
+    <h3 id="result"></h3>
+    <script>
+      // async / await
+      // es 8 문법
+      // 비동기 작업을 할때, promise를 쓸때
+      // 좀 더 편하게 쓰기 위한 문법.
+
+      // promise 를 만드는 함수
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      const getDog = async () => {
+        await sleep(1000);
+        console.log('1초 뒤에 찍힙니다.');
+        return '강아지';
+      };
+
+      const getRabbit = async () => {
+        await sleep(5000);
+        console.log('5초 뒤에 찍힙니다.');
+        return '토끼';
+      };
+
+      const getTurtle = async () => {
+        await sleep(10000);
+        console.log('10초 뒤에 찍힙니다.');
+        return '거북이는 느려요';
+      };
+
+      function test() {
+        const rabbit = getRabbit();
+        console.log(rabbit); // 토끼
+        const dog = getDog();
+        console.log(dog); // 강아지
+        const turtle = getTurtle();
+        console.log(turtle); // 거북이는 느려요
+
+        pending(dog, rabbit, turtle);
+      }
+
+      async function process() {
+        let start2 = new Date();
+        const rabbit = await getRabbit();
+        console.log(rabbit); // 토끼
+        let end = new Date();
+        document.getElementById(
+          'result',
+        ).innerHTML += `${rabbit} ${JSON.stringify(
+          rabbit,
+        )} <br /> 값 전달 시간 : ${
+          end.getSeconds() - start2.getSeconds()
+        } 초 걸렸습니다. <br /> 여기까지 총 : ${
+          end.getSeconds() - start.getSeconds()
+        } 초 걸렸습니다. <br /><br /> `;
+
+        start2 = new Date();
+        const dog = await getDog();
+        console.log(dog); // 강아지
+        end = new Date();
+        document.getElementById('result').innerHTML += `${dog} ${JSON.stringify(
+          dog,
+        )} <br /> 값 전달 시간 : ${
+          end.getSeconds() - start2.getSeconds()
+        } 초 걸렸습니다. <br /> 여기까지 총 : ${
+          end.getSeconds() - start.getSeconds()
+        } 초 걸렸습니다. <br /><br /> `;
+
+        start2 = new Date();
+        const turtle = await getTurtle();
+        console.log(turtle); // 거북이는 느려요
+        end = new Date();
+        document.getElementById(
+          'result',
+        ).innerHTML += `${turtle} ${JSON.stringify(
+          turtle,
+        )} <br /> 값 전달 시간 : ${
+          end.getSeconds() - start2.getSeconds()
+        } 초 걸렸습니다. <br /> 여기까지 총 : ${
+          end.getSeconds() - start.getSeconds()
+        } 초 걸렸습니다. <br /><br /> `;
+
+        end = new Date();
+        document.getElementById('result').innerHTML += `총 걸린시간 : ${
+          end.getSeconds() - start.getSeconds()
+        } 소요 되었습니다.`;
+
+        document.getElementById('title').innerHTML = '모든 작업이 끝났습니다.';
+        document.getElementById('title').style.color = 'red';
+      }
+
+      const start = new Date();
+      document.getElementById('start').innerHTML = `작업 시작 : ${start}`;
+
+      test();
+      process();
+
+      function pending(dog, rabbit, turtle) {
+        const end = new Date();
+        document.getElementById(
+          'pending',
+        ).innerHTML += `${dog} ${JSON.stringify(
+          dog,
+        )} <br /> ${rabbit} ${JSON.stringify(
+          rabbit,
+        )} <br /> ${turtle} ${JSON.stringify(turtle)} <br /><br /> ${
+          end.getSeconds() - start.getSeconds()
+        } 초 걸렸습니다.`;
+
+        document.getElementById('title').innerHTML = '모든 작업이 끝났습니다.';
+        document.getElementById('title').style.color = 'red';
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Form3</title>
+</head>
+<body>
+	<h3>여러가지 Input Type</h3>
+	<form action="https://www.w3schools.com/action_page.php">
+
+		<!-- hidden -->
+		<!-- hidden 값도 서버에 넘어 갑니다. -->
+		<input type="hidden" name="data1" value='alpha'> <input
+			type="hidden" name="data2" value='beta'>
+
+		<!-- text -->
+		First name : <br /> <input type="text" name="firstName" /> <br />
+		Last name : <br /> <input type="text" name="lastName" /> <br /> <br>
+		<hr>
+
+
+		<!-- 필수요소인 경우 required ,placeholder : 입력 힌트 -->
+		ID : <br /> <input type="text" name="id" required placeholder="입력바람" />
+		<!-- required Attribute : 값이 없을시 submit 불가 -->
+		<br>
+		<hr>
+
+		<!-- disabled, readonly -->
+		<!-- disabled : submit 이 되지 않습니다. -->
+		별명 : <br /> <input type="text" name="nick" value="건드리면 안되는 값"
+			disabled /> <br />
+		<!-- readonly 는 disabled와 같이 값이 변경은 안되지만 서버로 submit 은 가능합니다. -->
+		취미 : <br /> <input type="text" name="hobby" value="읽기 전용" readonly />
+		<br>
+		<hr>
+
+		<!-- number -->
+		<!-- type number 일시 문자도 작성은 되지만 서버로 submit 되지 않습니다 -->
+		<!-- 숫자 일시는 submit이 문제 없이 가능 합니다. -->
+		<!-- BUT !!!! browser 마다 동작이 달라집니다. -->
+		나이 : <br /> <input type="number" name="age" /> <br>
+		<hr>
+
+		<!--  password -->
+		User Password : <br /> <input type="password" name="pw" required>
+		<br>
+		<hr>
+
+
+		<!-- radio -->
+		<input type="radio" name="gender" value="maie" />남성<br /> <input
+			type="radio" name="gender" value="femaie" />여성<br /> <input
+			type="radio" name="gender" value="pet" />동물<br /> <br>
+		<hr>
+
+
+		<!-- checkbox -->
+		<input type="checkbox" name="vehicle1" value="Bike" />자전거<br /> <input
+			type="checkbox" name="vehicle2" value="Car" />자동차<br /> <br>
+		<hr>
+
+
+		<!-- button -->
+		<!--  <button> 도 있고 <input type="button" 도 있다 -->
+		<input type="button" value="Click Me!" onclick="alert('hello word');" />
+		<br>
+		<hr>
+		
+		<!-- file -->
+		<input type="file" />
+		<hr/>
+
+		<!-- Muti file -->
+		<input type="file" multiple/>
+		<hr/>
+
+		<!-- reset -->
+		<input type="reset" value="초기화" />
+
+		<!-- submit -->
+		<input type="submit" value="제출">
+
+		<hr />
+		
+		<!-- form 안의 button 은 type=button 이 명시 안되면 submit 종작을 하니 주의! -->
+		<!-- button이 type 명시 없을시 form안에 들어 갔을시 submit의로 동작합니다. -->
+		<button type="button">버튼이당!</button>
+		<button>button element가 form 안에서 type이 명시 안될시 default 는 submit 입니다.</button>
+
+	</form>
+
+</body>
+</html>

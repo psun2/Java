@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQuery DOM연습</title>
+    <style>
+      div {
+        padding: 3px;
+      }
+      p {
+        background-color: cyan;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+      }
+      td {
+        background-color: orange;
+      }
+
+      span,
+      input {
+        display: inline-block;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    // TODO:
+
+    function change(target) {
+      var tagName = $(target).prop('tagName');
+      if (tagName === 'SPAN') {
+        var text = $(target).text();
+        var input = $('<input />').val(text);
+        $(target).after(input);
+        input.focus();
+        input.focusout(function () {
+          change(this);
+        });
+        $(target).remove();
+      } else if (tagName === 'INPUT') {
+        var value = $(target).val();
+        var span = $('<span></span>').text(value);
+        $(target).after(span);
+        span.click(function () {
+          change(this);
+        });
+        $(target).remove();
+      }
+    }
+
+    $(document).ready(function () {
+      $('#table1')
+        .children()
+        .find('td')
+        .children()
+        .click(function (event) {
+          change(event.target);
+        });
+    });
+  </script>
+
+  <body>
+    <div>
+      <table id="table1">
+        <tr>
+          <th>이름</th>
+          <th>아이디</th>
+        </tr>
+        <tr>
+          <td>
+            <span>홍길동</span>
+          </td>
+          <td>
+            <span>Mr.Hong</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

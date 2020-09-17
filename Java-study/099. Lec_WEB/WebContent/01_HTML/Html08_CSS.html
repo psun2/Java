@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CSS</title>
+<link rel="stylesheet" href="./CSS/styles.css" />
+<link rel="stylesheet" href="./CSS/reset.css" />
+<!--
+    <style>
+      :root {
+        /* Color */
+        --white-color: #fff;
+        --black-color: #140a00;
+        --blue-color: #045fd4;
+        --red-color: #ff0000;
+        --grey-dark-color: #909090;
+        --grey-light-color: #e0e0e0;
+        /* Size */
+        --padding: 12px;
+        --avatar-size: 36px;
+        /* Font Size */
+        --font-large: 18px;
+        --font-medium: 14px;
+        --font-small: 12px;
+        --font-micro: 10px;
+      }
+      /* selector { property: value;} */
+      body {
+        background-color: powderblue;
+      }
+      h1 {
+        color: blue;
+      }
+      p {
+        color: green;
+      }
+      #test {
+        color: var(--blue-color);
+        font-size: var(--font-large);
+      }
+    </style>
+          -->
+</head>
+
+<!--
+CSS : Cascading Style Sheets.
+ HTML elements 들이 화면상에 어떻게 표시될지 기술함.
+ 
+적용방식 3가지
+1. Inline : 시작태그에 style 속성과 함께 기술
+2. Internal : <head> 안에 <style> 태그로 기술
+3. External : 외부 파일 (*.css) 로 만들고 연결
+-->
+
+<body>
+	<h1>This is a heading1</h1>
+	<p>This is a paragraph1</p>
+	<h1>This is a heading2</h1>
+	<p style="color: magenta;">This is a paragraph2</p>
+
+	<hr />
+
+	<h1>This is a heading3</h1>
+	<p>This is a paragraph3</p>
+	<p>I am different1</p>
+
+	<hr />
+
+	<p>This is a paragraph4</p>
+	<p>This is a paragraph5</p>
+	<p>I am different2.</p>
+	<p>This is a paragraph6</p>
+	<p id="test">I am different too3.</p>
+</body>
+</html>

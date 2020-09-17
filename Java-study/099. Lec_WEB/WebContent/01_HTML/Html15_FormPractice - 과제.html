@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/reset.css" />
+    <link rel="stylesheet" href="./CSS/form.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/5d1d5aa1e7.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Form 만들기 과제</title>
+  </head>
+  <body>
+    <section class="order">
+      <form
+        class="order__form"
+        action="https://www.w3schools.com/action_page.php"
+      >
+        <!-- 주문자 정보 입력 -->
+        <div class="order__input">
+          <h1 class="input__title">주문자 정보 입력</h1>
+          <div class="wrapper">
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">주문자정보</div>
+              <div class="box__content">
+                비회원으로 상품구매 시 반드시 본인인증을 하셔야 합니다.
+              </div>
+              <div class="box__btns">
+                <button type="button" class="oreder__btn">휴대폰인증</button>
+                <button type="button" class="oreder__btn">아이핀인증</button>
+              </div>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">주소</div>
+              <input
+                class="input__sm"
+                type="text"
+                name="zipcode"
+                id="lbinput"
+                disabled
+                required
+              />
+              <button type="button" class="oreder__btn">주소 찾기</button>
+            </div>
+            <div class="input__boxColumn">
+              <input
+                class="input__lg"
+                type="text"
+                name="zipjuso1"
+                disabled
+                required
+              />
+            </div>
+            <div class="input__boxColumn">
+              <input class="input__lg" type="text" name="zipjuso2" required />
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">휴대전화</div>
+              <select class="input__sm tel__select" id="lbselec" name="telFirst">
+                <option class="tel_selectOption" value="010" selected
+                  >010</option
+                >
+              </select>
+              <span>-</span>
+              <input
+                type="text"
+                name="telMiddle"
+                class="tel__input input__sm"
+                required
+              />
+              <span>-</span>
+              <input
+                type="text"
+                name="telLast"
+                class="tel__input input__sm"
+                required
+              />
+              <div class="box__chkBox">
+                <input type="checkbox" name="toChecked" checked />
+                <span>
+                  SMS수신동의
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">이메일</div>
+              <input
+                type="email"
+                name="emailID"
+                class="email__input input__m"
+                required
+              />
+              <span>@</span>
+              <input
+                type="text"
+                name="emailDomain"
+                class="email__input input__m"
+                required
+              />
+              <select class="email__select input__sm" name="emailLast">
+                <option value="DirectInput" selected>직접입력</option>
+                <option value="naver.com">네이버</option>
+                <option value="google.com">구글</option>
+                <option value="daum.net">다음</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div>
+        <div class="msg">
+          *SK플래닛㈜는 통신판매중개자로서 통신판매의 당사자가 아니며,
+          개별판매자가 등록한 상품정보 및 거래에 대해 SK플래닛㈜는 일체의 책임을
+          지지 않습니다.
+        </div>
+
+        <!--배송지 정보 입력 -->
+        <div class="order__input">
+          <h1 class="input__title">배송지 정보 입력</h1>
+          <div class="wrapper">
+          <div class="flexBox__color">
+            <div class="input__box">
+              <div class="input__flexBox">
+                <div class="box__title">배송지선택</div>
+                <button type="button">주문자 정보와 동일</button>
+              </div>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">받으시는분</div>
+              <input
+              class="input__sm fromPerson__input"
+                type="text"
+                name="fromPerson"  
+              />
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">주소</div>
+              <input
+                class="input__sm"
+                type="text"
+                name="fromZipcode"
+                id="lbinput"
+                disabled
+                required
+              />
+              <button type="button" class="oreder__btn">주소 찾기</button>
+            </div>
+            <div class="input__boxColumn">
+              <input
+                class="input__lg"
+                type="text"
+                name="fromZipjuso1"
+                disabled
+                required
+              />
+            </div>
+            <div class="input__boxColumn">
+              <input
+                class="input__lg"
+                type="text"
+                name="fromZipjuso2"
+                required
+              />
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">휴대전화</div>
+              <select class="tel__select input__sm" id="lbselec" name="fromTelFirst">
+                <option class="tel_selectOption" value="010" selected
+                  >010</option
+                >
+              </select>
+              <span>-</span>
+              <input
+                type="text"
+                name="fromTelMiddle"
+                class="tel__input input__sm"
+                required
+              />
+              <span>-</span>
+              <input
+                type="text"
+                name="fromTelLast"
+                class="tel__input input__sm"
+                required
+              />
+              <div class="box__chkBox">
+                <input type="checkbox" name="fromChecked1" checked />
+                <span>
+                  안신번호 사용(무료)
+                </span>
+              </div>
+              <div class="box__icons">
+                <i class="far fa-question-circle"></i>
+              </div>
+              <div class="box__chkBox">
+                <input type="checkbox" name="fromChecked2" />
+                <span>
+                  집전화 추가 입력
+                </span>
+              </div>
+            </div>
+          </div>
+              <div class="input__box">
+                <div class="input__flexBox">
+                  <div class="box__title">배송시요구사항</div>
+                  <div class="input__boxColumn">
+                    <input class="input__lg yogu" type="text" name="yogu" />
+                  </div>
+                  <span class="flex__msg">(0자/50자)</span>
+                </div>
+                <div class="box__msg">
+                  *특정한 배송일을 지정하고자 할 경우 판매자와 연락하여 배송일을
+                  확인해 주시기 바랍니다.
+                </div>
+              </div>
+        </div>
+        </div>
+
+        <!-- 결제 정보 입력 -->
+        <div class="order__input">
+          <h1 class="input__title">결제 정보 입력</h1>
+          <div class="wrapper">
+          <div class="flexBox__color">
+            <div class="input__box">
+              <div class="input__flexBox">
+                <div class="box__title">신용카드</div>
+                <div class="flexBox__credit">
+                  <input type="radio" name="card" id="general" checked />
+                  <label for="general">신용카드(일반)</label>
+                </div>
+                <div class="flexBox__credit">
+                  <input type="radio" name="card" id="corporate" />
+                  <label for="corporate">신용카드(법인)</label>
+                </div>
+                <div class="flexBox__credit">
+                  <input type="radio" name="card" id="overseas" />
+                  <label for="overseas">해외발급카드</label>
+                </div>
+              </div>
+            </div>
+            <div class="input__box">
+              <div class="input__flexBox">
+                <div class="box__title">현금결제</div>
+                <div class="flexBox__credit">
+                  <input type="radio" name="card" id="passbook" />
+                  <label for="passbook">무통장입금</label>
+                </div>
+                <div class="flexBox__credit">
+                  <input type="radio" name="card" id="account" />
+                  <label for="account">실시간계좌이체</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">카드선택</div>
+              <select name="cardSelect" class="input__m">
+                <option value="choice"selected>선택하세요</option>
+              </select>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">할부방식</div>
+              <select name="halbu" class="input__m">
+                <option value="choice" selected>일시불</option>
+              </select>
+            </div>
+          </div>
+          <div class="input__box">
+            <div class="input__flexBox">
+              <div class="box__title">결제안내</div>
+              <div class="box__btns">
+                <button type="button" class="oreder__btn select">간편결제안내</button>
+                <button type="button" class="oreder__btn">공인인증안내</button>
+                <button type="button" class="oreder__btn">안전결제안내</button>
+                <button type="button" class="oreder__btn">안심클릭안내</button>
+                <button type="button" class="oreder__btn">해외발급카드안내</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

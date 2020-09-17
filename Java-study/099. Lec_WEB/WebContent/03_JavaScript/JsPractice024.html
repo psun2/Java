@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>JS연습:연속되지 않은 문자</title>
+  </head>
+
+  <body>
+    <h3>
+      uniqueInOrder <br />
+      연속되지 않은 문자들 출력
+    </h3>
+    문자열 입력:<input
+      type="text"
+      id="txt"
+      size="60"
+      value="alll good tree"
+    /><br />
+    <br />
+    <input
+      type="button"
+      value="결과"
+      onclick="document.getElementById('result').innerHTML =  uniqueInOrder(document.getElementById('txt').value)"
+    />
+    <!-- 이런식으로 매개변수(argument) 넘겨줄수 있다-->
+    <h3 id="result"></h3>
+  </body>
+
+  <script>
+    // 연속되지 않을 문자열 출력
+
+    var uniqueInOrder = function (iterable) {
+      // TODO
+      // return recursion(iterable.trim().split(''));
+
+      let arr = iterable.trim().split('');
+
+      arr = arr.filter((item, index) =>
+        item === ' ' ? item : arr.indexOf(item) === index,
+      );
+
+      return arr;
+    }; // end function;
+<<<<<<< HEAD
+=======
+
+    const second = (iterable) => {
+      let arr = iterable.trim().split('');
+
+      arr = arr.reduce((acc, cur, idx, src) => {
+        if (cur === ' ') acc.push(cur);
+        else if (src.indexOf(cur) === idx) acc.push(cur);
+
+        return acc;
+      }, []);
+      console.log(arr);
+    };
+    second(document.getElementById('txt').value);
+>>>>>>> a58994e59841d68b52d53c958f7bc619b844da9b
+  </script>
+</html>

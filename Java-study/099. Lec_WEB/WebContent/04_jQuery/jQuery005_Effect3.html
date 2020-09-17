@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>stop()</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <script type="text/javascript">
+    // $(selector).stop(stopAll,goToEnd);
+
+    // stopAll : 애니메이션 queue 가 clear 되는지 여부,
+    //			디폴트값은 false, 즉 중간에 stop 되면 현재 애니메이션만 중단되고 다음 애니메이션이 진행
+    // goToEnd : stop() 될때 곧바로 애니메이션의 끝 상태로.  디폴트 값은 false
+
+    $(document).ready(function () {
+      // #start 버튼을 누르면 다음 애니메이션이 '차례대로' 진행
+      // 1. 사각형이 오른쪽으로 100px 움직이고 (5초)
+      // 2. 글자 크기가 3em 으로 커지게 하기 (5초)
+      // TODO:
+      $('#start').click(function () {
+        // stop button 을 작동 시켰을시
+        // font-size 에 대한 애니메이션은 이동에 애니메이션에 대한 콜백으로서,
+        // 이동이 정지되면 받을 콜백도 없기 때문에 font-size 가 변경되지 않습니다.
+        // $('div').animate({ left: '100px' }, 5000, function () {
+        //   $('div').animate({ fontSize: '3em' }, 5000);
+        // });
+
+        // 위와 stop 함수가 다르게 작동합니다.
+        // stop button 을 작동 시켰을시
+        // 왼쪽으로 가는 움직임은 정지 하지만 font-size 에 대한 애니메이션은 정지 되지 않습니다.
+        $('div').animate({ left: '100px' }, 5000);
+        $('div').animate({ fontSize: '3em' }, 5000);
+      });
+
+      // TODO:
+      $('#stop').click(function () {
+        $('div').stop();
+      });
+
+      // TODO:
+      $('#stopAll').click(function () {
+        $('div').stop(true); // 애니메이션 큐의 모든 애니메이션 종료
+      });
+
+      // TODO:
+      // 첫번째 anim중 stop() 하면? 아래 각각의 경우는?
+      $('#stopButFinish').click(function () {
+        // $('div').stop(false, true);
+        $('div').stop(true, true);
+      });
+    });
+  </script>
+  <body>
+    <h1>stop()</h1>
+
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="stopAll">Stop all</button>
+    <button id="stopButFinish">Stop but finish</button>
+
+    <br />
+    <br />
+
+    <div
+      style="
+        background: #98bf21;
+        height: 100px;
+        width: 200px;
+        position: absolute;
+      "
+    >
+      HELLO
+    </div>
+  </body>
+</html>

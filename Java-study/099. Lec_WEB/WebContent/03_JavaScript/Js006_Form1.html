@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form 데이터</title>
+    <style>
+      div#btnBox {
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        margin: 4px;
+        border: 1px solid orange;
+        width: 180px;
+      }
+      div#btnBox * {
+        margin: 2px;
+      }
+    </style>
+  </head>
+  <!-- 
+	JavaScript 로 
+	다양한 form element 들의 '값을 가져 올수도' 있어야 한며,
+	반대로 '값을 입력해야 할수도' 있다.
+	
+	JavaScript 는 form element 들을 접근할수 있는
+	다양한 방법들을 제공한다.  (특히 name 값 활용!)
+ -->
+
+  <!-- 
+	※ 각 form element별 동작하는 것으로 JS 와 HTML 코드 작성하면서 확인 하기 
+ -->
+  <script>
+    // TODO:
+
+    // 입력값 보여주기
+    const showData = () => {
+      let result = '입력결과<br />';
+
+      // FIXME: form 객체 가져오기
+      let form = document.forms.myform1;
+      console.log(form);
+      form = document.forms['myform1'];
+      console.log(form);
+
+      // FIXME: 1. 일반적인 input 값 .value 값
+      let username = document.forms['myform1']['username'].value;
+      console.log('username : ', username);
+      username = document.forms.myform1.username.value;
+      console.log('username : ', username);
+      username = form['username'].value;
+      console.log('username : ', username);
+      username = form.username.value;
+      console.log('username : ', username);
+      result += `이름: ${username}<br />`;
+
+      // FIXME: 2. checkbox 의 값 .checked 로 판단.
+      let hobby = '';
+      if (form.drive.checked) hobby += form.drive.value;
+      if (form.music.checked) hobby += form.music.value;
+      if (form.sports.checked) hobby += form.sports.value;
+      result += `취미: ${hobby}<br />`;
+
+      // FIXME: 3. checkbox 동일 name 이 여럿인 경우 (Array 반환)
+      let skill = '';
+      // frm['skill'] <== skill 이라는 name을 갖고 있는 form element 들의 array
+      console.log('name 이 같다면 배열 반환 : ', form.skill);
+      form.skill.forEach((index) => {
+        if (index.checked) skill += index.value + ', ';
+      });
+      result += `보유기술: ${skill}<br />`;
+
+      // FIXME: 4. radio : 이 또한 동일 name 으로 구성. 3. 과 유사
+      let gender = '';
+      form.gender.forEach((index) => {
+        index.checked ? (gender += index.value) : gender;
+      });
+      result += `성별: ${gender}<br />`;
+
+      // FIXME: 5.<select> : 단일 .value 사용
+      let cars = '';
+      result += `좋아하는차1: ${form.cars.value}<br />`;
+
+      // FIXME: 6.<select> : multiple 3. 과 비슷
+      var cars2 = '';
+      console.log(
+        '배열 반환이 아닌 select 의 option 들을 반환(1) : ',
+        form['cars2'],
+      );
+      console.log(
+        '배열 반환이 아닌 select 의 option 들을 반환(2) : ',
+        form.cars2,
+      );
+      console.log('Array.from() 을 사용하여 배열화 : ', Array.from(form.cars2));
+      // 방법1. select 태그를 이용한 for 문
+      // 어떠한 기준인지 모르겠으나 위 for 문과 아래의 for 문은 같은 결과를 반환하는데,
+      // 위의 for문에서의 car2의 length에서 오류 가 발생합니다.
+      //   for (let i = 0; i < form.casr2.length; i++) {
+      //     if (form.casr2[i].selected) cars2 += form.cars2[i].value + ',';
+      //   }
+      for (let i = 0; i < form['cars2'].length; i++) {
+        if (form['cars2'][i].selected) cars2 += form['cars2'][i].value + ', ';
+      }
+      Array.from(form.cars2).forEach((index) => {
+        if (index.selected) cars2 += index.value + ', ';
+      });
+      result += `좋아하는차2: ${cars2}<br />`;
+
+      // FIXME: 7.<textarea> : .innerHTML 혹은 .value 로 값을 가져올수 있다.
+      // .value : '현재' 사용자가 입력한 값
+      // .innerHTML : 'HTML' content의 값
+      result += `메모: ${form.message.value}<br />`; // 현재 focus를 두고 있는 textarea의 값
+      result += `메모: ${form.message.innerHTML}<br />`; // mark Up으로 등록되어있는 태크 안쪽의 값
+
+      // 결과값 대입
+      document.getElementById('result').innerHTML = result;
+    };
+
+    // 입력값 셋팅
+    const setData = () => {
+      const form = document.forms.myform1;
+
+      // FIXME: input
+      form.username.value = '홍길동';
+
+      // FIXME: checkbox
+      form.drive.checked = false;
+      form.music.checked = true;
+      form.sports.checked = true;
+
+      // FIXME: checkbox (동일 name)
+      form.skill[0].checked = false;
+      form.skill[1].checked = true;
+      form.skill[2].checked = true;
+
+      // FIXME: radio button
+      form.gender[1].checked = true;
+
+      // FIXME: select (단일)
+      form.cars.value = 'fiat'; // 해당 value 값으로 바꿔주면 알아서 바뀐다.
+      form.cars[1].selected = true; // 위와 같은 행동을 할 수 있습니다.
+
+      // FIXME: select (multiple)
+      form.cars2[0].selected = true;
+      form.cars2[1].selected = false;
+      form.cars2[2].selected = true;
+      form.cars2[3].selected = false;
+
+      // FIXME: textarea : .value .innerHTML
+      form['message'].value = '안녕하세요!';
+    };
+  </script>
+  <body>
+    <div id="btnBox">
+      <button type="button" onclick="showData();">입력값 보여주기</button>
+      <br />
+      <button type="button" onclick="setData();">입력값 세팅</button>
+      <br />
+      <p id="result"></p>
+    </div>
+
+    <form name="myform1">
+      이름:<br />
+      <input type="text" name="username" /><br />
+      <br />
+
+      취미:<br />
+      <input type="checkbox" name="drive" value="driving" />드라이빙<br />
+      <input type="checkbox" name="music" value="music" />음악<br />
+      <input type="checkbox" name="sports" value="sports" />운동<br />
+      <br />
+
+      보유기술:<br />
+      <input type="checkbox" name="skill" value="자바" />JAVA<br />
+      <input type="checkbox" name="skill" value="닷넷" />.Net<br />
+      <input type="checkbox" name="skill" value="애플" />iOS<br />
+      <br />
+
+      성별:<br />
+      <input type="radio" name="gender" value="male" />남<br />
+      <input type="radio" name="gender" value="female" />여<br />
+      <input type="radio" name="gender" value="animal" />케모노<br />
+      <br />
+
+      좋아하는 차1:<br />
+      <select name="cars">
+        <option value="volvo">볼보</option>
+        <option value="saab">사브</option>
+        <option value="fiat">피아트</option>
+        <option value="audi" selected>아우디</option>
+      </select>
+      <br /><br />
+
+      좋아하는 차2:<br />
+      <select name="cars2" size="4" multiple>
+        <option value="volvo">볼보</option>
+        <option value="saab" selected>사브</option>
+        <option value="fiat">피아트</option>
+        <option value="audi" selected>아우디</option>
+      </select>
+      <br /><br />
+
+      메모:<br />
+      <textarea name="message" style="width: 200px; height: 100px">
+The cat was playing in the garden.</textarea
+      >
+      <br />
+
+      <!-- <input type="submit" value="제출">  -->
+    </form>
+
+    <!-- 
+<form name="myform2">
+별명:<br>
+<input type="text" name="nickname">
+<br><br>
+<input type="submit" value="제출">
+</form>
+ -->
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

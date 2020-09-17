@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery Intro</title>
+  </head>
+  <script>
+    function hideP() {
+      // TODO:
+      const elements = document.getElementsByTagName('p');
+
+      for (value of elements) {
+        value.addEventListener('click', function () {
+          this.style.display = 'none';
+        });
+      }
+    } // end hideP()
+
+    function hideElement() {
+      // TODO
+    }
+
+    // TODO: 함수나 변수이름으로 $ 사용 가능
+    $ = 10;
+    // alert($);
+    $ = function () {
+      document.write('hello<br />');
+    };
+    $();
+
+    (function () {
+      document.write('하하하하하하하<br />');
+    })();
+  </script>
+  <body onload="hideP()">
+    <h1>jQuery Intro</h1>
+    <p>없어지는 마술을 보여줄께.</p>
+    <p>요것도.</p>
+    <p>따다~~!</p>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Table1</title>
+
+<style>
+table, td, th {
+border: 1px solid black;
+border-collapse: collapse;
+/* border-collapse: collapse : border가 겹치는 부분을 지워(?) 줍니다 */
+}
+</style>
+
+</head>
+<!--
+HTML 문서에 '표' 를 나타내기 위한 태그로 <table> 제공
+다음 태그들과 같이 사용된다.
+<tr> : table row
+<td> : table data
+<th> : table header
+실제 내용을 담는 태그는 td, th 다.
+ 
+
+정렬관련 (td, th 에 적용)
+좌우 정렬: text-align
+세로 정렬: vertical-align
+ 
+ -->
+<body>
+
+	<table>
+
+		<!-- tr : 행 -->
+		<!-- td : 열 -->
+		<!-- th : 헤더 => 굵은 타이틀 글씨 -->
+		<!-- thead : 테이블 헤더를 모아놓은 태그-->
+		<!-- tbody : 테이블에서 테이블 열과 데이터를 모아놓은 태그 -->
+		<!-- 해더와 바디는 별개의 태그로 묶여있으니 colspan 과 rowspan 도 따로 따로 먹으니 주의 바랍니다. -->
+
+
+		<tr>
+			<th>111</th>
+			<th>222</th>
+			<th>333</th>
+		</tr>
+
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+		</tr>
+
+		<tr>
+			<td>4</td>
+			<td>5</td>
+			<td>6</td>
+		</tr>
+
+		<tr>
+			<td>7</td>
+			<td>8</td>
+			<td>9</td>
+		</tr>
+
+
+	</table>
+
+	<hr />
+	<hr />
+	<hr />
+
+	<table>
+		<thead>
+			<tr>
+				<th>111</th>
+				<th>222</th>
+				<th>333</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>8</td>
+				<td>9</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX API서울시 지하철호선별 역별 승하차 인원 정보</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <!-- 
+■서울시 지하철호선별 역별 승하차 인원 정보 
+http://data.seoul.go.kr/dataList/datasetView.do?infId=OA-12914&srvType=A&serviceKind=1&currentPageNo=1
+샘플url
+XML 버젼
+http://openapi.seoul.go.kr:8088/키값을넣으세요/xml/CardSubwayStatsNew/1/5/20181001
+예) http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/xml/CardSubwayStatsNew/1/5/20181001  
+JSON 버젼
+http://openapi.seoul.go.kr:8088/키값을넣으세요/json/CardSubwayStatsNew/1/5/20181001
+예) http://openapi.seoul.go.kr:8088/4d46796d7366726f3833774a774955/json/CardSubwayStatsNew/1/5/20181001 
+ -->
+  <body>
+    <h1>서울시 지하철 승하차 인원 정보</h1>
+    <form>
+      날짜 (yyyyMMdd):
+      <input type="text" name="date" id="date" value="20181001" /><br /><br />
+
+      <button type="button" onclick="loadData()">승하차정보 가져오기</button>
+      <button type="button" onclick="removeTable()">지우기</button>
+    </form>
+    <br /><br />
+    <h2>AJAX + XML</h2>
+    <table id="demoXML"></table>
+    <hr />
+    <h2>AJAX + JSON</h2>
+    <table id="demoJSON"></table>
+
+    <script>
+      // TODO:
+
+      const api_key = '42424f4e48746a6434344575756f68';
+      let date = undefined;
+      let kind = undefined;
+      let startIndex = 1;
+      let endIndex = 5;
+      let url = undefined; // http://openapi.seoul.go.kr:8088/(인증키)/xml/CardSubwayStatsNew/1/5/20151101
+      let xhtt = undefined;
+
+      function loadData() {
+        // TODO:
+
+        // XML
+        date = document.getElementById('date').value.trim();
+        kind = 'xml';
+        url = `http://openapi.seoul.go.kr:8088/${api_key}/${kind}/CardSubwayStatsNew/${startIndex}/${endIndex}/${date}`;
+        console.log('XML URL', url);
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.status === 200 && this.readyState === 4)
+            parseXML(this.responseXML);
+        };
+        xhttp.open('GET', url, true); // true: 비동기 통신 false: 동기 통신
+        xhttp.send();
+
+        // JSON
+        date = document.getElementById('date').value.trim();
+        kind = 'json';
+        url = `http://openapi.seoul.go.kr:8088/${api_key}/${kind}/CardSubwayStatsNew/${startIndex}/${endIndex}/${date}`;
+        console.log('JSON URL', url);
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+          if (xhttp.status === 200 && xhttp.readyState === 4)
+            parseJSON(xhttp.responseText);
+        };
+        xhttp.open('GET', url, true); // true: 비동기 통신 false: 동기 통신
+        xhttp.send();
+
+        function parseXML(xmlDOM) {
+          // TODO:
+          const row = xmlDOM.getElementsByTagName('row'); // XML 데이터는 대소문자를 구분합니다.
+          const rowArr = Array.from(row);
+          let table =
+            '<tr><th>호선</th><th>역명</th><th>승차인원</th><th>하차인원</th></tr>';
+          rowArr.forEach((index) => {
+            const LINE_NUM = index.getElementsByTagName('LINE_NUM')[0]
+              .childNodes[0].nodeValue;
+            const SUB_STA_NM = index.getElementsByTagName('SUB_STA_NM')[0]
+              .childNodes[0].nodeValue;
+            const RIDE_PASGR_NUM = index.getElementsByTagName(
+              'RIDE_PASGR_NUM',
+            )[0].childNodes[0].nodeValue;
+            const ALIGHT_PASGR_NUM = index.getElementsByTagName(
+              'ALIGHT_PASGR_NUM',
+            )[0].childNodes[0].nodeValue;
+            table += `<tr><td>${LINE_NUM}</td><td>${SUB_STA_NM}</td><td>${RIDE_PASGR_NUM}</td><td>${ALIGHT_PASGR_NUM}</td></tr>`;
+          });
+          document.getElementById('demoXML').innerHTML = table;
+        }
+
+        function parseJSON(jsonObj) {
+          // TODO:
+          const parsed = JSON.parse(jsonObj); // 문자열 형태의 제이슨을 오브젝트로 파싱합니다.
+          const rowArr = parsed.CardSubwayStatsNew.row;
+          let table =
+            '<tr><th>호선</th><th>역명</th><th>승차인원</th><th>하차인원</th></tr>';
+          rowArr.forEach((index) => {
+            const LINE_NUM = index.LINE_NUM;
+            const SUB_STA_NM = index.SUB_STA_NM;
+            const RIDE_PASGR_NUM = index.RIDE_PASGR_NUM;
+            const ALIGHT_PASGR_NUM = index.ALIGHT_PASGR_NUM;
+            table += `<tr><td>${LINE_NUM}</td><td>${SUB_STA_NM}</td><td>${RIDE_PASGR_NUM}</td><td>${ALIGHT_PASGR_NUM}</td></tr>`;
+          });
+          document.getElementById('demoJSON').innerHTML = table;
+        }
+      }
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form 검증2</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <!-- 여러개의 체크 박스의 경우, 그중에 몇개이상 체크해야 하는 경우라면? -->
+  <body>
+    <form name="frm" action="https://www.w3schools.com/action_page.php">
+      <table>
+        <tr>
+          <th>check</th>
+          <th>id</th>
+          <th>이름</th>
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="id" value="43" /></td>
+          <td>43</td>
+          <td>최승섭</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="id" value="27" /></td>
+          <td>27</td>
+          <td>강성후</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="id" value="8" /></td>
+          <td>8</td>
+          <td>하혜선</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" name="id" value="11" /></td>
+          <td>11</td>
+          <td>이재민</td>
+        </tr>
+      </table>
+      <br />
+      <!--  TODO : onclick -->
+      <button type="button" onclick="handleSubmit();">삭제하기</button>
+      <br />
+    </form>
+
+    <script>
+      // TODO:
+
+      const form = document.forms.frm;
+
+      const handleSubmit = () => {
+        let count = 0;
+        form.id.forEach((index) => {
+          if (index.checked) count++;
+        });
+        if (count === 0) {
+          alert('한개 이상 체크가 되어야 합니다.');
+        } else {
+          if (confirm('정말 삭제 하시겠습니까?')) form.submit();
+          else {
+            form.id.forEach((index) => {
+              index.checked = false;
+            });
+            alert('삭제가 취소 되었습니다.');
+          }
+        }
+      };
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

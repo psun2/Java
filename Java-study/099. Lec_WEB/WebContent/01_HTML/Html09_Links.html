@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HyperLinks</title>
+
+<style>
+
+a { /* 링크의 밑줄을 없앰 */
+	text-decoration: none;
+	/* all : unset; : 모든 스타일을 제거 */
+	all : unset;
+}
+
+a:link { /* 기본 상태 스타일 */
+	color: pink;
+	background-color: transparent; /* 배경색을 지정 하지 않음 */
+	text-decoration: none;
+}
+
+a:visited { /* 방문한 상태 스타일 */
+	color: green;
+	background-color: transparent; /* 배경색을 지정 하지 않음 */
+	text-decoration: none;
+}
+
+a:hover { /* 마우스가 올라간 상태 스타일 */
+	color: red;
+	background-color: transparent; /* 배경색을 지정 하지 않음 */
+	text-decoration: underline;
+}
+
+a:active { /* 마우스가 눌린 상태 스타일 */
+	color: blue;
+	background-color: transparent; /* 배경색을 지정 하지 않음 */
+	text-decoration: underline;
+}
+/*
+a:active, a:hover {
+	background-color: greenyellow;
+	color: white;
+}
+*/
+</style>
+</head>
+
+<!--
+기본 구문 : <a href="url">link text</a>
+ 
+ target attribute
+	_blank - 새 윈도우나 탭에.
+	_self - 현재 브라우저창에 (디폴트)
+	_parent - 상위 frame 에
+	_top - 최 상위 윈도우에  
+ 
+ -->
+
+<body>
+	<a href="https://naver.com" target="_blank">네이버</a>
+	<br />
+	<a href="https://daum.net" target="_blank">다음</a>
+	<br />
+	<a href="https://developer.mozilla.org/ko/"> <img
+		src="../img/smiley.gif" alt="웃어?" />
+	</a>
+</body>
+</html>

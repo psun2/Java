@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>JS연습:알파벳순서 출력</title>
+  </head>
+
+  <body>
+    <h3>
+      alphabetPosition<br />영어 문장을 입력하면<br />각 글자별 알파벳 순서
+      출력하기
+    </h3>
+    <h5>알파벳 외의 문자는 무시</h5>
+    영어문장입력:<input
+      type="text"
+      id="txt"
+      size="60"
+      value="sad sa35 43sd'f sd45 stsdfdcd dyDDSD''''''''''''''''''''''''''''''"
+    />
+    <br />
+    <input
+      type="button"
+      value="결과"
+      onclick="document.getElementById('result').innerHTML = alphabetPosition(document.getElementById('txt').value)"
+    />
+    <!-- 이런식으로 매개변수(argument) 넘겨줄수 있다-->
+    <h3 id="result"></h3>
+  </body>
+
+  <script>
+    // 알파벳 순서 번호
+    // 코드 작성!
+    // const alphabet = 'a,b,c,d,e,f,g,h,i,j,j,k,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
+    const alphabet = 'abcdefghijjkmnopqrstuvwxyz';
+    var alphabetPosition = function (text) {
+      const length = alphabet.length - 1;
+      let count = 0;
+      let result = '';
+      text
+        .trim()
+        .toLowerCase()
+        .replace(/(\s*)/g, '')
+        .split('')
+        .forEach((textChar) => {
+          alphabet.split('').forEach((alphabetChar) => {
+            if (textChar === alphabetChar) {
+              result += alphabet.indexOf(textChar) + 1;
+              if (count < length) result += ' ';
+              count++;
+            }
+          });
+        });
+      return result;
+    };
+  </script>
+</html>

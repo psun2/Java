@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Object prototype</title>
+  </head>
+  <body>
+    <h2>JavaScript object ProtoType</h2>
+
+    <p id="demo1"></p>
+
+    <script>
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        this.eyes = 2;
+        this.print = function () {
+          console.log(
+            '이름: ',
+            this.name,
+            ', 나이: ',
+            this.age,
+            ', 눈: ',
+            this.eyes,
+          );
+        };
+      }
+
+      let kim = new Person('김씨', 12);
+      let park = new Person('박씨', 38);
+
+      console.log(kim);
+      // Person {name: "김씨", age: 12, eyes: 2, print: function (), constructor: Object}
+      console.log(park);
+      // Person {name: "박씨", age: 38, eyes: 2, print: function (), constructor: Object}
+
+      kim.print();
+      // 이름:  김씨 , 나이:  12 , 눈:  2
+      park.print();
+      // 이름:  박씨 , 나이:  38 , 눈:  2
+
+      console.log(Person.prototype);
+      // Object {}
+
+      document.getElementById('demo1').innerHTML =
+        'kim: Person {name: "김씨", age: 12, eyes: 2, print: function (), constructor: Object} <br/ > park: Person {name: "박씨", age: 38, eyes: 2, print: function (), constructor: Object} <br/ > kim.print(): 이름:  김씨 , 나이:  12 , 눈:  2 <br /> park.print(): 이름:  박씨 , 나이:  38 , 눈:  2 <br /> Person.prototype: {constructor: ƒ} => (Object {}) <br />';
+    </script>
+
+    <h2>Person 객체를 100 개 만들면 속성 (데이터)가 400개가 생긴다.</h2>
+    <h2>그런데.. print() 와 eyes 가 굳이 여러개 생성될 필요가 있나?</h2>
+
+    <p id="demo2"></p>
+    <p id="demo3"></p>
+    <p id="demo4"></p>
+
+    <script>
+      // Person 객체를 100 개 만들면 속성 (데이터)가 400개가 생긴다.
+      // 그런데.. print() 와 eyes 가 굳이 여러개 생성될 필요가 있나?
+
+      console.log(
+        'Person 객체를 100 개 만들면 속성 (데이터)가 400개가 생긴다.',
+      );
+      console.log(
+        '그런데.. print() 와 eyes 가 굳이 여러개 생성될 필요가 있나?',
+      );
+
+      function Person2(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      console.log(Person2.prototype); // {constructor: ƒ}
+      console.log(Person2.prototype.sharedValue); // undefined
+      Person2.prototype.sharedValue = 1;
+      console.log(Person2.prototype); // {sharedValue: 1, constructor: ƒ}
+      console.log(Person2.prototype.sharedValue); // 1
+
+      document.getElementById('demo2').innerHTML =
+        'Person2.prototype: {constructor: ƒ} <br /> Person2.prototype.sharedValue: undefined <br /> Person2.prototype.sharedValue = 1; <br /> Person2.prototype: {sharedValue: 1, constructor: ƒ} <br /> Person2.prototype.sharedValue: 1 <br />';
+
+      Person2.prototype.eyes = 2;
+      Person2.prototype.print = function () {
+        console.log(
+          '이름: ',
+          this.name,
+          ', 나이: ',
+          this.age,
+          ', 눈: ',
+          this.eyes,
+        );
+      };
+
+      document.getElementById('demo3').innerHTML = `
+      Person2.prototype.eyes = 2; <br />
+      <xmp>
+    Person2.prototype.print = function () {
+        console.log(
+          '이름: ',
+          this.name,
+          ', 나이: ',
+          this.age,
+          ', 눈: ',
+          this.eyes,
+        );
+      };
+        </xmp>`;
+
+      kim = new Person2('김씨', 12);
+      park = new Person2('박씨', 38);
+
+      console.log(kim);
+      // Person2 {name: "김씨", age: 12, constructor: Object}
+      console.log(park);
+      // Person2 {name: "박씨", age: 38, constructor: Object}
+
+      // 객체를 찍어 보았을때, 인자로 가지고 있지 않지만 print 함수 사용 이 가능합니다.
+      kim.print();
+      // 이름:  김씨 , 나이:  12 , 눈:  2
+      park.print();
+      // 이름:  박씨 , 나이:  38 , 눈:  2
+
+      console.log(Person2.prototype); // {sharedValue: 1, eyes: 2, print: ƒ, constructor: ƒ}
+
+      document.getElementById('demo4').innerHTML =
+        'kim: Person2 {name: "김씨", age: 12, constructor: Object} <br/ > park: {name: "박씨", age: 38, constructor: Object} <br/ > 위의 Person 생성자와는 다르게 Person2 생성자를 출력시 eyes proerty 와 print함수 property는 가지고 있지 않습니다. <br/ ><br /> kim.print(): 이름:  김씨 , 나이:  12 , 눈:  2 <br /> park.print(): 이름:  박씨 , 나이:  38 , 눈:  2 <br /> 하지만... print 함수가 작동 함을 알 수 있습니다. <br /><br /> Person2.prototype: {sharedValue: 1, eyes: 2, print: ƒ, constructor: ƒ} <br /> Pserson2의 프로토타입 출력 결과 prototype으로 print 와 eyes 를 가지고 있음을 알 수 있었습니다. <br />';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS string</title>
+  </head>
+  <body>
+    <h1>String</h1>
+    <script>
+      //도우미 함수들
+      function TITLE(t) {
+        document.write('<hr><h3>' + t + '</h3>');
+      }
+      function write(c) {
+        document.write(c + '<br>');
+      } // 도우미 함수
+      function wrType(dsc, c) {
+        document.write(dsc + ' : ' + c + ' ' + typeof c + '<br>');
+      }
+    </script>
+
+    <script>
+      /* 기본적으로 string 의 모든 함수는 immutable 하다. 즉 원본을 변화시키기 않고,
+       * 새로운 string 을 만들어 리턴한다.
+       */
+      var str, str1, str2;
+      TITLE('문자열 생성');
+      // 문자열은
+      //   1. "~" 혹은 '~' 으로 정의
+      //   2. new String() 으로 정의 (비추)
+      // TODO:
+      str = 'Volbo';
+
+      // '~', "~" 둘다 사용하는 이유
+      // TODO:
+      str = "It's allright";
+      write(str);
+      str = 'He is called "Johnny"';
+      write(str);
+
+      // new 사용하여 생성하는 경우
+      // TODO:
+      str1 = 'John'; // String type
+      wrType(str1, str1);
+      str2 = new String('John'); // Object type
+      wrType(str2, str2);
+
+      write(str1 == str2);
+      write(str1 === str2);
+
+      // .length
+      TITLE('length: 문자개수');
+      var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      // TODO:
+      write(str.length);
+
+      // 이스케이프 문자 escape character
+      //  \'   \"   \\    \n   \t
+      TITLE('Escapce character');
+      // TODO:
+      str = 'He is called "Johny"';
+
+      // 문자열 중간에 자르기
+      TITLE('문자열 중간에 자르기');
+      str = 'Hello Web Application'; // 과연 문자열을 중간에 자르면 될까
+      // TODO:
+      write(str);
+      // 과연 문자열을 중간에 자르면 될까
+      str = 'Hello Web Appli\
+cation';
+      write(str); // 비추...
+      str = 'Hello Web Appli' + 'cation';
+      write(str);
+
+      // indexOf(), lastIndexOf(), search() : 문자열 안에서 문자열 찾기
+      // 찾은 위치 인덱스 리턴, 못찾으면 -1 리턴
+      TITLE('문자열 검색 <br>indexOf(), lastIndexOf(), search()');
+      str = "Please locate where 'locate' occurs!";
+      // TODO:
+      write(str.indexOf('locate')); // 7
+      write(str.indexOf('locate', 8)); // 8번째부터 검색 21번째 index
+      write(str.lastIndexOf('locate')); // 21
+      write(str.lastIndexOf('locate', 15)); // 7 15번째부터 앞으로 검색 7번째 index
+      write(str.lastIndexOf('John')); // -1
+
+      // search() : 문자열 안에서 문자열 찾기
+      // TODO:
+      write(str.search('locate')); // 찾긴 찾는데 몇번째 인덱스 부터 찾는 것인지 없습니다.
+
+      // search() vs indexOf() : 둘은 다르다!
+      // 	search() : 두번째 매개변수 없다
+      // 	indexOf() : regexp 사용 불가
+
+      //문자열 추출
+      //slice(start, end)
+      //substring(start, end)
+      //substr(start, length)
+      TITLE('문자열 추출<br>slice(), substring(), substr()');
+      str = 'Apple, Banana, Kiwi';
+      // TODO:
+      write(str.slice(7, 13));
+      write(str.slice(-12, -6)); // 음수인덱싱 : 위와 역순으로 카운트가 가능
+      write(str.slice(7)); // 7부터 끝까지.
+      write(str.slice(-12));
+
+      // 문자열 치환
+      // replace() : 치환한 결과 문자열 리턴, 정규표현식 사용 가능
+      // 기본적으로 첫번째 '매칭된 문자열 만 치환
+      TITLE('문자열 치환 replace()');
+      str = 'Please visit Japan!';
+      // TODO:
+      write(str.replace('Japan', 'Korea'));
+      write(str + '\t <= 원본');
+      write(str.replace('JAPAN', 'Korea')); // 대소문자 구분.
+      write(str.replace(/JAPAN/i, 'Korea')); // i = 정규표현식 대소문자 구분 안하기(case insensitive)
+
+      str = 'Please visit Japan! Go Japan';
+      // TODO:
+      write(str.replace('Japan', 'Korea'));
+      write(str.replace(/JAPAn/gi, 'Korea'));
+
+      // 대소문자 전환
+      // toUpperCase(), toLowerCase()
+      TITLE('대소문자 전환<br>toUpperCase(), toLowerCase()');
+      str = 'Hello World!';
+      // TODO:
+      write(str.toUpperCase());
+      write(str.toLowerCase());
+
+      // 문자열 연결 concat()
+      TITLE('문자열 연결 concat()');
+      str1 = 'Hello';
+      str2 = 'World';
+
+      // 아래 두 문장은 같다
+      // TODO:
+      write(str1 + ' ' + str2);
+      write(str1.concat(' ', str2));
+      write('a'.concat('b', 'c', 'd'));
+
+      // 좌우 공백 제거 trim()
+      TITLE('좌우 공백 제거 trim()');
+      str = '       Hello World!        ';
+      //※ alert() 으로 확인해볼수 밖에 없다.
+      // TODO:
+      write(str + ' console로 확인');
+      console.log(`trim() 전 : [${str}]`);
+      console.log(`trim() 후 : [${str.trim()}]`);
+
+      // 문자 코드 :
+      // charAt(position)
+      // charCodeAt(position)
+      // Property access [ ]
+      TITLE('문자 코드 <br> [ ], charAt(), charCodeAt()');
+      str = 'HELLO WORLD';
+      // TODO:
+      write(str.charAt(0));
+      write(str.charAt(100));
+      write(str.charCodeAt(0));
+      write(str[0]);
+      write(str[100]);
+
+      // 다음과 같이 해도 변화없다
+      // TODO:
+      str[0] = 'Y'; // immutable 이므로 바뀌지 않습니다. 아무런 변화가 없습니다.
+      write(str);
+
+      //
+      write('a' < 'b'); // true
+      write('able' > 'bible'); // false
+
+      // 1. bible
+      // 2. cable
+      // 3. table
+      // 4. albe
+      // => 4 - 1 - 2 - 3
+
+      // 1. AaAa
+      // 2. aaAA
+      // 3. AAaa
+      // 4. aAaA
+      // => 3 - 1 - 4 - 2
+
+      const arr2 = ['AaAa', 'aaAA', 'AAaa', 'aAaA'];
+      console.log(
+        arr2.sort((a, b) => {
+          return a - b;
+        }),
+      );
+      console.log(
+        arr2.sort((a, b) => {
+          return b - a;
+        }),
+      );
+
+      const arr1 = [2, 1, 0, 5];
+      console.log(
+        arr1.sort((a, b) => {
+          return a - b;
+        }),
+      );
+      console.log(
+        arr1.sort((a, b) => {
+          return b - a;
+        }),
+      );
+
+      // string -> array : split()
+      // array -> string : join()
+      TITLE('string ↔ array');
+      str = '2019-11-23';
+      // TODO:
+      var arr = str.split('-');
+      write(arr);
+      write(arr[0]);
+
+      str = 'Hello';
+      // TODO:
+      write(str.split(''));
+      str = 'Hello My World';
+      write(str.split(' '));
+
+      arr = ['H', 'e', 'l', 'l', 'o']; // array -> string
+      // TODO:
+      write(arr.join('_'));
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

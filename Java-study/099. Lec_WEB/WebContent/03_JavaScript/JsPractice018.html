@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JS연습: *직각삼각형</title>
+  </head>
+
+  <body>
+    <h3>
+      * 직각 삼각형<br />숫자를 입력하면 숫자의 크기 만큼 * 직각 삼각형 출력
+    </h3>
+    숫자입력:<input type="number" id="txt" />
+    <br />
+    <input type="button" value="결과" onclick="triangle()" />
+    <h3 id="result"></h3>
+  </body>
+
+  <script>
+    function triangle() {
+      const len = parseInt(document.getElementById('txt').value.trim());
+      console.log(len);
+      for (let i = 1; i <= len; i++) {
+        for (let j = 1; j <= i; j++) {
+          const span = document.createElement('span');
+          span.innerText = '*';
+          document.getElementById('result').appendChild(span);
+        }
+        const br = document.createElement('br');
+        document.getElementById('result').appendChild(br);
+        document.getElementById('txt').value = '';
+      }
+    }
+    // function triangle() {
+    //   var num = parseInt(document.getElementById('txt').value.trim());
+    //   var result = '';
+
+    //   for (var i = 0; i <= num; i++) {
+    //     for (var j = 0; j <= i; j++) {
+    //       result += '*';
+    //     }
+    //     result += '<br>';
+    //   }
+    //   document.getElementById('result').innerHTML = result;
+    // }
+  </script>
+</html>
