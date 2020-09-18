@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="CSS/111_LoginForm.css" rel="stylesheet" type="text/css" />
+    <title>Login Form</title>
+  </head>
+  <body>
+    <h2>Modal Login Form</h2>
+
+    <!-- Button to open the modal login form -->
+    <button id="btn_login" style="width: auto">Login</button>
+
+    <!-- The Modal -->
+    <div id="modal_box" class="modal">
+      <!-- Form : 이 위치에 form 을 넣습니다 -->
+      <form
+        class="modal-content animate"
+        action="https://www.w3schools.com/action_page.php"
+        method="post"
+      >
+        <div class="imgcontainer">
+          <!-- 닫기버튼  -->
+          <span class="close" title="Close Modal">&times;</span>
+
+          <!-- 이미지  -->
+          <img src="../img/img_avatar.png" alt="아바타" class="avatar" />
+        </div>
+
+        <div class="container">
+          <!-- 로그인 form -->
+          <label for="uname"><b>Username</b></label>
+          <input
+            type="text"
+            placeholder="Enter username"
+            name="uname"
+            required
+          />
+          <label for="psw"><b>Password</b></label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="psw"
+            required
+          />
+          <button type="submit">Login</button>
+          <label for="">
+            <input type="checkbox" name="remember" checked /> Rememeber me
+          </label>
+        </div>
+
+        <div class="container" style="background-color: #f1f1f1">
+          <!-- 취소 버튼 -->
+          <button type="button" class="cancelbtn">Cancel</button>
+
+          <!-- 비밀번호 잊으셨나요? -->
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // TODO:
+      var modal_box = document.getElementById('modal_box');
+      var btn_login = document.getElementById('btn_login');
+      var btn_close = document.getElementsByClassName('close')[0];
+      var btn_cancel = document.getElementsByClassName('cancelbtn')[0];
+
+      btn_login.onclick = function () {
+        modal_box.style.display = 'block';
+      };
+      btn_close.onclick = function () {
+        modal_box.style.display = 'none';
+      };
+      btn_cancel.onclick = function () {
+        modal_box.style.display = 'none';
+      };
+      window.onclick = function (event) {
+        if (event.target == modal_box) {
+          modal_box.style.display = 'none';
+        }
+      };
+    </script>
+  </body>
+</html>

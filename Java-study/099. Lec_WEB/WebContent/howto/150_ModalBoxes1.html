@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="CSS/150_ModalBoxes1.css" rel="stylesheet" type="text/css" />
+    <title>Modal Boxes</title>
+  </head>
+  <body>
+    <!-- modal 로 작동하는 레이어드 팝업 (layered popup> -->
+    <button id="myBtn">Modal 팝업</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>팝업창의 내용입니다. 어쩌구 저쩌구</p>
+      </div>
+    </div>
+
+    <script>
+      // TODO:
+      var modal = document.getElementById('myModal');
+      var btn = document.getElementById('myBtn');
+      var span = document.getElementsByClassName('close')[0];
+
+      // 버튼 클릭하면 팝업 보이게 하기
+      btn.onclick = function () {
+        modal.style.display = 'block';
+      };
+
+      // 팝업의 x 버튼 누르면 닫히게 하기
+      span.onclick = function () {
+        modal.style.display = 'none';
+      };
+
+      // 팝업창 바깥을 클릭해도 팝업이 닫히게 하기 (modal) <--> (반대: modaless)
+      modal.onclick = function (event) {
+        // span.onclick = function (event) {
+        // if (event.target === modal)
+        modal.style.display = 'none';
+      };
+    </script>
+  </body>
+</html>
