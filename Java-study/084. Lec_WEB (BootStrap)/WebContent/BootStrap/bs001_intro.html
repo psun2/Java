@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BootStrap4 Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- MaxCDN 사용 -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- 부트스트랩 js -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <!-- 
+BootStrap 은 
+	HTML, CSS, JavaScript 를 활용한 
+	반응형 웹 (Responsive Web) 프레임워크 .
+
+최신버젼은 (2020.09 현재)
+	4.5.x  (이하 BS4)
+	3.4.1  (이하 BS3)
+
+BS 장점
+	- 모던한 스타일을 '손쉽게' + '빨리' 제작 가능케 함
+	- typography, 폼, 버튼, 테이블, 네빙게이션, 모달, 이미지 carousle 등.. 많은 템플릿 제공.
+	- Mobile-First 로 반응형 웹 설계됨
+	- 현재 시중의 대부분의 브라우저 지원 (크롬, 사파리, IE10+, Edge, 사파리, 오페라)
+
+BS 단점
+	- 너무 오래 + 널리 사용되어, 이제는 그닥 신선하지 않다.
+	- 무겁다.(성능)
+
+BS4 에서 달라진 점
+	** BS4 는 IE9 이하 버젼의 브라우저는 지원 안함,  IE8-9 는 BS3 버젼 사용해야 함
+	** BS4 에선 화면그리드 단위가 px → em 으로 변경
+	** BS4 에 와서는 Glyphicons 지원이 빠짐.  → Font Awesome 사용하자.
+
+BS 세팅?
+	방법1: BS CDN 사용   (Content Delivery Network)
+	방법2: getbootstrap.com 에서 다운로드
+
+	** CDN을 사용하면 브라우저가 cache 하므로. 페이지 로딩 속도가 빨라진다.
+	** jQuery? Popper? : BS4 의 JavaScript 부분은 jQuery, Popper 라이브러리를 사용한다.
+			(만약 BS4의 스타일만 사용하는거라면, JS는 굳이 필요하진 않다) 
+
+
+공식: http://getbootstrap.com/
+BS4 각종예제: http://getbootstrap.com/docs/4.1/examples/   (함 보자)
+한글: http://bootstrapk.com/
+
+BS를 활용한 테마 사이트들 (많다!), 대체로 유료 이긴 하나 공짜 템플릿도 제법 있다. 
+	https://themes.getbootstrap.com/  
+	https://wrapbootstrap.com/ 
+	https://themeforest.net/
+	https://startbootstrap.com/
+	등등. 
+
+BS4 가 최신이지만, 여전히 BS3가 사용되는 이유
+	이미 BS3 로 작성된 수많은 관리자 템플릿...등이 있다.  
+	기반 플러그인 들이 아직 BS3에 머물러 있는 경우가 많다..
+	summernote등도  BS3 를 사용.
+	관련 문서, 예제 코드들이 BS3로  되어 있는 경우 많다.
+-->
+  <body>
+    <div class="jumbotron text-center">
+      <h1>My First Bootstrap Page</h1>
+      <p>브라우저를 늘렸다 줄였다 해보세요</p>
+    </div>
+
+    <!--  
+ 	BS4 사이트 요소들을 담기 위한 컨테이너
+ 	.container	:  responsive 고정폭 컨테이너
+ 	.container-fluid : 전체폭(full-width) 컨테이너
+ 	
+ 	** ↓ 아래 class 를 변경해보며 브라우저에서 확인해보자
+ -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Column 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 2</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 3</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+          <p>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris...
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>
