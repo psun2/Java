@@ -1,3 +1,55 @@
 @charset "UTF-8";
 
-/* TODO */
+/* TODO: */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.5s; /* Open3 */
+}
+
+#main {
+  transition: margin-left 0.5s; /* Open2 */
+  padding: 16px;
+}
+
+span.open {
+  cursor: pointer;
+  font-size: 30px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.sidenav {
+  background-color: #111;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s; /* 스라이드인 속도 */
+  width: 0; /* 처음에는 보이지 않도록 폭을 0으로 둔다. */
+}
+
+/* 메뉴 링크 */
+.sidenav a {
+  color: #818181;
+  display: block;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  transition: 0.3s; /* 색상등이 부드럽게 변함 */
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}

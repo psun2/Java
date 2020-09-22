@@ -1,88 +1,115 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>Slide Navigation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="CSS/001_SlideNavigation.css" rel="stylesheet" type="text/css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="CSS/001_SlideNavigation.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div id="mySidenav" class="sidenav">
+      <a href="#" class="closebtn" id="closebtn" onclick="closeNav()"
+        >&times;</a
+      >
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
 
-<div id="mySidenav" class="sidenav">
-  <a href="#" 
-  	class="closebtn" id="closebtn" 
-  	onclick="closeNav()">&times;</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
-</div>
+    <div id="main">
+      <h2>Animated Sidenav Example</h2>
+      <p>Click on the element below to open the side navigation menu.</p>
+      <span class="open" onclick="openNav1()">&#9776;Open1 - Slide</span>
+      <br />
+      <span class="open" onclick="openNav2()">&#9776;Open2 - Push</span>
+      <br />
+      <span class="open" onclick="openNav3()"
+        >&#9776;Open3 - Push & Opacity</span
+      >
+      <br />
+      <span class="open" onclick="openNav4()">&#9776;Open4 - Full Width</span>
+      <br />
+      <span class="open" onclick="openNav5()">&#9776;Open5 - No Anim</span>
+    </div>
 
-<div id="main">
-	<h2>Animated Sidenav Example</h2>
-	<p>Click on the element below to open the side navigation menu.</p>
-	<span class="open" onclick="openNav1()">&#9776;Open1 - Slide</span>
-	<br>
-	<span class="open" onclick="openNav2()">&#9776;Open2 - Push</span>
-	<br>
-	<span class="open" onclick="openNav3()">&#9776;Open3 - Push & Opacity</span>
-	<br>
-	<span class="open" onclick="openNav4()">&#9776;Open4 - Full Width</span>
-	<br>
-	<span class="open" onclick="openNav5()">&#9776;Open5 - No Anim</span>
-</div>
+    <script>
+      var closeNav;
 
-<script>
+      // Open1 : Slide Overlay 방식
+      function openNav1() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '250px';
+        closeNav = closeNav1;
+      }
 
-var closeNav;
+      function closeNav1() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '0';
+      }
 
-// Open1 : Slide Overlay 방식
-function openNav1() {
-	// TODO
-}
+      // Open2 : Slide Push Content 방식
+      function openNav2() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '250px';
+        document.getElementById('main').style.marginLeft = '250px';
+        closeNav = closeNav2;
+      }
 
-function closeNav1() {
-    // TODO
-}
+      function closeNav2() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '0';
+        document.getElementById('main').style.marginLeft = '0';
+      }
 
-// Open2 : Slide Push Content 방식
-function openNav2() {
-    // TODO
-}
+      // Open3 : Slide Push w/ opacity
+      function openNav3() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '250px';
+        document.getElementById('main').style.marginLeft = '250px';
+        document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+        closeNav = closeNav3;
+      }
 
-function closeNav2() {
-    // TODO
-}
+      function closeNav3() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '0';
+        document.getElementById('main').style.marginLeft = '0';
+        document.body.style.backgroundColor = 'white';
+      }
 
-// Open3 : Slide Push w/ opacity
-function openNav3() {
-    // TODO
-}
+      // Open4 : Full Width
+      function openNav4() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '100%';
+        document.getElementById('mySidenav').style.textAlign = 'center';
+        closeNav = closeNav4;
+      }
 
-function closeNav3() {
-    // TODO
-}
+      function closeNav4() {
+        // TODO:
+        document.getElementById('mySidenav').style.width = '0';
+        document.getElementById('mySidenav').style.textAlign = ''; /* 디폴트 */
+        // document.getElementById('mySidenav').style.textAlign = 'inherit';
+      }
 
-// Open4 : Full Width
-function openNav4() {
-    // TODO
-}
+      // Open5 : No animation
+      function openNav5() {
+        // TODO:
+        document.getElementById('mySidenav').style.transition = 'none';
+        // document.getElementById('mySidenav').style.display = 'none';
+        document.getElementById('mySidenav').style.width = '250px';
+        // document.getElementById('mySidenav').style.display = 'block';
+        closeNav = closeNav5;
+      }
 
-function closeNav4() {
-    // TODO
-}
-
-// Open5 : No animation
-function openNav5() {
-    // TODO
-}
-
-function closeNav5() {
-    // TODO
-}
-</script>
-
-
-
-</body>
+      function closeNav5() {
+        // TODO:
+        // document.getElementById('mySidenav').style.display = 'block';
+        document.getElementById('mySidenav').style.width = '0';
+        // document.getElementById('mySidenav').style.display = 'none';
+        document.getElementById('mySidenav').style.transition = '.5s';
+      }
+    </script>
+  </body>
 </html>

@@ -1,100 +1,103 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <style>
-  /* Make the image fully responsive */
-  .carousel-inner img {
-    width: 100%;
-    height: 100%;
-  }
-  </style>
-</head>
-<!--
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+      /* Make the image fully responsive */
+      .carousel-inner img {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <!--
 BS4 Carousel + JS 코드로 수동 동작
 	: data-* 를 사용 안함 
 	: element 에  추가된 .carousel(n) 메소드로 동작 
 -->
 
-<body>
+  <body>
+    <div class="container mt-3">
+      <h2>Activate Carousel with JavaScript</h2>
+      <div id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+          <li class="item1 active"></li>
+          <li class="item2"></li>
+          <li class="item3"></li>
+        </ul>
 
-<div class="container mt-3">
-<h2>Activate Carousel with JavaScript</h2>
-<div id="myCarousel" class="carousel slide">
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="../img/la.jpg"
+              alt="Los Angeles"
+              width="1100"
+              height="500"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="../img/chicago.jpg"
+              alt="Chicago"
+              width="1100"
+              height="500"
+            />
+          </div>
+          <div class="carousel-item">
+            <img src="../img/ny.jpg" alt="New York" width="1100" height="500" />
+          </div>
+        </div>
 
-  <!-- Indicators -->
-  <ul class="carousel-indicators">
-    <li class="item1 active"></li>
-    <li class="item2"></li>
-    <li class="item3"></li>
-  </ul>
-  
-  <!-- The slideshow -->
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="../img/la.jpg" alt="Los Angeles" width="1100" height="500">
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#myCarousel">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
     </div>
-    <div class="carousel-item">
-      <img src="../img/chicago.jpg" alt="Chicago" width="1100" height="500">
-    </div>
-    <div class="carousel-item">
-      <img src="../img/ny.jpg" alt="New York" width="1100" height="500">
-    </div>
-  </div>
-  
-  <!-- Left and right controls -->
-  <a class="carousel-control-prev" href="#myCarousel">
-    <span class="carousel-control-prev-icon"></span>
-  </a>
-  <a class="carousel-control-next" href="#myCarousel">
-    <span class="carousel-control-next-icon"></span>
-  </a>
-</div>
-</div>
 
-<script>
-$(document).ready(function(){
-  // Activate Carousel
-  // TODO
-    
-  // Enable Carousel Indicators
-  // TODO
-    
-  // Enable Carousel Controls
-  // TODO
-  
-});
-</script>
+    <script>
+      $(document).ready(function () {
+        // Activate Carousel
+        // TODO:
+        $('#myCarousel').carousel();
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-</body>
+        // Enable Carousel Indicators
+        // TODO:
+        $('.item1').click(function () {
+          $('#myCarousel').carousel(0);
+        });
+        $('.item2').click(function () {
+          $('#myCarousel').carousel(1);
+        });
+        $('.item3').click(function () {
+          $('#myCarousel').carousel(2);
+        });
+
+        // Enable Carousel Controls
+        // TODO:
+        $('.carousel-control-prev').click(function () {
+          $('#myCarousel').carousel('prev');
+        });
+        $('.carousel-control-next').click(function () {
+          $('#myCarousel').carousel('next');
+        });
+      });
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
