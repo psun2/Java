@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="086. 부트스트랩을 이용한 게시판 만들기(summernote, form, navbar)">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <property name="context-root" value="086._부트스트랩을_이용한_게시판_만들기(summernote,_form,_navbar)"/>
+    </wb-module>
+</project-modules>
