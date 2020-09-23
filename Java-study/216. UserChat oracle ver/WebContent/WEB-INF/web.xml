@@ -118,4 +118,16 @@
 		<url-pattern>/memberProfile</url-pattern>
 	</servlet-mapping>
 
+	<!-- find 시 유저 프로필 사진을 가져오기 위한 servlet -->
+	<!-- ajax 통신으로 대체 하기 때문에 굳이 xml 에서 정의할 필요가 없습니다. -->
+	<!-- 
+	<servlet>
+		<servlet-name>MemberFindServlet</servlet-name>
+		<servlet-class>member.MemberFindServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberFindServlet</servlet-name>
+		<url-pattern>/memberFind</url-pattern>
+	</servlet-mapping>
+	-->
 </web-app>

@@ -220,14 +220,14 @@ public class MemberDAO {
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String sql="UPDATE MEMBER SET userProfile = ? WHERE userID = ?";
-		
+		String sql = "UPDATE MEMBER SET userProfile = ? WHERE userID = ?";
+
 		try {
-			
+
 			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, fileName);
-			psmt.setString(2, userID);			
+			psmt.setString(2, userID);
 			return psmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -244,6 +244,50 @@ public class MemberDAO {
 		}
 
 		return -1; // 데이터베이스 오류
+	}
+
+	// 사용자의 프로필 주소 반환 (채팅창에서 사용하기 위한)
+	public String getProfile(String userID) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT userProfile FROM MEMBER WHERE userID = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userID);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				String userProfile = rs.getString("userProfile");
+				System.out.println(userProfile);
+//				if (userProfile.equals(""))
+				if (userProfile == null)
+					return "http://localhost:8080/216. UserChat oracle ver/images/yellow-48.png";
+//					return "http://localhost:8080/216.%20UserChat%20oracle%20ver/WebContent/images/yellow-48.png";
+
+				return "http://localhost:8080/216. UserChat oracle ver/upload/" + userProfile;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return "http://localhost:8080/216. UserChat oracle ver/images/yellow-48.png"; // 데이터 베이스 오류
 	}
 
 }

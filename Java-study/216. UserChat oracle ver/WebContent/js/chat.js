@@ -82,13 +82,19 @@ const chatListFunction = (type) => {
 	
 }
 
+let me = null;
+let you = null;
+
 const addChat = (chatName, chatContent, chatTime) => {
+	
+	const src = chatName.includes('나') ? me : you;
+	
 	$('#chatList').append(
 	'<div class="row">' + 
 	'<div class="col-lg-12">' + 
 	'<div class="media">' + 
 	'<a class="pull-left" href="#">' + 
-	'<img class="media-object img-circle" src="./images/yellow-48.png" alt="프로필사진" style="width:30px; height:30px;" />' +
+	'<img class="media-object img-circle" src="'+src+'" alt="프로필사진" style="width:30px; height:30px;" />' +
 	'</a>' + 
 	
 	'<div class="media-body">' + 
@@ -116,10 +122,12 @@ const getInfiniteChat = () => {
 	}, 4000);
 }
 
-const init = (paramFromID, paramToID) => {
+const init = (paramFromID, paramToID, fromProfile, toProfile) => {
 
 	fromID = paramFromID;
 	toID = paramToID;
+	me = fromProfile;
+	you = toProfile;
 
 	console.log('fromID : ', fromID);
 	console.log('toID : ', toID);

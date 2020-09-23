@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.net.URLDecoder"%>
+<%@page import="member.MemberDAO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,13 +58,20 @@
 		response.sendRedirect("find.jsp");
 		return;
 	}
-	
-	if(userID.equals(toID)) {
+
+	if (userID.equals(toID)) {
 		session.setAttribute("messageType", "오류 메시지");
 		session.setAttribute("messageContent", "자신이게는 메시지를 보낼수 없습니다.");
 		response.sendRedirect("find.jsp");
 		return;
 	}
+
+	String fromProfile = new MemberDAO().getProfile(userID); // 자신의 프로필 사진
+
+	String toProfile = new MemberDAO().getProfile(toID); // 자신의 프로필 사진
+	
+	// System.out.println(fromProfile);
+	// System.out.println(toProfile);
 	%>
 
 	<!-- 네비게이션 -->
@@ -95,8 +103,8 @@
 					aria-expanded="false"> 회원관리<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-					<li><a href="update.jsp">회원정보수정</a></li>
-					<li><a href="profileUpdate.jsp">프로필 수정</a></li>
+						<li><a href="update.jsp">회원정보수정</a></li>
+						<li><a href="profileUpdate.jsp">프로필 수정</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
@@ -220,7 +228,7 @@ else
 	<script defer type="text/javascript">
 	
 	function second() {
-		init('<%=userID%>', '<%=toID%>');
+		init('<%=userID%>', '<%=toID%>', '<%=fromProfile%>', '<%=toProfile%>');
 
 		}
 

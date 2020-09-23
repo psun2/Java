@@ -3,9 +3,6 @@ package chat;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import member.MemberDAO;
 
 @WebServlet("/ChatBoxServlet")
 public class ChatBoxServlet extends HttpServlet {
@@ -103,16 +102,23 @@ public class ChatBoxServlet extends HttpServlet {
 		for (int i = 0; i < chatList.size(); i++) {
 //		for (int i = chatList.size() - 1; i >= 0; i--) {
 			String unread = "";
+			String userProfile = "";
 			if (userID.equals(chatList.get(i).getToID())) {
 				unread = chatDAO.getUnreadChat(chatList.get(i).getFromID(), userID) + "";
 				if (unread.equals("0"))
 					unread = ""; // 안 읽은 메시지가 없을때 (최신의 메시지까지 다 읽은 경우)
 			}
+			if (userID.equals(chatList.get(i).getToID())) {
+				userProfile = new MemberDAO().getProfile(chatList.get(i).getFromID());
+			} else {
+				userProfile = new MemberDAO().getProfile(chatList.get(i).getToID());
+			}
 			result.append("[{\"fromID\":\"" + chatList.get(i).getFromID() + "\"},");
 			result.append("{\"toID\":\"" + chatList.get(i).getToID() + "\"},");
 			result.append("{\"chatContent\":\"" + chatList.get(i).getChatContent() + "\"},");
 			result.append("{\"chatTime\":\"" + chatList.get(i).getTime() + "\"},");
-			result.append("{\"chatUnread\":\"" + unread + "\"}]"); // 자신이 받는 사람에 한해서 현재 읽지 않은 메시지 갯수 출력
+			result.append("{\"chatUnread\":\"" + unread + "\"},"); // 자신이 받는 사람에 한해서 현재 읽지 않은 메시지 갯수 출력
+			result.append("{\"userProfile\":\"" + userProfile + "\"}]");
 			if (i != chatList.size() - 1)
 //			if (i != 0)
 				result.append(",");

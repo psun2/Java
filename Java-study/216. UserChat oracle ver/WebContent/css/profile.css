@@ -17,9 +17,14 @@
 	filter: alpha(opacity = 0);
 	opacity: 0; /* 투명도는 0 디스플리이 none 과 다르게 0이지만 요소가 있습니다. */
 	/* overflow hidden 과 연계하여 넘치지 않은부부만 클릭함으로써 뒤에 있는 input 이 동작 합니다. */
-	outline : none;
+	outline: none;
 	background-color: #fcfcfc;
 	cursor: inherit;
 	display: block;
 	outline: none;
+}
+
+.file {
+	visibility: hidden;
+	position: absolute;
 }

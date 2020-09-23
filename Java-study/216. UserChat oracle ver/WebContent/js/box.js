@@ -48,7 +48,7 @@ const showUnread = (result) => {
 		 			result[i][1].toID = result[i][0].fromID;
 				
 		 		addBox(result[i][0].fromID, result[i][1].toID, result[i][2].chatContent,
-		 				result[i][3].chatTime, result[i][4].chatUnread);
+		 				result[i][3].chatTime, result[i][4].chatUnread, result[i][5].userProfile);
 		 	}
 	 }
  	});
@@ -79,10 +79,13 @@ const showUnread = (result) => {
 // }
 
 // 읽지 않은 데이터를 가져온뒤 document 에 뿌려주는 함수
-function addBox(lastID, toID, chatContent, chatTime, chatUnread) {
+function addBox(lastID, toID, chatContent, chatTime, chatUnread, profile) {
 	$('#boxTable').append(
 			'<tr onclick="location.href=\'chat.jsp?toID=' + encodeURIComponent(toID) + '\'">' + 
-			'<td style="width:150px;"><h5>'+lastID+'</h5></td>' +
+			'<td style="width:150px;">'+
+			'<img class="media-object img-circle" style="margin: 0 auto; max-width: 40px; max-height: 40px;" alt="프로필 사진" src="'+
+			profile+'"/>' + 
+			'<h5>'+lastID+'</h5></td>' +
 			'<td>' + 
 			'<h5>' + 
 			chatContent +
