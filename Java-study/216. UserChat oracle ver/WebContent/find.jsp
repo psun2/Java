@@ -64,6 +64,7 @@
 				<li class="active"><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메시지함 <span id="unread"
 						class="label label-info"></span></a></li>
+							<li><a href="boardView.jsp">자유 게시판</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

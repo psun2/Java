@@ -59,6 +59,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="index.jsp">메인</a></li>
 				<li><a href="find.jsp">친구찾기</a></li>
+				<li><a href="box.jsp">메시지함 <span id="unread"
+						class="label label-info"></span></a></li>
+					<li><a href="boardView.jsp">자유 게시판</a></li>
 			</ul>
 			<%
 				// 로그인이 된상태면 위에서 index 페이지로 돌려보내는데 굳이 필요가 있을까 .... ?

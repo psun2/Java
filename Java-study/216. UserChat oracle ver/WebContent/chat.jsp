@@ -92,6 +92,7 @@
 				<li><a href="find.jsp">친구찾기</a></li>
 				<li><a href="box.jsp">메시지함 <span id="unread"
 						class="label label-info"></span></a></li>
+							<li><a href="boardView.jsp">자유 게시판</a></li>
 			</ul>
 			<%
 				// 로그인이 된상태에서만 접근이 가능한데 굳이 if문이 필요 할 까 ?
