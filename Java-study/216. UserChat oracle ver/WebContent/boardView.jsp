@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardDTO"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +36,16 @@
 
 	if (session.getAttribute("userID") != null)
 		userID = (String) session.getAttribute("userID");
+
+	// 로그인이 안되어 있다면 게시글 접근 불가능
+	if (userID == null) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "현재 로그인이 되어있지 않습니다");
+		response.sendRedirect("login.jsp");
+		return;
+	}
+
+	ArrayList<BoardDTO> boardList = new BoardDAO().getList();
 	%>
 
 	<!-- 네비게이션 -->
@@ -56,23 +69,6 @@
 				<li class="active"><a href="boardView.jsp">자유 게시판</a></li>
 			</ul>
 
-			<%
-				if (userID == null) { // 로그인을 하지 않은 상태 라면...
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false"> 접속하기 <!-- <span class="caret"></span> : 이미지 입니다. (▼) -->
-						<span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul></li>
-			</ul>
-			<%
-				} else { // 로그인 상태시
-			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -84,9 +80,7 @@
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
-			<%
-				}
-			%>
+
 		</div>
 	</nav>
 	<!-- //네비게이션 -->
@@ -100,16 +94,31 @@
 					<th colspan="5"><h4>자유 게시판</h4></th>
 				</tr>
 				<tr>
-					<th style="background-color: #fafafa; color: #000000; wdith: 70px;"><h5>번호</h5></th>
+					<th style="background-color: #fafafa; color: #000000; width: 70px;"><h5>번호</h5></th>
 					<th style="background-color: #fafafa; color: #000000;"><h5>제목</h5></th>
 					<th style="background-color: #fafafa; color: #000000;"><h5>작성자</h5></th>
 					<th
-						style="background-color: #fafafa; color: #000000; width: 100px;"><h5>작성
+						style="background-color: #fafafa; color: #000000; width: 200px;"><h5>작성
 							날짜</h5></th>
 					<th style="background-color: #fafafa; color: #000000; width: 70px;"><h5>조회수</h5></th>
 				</tr>
 			</thead>
 			<tbody>
+				<%
+					for (BoardDTO board : boardList) {
+				%>
+
+				<tr>
+					<td><%=board.getBoardID()%></td>
+					<td style="text-align: left;"><a
+						href="boardShow.jsp?boardID=<%=board.getBoardID()%>"><%=board.getBoardTitle()%></a>
+					</td>
+					<td><%=board.getUserID()%></td>
+					<td><%=board.getBoardDate()%></td>
+					<td><%=board.getBoardHit()%></td>
+				</tr>
+				<!--
+			
 				<tr>
 					<td>1</td>
 					<td>예시 데이터 입니다.</td>
@@ -117,6 +126,12 @@
 					<td>2020-09-24</td>
 					<td>0</td>
 				</tr>
+				
+				-->
+				<%
+					}
+				%>
+
 				<tr>
 					<td colspan="5"><a href="boardWrite.jsp"
 						class="btn btn-primary pull-right">글쓰기</a></td>

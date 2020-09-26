@@ -133,10 +133,11 @@ public class BoardDTO {
 
 	public void setDateStr(String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String temp = date.substring(0, date.lastIndexOf("."));
+		System.out.println("DTO : " + date);
+//		String temp = date.substring(0, date.lastIndexOf("."));
 
 		try {
-			this.date = sdf.parse(temp);
+			this.date = sdf.parse(date);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

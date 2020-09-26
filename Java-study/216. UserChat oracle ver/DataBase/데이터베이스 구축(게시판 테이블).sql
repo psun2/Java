@@ -13,6 +13,9 @@ boardSequence INT,
 boardLevel INT
 );
 
+-- 테이블 스키마 확인
+DESC BOARD;
+
 -- boardID를 위한 sequence 생성 (oracle 은 ifnull 이 없는듯)
 -- IFNULL((SELECT max(boardID)+1 from BOARD ), 1) -- 작동안됨
 CREATE SEQUENCE board_boardID

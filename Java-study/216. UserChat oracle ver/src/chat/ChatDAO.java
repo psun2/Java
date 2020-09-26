@@ -192,7 +192,7 @@ public class ChatDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		String sql = "INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTimeStamp, chatRead) values (chatID.nextval, ?, ?, ?, SYSDATE, SYSDATE, 0)";
+		String sql = "INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTimeStamp, chatRead) values (CHAT_chatID.nextval, ?, ?, ?, SYSDATE, SYSDATE, 0)";
 
 		try {
 
