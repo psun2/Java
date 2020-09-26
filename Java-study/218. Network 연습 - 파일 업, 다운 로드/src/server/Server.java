@@ -34,7 +34,7 @@ public class Server {
 	void init() {
 		try {
 
-			this.server = new ServerSocket();
+			this.server = new ServerSocket(port);
 //			InetAddress local = InetAddress.getLocalHost();
 //			System.out.println(local); // DESKTOP-EJRGSL9/192.168.0.9
 
@@ -48,7 +48,7 @@ public class Server {
 //			server.bind(new InetSocketAddress(host, PORT));
 //			System.out.println(server); // ServerSocket[addr=/127.0.0.1,localport=9999]
 
-			server.bind(new InetSocketAddress(host, port));
+//			server.bind(new InetSocketAddress(host, port));
 
 //			this.clients = new Vector<Client>();
 //			this.clients = new ArrayList<Client>();
