@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class Client {
 
@@ -25,6 +26,7 @@ public class Client {
 
 		try {
 			this.is = socket.getInputStream();
+			this.oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +71,6 @@ public class Client {
 		System.out.println("메시지 전송 완료");
 
 		try {
-			this.oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(message);
 			oos.flush(); // 쓰기의 끝을 알림
 			oos.reset();

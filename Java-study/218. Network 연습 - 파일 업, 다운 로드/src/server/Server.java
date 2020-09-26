@@ -76,7 +76,7 @@ public class Server {
 
 				clients.add(new Client(client));
 
-				System.out.println(clients.toString());
+				System.out.println("현재 접속자 목록 : " + clients.toString());
 
 			}
 

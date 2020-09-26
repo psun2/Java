@@ -30,6 +30,8 @@ public class Client {
 			stopClient();
 		}
 
+		System.out.println("[서버 연결 성공]");
+		
 		send();
 		receive();
 	}
@@ -55,6 +57,8 @@ public class Client {
 
 					while (ois != null) {
 
+						System.out.print("채팅 내용 : ");
+						
 						String message = (String) ois.readObject();
 
 						System.out.println("[서버로부터 받은 메시지 ] " + message);
