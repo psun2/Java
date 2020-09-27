@@ -100,8 +100,12 @@ public class BoardDAO {
 
 				board.setBoardDate(temp.substring(0, 10) + " " + timeType + " " + integerTime + temp.substring(13, 16));
 				board.setBoardHit(rs.getInt("boardHit"));
-				board.setBoardFile(rs.getString("boardFile"));
-				board.setBoardRealFile(rs.getString("boardRealFile"));
+
+				String boardFile = (rs.getString("boardFile") == null ? "" : rs.getString("boardFile"));
+				String boardRealFile = (rs.getString("boardRealFile") == null ? "" : rs.getString("boardRealFile"));
+
+				board.setBoardFile(boardFile);
+				board.setBoardRealFile(boardRealFile);
 				board.setBoardGroup(rs.getInt("boardGroup"));
 				board.setBoardSequence(rs.getInt("boardSequence"));
 				board.setBoardLevel(rs.getInt("boardLevel"));
@@ -166,8 +170,13 @@ public class BoardDAO {
 
 				board.setBoardDate(temp.substring(0, 10) + " " + timeType + " " + integerTime + temp.substring(13, 16));
 				board.setBoardHit(rs.getInt("boardHit"));
-				board.setBoardFile(rs.getString("boardFile"));
-				board.setBoardRealFile(rs.getString("boardRealFile"));
+
+				String boardFile = (rs.getString("boardFile") == null ? "" : rs.getString("boardFile"));
+				String boardRealFile = (rs.getString("boardRealFile") == null ? "" : rs.getString("boardRealFile"));
+
+				board.setBoardFile(boardFile);
+				board.setBoardRealFile(boardRealFile);
+
 				board.setBoardGroup(rs.getInt("boardGroup"));
 				board.setBoardSequence(rs.getInt("boardSequence"));
 				board.setBoardLevel(rs.getInt("boardLevel"));
@@ -238,8 +247,12 @@ public class BoardDAO {
 			psmt.setString(1, boardID);
 			rs = psmt.executeQuery();
 
-			if (rs.next())
-				return rs.getString("boardFile");
+			if (rs.next()) {
+
+				String boardFile = (rs.getString("boardFile") == null ? "" : rs.getString("boardFile"));
+
+				return boardFile;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -274,8 +287,12 @@ public class BoardDAO {
 			psmt.setString(1, boardID);
 			rs = psmt.executeQuery();
 
-			if (rs.next())
-				return rs.getString("boardRealFile");
+			if (rs.next()) {
+
+				String boardRealFile = (rs.getString("boardRealFile") == null ? "" : rs.getString("boardRealFile"));
+
+				return boardRealFile;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -293,5 +310,144 @@ public class BoardDAO {
 		}
 
 		return "-1"; // 데이터 베이스 오류
+	}
+
+	// 게시글 수정
+	public int update(String boardID, String boardTitle, String boardContent, String boardFile, String boardRealFile) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "UPDATE BOARD SET boardTitle = ?, boardContent = ?, boardFile = ?, boardRealFile = ? WHERE boardID = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, boardTitle);
+			psmt.setString(2, boardContent);
+			psmt.setString(3, boardFile);
+			psmt.setString(4, boardRealFile);
+			psmt.setInt(5, Integer.parseInt(boardID));
+
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	// 게시글 삭제
+	public int delete(String boardID) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "DELETE FROM BOARD WHERE boardID = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(boardID));
+			return psmt.executeUpdate(); // 삭제 성공
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return -1; // 데이터 베이스 오류
+	}
+
+	// 답변 등록
+	public int reply(String userID, String boardTitle, String boardContent, String boardFile, String boardRealFile,
+			BoardDTO parent) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "INSERT INTO BOARD "
+				+ "(userID, boardID, boardTitle, boardContent,boardDate, boardHit, boardFile, boardRealFile, boardGroup, boardSequence, boardLevel) "
+				+ "VALUES(?, board_boardID.NEXTVAL, ?, ?, sysdate, 0, ?, ?, ?, ?, ?)";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userID);
+			psmt.setString(2, boardTitle);
+			psmt.setString(3, boardContent);
+			psmt.setString(4, boardFile);
+			psmt.setString(5, boardRealFile);
+			psmt.setInt(6, parent.getBoardGroup());
+			psmt.setInt(7, parent.getBoardSequence() + 1);
+			psmt.setInt(8, parent.getBoardLevel() + 1);
+
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	// 답변 수정
+	public int replyUpdate(BoardDTO parent) {
+
+		// 같은 구룹 내에서도 시퀀스를 내림 차순으로 정렬 함으로써, 전에 있던 글들은
+		// 모두 sequence 에 1 씩을 더하여 최신 답변보다 아래 보 일 수 있도록 합니다.
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "UPDATE BOARD SET boardSequence = boardSequence + 1 WHERE boardGroup = ? AND boardSequence > ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, parent.getBoardGroup());
+			psmt.setInt(2, parent.getBoardSequence());
+
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
 	}
 }

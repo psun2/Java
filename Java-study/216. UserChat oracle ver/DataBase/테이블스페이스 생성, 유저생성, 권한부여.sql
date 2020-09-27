@@ -1,6 +1,6 @@
 -- 테이블 스페이스 생성
 CREATE TABLESPACE USERCHAT
-DATAFILE 'D:\Study\Java\Java-study\216. UserChat oracle ver\DataBase\UserChat.dbf'
+DATAFILE 'C:\oraclexe\app\oracle\oradata\UserChat\UserChat.dbf'
 -- SIZE 50000000;
 -- SIZE 100000000;
 

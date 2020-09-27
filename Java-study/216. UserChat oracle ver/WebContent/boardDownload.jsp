@@ -41,7 +41,11 @@
 	boardFile = boardDAO.getFile(boardID);
 	boardRealFile = boardDAO.getRealFile(boardID);
 
+	System.out.println(boardFile);
+	System.out.println(boardRealFile);
+
 	if (boardFile.equals("") || boardRealFile.equals("")) { // 파일이 없는 경우
+	// if (boardFile == null || boardRealFile == null) { // 파일이 없는 경우 (get 을 수정하여 공백값으로 변경)
 		session.setAttribute("messageType", "오류 메시지");
 		session.setAttribute("messageContent", "접근할 수 없습니다.");
 		response.sendRedirect("boardShow.jsp?boardID=" + boardID);

@@ -28,7 +28,7 @@ INCREMENT BY 1;
 DROP SEQUENCE chatID;
 
 -- 예제 데이터 연습
-INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTime2) values (chatID.nextval, '7777', '운영자', '안녕?', SYSDATE, SYSDATE);
+INSERT INTO CHAT (chatID, fromID, toID, chatContent, chatTime, chatTime2) values (CHAT_chatID.nextval, '7777', '운영자', '안녕?', SYSDATE, SYSDATE);
 
 -- 예제 데이터 확인
 SELECT * FROM CHAT;

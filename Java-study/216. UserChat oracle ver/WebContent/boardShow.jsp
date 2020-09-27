@@ -48,6 +48,13 @@
 	if (request.getParameter("boardID") != null)
 		boardID = request.getParameter("boardID");
 
+	if (boardID == null || boardID.equals("")) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "게시물을 선택해 주세요.");
+		response.sendRedirect("boardView.jsp");
+		return;
+	}
+
 	BoardDAO boardDAO = new BoardDAO();
 	BoardDTO board = boardDAO.getBoard(boardID);
 	boardDAO.hit(boardID); // show 페이지로 진입하는 순간 조회수를 1 증가합니다.
@@ -134,11 +141,12 @@
 						class="btn btn-primary =">답변</a> <%
  	if (userID.equals(board.getUserID())) { // 게시글을 보고있는 사용자가 작성자 본인이라면...
  %> <a href="boardUpdate.jsp?boardID=<%=board.getBoardID()%>"
-						class="btn btn-primary =">수정</a> <a
-						href="boardDelete.jsp?boardID=<%=board.getBoardID()%>"
-						class="btn btn-primary =">삭제</a> <%
- 	}
- %></td>
+						class="btn btn-primary">수정</a> <a
+						href="boardDelete?boardID=<%=board.getBoardID()%>"
+						class="btn btn-primary" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+						<%
+							}
+						%></td>
 				</tr>
 			</tbody>
 		</table>
