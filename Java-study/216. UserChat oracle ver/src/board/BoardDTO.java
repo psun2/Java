@@ -6,7 +6,7 @@ import java.util.Date;
 public class BoardDTO {
 
 	private String userID, boardTitle, boardContent, boardDate, boardFile, boardRealFile;
-	private int boardID, boardHit, boardGroup, boardSequence, boardLevel;
+	private int boardID, boardHit, boardGroup, boardSequence, boardLevel, boardAvailable;
 	private Date date;
 
 	public BoardDTO() {
@@ -14,7 +14,8 @@ public class BoardDTO {
 	}
 
 	public BoardDTO(String userID, int boardID, String boardTitle, String boardContent, String boardDate, int boardHit,
-			String boardFile, String boardRealFile, int boardGroup, int boardSequence, int boardLevel) {
+			String boardFile, String boardRealFile, int boardGroup, int boardSequence, int boardLevel,
+			int boardAvailable) {
 		super();
 		this.userID = userID;
 		this.boardID = boardID;
@@ -27,6 +28,7 @@ public class BoardDTO {
 		this.boardGroup = boardGroup;
 		this.boardSequence = boardSequence;
 		this.boardLevel = boardLevel;
+		this.boardAvailable = boardAvailable;
 		this.date = new Date();
 	}
 
@@ -118,6 +120,14 @@ public class BoardDTO {
 		this.boardLevel = boardLevel;
 	}
 
+	public int getBoardAvailable() {
+		return boardAvailable;
+	}
+
+	public void setBoardAvailable(int boardAvailable) {
+		this.boardAvailable = boardAvailable;
+	}
+
 	public Date getDate() {
 		return date;
 	}
@@ -148,7 +158,7 @@ public class BoardDTO {
 		return "BoardDTO [userID=" + userID + ", boardID=" + boardID + ", boardTitle=" + boardTitle + ", boardContent="
 				+ boardContent + ", boardDate=" + boardDate + ", boardHit=" + boardHit + ", boardFile=" + boardFile
 				+ ", boardRealFile=" + boardRealFile + ", boardGroup=" + boardGroup + ", boardSequence=" + boardSequence
-				+ ", boardLevel=" + boardLevel + ", date=" + date + "]";
+				+ ", boardLevel=" + boardLevel + ", boardAvailable=" + boardAvailable + ", date=" + date + "]";
 	}
 
 }

@@ -32,8 +32,8 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		String sql = "INSERT INTO BOARD "
-				+ "(userID, boardID, boardTitle, boardContent,boardDate, boardHit, boardFile, boardRealFile, boardGroup, boardSequence, boardLevel) "
-				+ "VALUES(?, board_boardID.NEXTVAL, ?, ?, sysdate, 0, ?, ?, board_boardGroup.NEXTVAL, 0, 0)";
+				+ "(userID, boardID, boardTitle, boardContent,boardDate, boardHit, boardFile, boardRealFile, boardGroup, boardSequence, boardLevel, boardAvailable) "
+				+ "VALUES(?, board_boardID.NEXTVAL, ?, ?, sysdate, 0, ?, ?, board_boardGroup.NEXTVAL, 0, 0, 1)";
 
 		try {
 
@@ -110,6 +110,7 @@ public class BoardDAO {
 				board.setBoardSequence(rs.getInt("boardSequence"));
 				board.setBoardLevel(rs.getInt("boardLevel"));
 				board.setDateStr(rs.getString("boardDate"));
+				board.setBoardAvailable(rs.getInt("boardAvailable"));
 
 				System.out.println(board);
 
@@ -134,18 +135,26 @@ public class BoardDAO {
 	}
 
 	// 게시글을 가져오기 위한 함수
-	public ArrayList<BoardDTO> getList() {
+	public ArrayList<BoardDTO> getList(String pageNumber) {
 		ArrayList<BoardDTO> boardList = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT BOARD.*, TO_CHAR(boardDate, 'YYYY/MM/DD HH24:MI:SS') AS createDate FROM BOARD ORDER BY boardGroup DESC, boardSequence ASC";
+
+		// 페이징 처리 개편전
+//		String sql = "SELECT BOARD.*, TO_CHAR(boardDate, 'YYYY/MM/DD HH24:MI:SS') AS createDate FROM BOARD ORDER BY boardGroup DESC, boardSequence ASC";
 		// boardGroup 의 존재이유 : 일반적으로 댓글은 부모글의 하위에 생성 그러므로 그룹으로 묶어 줄수 있도록 합니다.
 		// boardSequence 를 통해 구룹핑이된 글들을 순서대로 출력 할 수 있도록 합니다.
+
+		// 페이징 처리 개편후
+		String sql = "SELECT BOARD.*, TO_CHAR(boardDate, 'YYYY/MM/DD HH24:MI:SS') AS createDate FROM BOARD WHERE boardGroup > (SELECT MAX(boardGroup) FROM BOARD) - ? AND boardGroup <= (SELECT MAX(boardGroup) FROM BOARD) - ? ORDER BY boardGroup DESC, boardSequence ASC";
+
 		try {
 
 			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(pageNumber) * 10); // end
+			psmt.setInt(2, (Integer.parseInt(pageNumber) - 1) * 10); // start
 			rs = psmt.executeQuery();
 			boardList = new ArrayList<BoardDTO>();
 
@@ -182,6 +191,7 @@ public class BoardDAO {
 				board.setBoardLevel(rs.getInt("boardLevel"));
 				System.out.println(rs.getString("boardDate"));
 				board.setDateStr(rs.getString("boardDate"));
+				board.setBoardAvailable(rs.getInt("boardAvailable"));
 
 				boardList.add(board);
 			}
@@ -202,6 +212,76 @@ public class BoardDAO {
 			}
 		}
 		return boardList;
+	}
+
+	// 다음 페이지의 존재 여부
+	public boolean nextPage(String pageNumber) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM BOARD WHERE boardGroup >= ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(pageNumber) * 10);
+			rs = psmt.executeQuery();
+
+			if (rs.next())
+				return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return false; // 데이터 베이스 오류
+	}
+
+	// 해당페이지로 이동
+	public int targetPage(String pageNumber) {
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(boardGroup) FROM BOARD WHERE boardGroup > ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, (Integer.parseInt(pageNumber) - 1) * 10);
+			rs = psmt.executeQuery();
+
+			if (rs.next())
+				return rs.getInt(1) / 10;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+		return 0; // 데이터 베이스 오류
 	}
 
 	// 조회수 증가 메소드
@@ -351,7 +431,8 @@ public class BoardDAO {
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String sql = "DELETE FROM BOARD WHERE boardID = ?";
+//		String sql = "DELETE FROM BOARD WHERE boardID = ?"; // 개편전
+		String sql = "UPDATE BOARD SET boardAvailable = 0 WHERE boardID = ?"; // 개편후
 
 		try {
 
@@ -384,8 +465,8 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		String sql = "INSERT INTO BOARD "
-				+ "(userID, boardID, boardTitle, boardContent,boardDate, boardHit, boardFile, boardRealFile, boardGroup, boardSequence, boardLevel) "
-				+ "VALUES(?, board_boardID.NEXTVAL, ?, ?, sysdate, 0, ?, ?, ?, ?, ?)";
+				+ "(userID, boardID, boardTitle, boardContent,boardDate, boardHit, boardFile, boardRealFile, boardGroup, boardSequence, boardLevel, boardAvailable) "
+				+ "VALUES(?, board_boardID.NEXTVAL, ?, ?, sysdate, 0, ?, ?, ?, ?, ?, 1)";
 
 		try {
 

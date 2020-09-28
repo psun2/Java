@@ -57,6 +57,14 @@
 
 	BoardDAO boardDAO = new BoardDAO();
 	BoardDTO board = boardDAO.getBoard(boardID);
+	if (board.getBoardAvailable() == 0) {
+		session.setAttribute("messageType", "오류 메시지");
+		session.setAttribute("messageContent", "삭제된 게시물 입니다.");
+		response.sendRedirect("boardView.jsp");
+		return;
+	}
+
+	// 이부분을 board 를 가져오는 부분보다 위에 있다면 굳이 아래서 +1 값을 해줘야 하나 .... ?
 	boardDAO.hit(boardID); // show 페이지로 진입하는 순간 조회수를 1 증가합니다.
 	%>
 
@@ -117,7 +125,9 @@
 					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>작성날짜</h5></td>
 					<td><%=board.getBoardDate()%></td>
 					<td style="background-color: #fafafa; color: #000000; width: 80px;"><h5>조회수</h5></td>
-					<td><%=board.getBoardHit()%></td>
+					<!-- board.getBoardHit() + 1 이유 : 새로고침을하면 조회수가 오르지만 클릭하여 show 로 들어 왔을땐 현재 조회수가 올라 있지 
+					않은 상태,,,, 그러므로 일단 출력시 +1 깂을하여 출력 합니다. -->
+					<td><%=board.getBoardHit() + 1%></td>
 				</tr>
 				<tr>
 					<td
