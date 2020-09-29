@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .container {
+        position: relative;
+        width: 1000px;
+        height: 400px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      .container__row {
+        position: absolute;
+        pointer-events: none;
+        z-index: 1;
+        transform: translateX(-1000px);
+        transition: transform 2s linear;
+      }
+
+      .container__row.active {
+        pointer-events: all;
+        z-index: 2;
+        transform: translateX(0);
+      }
+
+      .container a {
+        position: absolute;
+        color: white;
+        z-index: 2;
+        padding: 15px;
+        top: calc(50% - 45px);
+        font-weight: bold;
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      .next {
+        right: 0;
+      }
+
+      .dot {
+        text-align: center;
+      }
+
+      .dot__dot {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        /* border: 1px solid red; */
+        background-color: #bbb;
+        border-radius: 50%;
+        margin: 0 2px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__row active">
+        <img src="https://placeimg.com/1000/400/1" alt="carousel" />
+      </div>
+      <div class="container__row">
+        <img src="https://placeimg.com/1000/400/2" alt="carousel" />
+      </div>
+      <div class="container__row">
+        <img src="https://placeimg.com/1000/400/3" alt="carousel" />
+      </div>
+      <div class="container__row">
+        <img src="https://placeimg.com/1000/400/4" alt="carousel" />
+      </div>
+      <a class="prev">&#10094;</a>
+      <a class="next">&#10095;</a>
+    </div>
+    <div class="dot"></div>
+    <script>
+      const rows = document.getElementsByClassName('container__row');
+      const firstIndex = 0;
+      let preveIndex = rows.length - 1;
+      let currentIndex = firstIndex;
+      let interval = setInterval(autoSlide, 5000);
+
+      document.querySelector('.prev').onclick = function () {
+        clearInterval(interval);
+        console.log('click');
+        Array.from(rows).forEach((ele) => {
+          if (ele.getAttribute('class').includes('active')) {
+            console.log(ele);
+            preveIndex = Array.from(rows).indexOf(ele);
+            console.log('asdad', preveIndex);
+            return;
+          }
+        });
+        currentIndex = preveIndex - 1;
+        console.log('asdad', currentIndex);
+        autoSlide();
+        interval = setInterval(autoSlide, 5000);
+      };
+
+      document.querySelector('.next').onclick = function () {
+        clearInterval(interval);
+        autoSlide();
+        interval = setInterval(autoSlide, 5000);
+      };
+
+      function autoSlide() {
+        // console.log(currentIndex);
+        // if (rows[currentIndex]) {
+        //   rows[preveIndex].classList.remove('active');
+        //   rows[currentIndex].classList.add('active');
+        //   preveIndex = currentIndex;
+        //   currentIndex++;
+        // } else {
+        //   currentIndex = firstIndex;
+        //   rows[preveIndex].classList.remove('active');
+        //   rows[currentIndex].classList.add('active');
+        //   preveIndex = currentIndex;
+        //   currentIndex++;
+        // }
+        console.log(currentIndex);
+        console.log(preveIndex);
+        if (!rows[currentIndex]) currentIndex = firstIndex;
+        console.log(currentIndex);
+        console.log(preveIndex);
+        rows[preveIndex].classList.remove('active');
+        rows[currentIndex].classList.add('active');
+        preveIndex = currentIndex;
+        currentIndex++;
+      }
+
+      const dot = document.querySelector('.dot');
+      for (let i = 0; i < rows.length; i++) {
+        const span = document.createElement('span');
+        span.className = 'dot__dot';
+        dot.appendChild(span);
+      }
+
+      const dots = document.querySelectorAll('.dot__dot');
+
+      Array.from(dots).forEach((ele) => {
+        ele.onclick = click;
+      });
+
+      function click(event) {
+        clearInterval(interval);
+        console.log(event.currentTarget);
+
+        for (let i = 0; i < dots.length; i++) {
+          if (dots[i].getAttribute('class').includes('active')) {
+            preveIndex = i;
+            break;
+          }
+        }
+        currentIndex = Array.from(dots).indexOf(event.currentTarget);
+        autoSlide();
+        interval = setInterval(autoSlide, 5000);
+      }
+      autoSlide();
+    </script>
+  </body>
+</html>
