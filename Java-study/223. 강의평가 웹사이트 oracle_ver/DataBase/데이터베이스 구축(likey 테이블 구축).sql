@@ -1,0 +1,11 @@
+-- 좋아요 테이블
+CREATE TABLE LIKEY (
+userID VARCHAR2(20),
+evalueationID INT,
+userIP VARCHAR2(50)
+);
+
+-- 생성확인
+SELECT * FROM LIKEY;
+
+DESC LIKEY;

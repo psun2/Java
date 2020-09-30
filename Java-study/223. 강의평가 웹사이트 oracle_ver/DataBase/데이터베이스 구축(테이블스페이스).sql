@@ -1,0 +1,18 @@
+-- 테이블 스페이스 생성
+CREATE TABLESPACE LECTUREEVALUATION
+DATAFILE 'C:\oraclexe\app\oracle\oradata\LectureEvaluation\LectureEvaluation.dbf'
+SIZE 10M AUTOEXTEND ON NEXT 2M MAXSIZE UNLIMITED
+PERMANENT
+EXTENT MANAGEMENT LOCAL AUTOALLOCATE
+BLOCKSIZE 8K
+SEGMENT SPACE MANAGEMENT MANUAL
+FLASHBACK ON;
+
+-- tablespace 의 이름을 LectureEvaluation 으로 정하고
+-- 그 크기는 10MB 로 하며, 용량이 꽉찼을씨 2MB의 크기로 자동으로 증가합니다.
+
+-- 2048M => 2기가 바이트
+
+--생성확인
+SELECT * FROM dba_TABLESPACES;
+SELECT * FROM dba_TABLESPACES WHERE TABLESPACE_NAME = 'LECTUREEVALUATION';

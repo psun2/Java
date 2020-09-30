@@ -17,5 +17,5 @@
 	type="javax.sql.DataSource"
 	name="jdbc/222. 강의평가 웹사이트 개발 Tutorial_oracle ver"
 	global="jdbc/222. 강의평가 웹사이트 개발 Tutorial_oracle ver"
-	/>>
+	/>
 </context>

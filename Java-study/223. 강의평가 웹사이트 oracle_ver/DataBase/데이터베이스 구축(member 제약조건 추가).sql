@@ -1,0 +1,8 @@
+--primary key 추가
+ALTER TABLE MEMBER ADD CONSTRAINT userID_pk PRIMARY KEY(userID);
+
+-- 테이블 스키마 확인
+DESC MEMBER;
+
+-- PRIMARY KEY 확인
+SELECT * FROM USER_CONSTRAINTS WHERE table_name='MEMBER';
