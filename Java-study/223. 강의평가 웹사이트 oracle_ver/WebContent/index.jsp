@@ -24,8 +24,8 @@
         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown"> 회원관리
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdown">
-            <a class="dropdown-item" href="#">로그인</a> <a class="dropdown-item" href="#">회원가입</a> <a
-              class="dropdown-item" href="#">로그아웃</a>
+            <a class="dropdown-item" href="userLogin.jsp">로그인</a> <a class="dropdown-item" href="userJoin.jsp">회원가입</a> <a
+              class="dropdown-item" href="userLogout.jsp">로그아웃</a>
           </div>
         </li>
       </ul>
@@ -152,6 +152,7 @@
 		</div>
 	</section>
 <!-- // card -->
+
 
 <!-- 강의평가 모달양식 -->
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
