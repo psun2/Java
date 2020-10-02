@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter" %>
+<%@page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,6 +13,37 @@
 <!-- custom css -->
 <link rel="stylesheet" href="./css/custom.css" />
 </head>
+
+<%
+
+	String userID = null;
+	if(session.getAttribute("userID") != null) 
+		userID = (String) session.getAttribute("userID");
+	
+	if(userID == null) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 해주세요.');");
+		script.println("location.href='userLogin.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+
+	int result = new UserDAO().getUserEmailChecked(userID);
+	
+	if(result != 1) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('이메일 인증을 해주세요.');");
+		script.println("location.href='emailSendConfirm.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	
+%>
+
 <body>
 <!-- 네비게이션 -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,13 +53,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active"><a class="nav-link" href="index.jsp">메인</a></li>
-        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown"> 회원관리
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdown">
-            <a class="dropdown-item" href="userLogin.jsp">로그인</a> <a class="dropdown-item" href="userJoin.jsp">회원가입</a> <a
-              class="dropdown-item" href="userLogout.jsp">로그아웃</a>
-          </div>
+        <li class="nav-item active">
+        	<a class="nav-link" href="index.jsp">메인</a>
+        </li>
+        <li class="nav-item dropdown">
+        	<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">회원관리</a>
+          	<div class="dropdown-menu" aria-labelledby="dropdown">
+            <%
+            	if(userID == null) {
+            %>
+            	<a class="dropdown-item" href="userLogin.jsp">로그인</a> 
+            	<a class="dropdown-item" href="userJoin.jsp">회원가입</a> 
+            <%
+            	} else {
+            %>
+            	<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+            <%
+            	}
+            %>
+          	</div>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">

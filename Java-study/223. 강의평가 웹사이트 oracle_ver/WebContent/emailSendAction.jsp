@@ -43,7 +43,7 @@
 
 	// String host = "http://localhost:8080/223._%EA%B0%95%EC%9D%98%ED%8F%89%EA%B0%80_%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8_oracle_ver/";
 	// String host = request.getRequestURI();
-	String host =request.getRequestURL().toString();
+	String host = request.getRequestURL().toString();
 	System.out.println(host);
 	host = host.substring(0, host.lastIndexOf("/") + 1);
 	System.out.println(host);
@@ -111,20 +111,32 @@
 </head>
 <body>
 <!-- 네비게이션 -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="index.jsp">강의평가 웹 사이트</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active"><a class="nav-link" href="index.jsp">메인</a></li>
-        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown"> 회원관리
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdown">
-            <a class="dropdown-item" href="userLogin.jsp">로그인</a> <a class="dropdown-item" href="userJoin.jsp">회원가입</a> <a
-              class="dropdown-item" href="userLogout.jsp">로그아웃</a>
-          </div>
+        <li class="nav-item">
+        	<a class="nav-link" href="index.jsp">메인</a>
+        </li>
+        <li class="nav-item dropdown">
+        	<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">회원관리</a>
+          	<div class="dropdown-menu" aria-labelledby="dropdown">
+            <%
+            	if(userID == null) {
+            %>
+            	<a class="dropdown-item active" href="userLogin.jsp">로그인</a> 
+            	<a class="dropdown-item" href="userJoin.jsp">회원가입</a> 
+            <%
+            	} else {
+            %>
+            	<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+            <%
+            	}
+            %>
+          	</div>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">

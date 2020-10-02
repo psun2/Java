@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
-<%@page import="util.SHA256"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.net.URLDecoder"%>
 <!DOCTYPE html>
@@ -18,21 +17,7 @@
 	response.setContentType("text/html; charset=UTF-8");
 
 	String userID = null;
-	if (session.getAttribute("userID") != null)
-		userID = (String) session.getAttribute("userID");
-
-	if (userID != null) {
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('로그인을 해주세요.');");
-		script.println("location.href='userLogin.jsp'");
-		script.println("</script>");
-		script.close();
-		return;
-	}
-
 	String userPassword = null;
-	String userEmail = null;
 
 	if (request.getParameter("userID") != null)
 		userID = URLDecoder.decode(request.getParameter("userID"), "UTF-8");
@@ -40,11 +25,7 @@
 	if (request.getParameter("userPassword") != null)
 		userPassword = URLDecoder.decode(request.getParameter("userPassword"), "UTF-8");
 
-	if (request.getParameter("userEmail") != null)
-		userEmail = URLDecoder.decode(request.getParameter("userEmail"), "UTF-8");
-
-	if (userID == null || userID.equals("") || userPassword == null || userPassword.equals("") || userEmail == null
-			|| userEmail.equals("")) {
+	if (userID == null || userID.equals("") || userPassword == null || userPassword.equals("")) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('입력이 안된 사항이 있습니다.');");
@@ -56,20 +37,39 @@
 
 	UserDAO userDAO = new UserDAO();
 
-	int result = userDAO.join(new UserDTO(userID, userPassword, userEmail, SHA256.getSHA256(userEmail), 0));
-	System.out.println(result);
+	int result = userDAO.login(userID, userPassword);
 
-	if (result == 1) { // 회원 가입 성공
+	if (result == 1) { // 로그인 성공
 		session.setAttribute("userID", userID);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("location.href='emailSendAction.jsp'");
+		script.println("location.href='index.jsp'");
 		script.println("</script>");
 		script.close();
-	} else { // 회원가입 실패
+		return;
+	}
+	if (result == 0) { // 비밀번호 오류
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('이미 존재하는 아이디 입니다.');");
+		script.println("alert('비밀번호가 틀렸습니다.');");
+		script.println("history.back();");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	if (result == -1) { // 없는 아이디
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('없는 아이디 입니다.');");
+		script.println("location.href='userJoin.jsp'");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	if (result == -2) { // 데이터 베이스 오류
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('데이터베이스 오류 입니다.');");
 		script.println("history.back();");
 		script.println("</script>");
 		script.close();
