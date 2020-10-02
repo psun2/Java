@@ -83,7 +83,7 @@ p.put("mail.smtp.starttls.enable", "true"); // 사용가능여부
 p.put("mail.smtp.auth", "true"); // 인증
 p.put("mail.smtp.debug", "true"); // 디버그
 p.put("mail.smtp.socketFactory.port", "465");
-p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSlSocketFactory");
 p.put("mail.smtp.socketFactory.fallback", "false");
 p.put("mail.smtp.user", from);
 

@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <context path="/223. 강의평가 웹사이트 oracle_ver" docbase="www">
-	<Resource
-	naem="jdbc/223. 강의평가 웹사이트 oracle_ver"
-	auto="Container"
-	type="javax.sql.DataSource"
-	driverClassName="oracle.jdbc.OracleDriver"
-	loginTimeout="10"
-	validationQuery="SELECT 1 FROM DUAL"
-	maxWait="5000"
-	url="jdbc:oracle:thin:@localhost:1521:xe"
-	username="LectureEvalueation"
-	password="oracle"
-	testOnBorrow="true"
+	<Resource 
+		name="jdbc/223. 강의평가 웹사이트 oracle_ver"
+		auto="Container"
+		type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		loginTimeout="10"
+		validationQuery="SELECT 1 FROM DUAL"
+		maxWait="5000"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="LectureEvaluation"
+		password="oracle"
+		testOnBorrow="true"
 	/>
-	<ReSoueceLink
-	type="jdbc.sql.DataSource"
+	<ReSourceLink 
+	type="javax.sql.DataSource"
 	name="jdbc/223. 강의평가 웹사이트 oracle_ver"
 	global="jdbc/223. 강의평가 웹사이트 oracle_ver"
 	/>
