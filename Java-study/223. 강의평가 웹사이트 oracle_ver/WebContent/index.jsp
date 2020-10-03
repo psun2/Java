@@ -239,7 +239,7 @@
 							</div>
 							<div class="form-group col-sm-4">
 								<label>수강학기</label>
-								<select name="semesterDivied" class="form-control">
+								<select name="semesterDevied" class="form-control">
 									<option value="1학기" selected>1학기</option>
 									<option value="여름학기">여름학기</option>
 									<option value="2학기">2학기</option>
@@ -248,7 +248,7 @@
 							</div>
 							<div class="form-group col-sm-4">
 								<label>강의 구분</label>
-								<select name="lectureDivied" class="form-control">
+								<select name="lectureDevied" class="form-control">
 									<option value="전공" selected>전공</option>
 									<option value="교양">교양</option>
 									<option value="기타">기타</option>
@@ -257,7 +257,7 @@
 						</div>
 						<div class="form-group">
 							<label>제목</label>
-							<input type="text" name="evaluationTime" class="form-control" maxlength="30"/>
+							<input type="text" name="evaluationTitle" class="form-control" maxlength="30"/>
 						</div>
 						<div class="form-group">
 							<label>내용</label>
