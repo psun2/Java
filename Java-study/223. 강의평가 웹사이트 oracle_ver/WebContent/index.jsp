@@ -24,10 +24,10 @@
 request.setCharacterEncoding("UTF-8");
 response.setContentType("text/html; charset=UTF-8");
 
-String lectureDivide = "전체";
-String searchType = "최신순";
-String search = "";
-int pageNumber = 1;
+String lectureDivide = "전체"; // default
+String searchType = "최신순"; // default
+String search = ""; // default
+int pageNumber = 1; // default
 
 if(request.getParameter("lectureDivide") != null) 
 	lectureDivide = URLDecoder.decode(request.getParameter("lectureDivide"), "UTF-8");
@@ -114,7 +114,7 @@ if (result != 1) {
 			<form action="./index.jsp" method="get"
 				class="form-inline my-2 my-lg-0">
 				<input type="search" name="search" class="form-control mr-sm-2"
-					placeholder="내용을 입력하세요." aria-label="Search" />
+					placeholder="내용을 입력하세요." aria-label="Search" value="<%=search %>"/>
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 				<!-- my : 상하 마진을 줄 수 있음 -->
 			</form>
@@ -127,18 +127,18 @@ if (result != 1) {
 		<form method="get" action="./index.jsp" class="form-inline mt-3">
 			<select name="lectureDivide" class="form-control mx-1 mt-2">
 				<!-- mx : 좌우 마진을 줄 수 있음 -->
-				<option value="전체" <% if(lectureDivide.equals("전체")) out.print("seleted"); %> >전체</option>
-				<option value="전공" <% if(lectureDivide.equals("전공")) out.print("seleted"); %> >전공</option>
-				<option value="교양" <% if(lectureDivide.equals("교양")) out.print("seleted"); %> >교양</option>
-				<option value="기타" <% if(lectureDivide.equals("기타")) out.print("seleted"); %> >기타</option>
+				<option value="전체" <% if(lectureDivide.equals("전체")) out.print("selected"); %> >전체</option>
+				<option value="전공" <% if(lectureDivide.equals("전공")) out.print("selected"); %> >전공</option>
+				<option value="교양" <% if(lectureDivide.equals("교양")) out.print("selected"); %> >교양</option>
+				<option value="기타" <% if(lectureDivide.equals("기타")) out.print("selected"); %> >기타</option>
 			</select> 
 			<select name="searchType" class="form-control mx-1 mt-2">
 				<!-- mx : 좌우 마진을 줄 수 있음 -->
-				<option value="최신순" <% if(lectureDivide.equals("최신순")) out.println("seleted"); %> >최신순</option>
-				<option value="추천순" <% if(lectureDivide.equals("추천순")) out.println("seleted"); %> >추천순</option>
+				<option value="최신순" <% if(searchType.equals("최신순")) out.println("selected"); %> >최신순</option>
+				<option value="추천순" <% if(searchType.equals("추천순")) out.println("selected"); %> >추천순</option>
 			</select> 
 			<input type="text" name="search" class="form-control mx-1 mt-2"
-				placeholder="내용을 입력하세요." />
+				placeholder="내용을 입력하세요." value="<%=search %>"/>
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal"
 				href="#registerModal">등록하기</a> <a class="btn btn-danger mx-1 mt-2"
