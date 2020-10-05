@@ -38,6 +38,15 @@ public class FileDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 		return -1; // 데이터베이스 오류
 	}

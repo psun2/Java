@@ -23,11 +23,11 @@
 		// 	+ java.net.URLEncoder.encode(file, "UTF-8") + "\">" + file + "</a><br>");
 		// }
 
-		ArrayList<FileDAO> fileList = new FileDTO().getList();
+		ArrayList<FileDTO> fileList = new FileDAO().getList();
 		System.out.println(fileList);
 		System.out.println(request.getContextPath());
 
-		for (FileDAO file : fileList) {
+		for (FileDTO file : fileList) {
 			out.write("<a href=\"" + request.getContextPath() + "/downloadAction?file="
 			+ java.net.URLEncoder.encode(file.getFileRealName(), "UTF-8") + "\">" + file.getFileName() + "(다운로드 횟수: "
 			+ file.getdownloadCount() + ")</a><br>");

@@ -1,4 +1,4 @@
-<%@ page import="file.FileDTO"%>
+<%@ page import="file.FileDAO"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.util.Enumeration"%>
 <!-- DefaultFileRenamePolicy : 사용자가 올리는 파일들이 이름이 같을 경우 자동으로 이름이 겹치지 않도록 바꾸어 줍니다. -->
@@ -57,7 +57,8 @@
 		file.delete();
 		out.write("업로드할 수 없는 확장자 입니다.");
 			} else {
-		new FileDTO().upload(fileName, fileRealName);
+				
+		new FileDAO().upload(fileName, fileRealName);
 
 		out.write("파일명: " + fileName + "<br>");
 		out.write("실제 파일명: " + fileRealName + "<br>");
