@@ -1,4 +1,4 @@
-<%@ page import="file.FileDAO"%>
+<%@ page import="file.FileDTO"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.util.Enumeration"%>
 <!-- DefaultFileRenamePolicy : 사용자가 올리는 파일들이 이름이 같을 경우 자동으로 이름이 겹치지 않도록 바꾸어 줍니다. -->
@@ -16,54 +16,54 @@
 <body>
 	<%
 		// 중요 !!!
-	// .gitignore로 인하여 metadata 폴더가 옴겨지지 않아 
-	// D:\Study\Java\Java-study\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\107. File Upload (feat) 동빈나
-	// 이경로에 upload 폴더가 없어 Error이 발생했었습니다.
+		// .gitignore로 인하여 metadata 폴더가 옴겨지지 않아 
+		// D:\Study\Java\Java-study\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\107. File Upload (feat) 동빈나
+		// 이경로에 upload 폴더가 없어 Error이 발생했었습니다.
 
-	// ▶ Application 내장 객체는 전체 프로젝트에 대한 자원을 관리하는 객체입니다.
-	// ▶ 서버의 실제 프로젝트 경로에서 자원을 찾을 때 가장 많이 사용합니다.
-	// 우리가 만들었던 upload폴더를 찾도록 합니다.
-	// String directory = application.getRealPath("/upload/"); // race coindition 경쟁상태 유발에 의한 취약점 발경
-	String directory = "D:/Java/Java-study/208. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
+		// ▶ Application 내장 객체는 전체 프로젝트에 대한 자원을 관리하는 객체입니다.
+		// ▶ 서버의 실제 프로젝트 경로에서 자원을 찾을 때 가장 많이 사용합니다.
+		// 우리가 만들었던 upload폴더를 찾도록 합니다.
+		// String directory = application.getRealPath("/upload/"); // race coindition 경쟁상태 유발에 의한 취약점 발경
+		String directory = "D:/Java/Java-study/208. File Upload_파일 업 다운로드 (feat) 동빈나/WebContent/upload/";
 
-	// 파일의 최대크기 (총 100mb 까지만 저장되게 만듬)
-	int maxSize = 1204 * 1204 * 100;
+		// 파일의 최대크기 (총 100mb 까지만 저장되게 만듬)
+		int maxSize = 1204 * 1204 * 100;
 
-	String encoding = "UTF-8";
+		String encoding = "UTF-8";
 
-	// 생정자를 이용하여 생성과 동시에 파일전송을 할 수 있습니다.
-	MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding,
-			new DefaultFileRenamePolicy());
+		// 생정자를 이용하여 생성과 동시에 파일전송을 할 수 있습니다.
+		MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding,
+		new DefaultFileRenamePolicy());
 
-	// Enumeration : 마치 for문과 같이 사용한다고 생각하시면 됩니다.
-	Enumeration fileNames = multipartRequest.getFileNames();
+		// Enumeration : 마치 for문과 같이 사용한다고 생각하시면 됩니다.
+		Enumeration fileNames = multipartRequest.getFileNames();
 
-	while (fileNames.hasMoreElements()) {
+		while (fileNames.hasMoreElements()) {
 
-		String parameter = (String) fileNames.nextElement();
+			String parameter = (String) fileNames.nextElement();
 
-		// index에서 오는 file이라는 이름을 가진 input 으로 전해져오는 파일이름을 fileName 이라는 변수에 담슴니다. 
-		String fileName = multipartRequest.getOriginalFileName(parameter);
+			// index에서 오는 file이라는 이름을 가진 input 으로 전해져오는 파일이름을 fileName 이라는 변수에 담슴니다. 
+			String fileName = multipartRequest.getOriginalFileName(parameter);
 
-		// 실제로 사용자가 업로드한 파일 이름을 fileRealName 변수에 저장합니다.
-		String fileRealName = multipartRequest.getFilesystemName(parameter);
+			// 실제로 사용자가 업로드한 파일 이름을 fileRealName 변수에 저장합니다.
+			String fileRealName = multipartRequest.getFilesystemName(parameter);
 
-		if (fileName == null)
-			continue;
+			if (fileName == null)
+		continue;
 
-		if (!fileName.endsWith(".doc") && !fileName.endsWith(".hwp") && !fileName.endsWith(".pdf")
-		&& !fileName.endsWith(".xls")&& !fileName.endsWith(".png")) {
-			File file = new File(directory + fileName);
-			file.delete();
-			out.write("업로드할 수 없는 확장자 입니다.");
-		} else {
-			new FileDAO().upload(fileName, fileRealName);
+			if (!fileName.endsWith(".doc") && !fileName.endsWith(".hwp") && !fileName.endsWith(".pdf")
+			&& !fileName.endsWith(".xls")&& !fileName.endsWith(".png")) {
+		File file = new File(directory + fileName);
+		file.delete();
+		out.write("업로드할 수 없는 확장자 입니다.");
+			} else {
+		new FileDTO().upload(fileName, fileRealName);
 
-			out.write("파일명: " + fileName + "<br>");
-			out.write("실제 파일명: " + fileRealName + "<br>");
+		out.write("파일명: " + fileName + "<br>");
+		out.write("실제 파일명: " + fileRealName + "<br>");
+			}
+
 		}
-
-	}
 	%>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<context path="225. File Up and Down Load" docbase="www">
+		<Resource 
+			name="jdbc/225. File Up and Down Load"
+			auto="Container"
+			type="javax.sql.DataSource"
+			driverClassName="oracle.jdbc.driver.OracleDriver"
+			longingTime="10"
+			validationQuery="SELECT 1 FROM DUAL"
+			maxWait="5000"
+			url="jdbc:oracle:thin:@localhost:1521:xe"
+			username="FileUpload"
+			password="oracle"
+			testOnBorrow="true"
+		/>
+		<ReSourceLink 
+			type="javax.sql.DataSource"
+			name="jdbc/225. File Up and Down Load"
+			global="jdbc/225. File Up and Down Load"
+		/>
+	</context>

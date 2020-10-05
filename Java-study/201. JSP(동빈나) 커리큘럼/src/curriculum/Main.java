@@ -2,7 +2,7 @@ package curriculum;
 
 public class Main {
 
-	// JSP 강의평가 웹 사이트 개발하기(email send 기능 + 검색기능) ✔`
+	// JSP 강의평가 웹 사이트 개발하기(email send 기능 + 검색기능) ✔✔`
 	// https://www.youtube.com/watch?v=hke9FKluXow&list=PLRx0vPvlEmdAdWCQeUPnyMZ4PsW3dGuFB&index=1
 
 //--------------------------------------------------------------------------------------------------------------	
