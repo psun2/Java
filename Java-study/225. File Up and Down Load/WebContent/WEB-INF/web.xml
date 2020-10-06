@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>225. File Up and Down Load</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+<!-- 파일 다운로드 서블릿 -->
+	<servlet>
+		<servlet-name>DownloadAction</servlet-name>
+		<servlet-class>file.DownloadAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DownloadAction</servlet-name>
+		<url-pattern>/downloadAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DownloadAction_MY</servlet-name>
+		<servlet-class>file.DownloadAction_MY</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DownloadAction_MY</servlet-name>
+		<url-pattern>/downloadAction_my</url-pattern>
+	</servlet-mapping>
+</web-app>

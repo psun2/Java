@@ -12,5 +12,8 @@
 		<br />
 		<input type="submit" value="업로드"/>
 	</form>
+	<a href="./fileDownload.jsp">파일 다운로드 페이지</a>
+	<br/>
+	<a href="./fileDownload(my).jsp">My 파일 다운로드 페이지</a>
 </body>
 </html>
