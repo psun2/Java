@@ -4,15 +4,17 @@ public class FileDTO {
 
 	private String fileName;
 	private String fileRealName;
+	private int downloadCount;
 
 	public FileDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileDTO(String fileName, String fileRealName) {
+	public FileDTO(String fileName, String fileRealName, int downloadCount) {
 		super();
 		this.fileName = fileName;
 		this.fileRealName = fileRealName;
+		this.downloadCount = downloadCount;
 	}
 
 	public String getFileName() {
@@ -31,9 +33,18 @@ public class FileDTO {
 		this.fileRealName = fileRealName;
 	}
 
+	public int getDownloadCount() {
+		return downloadCount;
+	}
+
+	public void setDownloadCount(int downloadCount) {
+		this.downloadCount = downloadCount;
+	}
+
 	@Override
 	public String toString() {
-		return "FileDAO [fileName=" + fileName + ", fileRealName=" + fileRealName + "]";
+		return "FileDAO [fileName=" + fileName + ", fileRealName=" + fileRealName + ", downloadCount=" + downloadCount
+				+ "]";
 	}
 
 }

@@ -28,7 +28,7 @@ public class FileDAO {
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		String sql = "INSERT INTO FILEUPLOAD (fileName, fileRealName) VALUES (?, ?)";
+		String sql = "INSERT INTO FILEUPLOAD (fileName, fileRealName, downloadCount) VALUES (?, ?, 0)";
 
 		try {
 
@@ -53,6 +53,36 @@ public class FileDAO {
 		return -1; // 데이터베이스 오류
 	}
 
+	
+	
+	// 다운로드 횟수 증가
+	public int hit(String fileRealName) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		String sql = "UPDATE FILEUPLOAD SET downloadCount = downloadCount + 1 WHERE fileRealName = ?";
+
+		try {
+
+			conn = dataSource.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, fileRealName);
+			return psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null && !psmt.isClosed())
+					psmt.close();
+				if (conn != null && !conn.isClosed())
+					conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
 	public ArrayList<FileDTO> getList() {
 
 		ArrayList<FileDTO> fileList = null;
@@ -77,6 +107,7 @@ public class FileDAO {
 
 				file.setFileName(rs.getString(1));
 				file.setFileRealName(rs.getString(2));
+				file.setDownloadCount(rs.getInt(3));
 
 				fileList.add(file);
 			}

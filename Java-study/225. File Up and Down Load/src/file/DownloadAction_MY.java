@@ -25,7 +25,8 @@ public class DownloadAction_MY extends HttpServlet {
 
 		String fileName = URLDecoder.decode(request.getParameter("fileRealName"), "UTF-8");
 		
-		String savePath = request.getServletContext().getRealPath("/upload");
+		// String savePath = request.getServletContext().getRealPath("/upload");
+		String savePath = "D:\\Study\\Java\\Java-study\\225. File Up and Down Load\\upload(시큐어 코딩 웹셀 방어)";
 		File file = new File(savePath, fileName);
 
 		// 어떠한 정보를 주고 받을 것인지 설정
@@ -57,6 +58,8 @@ public class DownloadAction_MY extends HttpServlet {
 		}
 
 		sos.flush();
+		
+		new FileDAO().hit(fileName);
 
 		sos.close();
 		fis.close();
