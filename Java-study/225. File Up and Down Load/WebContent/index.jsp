@@ -8,7 +8,11 @@
 </head>
 <body>
 	<form action="uploadAction.jsp" method="post" enctype="multipart/form-data">
-		파일 : <input type="file" name="file"/>
+		파일 : <input type="file" name="file1"/>
+		<br />
+		파일 : <input type="file" name="file2"/>
+		<br />
+		파일 : <input type="file" name="file3"/>
 		<br />
 		<input type="submit" value="업로드"/>
 	</form>

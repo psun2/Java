@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -5,6 +6,7 @@
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.util.Enumeration"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,32 +30,40 @@
 	// 업로드 끝
 	MultipartRequest multi = new MultipartRequest(request, directory, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 
-	String fileName = multi.getOriginalFileName("file");
-	String fileRealName = multi.getFilesystemName("file");
+	Enumeration fileNames = multi.getFileNames();
+	while (fileNames.hasMoreElements()) {
 
-	System.out.println(fileName);
-	System.out.println(fileName.endsWith(".png"));
+		String parameter = (String) fileNames.nextElement();
+		String fileName = multi.getOriginalFileName(parameter);
+		String fileRealName = multi.getFilesystemName(parameter);
 
-	// 파일 업로드 시큐어 코딩
-	// 웹셀 공격 방어
-	boolean discrimination = false;
-	String[] ext = { ".png", ".jpg", ".gif" };
-	for (String str : ext) {
-		if (fileName.endsWith(str)) {
-			discrimination = true;
-			break;
+		if (fileName == null)
+			continue;
+
+		System.out.println(fileName);
+		System.out.println(fileName.endsWith(".png"));
+
+		// 파일 업로드 시큐어 코딩
+		// 웹셀 공격 방어
+
+		// boolean discrimination = false;
+		// String[] ext = { ".png", ".jpg", ".gif" };
+		// for (String str : ext) {
+		// 	if (fileName.endsWith(str)) {
+		// discrimination = true;
+		// break;
+		// 	}
+		// }
+
+		if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".gif")) {
+			File file = new File(directory, fileRealName);
+			file.delete();
+			out.write("업로드 할 수 없는 확장자 입니다." + "<br />");
+		} else {
+			new FileDAO().upload(fileName, fileRealName);
+			out.write("파일명: " + fileName + "<br />");
+			out.write("실제 파일명: " + fileRealName + "<br />");
 		}
-	}
-
-	if (!discrimination) {
-		File file = new File(directory, fileRealName);
-		file.delete();
-		out.write("업로드 할 수 없습니다.");
-		return;
-	} else {
-		new FileDAO().upload(fileName, fileRealName);
-		out.write("파일명: " + fileName + "<br />");
-		out.write("실제 파일명: " + fileRealName + "<br />");
 	}
 	%>
 </body>
