@@ -1,21 +1,38 @@
 package spring.di;
 
-import spring.di.entity.Exam;
-import spring.di.entity.NewLecExam;
-import spring.di.ui.ExamConsole;
-import spring.di.ui.GridExamConsole;
-import spring.di.ui.InlineExamConsole;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class Program {
+import spring.di.entity.Exam;
+import spring.di.ui.ExamConsole;
+
+public class Program { // https://mvnrepository.com/
 
 	public static void main(String[] args) {
+
+		/*
+		 * 스프링에게 지시하는 방법으로 코드를 변경 
+		 *  // Exam exam = new NewLecExam();
+		 *  Exam exam = new NewLecExam(10, 10, 10, 10); 
+		 *  ExamConsole console = new GridExamConsole();
+		 *
+		 * console.setExam(exam);
+		 */
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/setting.xml");
+
+		Exam exam = context.getBean(Exam.class);
+		System.out.println(exam.toString());
 		
-		Exam exam = new NewLecExam();
-		// ExamConsole console = new InlineExamConsole(exam); // DI
-		ExamConsole console = new GridExamConsole(exam);
-		// ExamConsole console = [?]; // 필요에따라 inline 또는 Grid로 하려면... ?
+		// ExamConsole console = (ExamConsole) context.getBean("console");
+		ExamConsole console = context.getBean(ExamConsole.class);
 		console.print();
-		
+
+//		ApplicationContext = new 
+//				ClassPathXmlApplicationContext("path.xml");
+//				FileSystemXmlApplicationContext("path.xml");
+//				XmlWebApplicationContext("path.xml");
+//				AnnotationConfigClassPathApplicationContext("scan 방법");
 	}
 
 }

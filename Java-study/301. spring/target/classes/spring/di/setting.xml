@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Exam exam = new NewLecExam(); -->
+	<!-- 
+	<bean id="exam" class="spring.di.entity.NewLecExam">
+	 -->
+		<!-- 값을 셋팅하는 방법 -->
+		<!-- 
+		<property name="kor">
+			<value>10</value>
+		</property>
+		<property name="eng" value="10" />
+		<property name="math" value="10" />
+		<property name="com" value="10" />
+		 -->
+		 
+		 <!-- 생성자를 통한 값 설정 -->
+		 
+		 <!-- 1. 인덱싱 -->
+		 <!-- 
+		 <constructor-arg index="0">
+		 	<value>10</value>
+		 </constructor-arg>
+		 <constructor-arg index="1" value="20" />
+		 <constructor-arg index="2" value="30" />
+		<constructor-arg index="3" value="40" />
+		 -->
+		 
+		 <!-- 2. name -->
+		 <!-- 
+		 <constructor-arg name="kor">
+		 	<value>10</value>
+		 </constructor-arg>
+		 <constructor-arg name="eng" value="20" />
+		 <constructor-arg name="math" value="30" />
+		<constructor-arg name="com" value="40" />
+		 -->
+		 
+		 <!-- 3. type 지정 -->
+		 <!-- 
+		 <constructor-arg name="kor" type="int">
+		 	<value>10</value>
+		 </constructor-arg>
+		 <constructor-arg name="eng" type="int" value="20" />
+		 <constructor-arg name="math" type="int" value="30" />
+		 <constructor-arg name="com" type="int" value="40" />
+		  -->
+	 <!--
+	</bean>
+	 -->
+	
+	 <!-- 단일 태그 방식 -->
+	 <!-- 
+	 <홀길동:bean></홍길동:bean>
+	 <김길동:bean></김길동:bean>
+	  -->
+	 <bean id="exam" class="spring.di.entity.NewLecExam" p:kor="10" p:eng="6" p:math="10"/>
+
+	<!-- ExamConsole console = new GridExamConsole(); -->
+	<bean id="console" class="spring.di.ui.InlineExamConsole">
+		<!-- console.setExam(exam); -->
+		<!-- setExam 호출 -->
+		<!-- <property name="setExam" value="" ref=""></property> -->
+		<property name="exam" ref="exam" />
+	</bean>
+
+
+</beans>
