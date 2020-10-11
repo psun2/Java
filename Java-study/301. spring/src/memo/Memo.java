@@ -42,4 +42,24 @@ public class Memo { // https://mvnrepository.com/
 	// https://www.youtube.com/watch?v=K_4xDEeDvk8&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=10
 	// 2020-10-10 (완료)
 
+	// 스프링 프레임워크 강의 11강 - 콜렉션 생성과 목록 DI
+	// https://www.youtube.com/watch?v=0ktRT5Fatnw&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=11
+	// 2020-10-11 (완료)
+
+	// 스프링 프레임워크 강의 12강 - 어노테이션을 이용할 때의 장점과 @Autowired를 이용한 DI 해보기
+	// https://www.youtube.com/watch?v=S065KRjXRSY&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=12
+	// 2020-10-11 (완료)
+
+	// 스프링 프레임워크 강의 13강 - @Autowired 동작방식 이해와 @Qualifier
+	// https://www.youtube.com/watch?v=Od-WtriilwY&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=13
+	// 2020-10-11 (완료)
+
+	// 스프링 프레임워크 강의 14강 - @Autowired의 위치와 required 옵션
+	// https://www.youtube.com/watch?v=MlTk1AFMIzU&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=14
+	// 2020-10-11 (완료)
+
+	// 스프링 프레임워크 강의 15강 - 어노테이션을 이용한 객체 생성
+	// https://www.youtube.com/watch?v=DNrkw3pAsAM&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=15
+	// 2020-10-11 (완료)
+
 }

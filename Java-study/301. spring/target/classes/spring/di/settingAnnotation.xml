@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- xmlns:p="http://www.springframework.org/schema/p" : Namespaces 의 p 
+		: properties -->
+	<!-- xmlns:util="http://www.springframework.org/schema/util"" : Namespaces 
+		의 utill -->
+	<!-- xmlns:context="http://www.springframework.org/schema/context" : Namespaces 
+		의 context @Autowired 사용 -->
+
+	<!-- annotation 참조 지시 : @Autowired 사용시 -->
+	<!-- <context:component-scan base-package="spring.di.ui" /> : 사용시 
+	<context:annotation-config />의 일을 대 체 할 수 있습니다.
+	 -->
+	 <!-- 
+	<context:annotation-config />
+	  -->
+	
+	<!-- 객체생성 anootation -->
+	<context:component-scan base-package="spring.di.ui, spring.di.entity" />
+
+	<!-- NewLecExam -->
+	<!-- required 옵션 사용을 위한 주석
+	<bean id="exam1" class="spring.di.entity.NewLecExam" p:kor="10"
+		p:eng="6" p:math="10" />
+	<bean id="exam2" class="spring.di.entity.NewLecExam" p:kor="30"
+		p:eng="6" p:math="40" />
+	 -->
+	<!-- @Qualifier 를 사용하여 injection 대상 명시 : ID 값을 이용 -->
+
+	<!-- InlineExamConsole -->
+		<!-- injection 단계 없음 InlineExamConsole setter 참조 -->
+		<!-- @Autowired 어노테이션 사용 -->
+		<!-- <property name="exam" ref="exam" /> -->
+		<!-- @Qualifier 를 사용하여 injection 대상 명시 -->
+	<!-- 
+	<bean id="console" class="spring.di.ui.InlineExamConsole" />
+	 -->
+
+	<!-- utill Namespaces 이용 ArrayList만들기 -->
+	<!-- List : ArrayList -->
+	<!-- 
+	<util:list id="exams" list-class="java.util.ArrayList"> 
+		<bean class="spring.di.entity.NewLecExam" p:kor="1" p:eng="1"
+			p:math="75" />
+		<ref bean="exam" />
+	</util:list>
+	 -->
+
+</beans>
