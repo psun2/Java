@@ -62,4 +62,24 @@ public class Memo { // https://mvnrepository.com/
 	// https://www.youtube.com/watch?v=DNrkw3pAsAM&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=15
 	// 2020-10-11 (완료)
 
+	// 스프링 프레임워크 강의 16강 - 특화된 @Component 어노테이션 (@Component/@Service/@Repository)
+	// https://www.youtube.com/watch?v=pyMzPpK4uXk&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=16
+	// 2020-10-12 (완료)
+	
+	// 스프링 프레임워크 강의 17강 - XML Configuration을 Java Configuration으로 변경하기
+	// https://www.youtube.com/watch?v=XzrXZIRB1vM&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=17
+	// 2020-10-12 (완료)
+
+	// 스프링 프레임워크 강의 18강 - AOP(Aspect Oriented Programming) 이란? - 방법론
+	// https://www.youtube.com/watch?v=y2JkXjOocZ4&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=18
+	// 2020-10-12 (완료)
+
+	// 스프링 프레임워크 강의 19강 - AOP(Aspect Oriented Programming) 자바 코드 이해하기
+	// https://www.youtube.com/watch?v=DhcrnaKKrbA&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=19
+	// 2020-10-12 (완료)
+
+	// 스프링 프레임워크 강의 20강 - 순수 자바로 AOP(Aspect Oriented Programming) 구현해보기
+	// https://www.youtube.com/watch?v=pr2dwdf_03k&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=20
+	// 2020-10-12 (완료)
+
 }

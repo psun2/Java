@@ -3,10 +3,12 @@ package spring.di.ui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import spring.di.entity.Exam;
 
-@Component("console")
+//@Component("console")
+@Service("console")
 public class InlineExamConsole implements ExamConsole {
 
 	private Exam exam;

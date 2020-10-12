@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.di.entity.Exam;
@@ -24,7 +25,8 @@ public class Program { // https://mvnrepository.com/
 		 */
 
 		// ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/settingXML.xml");
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/settingAnnotation.xml");
+		// ApplicationContext context = new ClassPathXmlApplicationContext("spring/di/settingAnnotation.xml");
+		ApplicationContext context = new AnnotationConfigApplicationContext(NewlecDIConfig.class);
 
 		// Exam exam = context.getBean(Exam.class);
 		// System.out.println(exam.toString());
