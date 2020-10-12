@@ -153,7 +153,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="223. 강의평가 웹사이트 oracle_ver" path="/223._강의평가_웹사이트_oracle_ver" reloadable="true" source="org.eclipse.jst.jee.server:223. 강의평가 웹사이트 oracle_ver"/><Context docBase="225. File Up and Down Load" path="/225._File_Up_and_Down_Load" reloadable="true" source="org.eclipse.jst.jee.server:225. File Up and Down Load"/></Host>
+      <Context docBase="223. 강의평가 웹사이트 oracle_ver" path="/223._강의평가_웹사이트_oracle_ver" reloadable="true" source="org.eclipse.jst.jee.server:223. 강의평가 웹사이트 oracle_ver"/><Context docBase="225. File Up and Down Load" path="/225._File_Up_and_Down_Load" reloadable="true" source="org.eclipse.jst.jee.server:225. File Up and Down Load"/><Context docBase="JSP03_ServletGetPost" path="/JSP03_ServletGetPost" reloadable="true" source="org.eclipse.jst.jee.server:JSP03_ServletGetPost"/><Context docBase="JSP05_ServletForm (submit)" path="/JSP05_ServletForm (submit)" reloadable="true" source="org.eclipse.jst.jee.server:JSP05_ServletForm (submit)"/></Host>
     </Engine>
   </Service>
 </Server>

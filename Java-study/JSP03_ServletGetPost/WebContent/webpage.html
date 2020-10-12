@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>doGet() 메소드 동작 확인</title>
+</head>
+<body>
+	<form method="post" action="./Sev">
+		<input type="submit" />
+	</form>
+	<br />
+
+	<!-- a: get 방식의 request -->
+
+	<!-- http://localhost:8080/JSP03_ServletGetPost : Context Path -->
+
+	<a href="Sev">클릭해 보세요 1 /Sev</a>
+	<br />
+	<!-- http://localhost:8080/JSP03_ServletGetPost/Sev -->
+
+	<a href="./Sev">클릭해 보세요 2 ./Sev</a>
+	<br />
+	<!-- http://localhost:8080/JSP03_ServletGetPost/Sev -->
+
+	<!-- Error -->
+	<a href="/Sev">클릭해 보세요 3 /Sev</a>
+	<br />
+	<!-- http://localhost:8080/Sev -->
+
+</body>
+</html>
+
