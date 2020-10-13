@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- 객체 생성 -->
-	<bean id="target" class="spring.aop.entity.NewLecExam" p:kor="101" p:eng="50" p:math="1" p:com="15" />
+	<bean id="target" class="spring.aop.entity.NewLecExam" p:kor="10" p:eng="50" p:math="1" p:com="15" />
 
 	<!-- around 방식의 proxy 생성 -->
 	<bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice" />
@@ -22,6 +22,24 @@
 
 	<!-- throwing 방식의 proxy 생성 -->
 	<bean id="logThrowingAdvice" class="spring.aop.advice.LogThrowingAdvice" />
+
+	<!-- Point Cut -->
+	<bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<property name="mappedName" value="total" />
+	</bean>
+	
+	<!-- 포인트 컷 과 어드바이스 연결 -->
+	<bean id="classicBeforeAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+		<property name="advice" ref="logBeforeAdvice" />
+		<property name="pointcut" ref="classicPointCut" />	
+	</bean>
+
+	<bean id="classicAroundAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+		<property name="advice" ref="logAroundAdvice" />
+		<property name="pointcut" ref="classicPointCut" />	
+	</bean>
 
 	<!-- proxy 객체 생성 -->
 	<bean id="proxy"
@@ -39,7 +57,7 @@
 		<property name="interceptorNames">
 			<list>
 				<value>logAroundAdvice</value>
-				<value>logBeforeAdvice</value>
+				<value>classicBeforeAdvisor</value>
 				<value>logAfterReturningAdvice</value>
 				<value>logThrowingAdvice</value>
 			</list>

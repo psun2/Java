@@ -93,7 +93,13 @@ public class Memo { // https://mvnrepository.com/
 
 	// 스프링 프레임워크 강의 23강 - AOP(Aspect Oriented Programming) After Returning /
 	// Throwing 어드바이스 구현하기
+	// Throwing 어드바이스 구현하기
 	// https://www.youtube.com/watch?v=rClfDKEiEA0&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=23
+	// 2020-10-13 (완료)
+
+	// 스프링 프레임워크 강의 24강 - AOP(Aspect Oriented Programming) Point Cut(Weaving, Join
+	// Pointer)
+	// https://www.youtube.com/watch?v=ikKy-6K63wU&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=24
 	// 2020-10-13 (완료)
 
 }

@@ -24,6 +24,9 @@ public class Program {
 		System.out.printf("total is %d\n", proxy.total());
 		System.out.printf("avg is %f\n", proxy.avg());
 
+		// point cut : org.springframework.aop.support.NameMatchMethodPointcut
+		// point cut 과 advice 연결: org.springframework.aop.support.DefaultPointcutAdvisor
+
 		// spring xml 로 구현 (setting)
 //		Exam exam = new NewLecExam(1, 1, 1, 1);
 //		
