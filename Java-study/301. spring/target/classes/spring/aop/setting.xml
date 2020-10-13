@@ -9,13 +9,19 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
 	<!-- 객체 생성 -->
-	<bean id="target" class="spring.aop.entity.NewLecExam" p:kor="10" p:eng="50" p:math="1" p:com="15" />
+	<bean id="target" class="spring.aop.entity.NewLecExam" p:kor="101" p:eng="50" p:math="1" p:com="15" />
 
 	<!-- around 방식의 proxy 생성 -->
 	<bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice" />
 
 	<!-- before 방식의 proxy 생성 -->
 	<bean id="logBeforeAdvice" class="spring.aop.advice.LogBeforeAdvice" />
+
+	<!-- after returning 방식의 proxy 생성 -->
+	<bean id="logAfterReturningAdvice" class="spring.aop.advice.LogAfterReturningAdvice" />
+
+	<!-- throwing 방식의 proxy 생성 -->
+	<bean id="logThrowingAdvice" class="spring.aop.advice.LogThrowingAdvice" />
 
 	<!-- proxy 객체 생성 -->
 	<bean id="proxy"
@@ -34,6 +40,8 @@
 			<list>
 				<value>logAroundAdvice</value>
 				<value>logBeforeAdvice</value>
+				<value>logAfterReturningAdvice</value>
+				<value>logThrowingAdvice</value>
 			</list>
 		</property>
 	</bean>

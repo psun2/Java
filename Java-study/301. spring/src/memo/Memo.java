@@ -65,7 +65,7 @@ public class Memo { // https://mvnrepository.com/
 	// 스프링 프레임워크 강의 16강 - 특화된 @Component 어노테이션 (@Component/@Service/@Repository)
 	// https://www.youtube.com/watch?v=pyMzPpK4uXk&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=16
 	// 2020-10-12 (완료)
-	
+
 	// 스프링 프레임워크 강의 17강 - XML Configuration을 Java Configuration으로 변경하기
 	// https://www.youtube.com/watch?v=XzrXZIRB1vM&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=17
 	// 2020-10-12 (완료)
@@ -82,12 +82,18 @@ public class Memo { // https://mvnrepository.com/
 	// https://www.youtube.com/watch?v=pr2dwdf_03k&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=20
 	// 2020-10-12 (완료)
 
-	// 스프링 프레임워크 강의 21강 - 스프링으로 AOP(Aspect Oriented Programming) 구현해보기 - AroundAdvice
+	// 스프링 프레임워크 강의 21강 - 스프링으로 AOP(Aspect Oriented Programming) 구현해보기 -
+	// AroundAdvice
 	// https://www.youtube.com/watch?v=eHYPujubB3E&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=21
 	// 2020-10-13 (완료)
 
 	// 스프링 프레임워크 강의 22강 - AOP(Aspect Oriented Programming) BeforeAdvice 구현하기
 	// https://www.youtube.com/watch?v=oysjZMw9S6M&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=22
+	// 2020-10-13 (완료)
+
+	// 스프링 프레임워크 강의 23강 - AOP(Aspect Oriented Programming) After Returning /
+	// Throwing 어드바이스 구현하기
+	// https://www.youtube.com/watch?v=rClfDKEiEA0&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=23
 	// 2020-10-13 (완료)
 
 }
