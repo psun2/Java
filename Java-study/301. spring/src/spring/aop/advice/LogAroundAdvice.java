@@ -5,6 +5,8 @@ import org.aopalliance.intercept.MethodInvocation;
 
 public class LogAroundAdvice implements MethodInterceptor {
 
+	// AroundAdvice : 비지니스 로직의 앞뒤로 곁다리 업무를 넣어야 하기 때문에 around 사용
+
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		long start = System.currentTimeMillis();
