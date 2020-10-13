@@ -24,21 +24,59 @@
 	<bean id="logThrowingAdvice" class="spring.aop.advice.LogThrowingAdvice" />
 
 	<!-- Point Cut -->
-	<bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+	<!-- <bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
 		<property name="mappedName" value="total" />
-	</bean>
+	</bean> -->
 	
 	<!-- 포인트 컷 과 어드바이스 연결 -->
-	<bean id="classicBeforeAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
-		<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+	<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+	<!-- <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
 		<property name="advice" ref="logBeforeAdvice" />
 		<property name="pointcut" ref="classicPointCut" />	
-	</bean>
+	</bean> -->
 
-	<bean id="classicAroundAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
-		<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+	<!-- 포인트 컷 과 어드바이스 연결 -->
+	<!-- advice 와 pointcut 는 정해져 있는 것이므로 변경 불가 -->
+	<!-- <bean id="classicAroundAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
 		<property name="advice" ref="logAroundAdvice" />
 		<property name="pointcut" ref="classicPointCut" />	
+	</bean> -->
+
+	<!-- pointcut을 품은 Advisor -->
+	<!-- <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice" ref="logBeforeAdvice" />
+		<property name="mappedName" value="total" />	
+	</bean> -->
+	
+	<!-- pointcut을 품은 Advisor -->
+	<!-- <bean id="classicAroundAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice" ref="logAroundAdvice" />
+		<property name="mappedNames">
+			<list>
+				<value>total</value>
+				<value>avg</value>
+			</list>
+		</property>	
+	</bean> -->
+
+	<bean id="classicBeforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice" ref="logBeforeAdvice" />
+		<property name="mappedNames">
+			<list>
+				<value>totla</value>
+			</list>
+		</property>	
+	</bean>
+
+	<!-- parrern 이 가능한 Advisor (정규식) -->
+	<bean id="classicAroundAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice" ref="logAroundAdvice" />
+		<property name="patterns">
+			<list>
+				<value>.*to.*</value> <!-- method 이름중.. to가 들어간... -->
+				<!-- <value>avg</value>  -->
+			</list>
+		</property>	
 	</bean>
 
 	<!-- proxy 객체 생성 -->
@@ -56,7 +94,7 @@
 		<!-- 핸들러 삽입 -->
 		<property name="interceptorNames">
 			<list>
-				<value>logAroundAdvice</value>
+				<value>classicAroundAdvisor</value>
 				<value>classicBeforeAdvisor</value>
 				<value>logAfterReturningAdvice</value>
 				<value>logThrowingAdvice</value>
