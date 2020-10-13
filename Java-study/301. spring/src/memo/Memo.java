@@ -82,4 +82,8 @@ public class Memo { // https://mvnrepository.com/
 	// https://www.youtube.com/watch?v=pr2dwdf_03k&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=20
 	// 2020-10-12 (완료)
 
+	// 스프링 프레임워크 강의 21강 - 스프링으로 AOP(Aspect Oriented Programming) 구현해보기 - AroundAdvice
+	// https://www.youtube.com/watch?v=eHYPujubB3E&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKru3T&index=21
+	// 2020-10-13 (완료)
+
 }

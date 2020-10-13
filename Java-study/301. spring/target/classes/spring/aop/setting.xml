@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- 객체 생성 -->
+	<bean id="target" class="spring.aop.entity.NewLecExam" p:kor="10" p:eng="50" p:math="1" p:com="15" />
+
+	<bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice" />
+
+	<!-- proxy 객체 생성 -->
+	<bean id="proxy"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- target : setter
+		원래이름은 setTarget 이나, 
+		target이란 메소드를 직접 호출 할땐느
+		약간의 규칙에 따라라 set은 빼주고 앞에문자는 소문자로 변경합니다.
+		 -->
+
+		<!-- loader 삽입 -->
+		<property name="target" ref="target" />
+
+		<!-- 핸들러 삽입 -->
+		<property name="interceptorNames">
+			<list>
+				<value>logAroundAdvice</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
