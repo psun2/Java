@@ -108,7 +108,7 @@
 				
 				
 				
-			<Context docBase="JSP06_ServletInitParam (XML_Annotation_Servlet기본 Param 설정)" path="/JSP06_ServletInitParam (XML_Annotation_Servlet기본 Param 설정)" reloadable="true" source="org.eclipse.jst.jee.server:JSP06_ServletInitParam (XML_Annotation_Servlet기본 Param 설정)"/><Context docBase="JSP07_ServletContext  (Context 의 XML 및 Path)" path="/JSP07_ServletContext  (Context 의 XML 및 Path)" reloadable="true" source="org.eclipse.jst.jee.server:JSP07_ServletContext  (Context 의 XML 및 Path)"/></Host>
+			<Context docBase="JSP09_ImplicitObject (response)" path="/JSP09_ImplicitObject (response)" reloadable="true" source="org.eclipse.jst.jee.server:JSP09_ImplicitObject (response)"/><Context docBase="JSP10_ActionTag (Include)" path="/JSP10_ActionTag (Include)" reloadable="true" source="org.eclipse.jst.jee.server:JSP10_ActionTag (Include)"/></Host>
 		</Engine>
 	</Service>
 </Server>

@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex-grow: 1;
+}
+
+.fakeimg {
+	height: 200px;
+	background: #aaa;
+}
