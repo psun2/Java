@@ -86,7 +86,7 @@ JAVA_HOME
 변수값 에 복사한 JDK 경로
 
 ```
-C:\Program Files\Java\jdk1.8.0_241\bin
+C:\Program Files\Java\jdk1.8.0_241
 ```
 
 를 입력합니다.
@@ -126,7 +126,7 @@ Path를 수정 할 수 있도록 합니다.
 Path에 새롭게 만든 JAVA_HOME 변수를 추가해줍니다.
 
 ```
-%JAVA_HOME%
+%JAVA_HOME%\bin
 ```
 
 위와 같이 입력하거나,
