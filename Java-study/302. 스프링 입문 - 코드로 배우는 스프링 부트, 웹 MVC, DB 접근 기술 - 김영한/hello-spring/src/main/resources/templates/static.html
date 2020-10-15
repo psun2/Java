@@ -1,10 +1,9 @@
-<!DOCTYPE HTML>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-<body>
 <!--
 templates 폴더 안에 있는 파일들은 정적인 파일(변하지 않는)이 아닌,
 동적 파일입니다.
@@ -18,6 +17,8 @@ thymeleaf 엔진을 통해 해당 부분에 데이터 전달후,!!!
         이는 controller 가 없으면 작동하지않습니다.
         해당 디렉토리 내의 static.html 을 참고
  -->
-<p th:text="'안녕하세요. ' + ${data}">안녕하세요. 손님</p>
+<body>
+    templates 폴더 안에 있는 정적 파일입니다.<br />
+    정적파일이 templates 폴더 내에서 controller 없이 작동 할 수 있을까요?<br />
 </body>
 </html>
