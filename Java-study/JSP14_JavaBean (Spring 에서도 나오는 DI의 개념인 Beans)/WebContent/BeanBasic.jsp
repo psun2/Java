@@ -7,6 +7,7 @@
 <title>Bean Basic</title>
 </head>
 <body>
+<%request.setCharacterEncoding("UTF-8"); %>
 
 <%--
 <%@ page import="beans.Person" %>
@@ -40,7 +41,6 @@
 <jsp:setProperty property="id" name="person1" value="1988" />
 <jsp:setProperty property="gender" name="person1" value="남" />
 
-
 <%
 	// getter 을 통해 해당 값 가져오기
 	// person1.getName();
@@ -56,6 +56,8 @@
 아이디: <jsp:getProperty property="id" name="person1" /><br />
 성별: <jsp:getProperty property="gender" name="person1" /><br />
 <hr />
+
+--------------------------------------------------------------------------------------
 
 <%
 	// 객체의 생성과 초기화를  동시에 진행
@@ -74,6 +76,23 @@
 아이디: <jsp:getProperty property="id" name="person2" /><br />
 성별: <jsp:getProperty property="gender" name="person2" /><br />
 <hr />
+
+--------------------------------------------------------------------------------------
+
+<%
+	// paramter 를 일괄로 받아올수 있다!
+	// 유효성 검사 먼저 진행 후 객체를 생성해 
+	// 유효성이 통과 되었을때 모두다 초기화 할 수 있는 꿀 조합(?!!)
+%>
+
+<jsp:useBean id="person3" class="beans.Person" scope="page" />
+<jsp:setProperty property="*" name="person3" />
+
+<h3>person3</h3>
+이름: <jsp:getProperty name="person3" property="name" /><br />
+나이: <jsp:getProperty property="age" name="person3" /><br />
+아이디: <jsp:getProperty property="id" name="person3" /><br />
+성별: <jsp:getProperty property="gender" name="person3" /><br />
 
 </body>
 </html>

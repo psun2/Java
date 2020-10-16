@@ -47,7 +47,7 @@ public class HelloController {
         return hello; // class 를 내보내 줄때 JSON 형식으로 내보내줍니다.
         // 굉장히 신기합니다.
         // ResponseBody 가 붙어 있을때 객체가 오면 JSON 방식으로 객체를 만들어서
-        // http 응답에 반환하겠다라는 기본 정택 입니다.
+        // http 응답에 반환하겠다라는 기본 정책 입니다.
 
         // spring 은 기본 적으로 객체를 JSON 으로 바꾸어주는
         // Jackson 이라는 라이브러리를 탑제하고 있으며,

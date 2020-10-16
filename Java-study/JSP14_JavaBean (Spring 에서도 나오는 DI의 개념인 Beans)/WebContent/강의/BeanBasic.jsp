@@ -36,6 +36,13 @@ new Person()
 <%--
 	person3.setName(request.getParameter("name"));
  --%>
+ 
+ 
+ 
+<%--paramter 를 일괄로 받아올수 있다! --%>
+<jsp:useBean id="person4" class="강의.com.lec.beans.Person" scope="page" />
+<jsp:setProperty name="person4" property="*" />
+<!-- form 의 name이 일치하는 setter 들을 알아서 초기화 해 줍니다 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -95,6 +102,13 @@ new Person()
 성별: <jsp:getProperty name="person3" property="gender" /><br />
  
  <% System.out.println(person3.getAge()); // 47 %>
+
+ <h3>Person4</h3>
+<!-- 객체 내부의 값 얻어오기 -->
+이름: <jsp:getProperty name="person4" property="name" /><br />
+나이: <jsp:getProperty name="person4" property="age" /><br />
+아이디: <jsp:getProperty name="person4" property="id" /><br />
+성별: <jsp:getProperty name="person4" property="gender" /><br />
  
 </body>
 </html>
