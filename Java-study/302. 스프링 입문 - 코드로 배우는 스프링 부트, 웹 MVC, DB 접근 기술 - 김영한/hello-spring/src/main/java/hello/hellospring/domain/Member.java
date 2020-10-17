@@ -1,5 +1,6 @@
 package hello.hellospring.domain;
 
+// DTO 느낌이 납니다..
 public class Member {
 
     private Long id; // id 식별자 (AutoIncrement)

@@ -1,9 +1,14 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+// DAO - 느낌이 좀 납니다.
+// Repository 에 있는 코드가 진땡인 데 로직을 숨기기 위한 service 란 폴더에서
+// 가짜 DAO 를 생성합니다.
+@Repository
 public class MemoryMemberRepository  implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<Long, Member>();

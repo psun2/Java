@@ -1,8 +1,10 @@
 package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.service.MemberService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,10 +12,19 @@ import java.util.Optional;
 
 class MemoryMemberRepositoryTest {
 
+    MemberService memberService;
+
     // MemberRepository repository = new MemoryMemberRepository();
     // 클리어 메소드는 MemoryMemberRepository 이친구의 것이기때문에
     // 인터 페이스가 아닌 MemoryMemberRepository 로 생성합니다.
-    MemoryMemberRepository repository = new MemoryMemberRepository();
+    MemoryMemberRepository repository;
+
+    @BeforeEach
+    public void brforeEach() {
+        repository = new MemoryMemberRepository();
+        memberService = new MemberService(repository);
+        // 외부에서 주입 받는다 => Dependency Injection
+    }
 
     @AfterEach //모든 Test메서드가 끝날때마다 실행되는 callback 메서드 입니다.
     public void afterEach() {
@@ -48,7 +59,7 @@ class MemoryMemberRepositoryTest {
 
         // 검증 3
         // 강의: 자바11 인데 현재 자바 8을 쓰는데 아래 메소드가 보이지 않음
-        // Assertions.assertThat(member).isEqualTo(result);
+        org.assertj.core.api.Assertions.assertThat(member).isEqualTo(result);
     }
 
     @Test
