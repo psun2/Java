@@ -4,8 +4,11 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 // @Controller 라는 애노테이션을 보고
@@ -53,5 +56,13 @@ public class MemberController {
         // 모든 유효성이 통과 되었으므로 db에 저장을 한뒤
 
         return "redirect:/"; // 홈화면(root) 로 돌아가기
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+
+        return "members/memberList";
     }
 }
