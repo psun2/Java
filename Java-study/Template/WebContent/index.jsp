@@ -15,6 +15,7 @@
 	<button onclick="location.href='success'">성공</button>
 	<br />
 	<button onclick="location.href='exception'">에러</button>
+	<br />
 	
 <jsp:include page="components/template/modal.jsp" />
 
