@@ -9,22 +9,32 @@
 	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
 	OF ANY KIND, either express or implied. See the License for the specific 
 	language governing permissions and limitations under the License. --><!-- Note: A "Server" is not itself a "Container", so you may not define 
-	subcomponents such as "Valves" at this level. Documentation at /docs/config/server.html --><Server port="8005" shutdown="SHUTDOWN">
-	<Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
+	subcomponents such as "Valves" at this level. Documentation at /docs/config/server.html -->
+<Server port="8005" shutdown="SHUTDOWN">
+	<Listener
+		className="org.apache.catalina.startup.VersionLoggerListener" />
 	<!-- Security listener. Documentation at /docs/config/listeners.html <Listener 
 		className="org.apache.catalina.security.SecurityListener" /> -->
 	<!--APR library loader. Documentation at /docs/apr.html -->
-	<Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
+	<Listener SSLEngine="on"
+		className="org.apache.catalina.core.AprLifecycleListener" />
 	<!-- Prevent memory leaks due to use of particular java/javax APIs -->
-	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
-	<Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
-	<Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
+	<Listener
+		className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+	<Listener
+		className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+	<Listener
+		className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
 	<!-- Global JNDI resources Documentation at /docs/jndi-resources-howto.html -->
 	<GlobalNamingResources>
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
-		<Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
+		<Resource auth="Container"
+			description="User database that can be updated and saved"
+			factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+			name="UserDatabase" pathname="conf/tomcat-users.xml"
+			type="org.apache.catalina.UserDatabase" />
 	</GlobalNamingResources>
 
 	<!-- A "Service" is a collection of one or more "Connectors" that share 
@@ -43,7 +53,8 @@
 			and responses are returned. Documentation at : Java HTTP Connector: /docs/config/http.html 
 			Java AJP Connector: /docs/config/ajp.html APR (HTTP/AJP) Connector: /docs/apr.html 
 			Define a non-SSL/TLS HTTP/1.1 Connector on port 8080 -->
-		<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+		<Connector connectionTimeout="20000" port="8080"
+			protocol="HTTP/1.1" redirectPort="8443" />
 		<!-- A "Connector" using the shared thread pool -->
 		<!-- <Connector executor="tomcatThreadPool" port="8080" protocol="HTTP/1.1" 
 			connectionTimeout="20000" redirectPort="8443" /> -->
@@ -88,10 +99,12 @@
 				<!-- This Realm uses the UserDatabase configured in the global JNDI resources 
 					under the key "UserDatabase". Any edits that are performed against this UserDatabase 
 					are immediately available for use by the Realm. -->
-				<Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+				<Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+					resourceName="UserDatabase" />
 			</Realm>
 
-			<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+			<Host appBase="webapps" autoDeploy="true" name="localhost"
+				unpackWARs="true">
 
 				<!-- SingleSignOn valve, share authentication between web applications 
 					Documentation at: /docs/config/valve.html -->
@@ -100,15 +113,61 @@
 
 				<!-- Access log processes all example. Documentation at: /docs/config/valve.html 
 					Note: The pattern used is equivalent to using pattern="common" -->
-				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
+				<Valve className="org.apache.catalina.valves.AccessLogValve"
+					directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b"
+					prefix="localhost_access_log" suffix=".txt" />
 
-				
-				
-				
-				
-				
-				
-			<Context docBase="JSP09_ImplicitObject (response)" path="/JSP09_ImplicitObject (response)" reloadable="true" source="org.eclipse.jst.jee.server:JSP09_ImplicitObject (response)"/><Context docBase="JSP10_ActionTag (Include)" path="/JSP10_ActionTag (Include)" reloadable="true" source="org.eclipse.jst.jee.server:JSP10_ActionTag (Include)"/><Context docBase="React" path="/React" reloadable="true" source="org.eclipse.jst.jee.server:React"/><Context docBase="JSP11_Cookie (로그인 기능)" path="/JSP11_Cookie (로그인 기능)" reloadable="true" source="org.eclipse.jst.jee.server:JSP11_Cookie (로그인 기능)"/><Context docBase="JSP12_Session (로그인 기능 - 보안성)" path="/JSP12_Session (로그인 기능 - 보안성)" reloadable="true" source="org.eclipse.jst.jee.server:JSP12_Session (로그인 기능 - 보안성)"/><Context docBase="JSP13_Exception (XML 포함)" path="/JSP13_Exception (XML 포함)" reloadable="true" source="org.eclipse.jst.jee.server:JSP13_Exception (XML 포함)"/><Context docBase="JSP14_JavaBean (Spring 에서도 나오는 DI의 개념인 Beans)" path="/JSP14_JavaBean (Spring 에서도 나오는 DI의 개념인 Beans)" reloadable="true" source="org.eclipse.jst.jee.server:JSP14_JavaBean (Spring 에서도 나오는 DI의 개념인 Beans)"/><Context docBase="JSP07_ServletContext  (Context 의 XML 및 Path)" path="/JSP07_ServletContext  (Context 의 XML 및 Path)" reloadable="true" source="org.eclipse.jst.jee.server:JSP07_ServletContext  (Context 의 XML 및 Path)"/><Context docBase="JSP15_JDBC (CRUD 및 pagination)" path="/JSP15_JDBC (CRUD 및 pagination)" reloadable="true" source="org.eclipse.jst.jee.server:JSP15_JDBC (CRUD 및 pagination)"/></Host>
+
+
+
+
+
+
+				<Context docBase="React" path="/React" reloadable="true"
+					source="org.eclipse.jst.jee.server:React" />
+
+				<Context docBase="JSP17_ConnectionPool (MVC model ver 1)"
+					path="/JSP17_ConnectionPool (MVC model ver 1)" reloadable="true"
+					source="org.eclipse.jst.jee.server:JSP17_ConnectionPool (MVC model ver 1)" 
+					useNaming="true">
+					
+					<Resource 
+						description="DB Connection"
+						auth="Container"
+						driverClassName="oracle.jdbc.driver.OracleDriver"
+						name="jdbc/testDB"		
+						type="javax.sql.DataSource"
+						username="scott_b"
+						password="tiger_b"
+						url="jdbc:oracle:thin:@localhost:1521:XE"
+						maxIdle="5"
+						maxTotal="50"
+						maxWaitMills="5000"	
+					/>
+					
+				</Context>
+			</Host>
 		</Engine>
 	</Service>
 </Server>
+
+<!-- 
+				<Context docBase="JSP17_ConnectionPool"
+					path="/JSP17_ConnectionPool" reloadable="true"
+					source="org.eclipse.jst.jee.server:JSP17_ConnectionPool" 
+					useNaming="true">
+					<Resource 
+						description="DB Connection"
+						auth="Container"
+						driverClassName="oracle.jdbc.driver.OracleDriver"
+						name="jdbc/testDB"
+						type="javax.sql.DataSource"
+						username="scott_b"
+						password="tiger_b"
+						url="jdbc:oracle:thin:@localhost:1521:XE"
+						maxIdle="5"
+						maxTotal="50"
+						maxWaitMillis="5000"
+					/>
+					</Context>
+-->
