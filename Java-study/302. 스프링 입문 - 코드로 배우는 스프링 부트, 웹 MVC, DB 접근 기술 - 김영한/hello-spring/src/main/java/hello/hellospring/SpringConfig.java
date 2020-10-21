@@ -1,14 +1,13 @@
 package hello.hellospring;
 
-import hello.hellospring.repository.JdbcMemberRepository;
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
-import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
+import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 // 이전 시간 @AutoWired 와
@@ -19,11 +18,24 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringConfig {
 
-    private DataSource dataSource;
+//    private DataSource dataSource;
+
+//    @Autowired // jdbcTemplate
+//    public SpringConfig(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
+
+//    private EntityManager em; // jpa
+//
+//    public SpringConfig(EntityManager em) {
+//        this.em = em;
+//    }
 
     @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    // data-jpa
+    private final MemberRepository memberRepository;
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean // 스프링 IOC 컨테이너에 등록 합니다.
@@ -33,14 +45,16 @@ public class SpringConfig {
     // 새로 끼워 넣을 객체를 @Repository 하고 @Service 또한...
 
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+//        return new MemberService(memberRepository());
+        return new MemberService(memberRepository); // injection
     }
 
-    @Bean // 스프링 IOC 컨테이너에 등록 합니다.
+    // @Bean // 스프링 IOC 컨테이너에 등록 합니다.
     // 장점 코드 수정이 없고 바꿔 끼울 객체의 명만 변경 해주면 됩니다.
-    public MemberRepository memberRepository() {
+   //  public MemberRepository memberRepository() {
         // return new MemoryMemberRepository();
         // return new JdbcMemberRepository(dataSource);
-        return new JdbcTemplateMemberRepository(dataSource);
-    }
+        // return new JdbcTemplateMemberRepository(dataSource);
+        // return new JpaMemberRepository(em);
+    //}
 }

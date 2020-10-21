@@ -111,30 +111,18 @@
 				<Context docBase="React" path="/React" reloadable="true" source="org.eclipse.jst.jee.server:React"/>
 
 				<Context docBase="JSP17_ConnectionPool (MVC model ver 1)" path="/JSP17_ConnectionPool (MVC model ver 1)" reloadable="true" source="org.eclipse.jst.jee.server:JSP17_ConnectionPool (MVC model ver 1)" useNaming="true">
-					
+
 					<Resource auth="Container" description="DB Connection" driverClassName="oracle.jdbc.driver.OracleDriver" maxIdle="5" maxTotal="50" maxWaitMills="5000" name="jdbc/testDB" password="tiger_b" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="scott_b"/>
-					
+
 				</Context>
-			<Context docBase="Template" path="/Template" reloadable="true" source="org.eclipse.jst.jee.server:Template"/></Host>
+				<Context docBase="Template" path="/Template" reloadable="true" source="org.eclipse.jst.jee.server:Template"/>
+				<Context docBase="JSP18_MVC" path="/JSP18_MVC" reloadable="true" source="org.eclipse.jst.jee.server:JSP18_MVC"/>
+			<Context docBase="JSP18_REST API" path="/JSP18_REST_API" reloadable="true" source="org.eclipse.jst.jee.server:JSP18_REST API"/></Host>
 		</Engine>
 	</Service>
-</Server><!-- 
-				<Context docBase="JSP17_ConnectionPool"
-					path="/JSP17_ConnectionPool" reloadable="true"
-					source="org.eclipse.jst.jee.server:JSP17_ConnectionPool" 
-					useNaming="true">
-					<Resource 
-						description="DB Connection"
-						auth="Container"
-						driverClassName="oracle.jdbc.driver.OracleDriver"
-						name="jdbc/testDB"
-						type="javax.sql.DataSource"
-						username="scott_b"
-						password="tiger_b"
-						url="jdbc:oracle:thin:@localhost:1521:XE"
-						maxIdle="5"
-						maxTotal="50"
-						maxWaitMillis="5000"
-					/>
-					</Context>
--->
+</Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
+	reloadable="true" source="org.eclipse.jst.jee.server:JSP17_ConnectionPool" 
+	useNaming="true"> <Resource description="DB Connection" auth="Container" 
+	driverClassName="oracle.jdbc.driver.OracleDriver" name="jdbc/testDB" type="javax.sql.DataSource" 
+	username="scott_b" password="tiger_b" url="jdbc:oracle:thin:@localhost:1521:XE" 
+	maxIdle="5" maxTotal="50" maxWaitMillis="5000" /> </Context> -->

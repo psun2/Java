@@ -5,6 +5,7 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.ws.ServiceMode;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 //@Service
 // Repository 에 있는 코드가 진땡인 데 로직을 숨기기 위한 service 란 폴더에서
 // 가짜 DAO 를 생성합니다.
+@Transactional // jps 를 사용하기 위한 annotation 데이터를 저장 또는 변경을 위해선 항상 Transactional 이 있어야 합니다.
 public class MemberService { // 애노테이션이 붙기 전까지
     // MemberService 는 순수한 자바 클래스 입니다.
     // 스프링이 MemberService를 알 수 가 없습니다.

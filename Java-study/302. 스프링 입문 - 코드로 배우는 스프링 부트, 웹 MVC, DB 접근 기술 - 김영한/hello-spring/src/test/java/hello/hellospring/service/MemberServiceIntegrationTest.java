@@ -5,6 +5,7 @@ import hello.hellospring.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,6 +22,7 @@ public class MemberServiceIntegrationTest {
     MemberRepository memberRepository;
 
     @Test
+//    @Commit
     void 회원가입() { // 테스트 코드를 작성할때 제약이 없다면
         // 직관적으로 한글을 입력 하는 방법 도 있습니다.
 
