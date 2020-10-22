@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,10 @@ public class SpringConfig {
 //        this.em = em;
 //    }
 
+    private final MemberRepository memberRepository;
+
     @Autowired
     // data-jpa
-    private final MemberRepository memberRepository;
     public SpringConfig(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -51,10 +53,15 @@ public class SpringConfig {
 
     // @Bean // 스프링 IOC 컨테이너에 등록 합니다.
     // 장점 코드 수정이 없고 바꿔 끼울 객체의 명만 변경 해주면 됩니다.
-   //  public MemberRepository memberRepository() {
-        // return new MemoryMemberRepository();
-        // return new JdbcMemberRepository(dataSource);
-        // return new JdbcTemplateMemberRepository(dataSource);
-        // return new JpaMemberRepository(em);
+    //  public MemberRepository memberRepository() {
+    // return new MemoryMemberRepository();
+    // return new JdbcMemberRepository(dataSource);
+    // return new JdbcTemplateMemberRepository(dataSource);
+    // return new JpaMemberRepository(em);
     //}
+
+//    @Bean
+//    public TimeTraceAop timeTraceAop() {
+//        return new TimeTraceAop();
+//    }
 }
