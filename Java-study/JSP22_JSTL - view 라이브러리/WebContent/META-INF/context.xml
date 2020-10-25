@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context path="JSP22_JSTL - view 라이브러리" docbase="www">
+	<Resource 
+		name="JSP22_JSTL - view 라이브러리"
+		auto="container"
+		type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		longTimeout="10"
+		validationQuery="SELECT 1 FROM DUAL"
+		maxWait="5000"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="scott_b"
+		password="tiger_b"
+		testOnBorrow="true"
+		/>
+		<ResourceLink 
+			type="javax.sql.DataSource"
+			name="JSP22_JSTL - view 라이브러리"
+			global="JSP22_JSTL - view 라이브러리"
+		/>
+</context>

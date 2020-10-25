@@ -1,0 +1,10 @@
+﻿INSERT INTO professor (name, hiredate) VALUES ('name 01', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 02', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 03', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 04', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 05', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 06', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 07', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 08', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 09', sysdate);
+INSERT INTO professor (name, hiredate) VALUES ('name 10', sysdate);

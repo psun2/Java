@@ -1,0 +1,99 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- professor Table Create SQL
+CREATE TABLE professor
+(
+    profno      INT             NOT NULL, 
+    name        VARCHAR2(20)    NOT NULL, 
+    hiredate    DATE            NULL, 
+    CONSTRAINT PROFESSOR_PK PRIMARY KEY (profno)
+)
+/
+
+CREATE SEQUENCE professor_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER professor_AI_TRG
+BEFORE INSERT ON professor 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT professor_SEQ.NEXTVAL
+    INTO :NEW.profno
+    FROM DUAL;
+END;
+/
+
+--DROP TRIGGER professor_AI_TRG;
+/
+
+--DROP SEQUENCE professor_SEQ;
+/
+
+COMMENT ON TABLE professor IS '교수님테이블'
+/
+
+COMMENT ON COLUMN professor.profno IS '교수님고유번호'
+/
+
+COMMENT ON COLUMN professor.name IS '교수님 이름'
+/
+
+COMMENT ON COLUMN professor.hiredate IS '입사일'
+/
+
+
+-- professor Table Create SQL
+CREATE TABLE student
+(
+    studno    INT             NOT NULL, 
+    name      VARCHAR2(20)    NOT NULL, 
+    grade     VARCHAR2(20)    NULL, 
+    profno    INT             NULL, 
+    CONSTRAINT STUDENT_PK PRIMARY KEY (studno)
+)
+/
+
+CREATE SEQUENCE student_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER student_AI_TRG
+BEFORE INSERT ON student 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT student_SEQ.NEXTVAL
+    INTO :NEW.studno
+    FROM DUAL;
+END;
+/
+
+--DROP TRIGGER student_AI_TRG;
+/
+
+--DROP SEQUENCE student_SEQ;
+/
+
+COMMENT ON TABLE student IS '학생 테이블'
+/
+
+COMMENT ON COLUMN student.studno IS '학생 고유 번호'
+/
+
+COMMENT ON COLUMN student.name IS '학생 이름'
+/
+
+COMMENT ON COLUMN student.grade IS '학년'
+/
+
+COMMENT ON COLUMN student.profno IS '교수님고유번호'
+/
+
+ALTER TABLE student
+    ADD CONSTRAINT FK_student_profno_professor_pr FOREIGN KEY (profno)
+        REFERENCES professor (profno)
+/
+
+
