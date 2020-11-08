@@ -117,7 +117,7 @@
 				</Context>
 				<Context docBase="Template" path="/Template" reloadable="true" source="org.eclipse.jst.jee.server:Template"/>
 				<Context docBase="JSP18_MVC" path="/JSP18_MVC" reloadable="true" source="org.eclipse.jst.jee.server:JSP18_MVC"/>
-			<Context docBase="JSP18_REST API" path="/JSP18_REST_API" reloadable="true" source="org.eclipse.jst.jee.server:JSP18_REST API"/><Context docBase="JSP22_JSTL - view 라이브러리" path="/JSP22_JSTL - view 라이브러리" reloadable="true" source="org.eclipse.jst.jee.server:JSP22_JSTL - view 라이브러리"/><Context docBase="JSP19_AJAX__RESTAPI(JACKSON)" path="/JSP19_AJAX__RESTAPI(JACKSON)" reloadable="true" source="org.eclipse.jst.jee.server:JSP19_AJAX__RESTAPI(JACKSON)"/><Context docBase="JSP20_FileUpload" path="/JSP20_FileUpload" reloadable="true" source="org.eclipse.jst.jee.server:JSP20_FileUpload"/></Host>
+			<Context docBase="JSP18_REST API" path="/JSP18_REST_API" reloadable="true" source="org.eclipse.jst.jee.server:JSP18_REST API"/><Context docBase="JSP22_JSTL - view 라이브러리" path="/JSP22_JSTL - view 라이브러리" reloadable="true" source="org.eclipse.jst.jee.server:JSP22_JSTL - view 라이브러리"/><Context docBase="JSP19_AJAX__RESTAPI(JACKSON)" path="/JSP19_AJAX__RESTAPI(JACKSON)" reloadable="true" source="org.eclipse.jst.jee.server:JSP19_AJAX__RESTAPI(JACKSON)"/><Context docBase="JSP20_FileUpload" path="/JSP20_FileUpload" reloadable="true" source="org.eclipse.jst.jee.server:JSP20_FileUpload"/><Context docBase="JSPEX_WebEditor" path="/JSPEX_WebEditor" reloadable="true" source="org.eclipse.jst.jee.server:JSPEX_WebEditor"/></Host>
 		</Engine>
 	</Service>
 </Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
