@@ -96,14 +96,7 @@
 		System.out.println("startPagingNum: " + startPagingNum);
 		System.out.println("endPagingNum: " + endPagingNum);
 	%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-<body>
-	<ul>
+	<ul class="pagination">
 		<%
 			if(pageNum > 1) {
 		%>
@@ -140,5 +133,3 @@
 			}
 		%>
 	</ul>
-</body>
-</html>
