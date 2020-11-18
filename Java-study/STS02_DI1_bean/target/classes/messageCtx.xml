@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시 -->
+	<!-- project => 우클릭 => Maven => Update Project (alt + F5) -->
+
+	<!-- <bean id="messageBean" class="com.lec.spring.MessageKor" /> -->
+	<bean id="messageBean" class="com.lec.spring.MessageEng" />
+
+	<!-- 코드에서의 직접적인 수정이 아닌 객체만 바꾸어 주면 코드 변경 없이 사용 가능 합니다. -->
+
+</beans>

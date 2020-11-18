@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lec.spring</groupId>
+	<artifactId>STS01_Hellospring1</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- 어떠한 오류 또는 내용변경시  -->
+	<!-- project => 우클릭 => Maven => Update Project (alt + F5) -->
+
+	<!-- pom.xml에서 내부적으로 사용 할 변수 선언 -->
+	<properties>
+		<java.version>1.8</java.version>
+		<encoding>UTF-8</encoding>
+	</properties>
+
+	<!-- https://mvnrepository.com/ -->
+	<!-- 메이븐 레포지토리에서 라이브러리 검색 후 추가 -->
+	<dependencies>
+
+		<!-- spring-context -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.2.1.RELEASE</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- build -->
+	<build>
+		<!-- plugins -->
+		<plugins>
+			<!-- plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>${java.version}</source> <!-- source: 소스 파일 -->
+					<target>${java.version}</target> <!-- target: 빌드한 결과물로 생성된 파일 -->
+					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시  -->
+	<!-- project => 우클릭 => Maven => Update Project (alt + F5) -->
+
+	<!-- 기본 생겅자로 생성 -->
+	<bean id="myScore1" class="com.lec.spring.Score" />
+
+	<!-- JSTL 에서는 매개변수를 받는 생성자는 사용 할 수 없지만 -->
+	<!-- 스프링에서의 생성자 매개변수 지정 -->
+	<bean id="myScore2" class="com.lec.spring.Score">
+		<!-- 생성자 중에 매개변수 4개, 아래 순서대로 생성자에 전달 -->
+		<constructor-arg value="88" />
+		<constructor-arg value="70" />
+		<constructor-arg>
+			<value>91</value>
+		</constructor-arg>
+		<constructor-arg value="좋아요" />
+	</bean>
+
+	<!-- 매개변수 생성자, index 사용 -->
+	<!-- index를 사용하여 순서에 관계없이 생성자 value 사용 가능 -->
+	<bean id="myScore3" class="com.lec.spring.Score">
+		<constructor-arg index="3" value="나빠요" />
+		<constructor-arg index="0" value="78" />
+		<constructor-arg index="2" value="44" />
+		<constructor-arg index="1" value="90" />
+	</bean>
+
+	<!-- 매개변수 생성자, type 사용 -->
+	<bean id="myScore4" class="com.lec.spring.Score">
+		<!-- 
+			<constructor-arg type="int" value="99" />
+			<constructor-arg type="java.lang.String" value="그저그래요" />
+			<constructor-arg type="int" value="98" />
+			<constructor-arg type="int" value="97" />
+		 -->
+
+		<!-- int type이 byte type을 담을 수 있지만 -->
+		<!-- spring 컨테이너에서는 -->
+		<!-- 자동으로 casting 이 되지 않습니다. -->
+		<!-- <constructor-arg type="byte" value="99" /> -->
+		<constructor-arg type="int" value="99" />
+		<constructor-arg type="int" value="98" />
+		<constructor-arg type="int" value="97" />
+		<constructor-arg type="java.lang.String" value="그저그래요" />
+	</bean>
+
+	<!-- 배열형태를 받는 생성자 사용 -->
+	<bean id="myScore5" class="com.lec.spring.Score">
+		<constructor-arg>
+			<list>
+				<value>88</value>
+				<value>77</value>
+				<value>66</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- setter 사용 -->
+	<bean id="myScore6" class="com.lec.spring.Score">
+		<property name="kor" value="88" /> <!-- setKor(88); 호출 kor => setter의 이름 -->
+		<property name="eng" value="11" /> <!-- setEng(88); 호출 eng => setter의 이름 -->
+		<property name="math" value="22" /> <!-- setMath(88); 호출 math => setter의 이름 -->
+		<property name="comment" value="아주나빠요" /> <!-- setComment(88); 호출 comment => setter의 이름 -->
+	</bean>
+	
+	<!-- 생성자와 setter 동시 가능 
+	생성자가 먼저 호출, 그 다음에 setter 수행
+	출력으로 나오는 comment의 값이 먼저 선언한
+	<property name="comment" value="꿈만같다"/>
+	꿈만같다 로 나오는걸로 알 수 있듯이 생성자가 먼저 돌고
+	setter 가 호출 됩니다.
+	-->
+	<bean id="myScore7" class="com.lec.spring.Score">
+		<constructor-arg value="11"/>
+		<property name="comment" value="꿈만같다"/>
+		<constructor-arg value="22"/>
+		<constructor-arg value="33"/>
+		<constructor-arg value="정말 나빠요"/>
+	</bean>
+	
+	<!-- <List> 를 사용한 생성자 -->
+	<bean id="myScore8" class="com.lec.spring.Score">
+		<property name="score"> <!-- setScore() 호출 -->
+			<list>
+				<value>88</value>
+				<value>77</value>
+				<value>66</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
