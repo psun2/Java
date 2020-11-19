@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Qualifire 을 사용한(모호한 객체가 있는) Autowired -->
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시 -->
+	<!-- project => 우클릭 => Maven => Update -->
+	
+	<!-- 우클릭 => open with => Spring config Editor -->
+	<!-- 하단의 Namespaces -->
+	<!-- c 와 p 클릭 -->
+	<!-- 
+		xmlns:c="http://www.springframework.org/schema/c" => constructor
+		xmlns:p="http://www.springframework.org/schema/p" => property
+		xmlns:context="http://www.springframework.org/schema/context" => autowired
+	 -->
+
+	<context:annotation-config />
+
+	<!-- xml 파일에 JAVA 설정 가져오기, score1 이 설정됨 -->
+	<!-- 설정이 앞에 있다고 하더라도 먼저 만들어 지는 것이 아닙니다. -->
+	<bean class="com.lec.spring.config03.AppConfig03" />
+
+	<bean id="score2" class="com.lec.spring.Score" 
+		c:kor="100" c:eng="80" c:math="75" c:comment="좋아요" />
+
+	<!-- Java 설정과 동일한 id 의 빈이 있다면? xml 쪽 사용 -->
+	<bean id="score1" class="com.lec.spring.Score" 
+		c:kor="100" c:eng="5" c:math="999" c:comment="ㅎㅎㅎ" />
+
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Qualifire 을 사용한(모호한 객체가 있는) Autowired -->
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시 -->
+	<!-- project => 우클릭 => Maven => Update -->
+	
+	<!-- 우클릭 => open with => Spring config Editor -->
+	<!-- 하단의 Namespaces -->
+	<!-- c 와 p 클릭 -->
+	<!-- 
+		xmlns:c="http://www.springframework.org/schema/c" => constructor
+		xmlns:p="http://www.springframework.org/schema/p" => property
+		xmlns:context="http://www.springframework.org/schema/context" => autowired
+	 -->
+	
+	<!-- autowired 사용을 위한 import --> 
+	<context:annotation-config />
+	
+	<!-- Operand 객체 생성 -->
+	<bean id="operand1" class="ex3_1.Operand" p:value="10">
+		<qualifier value="op1"/>
+	</bean>
+
+	<!-- Operand 객체 생성 -->
+	<bean id="operand2" class="ex3_1.Operand" p:value="5">
+		<qualifier value="op2"/>
+	</bean>
+
+	<bean id="plus" class="ex3_1.PlusOp" />
+	<bean id="minus" class="ex3_1.MinusOp" />
+
+</beans>

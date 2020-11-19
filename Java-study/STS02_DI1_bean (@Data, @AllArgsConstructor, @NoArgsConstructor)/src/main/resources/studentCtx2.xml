@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시 -->
+	<!-- project => 우클릭 => Maven => Update -->
+	
+	<!-- 우클릭 => open with => Spring config Editor -->
+	<!-- 하단의 Namespaces -->
+	<!-- c 와 p 클릭 -->
+	<!-- 
+		xmlns:c="http://www.springframework.org/schema/c" => constructor
+		xmlns:p="http://www.springframework.org/schema/p" => property
+	 -->
+	 
+	 <!-- c: 매개변수 있는 생성자 호출 -->
+	 <bean id="score1" class="com.lec.spring.Score" 
+	 	c:kor="88" c:eng="77" c:math="66" c:comment="그럭저럭"/>
+	 <!-- c:name => 생성자의 매개변수 이름을 찾아 대입합니다. -->
+	 
+	 	 <!-- id가 중복 될 경우 -->
+	 <!-- Error -->
+	 <!-- Bean name 'score1' is already used -->
+	 <!-- <bean id="score1" class="com.lec.spring.Score" 
+	 		c:kor="88" c:eng="200" c:math="66" c:comment="그럭저럭"/>  -->
+	 
+	 <!-- 값을 하나만 받는 생성자가 없는 경우 -->
+	 <!-- Error -->
+	 <!-- Ambiguous argument values for parameter -->
+	 <!-- <bean id="score2" class="com.lec.spring.Score" 
+	 		c:kor="88" /> -->
+	 
+	 <!-- p: setter 호출 -->	
+	 <bean id="score2" class="com.lec.spring.Score" p:kor="88" />
+	 <!-- score2 자체는 기본생성자로 생성되고, setter로 kor 을 초기화 합니다. -->
+	 
+	 <!-- c: 생성자 매개변수가 ref 인 경우 -->
+	 <bean id="stud1" class="com.lec.spring.Student" 
+	 	c:name="김휘진" c:age="12" c:score-ref="score1"/>
+	 <!-- c:name="김휘진" c:age="12" c:score="score1"/> -->
+	 <!-- 
+	 	Error c:score="score1"
+	 	constructor parameter 2: Could not convert argument value of type [java.lang.String] 
+	 	to required type [com.lec.spring.Score]: Failed to convert value of type 'java.lang.String' 
+	 	to required type 'com.lec.spring.Score'
+	 	
+	 	Score type 의 변수에 c:score => String 의 형태로 들어가게 되어 type 에러가 발생합니다.
+	  -->
+	 	 
+	 <!-- p: 매개변수가 ref 인 경우 -->
+	 <bean id="stud2" class="com.lec.spring.Student" 
+	 	p:name="안정민" p:age="33" p:score-ref="score1" /> 
+
+</beans>

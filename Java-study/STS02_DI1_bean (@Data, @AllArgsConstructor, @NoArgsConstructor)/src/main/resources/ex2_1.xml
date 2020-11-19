@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Spring Bean Configuration File -->
+	<!-- 어떠한 오류 또는 내용변경시 -->
+	<!-- project => 우클릭 => Maven => Update -->
+	
+	<!-- 우클릭 => open with => Spring config Editor -->
+	<!-- 하단의 Namespaces -->
+	<!-- c 와 p 클릭 -->
+	<!-- 
+		xmlns:c="http://www.springframework.org/schema/c" => constructor
+		xmlns:p="http://www.springframework.org/schema/p" => property
+	 -->
+
+	<!-- @AllArgsConstructor 로 전 필드를 생성자로 받는 PlusOp 객체 생성 -->
+	<bean id="plus" class="ex2_1.PlusOp" c:operand1="10" c:operand2="5" />
+	
+	<!-- @Data 로 생성된 기본생성자로 MinusOp 객체 생성후 setter를 사용하여 맴버변수 값 추가 -->
+	<bean id="minus" class="ex2_1.MinusOp" p:operand1="10" p:operand2="5" />
+
+</beans>
