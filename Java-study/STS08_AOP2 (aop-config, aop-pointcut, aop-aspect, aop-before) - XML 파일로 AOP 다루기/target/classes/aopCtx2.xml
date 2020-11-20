@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 이클립스 에서의 namespace 등록 -->
+    <!-- 우클릭 => Open With => Spring Congfig Editor => 하단 메뉴 => NameSpace -->
+
+    <!-- xmlns:aop="http://www.springframework.org/schema/aop" : aop 기능을 이용 -->
+
+    <!-- 공통기능 클래스를 빈 객체로 만들기 -->
+    <bean id="logger" class="com.lec.spring.beans.Logger"/>
+
+    <!--  기본 구조
+        <aop:config>
+            <aop:aspect id="" ref="공통기능 클래스 빈">
+                <aop:pointcut expression="어디에 적용?(PCD)" id=""/>
+                <aop:before method="어떤 메소드 weaving?"/>
+            </aop:aspect>
+
+            <aop:aspect>...</aop:aspect>
+            <aop:aspect>...</aop:aspect>
+            <aop:aspect>...</aop:aspect>
+        </aop:config>
+    -->
+
+    <!-- target 생성 -->
+    <bean id="service1" class="com.lec.spring.aop02.MyService21"/>
+    <bean id="service2" class="com.lec.spring.aop02.MyService22"/>
+
+    <!--
+         Target
+        공통코드 / 관심코드 와 분리된,  핵심 코드 를 가지고 있는 객체
+        클래스
+
+        Proxy
+        Target 을 감싸고 있으며, Target호출코드가 수행될때면, Target 을 호출하기 [전, 후, 혹은 중간] 에 Advice 를 weaving 하여 실행
+        객체
+        (수동생성, 혹은 Auto-proxy 자동생성)
+
+        JoinPoint
+        Target 객체가 가진 메소드. Proxy 가 Advice 를 weaving 주는 대상
+        메소드
+
+        Advice
+        삽입되어 엮어지는 코드.  즉, 공통코드/관심코드
+        메소드
+
+        Weaving
+        Proxy 가  PointCut 설정에 따라  JoinPoint 가 호출될때마다 Advice 를 엮어서 실행해주는 동작
+        Proxy 의 동작
+
+        Pointcut
+        Advice 가 어느 JoinPoint(들) 에 적용될지 설정
+        설정
+        @어노테이션 혹은 XML
+
+        Advisor
+        Advice + Pointcut
+        메소드 + @어노테이션
+
+        Aspect
+        공통관점 사항들의 집합, 즉 Advisor 들을 모아놓은 객체
+        클래스
+    -->
+
+    <!-- AOP 설정 -->
+    <aop:config>
+        <!-- pointcut 생성 -->
+        <aop:pointcut expression="within(com.lec.spring.aop02.*)" id="pc1"/>
+
+        <!-- Aspect 생성 -->
+        <aop:aspect id="LogAspect1" ref="logger">
+            <aop:before pointcut-ref="pc1" method="login"/>
+        </aop:aspect>
+
+        <aop:aspect id="LogAspect2" ref="logger">
+            <aop:after pointcut-ref="pc1" method="logout"/>
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>

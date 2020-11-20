@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 이클립스 에서의 namespace 등록 -->
+    <!-- 우클릭 => Open With => Spring Congfig Editor => 하단 메뉴 => NameSpace -->
+
+    <!-- xmlns:aop="http://www.springframework.org/schema/aop" : aop 기능을 이용 -->
+
+    <!-- 공통기능 클래스를 빈 객체로 만들기 -->
+    <bean id="logger" class="com.lec.spring.beans.Logger"/>
+
+    <!--  기본 구조
+        <aop:config>
+            <aop:aspect id="" ref="공통기능 클래스 빈">
+                <aop:pointcut expression="어디에 적용?(PCD)" id=""/>
+                <aop:before method="어떤 메소드 weaving?"/>
+            </aop:aspect>
+
+            <aop:aspect>...</aop:aspect>
+            <aop:aspect>...</aop:aspect>
+            <aop:aspect>...</aop:aspect>
+        </aop:config>
+    -->
+
+
+    <!-- target 생성 -->
+    <bean id="service21" class="com.lec.spring.aop02.MyService21"/>
+    <bean id="service22" class="com.lec.spring.aop02.MyService22"/>
+    <bean id="serviceEx31" class="com.lec.spring.aop03.MyService31"/>
+    <bean id="serviceEx32" class="com.lec.spring.aop03.MyService32"/>
+
+    <!-- AOP 설정 -->
+    <aop:config>
+        <!-- pointcut 생성 -->
+        <aop:pointcut expression="within(com.lec.spring.aop03.*)" id="pc1"/>
+        <aop:pointcut expression="within(com.lec.spring.aop02.*)" id="pc2"/>
+        <aop:pointcut expression="execution(* com.lec.spring.aop*.My*.*Action(..))" id="pc3"/>
+        <aop:pointcut expression="execution(* com.lec.spring.*3.My*.do*(..))" id="pc4"/>
+        <!-- 연산자 사용 방법 -->
+        <aop:pointcut expression="within(com.lec.spring.aop03.*) || within(com.lec.spring.aop02.*)" id="pc5"/>
+        <aop:pointcut expression="within(com.lec.spring.aop03.*) &amp;&amp; within(com.lec.spring.aop02.*)" id="pc6"/>
+        <!-- xml 설정에선 and, or, not 이 허용됨. -->
+        <aop:pointcut expression="within(com.lec.spring.aop03.*) and within(com.lec.spring.aop02.*)" id="pc7"/>
+        <aop:pointcut expression="within(com.lec.spring.aop03.*) or within(com.lec.spring.aop02.*)" id="pc8"/>
+        <aop:pointcut expression="within(com.lec.spring.aop03.*) not within(com.lec.spring.aop02.*)" id="pc9"/>
+        <!-- Aspect 생성 -->
+        <aop:aspect ref="logger" id="aspect3">
+            <!-- pointcut-ref 대신 직접 pointcut 기술 가능 -->
+            <!-- <aop:after method="logout" pointcut="within(com.lec.spring.aop03.*)" /> -->
+            <aop:before method="logAdvice" pointcut-ref="pc4" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>

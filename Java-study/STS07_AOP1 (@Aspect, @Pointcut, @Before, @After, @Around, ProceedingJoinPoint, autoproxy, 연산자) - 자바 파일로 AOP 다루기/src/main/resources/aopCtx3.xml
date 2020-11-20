@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 이클립스 에서의 namespace 등록 -->
+    <!-- 우클릭 => Open With => Spring Congfig Editor => 하단 메뉴 => NameSpace -->
+
+    <!-- xmlns:aop="http://www.springframework.org/schema/aop" : aop 기능을 이용 -->
+
+    <!-- Proxy 객체 자동생성 @Aspect 가 붙은 빈 객체들을 찾아서 공통기능으로 등록 -->
+    <!-- proxy 생성 -->
+    <aop:aspectj-autoproxy />
+
+    <!-- Aspcet 객체 생성 -->
+    <bean id="LogAspect" class="com.lec.spring.aop03.LogAspect3" />
+
+    <!-- target 생성 -->
+    <bean id="service21" class="com.lec.spring.aop02.MyService21"/>
+    <bean id="service22" class="com.lec.spring.aop02.MyService22"/>
+    <bean id="serviceEx31" class="com.lec.spring.aop03.MyService31" />
+    <bean id="serviceEx32" class="com.lec.spring.aop03.MyService32" />
+
+</beans>
