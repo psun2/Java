@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<!--thymeleaf 템플릿 엔진-->
+<!--thymeleaf 공식 사이트: https://www.thymeleaf.org/-->
+<!--스프링 공식 튜토리얼: https://spring.io/guides/gs/serving-web-content/-->
+<!--스프링부트 메뉴얼: https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/-->
+<!--html/spring-boot-features.html#boot-features-spring-mvc-template-engines-->
+
+<!--https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-mvc-template-engines-->
+<!--7.1.9. Template Engines-->
+<!--REST 웹 서비스뿐만 아니라 Spring MVC를 사용하여 동적 HTML 컨텐츠를 제공 할 수도 있습니다.-->
+<!--Spring MVC는 Thymeleaf, FreeMarker 및 JSP를 포함한 다양한 템플릿 기술을 지원합니다.-->
+<!--또한 다른 많은 템플릿 엔진에는 자체 Spring MVC 통합이 포함되어 있습니다.-->
+
+<!--Spring Boot는 다음 템플릿 엔진에 대한 자동 구성 지원을 포함합니다.-->
+<!--FreeMarker-->
+<!--Groovy-->
+<!--Thymeleaf-->
+<!--Mustache-->
+
+<!--가능하다면 JSP는 피해야합니다. 임베디드 서블릿 컨테이너와 함께 사용할 때 몇 가지 알려진 제한 사항이 있습니다.-->
+<!--기본 구성으로 이러한 템플릿 엔진 중 하나를 사용하면 템플릿이 src / main / resources / templates에서 자동으로 선택됩니다.-->
+
+<!--애플리케이션을 실행하는 방법에 따라 IDE에서 클래스 경로를 다르게 정렬 할 수 있습니다.-->
+<!--메인 메서드에서 IDE에서 애플리케이션을 실행하면 Maven 또는 Gradle 또는 패키지 된 jar를 사용하여 애플리케이션을 실행할 때와 다른 순서가 발생합니다.-->
+<!--이로 인해 Spring Boot가 예상 템플릿을 찾지 못할 수 있습니다. 이 문제가있는 경우 IDE에서 클래스 경로를 재정렬하여 모듈의 클래스와 리소스를 먼저 배치 할 수 있습니다.-->
+
+<!-- data: controller 에서 넘겨주는 key -->
+<!-- data값: controller 에서 넘겨주는 hello!!!!! -->
+<p th:text="'안녕하세요. ' + ${data}">안녕하세요. 손님</p>
+</body>
+</html>
