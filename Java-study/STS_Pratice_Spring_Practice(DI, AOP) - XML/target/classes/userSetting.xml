@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config />
+
+    <aop:aspectj-autoproxy />
+    <bean id="userAspect" class="com.lec.spring.aop.UserAspect" />
+
+    <bean id="userDTO" class="com.lec.Entity.user.UserDTO">
+        <qualifier value="userDTO11"/>
+    </bean>
+    <bean id="userDAO" class="com.lec.repository.user.UserDAO" />
+
+    <aop:config>
+        <aop:pointcut id="pc" expression="within(com.lec.repository.user.*)"/>
+
+        <aop:aspect ref="userAspect" id="aspect1">
+            <aop:around method="aroundAdviceTimeChek" pointcut-ref="pc" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>
