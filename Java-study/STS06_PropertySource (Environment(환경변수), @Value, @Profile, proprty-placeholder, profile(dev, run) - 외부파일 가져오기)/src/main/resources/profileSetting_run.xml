@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       profile="run">
+    <!--  🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺 profile 설정법 🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺  -->
+
+    <!-- production 단계 실행단계 -->
+    <bean id="serverInfo" class="com.lec.spring.profile.xml.ServerInfo">
+        <!-- setter (property) -->
+        <property name="ipNum" value="213.186.229.29"/>
+        <property name="portNum" value="80"/>
+    </bean>
+</beans>

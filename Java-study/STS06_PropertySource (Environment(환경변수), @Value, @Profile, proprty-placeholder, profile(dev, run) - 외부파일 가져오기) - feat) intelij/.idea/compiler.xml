@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="STS06_PropertySource" />
+        <module name="STS06_PropertySource (Environment(환경변수), @Value, @Profile, proprty-placeholder, profile(dev, run) - 외부파일 가져오기) - feat) intelij" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

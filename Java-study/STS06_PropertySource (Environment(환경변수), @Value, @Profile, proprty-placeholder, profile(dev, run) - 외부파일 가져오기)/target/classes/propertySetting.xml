@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 외부파일에서 설정 파일 가져오기 -->
+	<!-- new GenericXmlApplicationContext().getEnvironment().getPropertySource().addLast(new 
+		ResourcePropertySource("classpath:admin.auth")) 와 같은 역할을 하여 외부 설정파일을 xml 
+		파일로 가져옵니다. -->
+	<context:property-placeholder location="admin.auth, db.info"/>
+
+
+	<bean id="dbInfo1" class="com.lec.spring.property.xml.DBConn">
+		<!-- <property name="id" value="${admin.id}"/> inLine 으로 설정 불가 -->
+		<property name="id">
+			<value>${admin.id}</value>
+		</property>
+		<property name="pw">
+			<value>${admin.pw}</value>
+		</property>
+		<property name="url">
+			<value>${db.url}</value>
+		</property>
+		<property name="port">
+			<value>${db.port}</value>
+		</property>
+	</bean>
+
+	<bean id="dbInfo2" class="com.lec.spring.property.xml.DBConn">
+		<!-- <constructor-arg name="id" value="${admin.id}"/> inLine 으로 설정 불가 -->
+		<constructor-arg name="id">
+			<value>${admin.id}</value>
+		</constructor-arg>
+		<constructor-arg name="pw">
+			<value>${admin.pw}</value>
+		</constructor-arg>
+		<constructor-arg name="url">
+			<value>${db.url}</value>
+		</constructor-arg>
+		<constructor-arg name="port">
+			<value>${db.port}</value>
+		</constructor-arg>
+	</bean>
+
+
+
+
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--  scope="singleton" : default => 모든 객체의 주소가 동일하다 즉 한 객체 입니다.  -->
+    <!--  bean 생성 setter  -->
+    <bean id="score1" class="com.lec.spring.Score" scope="singleton">
+        <property name="kor" value="55"/>
+        <property name="eng" value="66"/>
+        <property name="math" value="23"/>
+        <property name="comment" value="이것도 점수"/>
+    </bean>
+
+    <!--  scope="prototype" : default => getBean을 할때마다 주소가 다른 새로운 객체 생성  -->
+    <!--  bean 생성 constructor(생성자)  -->
+    <bean id="score2" class="com.lec.spring.Score" scope="prototype">
+        <constructor-arg name="kor" value="100"/>
+        <constructor-arg name="eng" value="80"/>
+        <constructor-arg name="math" value="90"/>
+        <constructor-arg name="comment" value="참 잘했어요"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="score1" class="com.lec.spring.Score" 
+		c:kor="55" c:eng="99" c:math="5" c:comment="영어 공부하세요!"
+		scope="singleton" />
+
+	<bean id="score2" class="com.lec.spring.Score" 
+		c:kor="11" c:eng="22" c:math="33" c:comment="다음엔 44점이네요"
+		scope="prototype" />
+
+</beans>

@@ -1,0 +1,45 @@
+package com.lec.spring.scope.xml;
+
+import com.lec.spring.Score;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class SingletonMain {
+
+    public static void main(String[] args) {
+
+        System.out.println("Main() 시작\n");
+
+        // 컨테이너 생성
+        GenericXmlApplicationContext genericXmlApplicationContext = new GenericXmlApplicationContext();
+        System.out.println("컨테이너 생성");
+
+        // 설정파일 load
+        genericXmlApplicationContext.load("classpath:scopeSetting.xml");
+
+        // 설정파일 재로드
+        genericXmlApplicationContext.refresh();
+
+        Score score1 = genericXmlApplicationContext.getBean("score1", Score.class);
+        Score score2 = genericXmlApplicationContext.getBean("score1", Score.class);
+        System.out.println(score1);
+        System.out.println(score2);
+        // Score(kor=55, eng=66, math=23, comment=이것도 점수)
+        // Score(kor=55, eng=66, math=23, comment=이것도 점수)
+
+        score2.setComment("나락입니다.");
+        System.out.println(score1);
+        System.out.println(score2);
+        // Score(kor=55, eng=66, math=23, comment=나락입니다.)
+        // Score(kor=55, eng=66, math=23, comment=나락입니다.)
+
+        if (score1 == score2) System.out.println("같은 객체 입니다.");
+        else System.out.println("다른 객체 입니다.");
+
+        // 같은 객체 입니다.
+
+        genericXmlApplicationContext.close();
+        System.out.println("\nMain() 종료");
+
+    }
+
+}
