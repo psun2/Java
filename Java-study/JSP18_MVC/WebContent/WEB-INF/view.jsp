@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
-<%@ page import="com.lec.beans.*"%> 
+<%@ page import="com.lec.sts12_validation.controller.logger.beans.*"%> 
 	<%
 		int uid = Integer.parseInt(request.getParameter("uid"));
 	%>

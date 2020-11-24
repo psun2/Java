@@ -1,4 +1,4 @@
-<%@page import="com.lec.beans.Person"%>
+<%@page import="com.lec.sts12_validation.controller.logger.Person"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,11 +11,11 @@
 <body>
 	<%
 		Person kim = new Person();
-		kim.setName("제임스");
-		kim.setAge(200);
+			kim.setName("제임스");
+			kim.setAge(200);
 	%>
 	
-	<c:set var="dto" value="<%=kim %>" />
+	<c:set var="dto" value="<%=kim%>" />
 	
 	이름: ${dto.name }<br /> <%-- dto.getName() 값 --%>
 	나이: ${dto.age }<br /> <%--dto.getAge() 값 --%>
@@ -23,7 +23,7 @@
 	
 	<hr />
 	
-	<jsp:useBean id="p0" class="com.lec.beans.Person">
+	<jsp:useBean id="p0" class="com.lec.sts11_requestparameter.beans.Person">
 		<jsp:setProperty name="p0" property="name" value="고길동" />
 		<jsp:setProperty name="p0" property="age" value="44" />
 	</jsp:useBean>

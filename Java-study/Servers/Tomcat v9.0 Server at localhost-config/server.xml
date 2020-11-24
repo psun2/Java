@@ -113,7 +113,7 @@
 				
 				
 				
-			<Context docBase="STS09_MVC" path="/sts09_mvc" reloadable="true" source="org.eclipse.jst.jee.server:STS09_MVC"/></Host>
+			<Context docBase="STS12_Vaildation (BindingResult, Errors)" path="/sts12_validation" reloadable="true" source="org.eclipse.jst.jee.server:STS12_Vaildation (BindingResult, Errors)"/></Host>
 		</Engine>
 	</Service>
 </Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
