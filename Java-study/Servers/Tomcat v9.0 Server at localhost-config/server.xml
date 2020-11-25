@@ -113,7 +113,7 @@
 				
 				
 				
-			<Context docBase="STS12_Vaildation (BindingResult, Errors)" path="/sts12_validation" reloadable="true" source="org.eclipse.jst.jee.server:STS12_Vaildation (BindingResult, Errors)"/></Host>
+			<Context docBase="STS13_JDBC" path="/sts13_jdbc" reloadable="true" source="org.eclipse.jst.jee.server:STS13_JDBC"/><Context docBase="STS12_Vaildation (BindingResult, Errors)" path="/sts12_validation" reloadable="true" source="org.eclipse.jst.jee.server:STS12_Vaildation (BindingResult, Errors)"/></Host>
 		</Engine>
 	</Service>
 </Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
