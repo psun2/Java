@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jdbc_refactoring:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>jdbc_refactoring</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="jdbc_refactoring-1.0.0-BUILD-SNAPSHOT.war">
+      <element id="artifact" artifact-name="jdbc_refactoring:war exploded" />
+    </root>
+  </artifact>
+</component>
