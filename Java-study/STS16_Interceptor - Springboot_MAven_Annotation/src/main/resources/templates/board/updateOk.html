@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$Title$</title>
+</head>
+<body>
+<div th:if="${result == 0}">
+    <script>
+        alert("수정 실패");
+        history.back();
+    </script>
+</div>
+<div th:unless="${result == 0}">
+    <script th:inline="javascript">
+        alert("수정 성공");
+        // let url = [[${param.uid}]]; // thymeleaf 의 변수를 js 에서 받는 방법
+        // location.href = `view?uid=${url}`;
+
+        location.href = `view?uid=${[[${param.uid}]]}`; // 직접 작성
+    </script>
+</div>
+</body>
+</html>

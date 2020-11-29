@@ -28,7 +28,7 @@
     </bean>
 
     <bean id="dbInfo2" class="com.lec.spring.property.xml.DBConn">
-        <!-- <property name="id" value="${admin.id}"/> inLine 으로 설정 불가 -->
+        <!-- <constructor-arg name="id" value="${admin.id}"/> inLine 으로 설정 불가 -->
         <constructor-arg name="id">
             <value>${admin.id}</value>
         </constructor-arg>

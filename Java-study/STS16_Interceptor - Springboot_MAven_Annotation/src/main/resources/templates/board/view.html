@@ -1,0 +1,44 @@
+<div th:if="${result == null }" xmlns:th="http://www.thymeleaf.org">
+    <script>
+        alert("해당 정보가 삭제되거나 없습니다");
+        history.back();
+    </script>
+</div>
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'읽기' +  ${result[0].subject }"></title>
+</head>
+<script>
+    function chkDelete(uid) {
+        // 삭제 여부, 다시 확인하고 진행하기
+        var r = confirm("삭제하시겠습니까?");
+
+        if (r) {
+            location.href = 'deleteOk?uid=' + uid;
+        }
+    }
+</script>
+<body>
+<h2 th:text="'읽기 ' + ${result[0].subject }"></h2>
+<br>
+<div>
+    <div th:text="'UID: ' + ${result[0].uid}"></div>
+    <div th:text="'작성자: ' + ${result[0].name}"></div>
+    <div th:text="'제목: ' + ${result[0].subject}"></div>
+    <div th:text="'등록일: ' + ${result[0].regDate}"></div>
+    <div th:text="'조회수: ' + ${result[0].viewcnt}"></div>
+    <div>내용:</div>
+    <div th:text=" ${result[0].content}"></div>
+</div>
+<br>
+<hr>
+<br>
+<button th:onclick="'location.href=\'' + 'update?uid=' + ${result[0].uid} + '\''">수정하기</button>
+<button onclick="location.href='list'">목록보기</button>
+<button th:onclick="'chkDelete(' + ${result[0].uid} + ')'">삭제하기</button>
+<button onclick="location.href='write'">신규등록</button>
+</body>
+</html>

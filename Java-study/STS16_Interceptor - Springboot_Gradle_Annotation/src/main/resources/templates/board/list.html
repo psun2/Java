@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 목록</title>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<hr>
+<h2>리스트</h2>
+<table>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회수</th>
+        <th>등록일</th>
+    </tr>
+    <div th:if="${result != null}">
+        <div th:each="dto : ${result}">
+            <tr>
+                <td th:text="${dto.uid }"></td>
+                <td><a th:href="'view?uid=' + ${dto.uid }" th:text="${dto.subject }"></a></td>
+                <td th:text="${dto.name }"></td>
+                <td th:text="${dto.viewcnt }"></td>
+                <td th:text="${dto.regDate }"></td>
+            </tr>
+        </div>
+    </div>
+</table>
+<br>
+<button onclick="location.href = 'write'">신규등록</button>
+</body>
+</html>
