@@ -21,99 +21,116 @@ public class WriteDAO {
 	PreparedStatement pstmt;
 	Statement stmt;
 	ResultSet rs;
-	
+
 	// DAO 객체가 생성될때 Conneciton 도 생성된다.
 	public WriteDAO() {
 		try {
 			Class.forName(D.DRIVER);
 			conn = DriverManager.getConnection(D.URL, D.USERID, D.USERPW);
 //			System.out.println("WriteDAO 생성, 데이터베이스 연결!~");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} // end try		
+		} // end try
 	} // end 생성자
-	
+
 	// DB 자원 반납.
 	public void close() throws SQLException {
-		if(rs != null) rs.close();
-		if(pstmt != null) pstmt.close();
-		if(stmt != null) stmt.close();
-		if(conn != null) conn.close(); 
+		if (rs != null)
+			rs.close();
+		if (pstmt != null)
+			pstmt.close();
+		if (stmt != null)
+			stmt.close();
+		if (conn != null)
+			conn.close();
 	} // end close()
-	
-	
+
 	// 새글 작성 <-- DTO
 	public int insert(WriteDTO dto) throws SQLException {
 		int cnt = 0;
-		
+
 		String subject = dto.getSubject();
 		String content = dto.getContent();
 		String name = dto.getName();
 		cnt = this.insert(subject, content, name);
-		
+
 		return cnt;
 	} // end insert(DTO)
-	
+
 	// 새글 작성 <-- 제목, 내용, 작성자
 	public int insert(String subject, String content, String name) throws SQLException {
 		int cnt = 0;
-		
+		int uid = 0; // 새로이 INSERT 된 글의 자동 생성된 wr_uid 값
+		// 자동생성된 컬럼의 이름(들) 이 담긴 배열 준비(auto-generated keys 배열)
+		String[] keyColumns = { "wr_uid" };
+
 		try {
-			pstmt = conn.prepareStatement(D.SQL_WRITE_INSERT);
+			pstmt = conn.prepareStatement(D.SQL_WRITE_INSERT, keyColumns);
 			pstmt.setString(1, subject);
 			pstmt.setString(2, content);
 			pstmt.setString(3, name);
-			cnt = pstmt.executeUpdate();
+			cnt = pstmt.executeUpdate(); // insert 동작
+
+			// auto-generated keys 값 뽑아오기
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				uid = rs.getInt(1);
+				System.out.println("uid: " + uid); // 위에서 insert된 파일의 배열에 명시된 wr_uid 값을 가져옵니다.
+			}
+		
+			// 위의 auto-generator 의 사용이유: 게시판 테이블에 insert 하면서, 같이 filetable에 insert
+			// file 테이블의 왜래키에 게시판 아이디가 있기때문에 file insert 시 게시판 id가 필요
+
 		} finally {
 			close();
 		}
-		
+
 		return cnt;
 	} // end insert()
-	
-	
+
 	// ResultSet => DTO배열로 리턴
-	public WriteDTO [] createArray(ResultSet rs) throws SQLException {
-		WriteDTO [] arr = null;
+	public WriteDTO[] createArray(ResultSet rs) throws SQLException {
+		WriteDTO[] arr = null;
 		ArrayList<WriteDTO> list = new ArrayList<WriteDTO>();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			int uid = rs.getInt("wr_uid");
 			String subject = rs.getString("wr_subject");
 			String content = rs.getString("wr_content");
-			if(content == null) content = "";
+			if (content == null)
+				content = "";
 			String name = rs.getString("wr_name");
 			int viewCnt = rs.getInt("wr_viewcnt");
-			
-			Date d = rs.getDate("wr_regdate");  // 년, 월, 일
-			Time t = rs.getTime("wr_regdate");  // 시, 분, 초
-			
+
+			Date d = rs.getDate("wr_regdate"); // 년, 월, 일
+			Time t = rs.getTime("wr_regdate"); // 시, 분, 초
+
 			String regDate = "";
-			if(d != null) {
+			if (d != null) {
 				regDate = new SimpleDateFormat("yyyy-MM-dd").format(d) + " "
 						+ new SimpleDateFormat("hh:mm:ss").format(t);
 			}
-			
+
 			WriteDTO dto = new WriteDTO(uid, subject, content, name, viewCnt);
 			dto.setRegDate(regDate);
-			
+
 			list.add(dto);
 		} // end while
-		
+
 		int size = list.size();
-		
-		if(size == 0) return null;
+
+		if (size == 0)
+			return null;
 		arr = new WriteDTO[size];
-		list.toArray(arr);  // 리스트 -> 배열 변환
-		
+		list.toArray(arr); // 리스트 -> 배열 변환
+
 		return arr;
 	} // end createArray()
-	
-	
+
 	// 전체 글 SELECT
-	public WriteDTO [] select() throws SQLException {
-		WriteDTO [] arr = null;
-		
+	public WriteDTO[] select() throws SQLException {
+		WriteDTO[] arr = null;
+
 		try {
 			pstmt = conn.prepareStatement(D.SQL_WRITE_SELECT);
 			rs = pstmt.executeQuery();
@@ -121,16 +138,15 @@ public class WriteDAO {
 		} finally {
 			close();
 		}
-		
+
 		return arr;
-		
+
 	} // end select()
-	
-	
+
 	// 특정 uid 의 글 만 SELECT
-	public WriteDTO [] selectByUid(int uid) throws SQLException{
-		WriteDTO [] arr = null;
-		
+	public WriteDTO[] selectByUid(int uid) throws SQLException {
+		WriteDTO[] arr = null;
+
 		try {
 			pstmt = conn.prepareStatement(D.SQL_WRITE_SELECT_BY_UID);
 			pstmt.setInt(1, uid);
@@ -139,48 +155,45 @@ public class WriteDAO {
 		} finally {
 			close();
 		} // end try
-		
+
 		return arr;
 	} // end selectByUid()
-	
-	
+
 	// 특정 uid 의 글 내용 읽기 + 조회수 증가
-	public WriteDTO [] readByUid(int uid) throws SQLException{
-		
+	public WriteDTO[] readByUid(int uid) throws SQLException {
+
 		int cnt = 0;
-		WriteDTO [] arr = null;
-		
+		WriteDTO[] arr = null;
+
 		try {
 			// 트랜잭션 처리
 			conn.setAutoCommit(false);
 			pstmt = conn.prepareStatement(D.SQL_WRITE_INC_VIEWCNT);
 			pstmt.setInt(1, uid);
 			cnt = pstmt.executeUpdate();
-			
+
 			pstmt.close();
 			pstmt = conn.prepareStatement(D.SQL_WRITE_SELECT_BY_UID);
 			pstmt.setInt(1, uid);
 			rs = pstmt.executeQuery();
-			
+
 			arr = createArray(rs);
-			
-			conn.commit();  // 트랜잭션 성공!
+
+			conn.commit(); // 트랜잭션 성공!
 		} catch (SQLException e) {
-			conn.rollback();  // 트랜잭션 실패하면 rollback()
+			conn.rollback(); // 트랜잭션 실패하면 rollback()
 			throw e;
 		} finally {
 			close();
-		} // end try		
-		
-		
+		} // end try
+
 		return arr;
 	} // end readByUid()
-	
-	
+
 	// 특정 uid 글 수정 (제목, 내용)
 	public int update(int uid, String subject, String content) throws SQLException {
 		int cnt = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement(D.SQL_WRITE_UPDATE);
 			pstmt.setString(1, subject);
@@ -190,14 +203,14 @@ public class WriteDAO {
 		} finally {
 			close();
 		} // end try
-		
+
 		return cnt;
 	} // end update()
-	
+
 	// 특정 uid 글 삭제
 	public int deleteByUid(int uid) throws SQLException {
 		int cnt = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement(D.SQL_WRITE_DELETE_BY_UID);
 			pstmt.setInt(1, uid);
@@ -205,35 +218,8 @@ public class WriteDAO {
 		} finally {
 			close();
 		} // end try
-		
+
 		return cnt;
 	}
 
 } // end DAO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

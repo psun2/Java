@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.generatedkey.domain.BoardDAO">
+
+    <!-- int write(BoardDTO dto); -->
+    <!-- 기존에 남은 DML 을 제거 => flushCache="true" -->
+    <!-- JSP20_FileUpload 의 WriteDAO 참조 -->
+    <insert id="write" flushCache="true"
+            parameterType="com.lec.generatedkey.domain.BoardDTO"
+            useGeneratedKeys="true" keyColumn="wr_uid" keyProperty="dto.uid">
+        --  useGeneratedKeys = true : ResultSet rs = psmt.getGeneratedKey() 를 활셩화 합니다.
+        -- KeyColumn : Insert를 한 후 값을 가져올 컬럼 명입니다.
+        -- keyPropertu : 현재 DAO에 셋팅된 갑 으로 셋팅을 하겠다는 의미입니다.
+        -- 먼저 활성화를 시키고 무엇을 가져 올 것이며 어디에 셋팅할 것인 가를 의미 합니다.
+
+        INSERT INTO
+			test_write (wr_uid, wr_subject, wr_content, wr_name, wr_regdate)
+		VALUES
+			(test_write_seq.nextval, #{dto.subject}, #{dto.content}, #{dto.name}, SYSDATE)
+    </insert>
+
+</mapper>
