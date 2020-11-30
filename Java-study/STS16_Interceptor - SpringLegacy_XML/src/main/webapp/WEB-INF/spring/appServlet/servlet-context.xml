@@ -61,18 +61,4 @@
         <beans:constructor-arg index="0" ref="sqlSessionFactory"/>
     </beans:bean>
 
-    <!-- Interceptor 빈(Bean) 생성 -->
-    <beans:bean id="loginInterceptor" class="com.lec.sts16_interceptor.interceptor.LoginInterceptor"/>
-
-    <!-- Interceptor 등록 / 설정 -->
-    <interceptors>
-    	<interceptor>    
-            <mapping path="/**"/>
-            <exclude-mapping path="/"/>  <!-- 인터셉터 예외 -->
-            <exclude-mapping path="/user/**"/>
-            <exclude-mapping path="/board/list"/>  <!-- 인터셉터 예외 -->
-            <beans:ref bean="loginInterceptor"/>
-    	</interceptor>
-    </interceptors>
-
 </beans:beans>

@@ -113,7 +113,7 @@
 				
 				
 				
-			<Context docBase="STS16_Interceptor - SpringLegacyXML" path="/interceptor" reloadable="true" source="org.eclipse.jst.jee.server:STS16_Interceptor - SpringLegacyXML"/></Host>
+			<Context docBase="STS19_REST" path="/sts19_rest" reloadable="true" source="org.eclipse.jst.jee.server:STS19_REST"/></Host>
 		</Engine>
 	</Service>
 </Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
