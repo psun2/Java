@@ -34,7 +34,8 @@ public class MyRestJSONController {
 	// 자바객체 [Object] -> JSON
 	@GetMapping("/JSON")
 	public WriteDTO JSON() {
-		WriteDTO dto = new WriteDTO(100, "안녕하세요", "REST", "하하하", 123, new Timestamp(10000));
+		
+		WriteDTO dto = new WriteDTO(100, "안녕하세요", "REST", "하하하", 123, new Timestamp(10000), new int[]{ 1, 2, 3 });
 		return dto;
 	}
 

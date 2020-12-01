@@ -1,19 +1,11 @@
 package com.lec.sts19_rest.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.sts19_rest.domain.AjaxWriteList;
 import com.lec.sts19_rest.domain.AjaxWriteResult;
 import com.lec.sts19_rest.domain.WriteDTO;
@@ -104,14 +96,39 @@ public class AjaxController {
 
 	// 글 읽기
 	@GetMapping("/{uid}")
-	public ResponseEntity<AjaxWriteList> view() {
-		// TODO
-		return null;
+	public ResponseEntity<AjaxWriteList> view(@PathVariable int uid) {
+		AjaxWriteList result = new AjaxWriteList();
+		result.setStatus("FAIL");
+		result.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+
+		List<WriteDTO> list = null;
+
+		try {
+
+			list = ajaxService.viewByUid(uid); // 조회수 증가와 글 읽기
+
+			if (list == null || list.size() == 0) {
+				result.setMessage("[해당 데이터가 없습니다.]");
+				return new ResponseEntity<AjaxWriteList>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				result.setStatus("OK");
+				result.setCount(list.size());
+				result.setMessage("[트랜잭션 성공 : " + list.size() + " insert]");
+				result.setList(list);
+			}
+
+		} catch (Exception e) {
+			log.error("[트랜잭션 에러 : {}]", e.getMessage());
+			result.setMessage("[트랜잭션 에러:" + e.getMessage() + "]");
+			return new ResponseEntity<AjaxWriteList>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<AjaxWriteList>(result, HttpStatus.OK);
 	}
 
 	// 글작성
-	@PostMapping // url : /board
-	public ResponseEntity<AjaxWriteResult> writeOk(WriteDTO dto) {
+	@PostMapping("/x-www-form-urlencoded") // querystring 형태의 body 가 들어옵니다. (lnline 형태의 body)
+	// url : /board
+	public ResponseEntity<AjaxWriteResult> writeOkXXX(WriteDTO dto) {
 		// TODO
 
 		AjaxWriteResult result = new AjaxWriteResult();
@@ -140,41 +157,68 @@ public class AjaxController {
 
 	}
 
-	// 글수정
-	@PutMapping
-	public ResponseEntity<AjaxWriteResult> updateOk(HttpServletRequest request) {
-		// TODO
+	// 글작성
+	@PostMapping // JSON 형태의 body 가 들어옵니다. (@RequestBody 필수)
+	public ResponseEntity<AjaxWriteResult> writeOk(@RequestBody WriteDTO dto) {
 
-		WriteDTO dto = new WriteDTO();
-		TestAjax test = new TestAjax();
+		AjaxWriteResult result = new AjaxWriteResult();
+		result.setStatus("FAIL");
+		result.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+
+		int cnt = 0;
 
 		try {
-			request.setCharacterEncoding("UTF-8");
-
-			BufferedReader bf = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-
-			String str = null;
-			StringBuffer json = new StringBuffer();
-
-			while ((str = bf.readLine()) != null) {
-				// System.out.println(str);
-				System.out.println(URLDecoder.decode(str, "UTF-8"));
-				json.append(URLDecoder.decode(str, "UTF-8"));
+			cnt = ajaxService.write(dto);
+			if (cnt == 0) {
+				result.setMessage("[트랜잭션 실패 : 0 insert]");
+				return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.BAD_REQUEST);
+			} else {
+				result.setMessage("[트랜잭션 성공 : " + cnt + " insert]");
+				result.setStatus("OK");
+				result.setCount(cnt);
 			}
-
-			test = new ObjectMapper().readValue(json.toString(), TestAjax.class);
-
-			System.out.println(test);
-
-			dto.setUid(test.getUid());
-			dto.setName(test.getName());
-			dto.setSubject(test.getSubject());
-			dto.setContent(test.getContent());
-
-		} catch (IOException e) {
-			log.error("JSON 에러 : {}", e.getMessage());
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.error("[트랜잭션 에러: {}]" + e.getMessage());
+			result.setMessage("[트랜잭션 에러:" + e.getMessage() + "]");
+			return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.OK);
+
+	}
+
+	// 글수정
+	@PutMapping("/x-www-form-urlencoded") // querystring 형태의 body 가 들어옵니다. (lnline 형태의 body)
+	public ResponseEntity<AjaxWriteResult> updateOXXX(WriteDTO dto) {
+
+		AjaxWriteResult result = new AjaxWriteResult();
+		result.setStatus("FAIL");
+		result.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+
+		int cnt = 0;
+
+		try {
+			cnt = ajaxService.update(dto);
+			if (cnt == 0) {
+				result.setMessage("[트랜잭션 실패 : 0 insert]");
+				return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.BAD_REQUEST);
+			} else {
+				result.setMessage("[트랜잭션 성공 : " + cnt + " insert]");
+				result.setStatus("OK");
+				result.setCount(cnt);
+			}
+		} catch (Exception e) {
+			log.error("[트랜잭션 에러: {}]" + e.getMessage());
+			result.setMessage("[트랜잭션 에러:" + e.getMessage() + "]");
+			return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.OK);
+	}
+
+	// 글수정
+	@PutMapping // JSON 형태의 body 가 들어옵니다. (@RequestBody 필수)
+	public ResponseEntity<AjaxWriteResult> updateOk(@RequestBody WriteDTO dto) {
 
 		AjaxWriteResult result = new AjaxWriteResult();
 		result.setStatus("FAIL");
@@ -202,12 +246,8 @@ public class AjaxController {
 	}
 
 	// 글삭제
-	@DeleteMapping
-	public ResponseEntity<AjaxWriteResult> deleteOk(int[] uids) {
-		// TODO
-
-		List<int[]> l = Arrays.asList(uids);
-		l.forEach((num) -> System.out.println(num));
+	@DeleteMapping("/x-www-form-urlencoded") // querystring 형태의 body 가 들어옵니다. (lnline 형태의 body)
+	public ResponseEntity<AjaxWriteResult> deleteOkXXX(int[] uids) {
 
 		AjaxWriteResult result = new AjaxWriteResult();
 		result.setStatus("FAIL");
@@ -217,6 +257,39 @@ public class AjaxController {
 
 		try {
 			cnt = ajaxService.delete(uids);
+			if (cnt == 0) {
+				result.setMessage("[트랜잭션 실패 : 0 insert]");
+				return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.BAD_REQUEST);
+			} else {
+				result.setMessage("[트랜잭션 성공 : " + cnt + " insert]");
+				result.setStatus("OK");
+				result.setCount(cnt);
+			}
+		} catch (Exception e) {
+			log.error("[트랜잭션 에러: {}]" + e.getMessage());
+			result.setMessage("[트랜잭션 에러:" + e.getMessage() + "]");
+			return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.OK);
+	}
+
+	// 글삭제
+	@DeleteMapping // JSON 형태의 body 가 들어옵니다. (@RequestBody 필수)
+	public ResponseEntity<AjaxWriteResult> deleteOk(@RequestBody WriteDTO uids) {
+		// int[] uid => Error
+		// jackson이 자동주입 해주므로... setter가 반드시 있어야하며
+		// inline  으로 들어오는 x-www-form-urlencoded 이 방식은
+		// setter 가 필요없이 int[] 을 사용 할 수 있습니다.
+
+		AjaxWriteResult result = new AjaxWriteResult();
+		result.setStatus("FAIL");
+		result.setTimeStamp(new Timestamp(System.currentTimeMillis()));
+
+		int cnt = 0;
+
+		try {
+			cnt = ajaxService.delete(uids.getUids());
 			if (cnt == 0) {
 				result.setMessage("[트랜잭션 실패 : 0 insert]");
 				return new ResponseEntity<AjaxWriteResult>(result, HttpStatus.BAD_REQUEST);
