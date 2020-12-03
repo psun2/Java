@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JS연습:isogram</title>
+</head>
+
+<!-- by 김현준-->
+<body>
+    <h3>isIsogram <br /> 중복글자 없는 단어 여부 확인</h3>
+    영어문장입력:<input type="text" id="txt" size="60">
+    <br>
+    <input type="button" value="결과" onclick="document.getElementById('result').innerHTML = isIsogram(document.getElementById('txt').value)">    <!-- 이런식으로 매개변수(argument) 넘겨줄수 있다-->
+    <h3 id="result"></h3>
+</body>
+
+<script>
+    //핵심 --> 소문자로 바꿔주기 
+    
+    var isIsogram = function (text) {
+        var str = text.toLowerCase();   // 다 소문자로 만들어준후 
+
+            for(var i =0; i<str.length; i++){   // 길이만큼 
+                for(var j=i+1; j<str.length; j++){  // 배열을 돌려주고 
+                    //이때 i+1을 해주는 경우는 i는 0번째부터 시작하기 때문에 
+                    // 비교를 해주기위해 
+                    if(str[i] == str[j])        // 1번부터 길이ㅢ 끝까지 비교해준다.
+                        return false;
+
+                }
+            }
+ 
+
+        return true;
+    }
+
+
+
+</script>
+
+</html>
+
+

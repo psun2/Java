@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영수증 확인 폼</title>
+</head>
+
+<style>
+    #whole{
+        border: 1px solid black;
+        padding: 5px;
+        width: 600px;
+    }
+
+    h4 {
+        font-weight: 900;
+    }
+
+    table {
+        width: 600px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 5px;
+    }
+
+    .moveNumber {
+        text-align: center;
+        width: 40px;
+    }
+
+    #NB {
+        color: rgb(122, 109, 109);
+    }
+
+    #sub{
+        width: 50%;
+    }
+
+    .bc{
+        background-color: skyblue;
+        text-align: left;
+        padding-left: 10px;
+    }
+</style>
+
+<!-- by 김연지 -->
+<body>
+    <div id = "whole">
+        <h4>영수증 확인을 위해 아래의 정보를 정확히 입력해 주시기 바랍니다.</h4>
+
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        <!--라디오버튼-->
+                        <input type="radio" name="receipt" value="user_cash" onclick="dispList('0');" checked> 구매자명 + 금액
+                        <input type="radio" name="receipt" value="email" onclick="dispList('1');"> 이메일
+                        <input type="radio" name="receipt" value="card" onclick="dispList('2');"> 카드번호
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+        <form name="form1" id="1" style="display:block" action="https://www.w3schools.com/action_page.php" method="get"
+            onsubmit="return chkSubmit1()">
+
+            <div>
+                <table>
+                    <tr>
+                        <th class="bc"> 구매자명 </th>
+                        <th> <input type="text" name="username"><br> </th>
+                    </tr>
+                    <tr>
+                        <th class="bc"> 결제금액 </th>
+                        <th> <input type="text" name="payment"><br> </th>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <br>
+
+            <!-- <button type="button">입력</button> -->
+            <input type="submit" value="입력">
+        </form>
+
+        <form name="form2" id="2" style="display:none" action="https://www.w3schools.com/action_page.php" method="get"
+            onsubmit="return chkSubmit2()">
+
+            <div>
+                <table>
+                    <tr>
+                        <th class="bc"> 이메일 </th>
+                        <th> <input type="text" name="email"><br> </th>
+                    </tr>
+
+                </table>
+            </div>
+            <br>
+            <br>
+
+            <!-- <button type="button">입력</button> -->
+            <input type="submit" value="입력"  class="sub">
+        </form>
+
+        <form name="form3" id="3" style="display:none" action="https://www.w3schools.com/action_page.php" method="get"
+            onsubmit="return chkSubmit3()">
+
+            <div>
+                <table>
+                    <tr>
+                        <th class="bc"> 카드번호 </th>
+                        <th>
+                            <input type="text" name="cardNum1" class="moveNumber" onKeyup="inputMoveNumber(this);"
+                                maxlength="4" />&nbsp;-&nbsp;
+
+                            <input type="text" name="cardNum2" class="moveNumber" onKeyup="inputMoveNumber(this);"
+                                maxlength="4" />&nbsp;-&nbsp;
+
+                            <input type="text" name="cardNum3" class="moveNumber" onKeyup="inputMoveNumber(this);"
+                                maxlength="4" />&nbsp;-&nbsp;
+
+                            <input type="text" name="cardNum4" class="moveNumber" onKeyup="inputMoveNumber(this);"
+                                maxlength="4" />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
+            <br>
+            <br>
+
+            <!-- <button type="button">입력</button> -->
+            <input type="submit" value="입력" class="sub">
+        </form>
+        <div id="NB">
+            <h5>[참고사항] <br>
+                구매자명과 금액은 결제결과 안내 메일에 기재된 내역 기준으로 입력하시기 바랍니다.</h5>
+        </div>
+
+    </div>
+
+
+    <script>
+        //라디오 함수
+        function dispList(selectList) {
+            var f1 = document.getElementById("1");
+            var f2 = document.getElementById("2");
+            var f3 = document.getElementById("3");
+
+            if (selectList == "0") { // 상품1 리스트
+                f1.style.display = "block";
+                f2.style.display = "none";
+                f3.style.display = "none";
+
+            } else if (selectList == "1") { // 상품2 리스트
+                f1.style.display = "none";
+                f2.style.display = "block";
+                f3.style.display = "none";
+
+            } else {
+                f1.style.display = "none";
+                f2.style.display = "none";
+                f3.style.display = "block";
+            }
+        }
+
+        //카드번호함수
+        function inputMoveNumber(num) {
+
+            if (isFinite(num.value) == false) { //숫자가 아닌 다른 문자가 입력될때
+                alert("카드번호는 숫자만 입력할 수 있습니다.");
+                num.value = "";
+                return false;
+            }
+
+            max = num.getAttribute("maxlength");
+
+            if (num.value.length >= max) { //자동칸바꿈
+                num.nextElementSibling.focus();
+            }
+        }
+
+        //구매자명 + 금액 필수sumit
+        function chkSubmit1() {
+            var frm1 = document.forms['form1'];
+
+            if (frm1['username'].value.trim() == "") {
+                alert("구매자명 은 필수입니다");
+
+                frm1['username'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            } else if (frm1['payment'].value.trim() == "") {
+                alert("결제금액 은 필수입니다");
+
+                frm1['payment'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            }
+
+            return true; // onsubmit 에 true 를 리턴하면 submit 진행함.
+        }
+
+         //이메일 필수sumit
+        function chkSubmit2() {
+            var frm2 = document.forms['form2'];
+
+            if (frm2['email'].value.trim() == "") {
+                alert("이메일은 필수입니다");
+
+                frm2['email'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            }
+
+            return true; // onsubmit 에 true 를 리턴하면 submit 진행함.
+        }
+        
+         //카드번호 필수sumit
+        function chkSubmit3() {
+            var frm3 = document.forms['form3'];
+
+
+            if (frm3['cardNum1'].value.trim() == "") {
+                alert("카드번호는 필수입니다");
+
+                frm3['cardNum1'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            } else if (frm3['cardNum2'].value.trim() == "") {
+                alert("카드번호는 필수입니다");
+
+                frm3['cardNum2'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            } else if (frm3['cardNum3'].value.trim() == "") {
+                alert("카드번호는 필수입니다");
+
+                frm3['cardNum3'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            } else if (frm3['cardNum4'].value.trim() == "") {
+                alert("카드번호는 필수입니다");
+
+                frm3['cardNum4'].focus(); 
+
+                return false; // onsubmit 이 false 를 리턴하면 submit 을 진행하지 않는다.
+            }
+            
+
+            return true; // onsubmit 에 true 를 리턴하면 submit 진행함.
+        }
+
+    </script>
+</body>
+
+</html>

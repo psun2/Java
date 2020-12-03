@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+//Falsy 로 평가될때!
+//false, 0, '', null, undefined, NaN   <-- 'Falsy 한 값'이라 한다
+
+//Truthy 로 평가될때
+//true, 37, 'Mark', {}, []   <-- 'Truthy 한 값' 이라 한다
+
+function print(data){
+    if(data)
+        document.write(data + ' -- Truthy 판정<br>');
+    else
+        document.write(data + ' -- Falsy 판정<br>');
+}
+
+
+
+</script>
+
+<body>
+    <h2>SCE</h2>
+    <script>
+        print(false)
+        print(0)
+        print('')
+        print(null)
+        print(undefined)
+        print(NaN)
+
+        document.write("<hr>")
+
+        print(true)
+        print(10)
+        print(0.1)
+        print(-1)
+        print('Mark')
+        print({name: 'john'})
+        print({})
+        print([10, 20, 30])
+        print([])
+        print(Infinity)
+
+        document.write('<hr>')
+
+// 논리연산자를 이용한 조건문 실행
+// Short Circuit Evaluation
+
+// 표현식1 && 표현식2
+//  표현식1 이 Falsy 이면 && 의 결과값은 표현식1
+//  표현식1 이 Truthy 이면 && 의 결과값은 표현식2
+
+// 표현식1 || 표현식2
+//  표현식1 이 Falsy 이면 && 의 결과값은 표현식2
+//  표현식1 이 Truthy 이면 && 의 결과값은 표현식1
+
+
+        var result;
+
+        result = true && false
+        print(result)
+        result = true || false
+        print(result)
+
+        result = true && 'hello'
+        print(result)
+
+        result = 0 && "Hello"
+        print(result)
+
+        result = 'hello' || 'byte'
+        print(result)
+
+        var n = 5;
+        (n % 5 == 0) && document.write('5의 배수<br>')
+
+        if(n % 5 == 0)
+            document.write('5의 배수<br>');
+
+
+        var age = 13;
+        (age >= 19) || document.write("애들은 저리가<br>")
+
+
+
+    </script>
+    
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+

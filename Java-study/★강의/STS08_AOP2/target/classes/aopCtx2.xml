@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- 공통기능 클래스를 빈 객체로 만들기 -->
+	<bean id="logger" class="com.lec.spring.beans.Logger"/>
+
+	<bean name="service21" class="com.lec.spring.aop02.MyService21"/>
+	<bean name="service22" class="com.lec.spring.aop02.MyService22"/>
+
+	<!--  기본 구조 
+	<aop:config>
+		<aop:aspect id="" ref="공통기능 클래스 빈">
+			<aop:pointcut expression="어디에 적용?(PCD)" id=""/>
+			<aop:before method="어떤 메소드 weaving?"/>		
+		</aop:aspect>
+		
+		<aop:aspect>...</aop:aspect>
+		<aop:aspect>...</aop:aspect>
+		<aop:aspect>...</aop:aspect>
+	</aop:config>
+	-->
+	
+	<aop:config>
+		<aop:aspect id="logAspect1" ref="logger">
+			<aop:pointcut expression="within(com.lec.spring.aop02.*)" id="pc1"/>
+			<aop:before pointcut-ref="pc1" method="logIn"/>
+		</aop:aspect>
+		
+		<aop:aspect id="logAspect2" ref="logger">
+			<aop:after pointcut-ref="pc1" method="logOut"/>
+		</aop:aspect>
+		
+	</aop:config>
+	
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+

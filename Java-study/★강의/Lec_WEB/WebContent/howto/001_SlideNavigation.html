@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Slide Navigation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="CSS/001_SlideNavigation.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="#" 
+  	class="closebtn" id="closebtn" 
+  	onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+<div id="main">
+	<h2>Animated Sidenav Example</h2>
+	<p>Click on the element below to open the side navigation menu.</p>
+	<span class="open" onclick="openNav1()">&#9776;Open1 - Slide</span>
+	<br>
+	<span class="open" onclick="openNav2()">&#9776;Open2 - Push</span>
+	<br>
+	<span class="open" onclick="openNav3()">&#9776;Open3 - Push & Opacity</span>
+	<br>
+	<span class="open" onclick="openNav4()">&#9776;Open4 - Full Width</span>
+	<br>
+	<span class="open" onclick="openNav5()">&#9776;Open5 - No Anim</span>
+</div>
+
+<script>
+
+var closeNav;
+
+// Open1 : Slide Overlay 방식
+function openNav1() {
+	document.getElementById("mySidenav").style.width = "250px";
+    closeNav = closeNav1
+}
+
+function closeNav1() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+// Open2 : Slide Push Content 방식
+function openNav2() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    closeNav = closeNav2;
+}
+
+function closeNav2() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+
+// Open3 : Slide Push w/ opacity
+function openNav3() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)"
+    closeNav = closeNav3;
+}
+
+function closeNav3() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.body.style.backgroundColor = "white"
+}
+
+// Open4 : Full Width
+function openNav4() {
+    document.getElementById("mySidenav").style.width = "100%";
+    document.getElementById("mySidenav").style.textAlign = "center";
+    closeNav = closeNav4;
+}
+
+function closeNav4() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.textAlign = ""; /* 디폴트 */
+}
+
+// Open5 : No animation
+function openNav5() {
+    document.getElementById("mySidenav").style.transition = ""
+    //document.getElementById("mySidenav").style.display = "none";
+    document.getElementById("mySidenav").style.width = "250px";
+    // document.getElementById("mySidenav").style.display = "block";
+    closeNav = closeNav5;
+}
+
+function closeNav5() {
+    // document.getElementById("mySidenav").style.display = "none";
+    document.getElementById("mySidenav").style.width = "0";
+    // document.getElementById("mySidenav").style.display = "block";
+    document.getElementById("mySidenav").style.transition = "0.5s"
+}
+</script>
+
+
+
+</body>
+</html>

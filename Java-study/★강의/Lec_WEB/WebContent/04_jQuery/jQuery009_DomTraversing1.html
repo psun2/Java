@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>jQuery DOM</title>
+<style>
+.ancestors, .ancestors * { 
+    display: block;
+    border: 2px solid grey;
+    color: grey;
+    padding: 3px;
+    margin: 10px;
+}
+
+.selected {
+	color: red; 
+	border: 2px solid red;
+}
+
+#btnbox{
+	position:fixed;
+	right: 0px;
+	top: 0px;
+	border: 1px cyan solid;
+	width: 150px;
+	background-color: rgba(255,255,255,0.7);
+}
+
+button {
+	color: black;
+	border: 1px solid black;
+	margin: 2px;	
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+/*
+ Traversing Up: 함수들
+	parent()
+	parents()
+	parentsUntil()
+	
+Traversing Down: 
+	children()
+	find()
+
+Traversing Sibling:
+	siblings()
+	next()
+	nextAll()
+	nextUntil()
+	prev()
+	prevAll()
+	prevUntil()
+ */
+
+$(document).ready(function(){
+
+	// 어떤 버튼이든지 눌리면 selected 클래스 제거
+	$("button").click(function(){
+		$("*").removeClass("selected"); 
+	});
+	
+	//---------------------------------------------
+	// parent() : 부모
+	$("#btn11").click(function(){
+		$("span").parent().addClass("selected")
+	});
+	
+	// parents() : 부모 -> 부모 ....
+	$("#btn12").click(function(){
+		$("span").parents().addClass("selected") 
+	});
+	
+	// parents("ul") : parents() 중에서 "ul" 만
+	$("#btn13").click(function(){
+		$("span").parents("div").addClass("selected")
+	});
+	
+	// parentesUntil("div") : 부모 -> 부모 -> .. "div" 전까지 선택
+	$("#btn14").click(function(){
+		$("span").parentsUntil("div").addClass("selected") 
+	});
+	
+	//-----------------------------------------
+	//
+	// children : 자식(들)
+	$("#btn21").click(function(){
+		$("div").children().addClass("selected")
+	});
+	
+	// children("..") : 자식(들) 중에 ".." 선택
+	$("#btn22").click(function(){
+		$("div").children("p").addClass("selected")
+	});
+	
+	// find(..) : 자식 -> 자식 ... 중에 ".. " 선택
+	$("#btn23").click(function(){
+		$("div").find("span").addClass("selected")
+	});
+	
+	// find("*") : 자손들 모두 선택
+	$("#btn24").click(function(){
+		$("div").find("*").addClass("selected")
+	});
+	
+	//-----------------------------------------
+	// siblings() : 형제들
+	$("#btn31").click(function(){
+		$("#sibling h2").siblings().addClass("selected")
+	});
+
+	// siblings(..) : 형제들중에 ".." 만
+	$("#btn32").click(function(){
+		$("#sibling h2").siblings("p").addClass("selected")
+	});
+
+	// next() : 바로 밑의 동생
+	$("#btn33").click(function(){
+		$("#sibling h2").next().addClass("selected")
+	});
+	
+	// nextAll() : 손 아래 동생들 
+	$("#btn34").click(function(){
+		$("#sibling h2").nextAll().addClass("selected")
+	});
+	
+	// nextUntil(..) : 손 아래 동생들 (".." 전까지)
+	$("#btn35").click(function(){
+		$("#sibling h2").nextUntil("h6").addClass("selected")  
+	});
+	
+	// TODO.. 나머지는 직접 해보자
+	// prev() : 형
+	$("#btn36").click(function(){
+		$("#sibling h5").prev().addClass("selected")
+	});
+	
+	// prevAll() : 형(들)
+	$("#btn37").click(function(){
+		$("#sibling h5").prevAll().addClass("selected")
+	});
+	
+	// prevUntil(..) : 형(들)  ".." 전까지
+	$("#btn38").click(function(){
+		$("#sibling h5").prevUntil("span").addClass("selected")
+	});
+	
+});
+
+</script>
+</head>
+<body> body
+
+<div class="ancestors">div.ancestors
+  <div>div
+    <ul>ul  
+      <li>li
+        <span>span</span>
+      </li>
+    </ul>   
+  </div>
+
+  <div>div   
+    <p>p
+        <span>span</span>
+      </p> 
+  </div>
+  
+	<div id="sibling">div#sibling
+		<p>p</p>
+		<span>span</span>
+		<h2>h2</h2>
+		<h3>h3</h3>
+		<h4>h4</h4>
+		<h5>h5</h5>
+		<h6>h6</h6>
+		<p>p</p>
+	</div>
+  
+</div>
+
+<div id="btnbox">
+	<button id="btn11">btn11 parent()</button>
+	<button id="btn12">btn12 parents()</button>
+	<button id="btn13">btn13 parents(..)</button>
+	<button id="btn14">btn14 parentsUntil()</button>
+	<br><br>
+	
+	<button id="btn21">btn21 children()</button>
+	<button id="btn22">btn22 children(..)</button>
+	<button id="btn23">btn23 find(..)</button>
+	<button id="btn24">btn24 find(*)</button>
+	<br><br>
+	
+	<button id="btn31">btn31 siblings()</button>
+	<button id="btn32">btn32 siblings(..)</button>
+	<button id="btn33">btn33 next()</button>
+	<button id="btn34">btn34 nextAll()</button>
+	<button id="btn35">btn35 nextUntil()</button>
+	<button id="btn36">btn36 prev()</button>
+	<button id="btn37">btn37 prevAll()</button>
+	<button id="btn38">btn38 prevUntil()</button>
+</div>
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

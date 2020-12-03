@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>noConflict</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+// $ 식별자를 release 하여, 다른 라이브러리에서 사용가능케 함.
+/*
+$.noConflict();
+
+// $의 원래 이름인 jQuery를 사용하여 작성 가능
+jQuery(document).ready(function(){
+    jQuery("button").click(function(){
+        jQuery("p").text("jQuery 는 그래도 동작한다.")
+        //$("p").text("jQuery 동작할까?");  // 더이상 $ 는 동작 안함
+    })
+});
+*/
+
+// 사용자가 지정한 jQuery 식별자를 사용할수도 있다.
+/*
+var jq = $.noConflict();
+jq(document).ready(function(){
+    jq("button").click(function(){
+        jq("p").text("jq 가 동작한다");
+    })
+})
+*/
+
+
+// 특정블록에선 $가 충돌되지 않기에 그 블럭에서 $를 사용하고 싶은 경우
+$.noConflict();
+jQuery(document).ready(function($){
+    $("button").click(function(){
+        $("p").text("$가 동작합니다");
+    })
+})
+
+</script>
+
+<body>
+
+<p>P</p>
+<button>테스트</button>
+
+</body>
+</html>

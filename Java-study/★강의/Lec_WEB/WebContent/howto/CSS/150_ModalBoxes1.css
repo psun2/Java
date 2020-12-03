@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/* modal 뒷 배경 */
+.modal {
+    background-color: rgba(0,0,0,0.4);
+    
+    width:  100%; /* 창 전체 차지 */
+    height: 100%;
+    position: fixed; 
+    left: 0;
+    top: 0;
+    
+    z-index: 1; /* 최상단에 보이게 하기 */
+    overflow: auto;
+
+    display: none;  /* 처음에는 팝업 안보이게 */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    width: 80%;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    float: right;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+

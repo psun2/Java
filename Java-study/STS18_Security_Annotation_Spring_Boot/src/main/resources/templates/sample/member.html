@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf_parameter" th:content="${_csrf.parameterName}">
+    <meta name="_csrf_token" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>member</title>
+</head>
+<body>
+<h1>/sample/member page</h1>
+<a th:href="${#httpServletRequest.getContextPath() }/customLogout">로그아웃</a>
+<script>
+    const parameter = document.querySelector('meta[name=_csrf_parameter]').getAttribute("content");
+    const token = document.querySelector('meta[name=_csrf_token]').getAttribute("content");
+    const header = document.querySelector('meta[name=_csrf_header]').getAttribute("content");
+
+    console.log(`parameter: `, parameter);
+    console.log(`token: `, token);
+    console.log(`header: `, header);
+</script>
+</body>
+</html>

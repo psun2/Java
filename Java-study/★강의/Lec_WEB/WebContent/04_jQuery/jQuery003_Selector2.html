@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Selector</title>
+<style>
+  div {
+    background: yellow;
+    border: 1px solid #AAA;
+    width: 80px;
+    height: 80px;
+    margin: 0 5px;
+    float: left;
+  }
+  div.colored {
+    background: green;
+  }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+// TODO
+
+</script>
+</head>
+<body>
+
+<button id="run">Run</button>
+ 
+<div></div>
+<div id="mover"></div>
+<div></div>
+
+<script>
+
+function animateIt(){
+  $("#mover").slideToggle("slow", animateIt);  
+  // 재귀호출 아님
+  // 무한루프도 아님.
+}
+animateIt();
+
+$("#run").click(function(){
+  $("div:animated").toggleClass("colored");
+});
+
+// 개발자도구에서 element 탭에서의 변화등을 확인해볼수 있다.
+
+</script>
+
+</body>
+</html>

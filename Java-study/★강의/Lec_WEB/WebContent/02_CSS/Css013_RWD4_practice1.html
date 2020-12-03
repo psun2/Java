@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWD 연습</title>
+<!-- by 홍성혁 -->
+<style>
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing:border-box;
+}
+
+#wraper{
+	margin: 0 auto 0;
+	padding: 5px;
+}
+
+.clear{
+	clear: both;
+}
+
+.undisplay{
+	display: none;
+}
+div{
+	overflow: hidden;
+}
+[class*="col-"]{
+	color: #fff;
+	font-size: 24px;
+	padding: 5px;
+	float: left;
+	min-height: 50px;
+	/* border : solid thin #333; */
+}
+
+span{
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+}
+#A{ background: lightgray;}
+#B{ background: purple;}
+#C{ background: cyan;}
+#D{ background: white; color:#333; border: thistle solid thin;}
+#E{ background: wheat;}
+#F{ background: cadetblue;}
+#G{ background: coral;}
+#H{ background: gold;}
+
+.col-m-1 {width: 8.33%; }  
+.col-m-2 {width: 16.66%; }  
+.col-m-3 {width: 25%;}
+.col-m-4 {width: 33.33%;}
+.col-m-5 {width: 41.66%;}
+.col-m-6 {width: 50%;}
+.col-m-7 {width: 58.33%;}
+.col-m-8 {width: 66.66%;}
+.col-m-9 {width: 75%;}
+.col-m-10 {width: 83.33%;}
+.col-m-11 {width: 91.66%;}
+.col-m-12 {width: 100%;}
+.min-height-m-1{height: 128px;}
+.min-height-m-2{height: 192px;}
+.min-height-m-3{height: 384px;;}
+
+/* 브라우저 윈도우가 600px 이상 */
+@media (min-width:600px){
+	[class*="col-"]{display: block;}
+	.col-tab-1 {width: 8.33%; } 
+	.col-tab-2 {width: 16.66%; } 
+	.col-tab-3 {width: 25%;}
+	.col-tab-4 {width: 33.33%;}
+	.col-tab-5 {width: 41.66%;}
+	.col-tab-6 {width: 50%;}
+	.col-tab-7 {width: 58.33%;}
+	.col-tab-8 {width: 66.66%;}
+	.col-tab-9 {width: 75%;}
+	.col-tab-10 {width: 83.33%;}
+	.col-tab-11 {width: 91.66%;}
+	.col-tab-12 {width: 100%;}
+	.min-height-tab-1{height: 128px;}
+	.min-height-tab-2{height: 192px;}
+	.min-height-tab-3{height: 384px;}
+}
+
+/* 브라우저 윈도우가 768px 이상 */
+@media (min-width:769px){
+	[class*="col-"]{display: block;}
+	.col-pc-1 {width: 8.33%; } 
+	.col-pc-2 {width: 16.66%; } 
+	.col-pc-3 {width: 25%;}
+	.col-pc-4 {width: 33.33%;}
+	.col-pc-5 {width: 41.66%;}
+	.col-pc-6 {width: 50%;}
+	.col-pc-7 {width: 58.33%;}
+	.col-pc-8 {width: 66.66%;}
+	.col-pc-9 {width: 75%;}
+	.col-pc-10 {width: 83.33%;}
+	.col-pc-11 {width: 91.66%;}
+	.col-pc-12 {width: 100%;}
+	.min-height-pc-1{height: 128px;}
+	.min-height-pc-2{height: 192px;}
+	.min-height-pc-3{height: 384px;}
+}
+
+/* 브라우저 윈도우가 1130px 이상 */
+@media (min-width:1130px){
+	.wraper {
+		position: relative;
+		width : 1130px;
+		margin: 0 auto 0;
+	}
+	[class*="col-"]{display: block;}
+	.col-pc-1 {width: 8.33%; } 
+	.col-pc-2 {width: 16.66%; } 
+	.col-pc-3 {width: 25%;}
+	.col-pc-4 {width: 33.33%;}
+	.col-pc-5 {width: 41.66%;}
+	.col-pc-6 {width: 50%;}
+	.col-pc-7 {width: 58.33%;}
+	.col-pc-8 {width: 66.66%;}
+	.col-pc-9 {width: 75%;}
+	.col-pc-10 {width: 83.33%;}
+	.col-pc-11 {width: 91.66%;}
+	.col-pc-12 {width: 100%;}
+	.min-height-pc-1{height: 128px;}
+	.min-height-pc-2{height: 192px;}
+	.min-height-pc-3{height: 384px;}
+}
+
+</style>
+    
+</head>
+<body>
+	<div id="wraper" class="wraper">
+		<div class="undisplay col-tab-2 col-pc-4 min-height-m-1 min-height-tab-1 min-height-pc-1"><span id="A">A: </span></div>
+		<div class="col-m-12 col-tab-10 col-pc-8 min-height-m-1  min-height-tab-1 min-height-pc-1"><span id="B" style="text-align: center;">B: </span></div>
+		<div class="col-m-12 col-tab-2 col-pc-2 min-height-m-1 min-height-tab-3 min-height-pc-3"><span id="C">C: </span></div>
+		<div class="col-m-12 col-tab-8 col-pc-6 min-height-m-2 min-height-tab-3 min-height-pc-3"><span id="D">D: </span></div>
+		<div class="col-m-4 col-tab-2 col-pc-4 min-height-m-1 min-height-tab-2 min-height-pc-1" ><span id="E">E: </span></div>
+		<div class="col-m-4 col-tab-2 col-pc-4 min-height-m-1 min-height-tab-2 min-height-pc-1"><span id="F">F: </span></div>
+		<div class="col-m-4 col-tab-3 col-pc-4 min-height-m-1  min-height-tab-1 min-height-pc-1"><span id="G" >G: </span></div>
+		<div class="col-m-12 col-tab-9 col-pc-12 min-height-m-1  min-height-tab-1 min-height-pc-1"><span id="H">H: </span></div>
+		<div class="clear"></div>
+	</div>
+<br>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	$(window).resize(function(){
+		if($(window).width()>=769){
+			$("span#A").text("A:4")
+			$("span#B").text("B:8")
+			$("span#C").text("C:2")
+			$("span#D").text("D:6")
+			$("span#E").text("E:4")
+			$("span#F").text("F:4")
+			$("span#G").text("G:4")
+			$("span#H").text("H:12")
+		}
+		else if($(window).width()>=600){
+			$("span#A").text("A:2")
+			$("span#B").text("B:10")
+			$("span#C").text("C:2")
+			$("span#D").text("D:8")
+			$("span#E").text("E:2")
+			$("span#F").text("F:2")
+			$("span#G").text("G:3")
+			$("span#H").text("H:9")
+		}
+		else {
+			$("span#B").text("B:12")
+			$("span#C").text("C:12")
+			$("span#D").text("D:12")
+			$("span#E").text("E:4")
+			$("span#F").text("F:4")
+			$("span#G").text("G:4")
+			$("span#H").text("H:12")
+		}
+	})
+	$("wraper span").each(function(){
+		$(this).text=$(this).text()+";"
+	})
+</script>
+</html>
+
+

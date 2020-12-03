@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       https://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- http://www.springframework.org/schema/security/spring-security-5.3.xsd -->
+    <!-- 버전 때문에 error 버전을 빼줄수 있도록합니다. -->
+    <!-- http://www.springframework.org/schema/security/spring-security.xsd -->
+    <!-- ??? 버전있어도 동작 잘 하는데요 ? -->
+
+    <!-- // 인증 (Authentication : 자신을 증명)
+    // 내가 (스스로) 자신을 증명말 만한 자료를 제시 하는 것.
+    // 인가 (Authorizatoin : 권한부여)
+    // 남에 의해서 ‘자격’ 이 부여된것.
+    -->
+
+    <!-- 로그인 성공시 처리해줄 설정객체 -->
+    <bean id="cutomLoginSuccess" class="com.lec.sts18_security.security.config.CustomLoginSuccessHandler"/>
+
+    <!-- 로그인 실패시 핸들링할 설정 객체 -->
+    <bean id="customLoginFail" class="com.lec.sts18_security.security.config.CustomLoginFailHandler"/>
+
+    <!-- 권한이 없이 접근 하려 할때 통제하는 설정 객체 -->
+    <bean id="customAccessDenied" class="com.lec.sts18_security.security.config.CustomAccessDeniedHandler"/>
+
+    <!-- 비밀번호 encoding 없이 사용할 때 쓸 encoding 객체 -->
+    <bean name="customPasswordEncoder"
+          class="com.lec.sts18_security.security.config.CustomNoOpPasswordEncoder"/>
+
+    <!-- 비밀번호 SHA-512 해쉬 encoding 설정 객체 -->
+    <bean id="customSha512PasswordEncoder" class="com.lec.sts18_security.security.config.CustomPasswordEncoder"/>
+
+    <!-- security 가 제공하는 비밀번호 인코더 객체 -->
+    <bean name="bcryptPasswordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!-- 컨테이너의 HTTP security 요소 (설정) -->
+    <security:http>
+        <!-- 특정 url pattern 요청이 들어올때 인터셉터를 이용래 접근 제한 설정 -->
+        <!-- permitAll(), permitAll : 모든 접근을 허용 -->
+        <security:intercept-url pattern="/sample/all" access="permitAll()"/>
+
+        <!-- /sample/member URI 요청은 ROLE_MEMBER 라는 권한이 있는 사용자만 접근 가능 -->
+        <security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
+
+        <!-- /sample/admin URI 요청은 ROLE_ADMIN 권한이 있는 사용자만 접근 가능 -->
+        <security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
+
+        <!-- security 만약 권한이 허용 되지 않는다면  form-login 으로 설정된 페이지로 redirect 합니다. -->
+        <!-- <security:form-login />  security 가 기본 제공하는 로그인 폼 -->
+        <security:form-login login-page="/customLogin"
+                             authentication-success-handler-ref="cutomLoginSuccess"
+                             authentication-failure-handler-ref="customLoginFail"/>
+        <!-- authentication-success-handler-ref : 로그인 '성공' 시 처리할 작업을 다루고 있는 핸들러 성정 파일 -->
+        <!-- authentication-success-handler-ref : 로그인 '실패' 시 처리할 작업을 다루고 있는 핸들러 성정 파일 -->
+
+        <!-- 접근권한 에러 발생시 동작시킬 핸들러 : 방법1: url 지정 -->
+        <!-- <security:access-denied-handler error-page="/accessError"/> -->
+
+        <!-- 접근권한 에러 발생시 동작시킬 핸들러 : 방법2: handler 지정 -->
+        <security:access-denied-handler ref="customAccessDenied"/>
+
+        <!-- 로그아웃 -->
+        <!-- invalidate-session="true" : 모든 세션 정보를 삭제 -->
+        <security:logout logout-url="/customLogout" invalidate-session="true"/>
+    </security:http>
+
+    <!-- security:http 에서 인증을 처리했다면 -->
+    <!-- security:authentication-manager : 에서는 권한 관계를 처리합니다. -->
+
+    <!-- AuthenricationManager -->
+    <security:authentication-manager>
+        <!--  UserDetailsService 를 사용한 인증과 권한 처리 -->
+        <!-- login 정보는 JSESSIONID이라는 쿠키로 저장됩니다. -->
+        <security:authentication-provider>
+            <!-- InMemory 방식 -->
+            <!-- name: 사용자의 id를 의미 -->
+            <!-- {noop}: password 암호화 encoding 사용 없이사용 -->
+            <!-- spring security에서 password는 반드시 암호화가 되어야 합니다. -->
+            <!--
+            <security:user-service>
+                <security:user name="member" password="member" authorities="ROLE_MEMBER"/>
+                <security:user name="admin" password="admin" authorities="ROLE_ADMIN, ROLE_MEMBER"/>
+            </security:user-service>
+            -->
+            <!-- 비밀번호 No 인코딩 객체 -->
+            <!--            <security:password-encoder ref="customPasswordEncoder"/>-->
+
+            <!-- 비밀번호 SHA512 인코딩 객체 -->
+            <!--            <security:password-encoder ref="customSha512PasswordEncoder"/>-->
+
+
+            <!-- JDBC 방식 -->
+            <!-- JDBC 사용 -->
+            <!-- 여기서 주의 점은 SELECT 할때
+                회원 아이디 컬럼 : username
+                회원 비밀번호 컬럼 : password
+                활성화 / 비활성화 : enabled (활성: 1 , 비활성: 0)
+            -->
+            <!-- 또한 usernmae 즉 id를 참조 하는 참조테이블이 있어야 하며,
+                아이디 참조테이블은 authority 라는 컬럼을 가지고 있어야하며,
+                authority: 회원권한을 의미합니다.
+                또한 컬럼명을 위와같이 짓기 싫다면 SELECT 할때만 바꿔 가져오면 됩니다.
+             -->
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query=
+                                                "SELECT userid username, userpw password, enabled FROM tbl_member WHERE userid = ?"
+                                        authorities-by-username-query=
+                                                "SELECT userid username, auth authority FROM tbl_member_auth WHERE userid = ?"
+            />
+
+            <!-- security 제공 BCryptPasswordEncoder 인코딩 객체  -->
+            <!-- 사용자가 입력한 비밀번호가 자동으로 encoding 됩니다. -->
+            <!-- 그러므로 디비에도 인코딩된 비밀번호가 있어야 서로 비교 할 수 있습니다. -->
+            <security:password-encoder ref="bcryptPasswordEncoder"/>
+            <!-- Springframework의 BCryptPasswordEncoder은 BCrypt 해시 함수를 이용하여 비밀번호를 저장하는 방법을 사용한다 -->
+
+
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+</beans>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Modal Image</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="CSS/005_ModalImage.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h2>Modal Image</h2>
+<p>hidden 이미지가 기본적으로 존재</p>
+<p>JavaScript로 modal 안에 이미지 보여지게 함. 
+modal 안의 텍스트도 alt 를 사용해서 나타나게 함</p>
+
+<img class="myImg" width="300" height="200"
+		src="../img/img_fjords.jpg" 
+		alt="Trolltunga, Norway">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_5terre.jpg" 
+		alt="beach, Italy">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_mountains.jpg" 
+		alt="mountain, USA">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_snow.jpg" 
+		alt="Snowpeak, Canada">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_woods.jpg" 
+		alt="Woods, France">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_nature.jpg" 
+		alt="Nature, Norway">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_lights.jpg" 
+		alt="Aurora, Iceland">
+<img class="myImg" width="300" height="200" 
+		src="../img/img_forest.jpg" 
+		alt="Forrest, Brasil">
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+
+var modal = document.getElementById('myModal');
+
+
+var modalImg = document.getElementById('img01');
+var captionText = document.getElementById('caption');
+
+// var img = document.getElementById('myImg');
+// img.onclick = function(){
+//   modal.style.display = 'block';
+//   modalImg.src = this.src;
+//   captionText.innerHTML = this.alt;
+// }
+
+// TODO : 어떠한 이미지를 클릭해도 그 이미지의 팝업이 뜨게 하기
+var imgs = document.getElementsByClassName("myImg");
+for(i = 0; i < imgs.length; i++){
+	imgs[i].addEventListener("click", function(){
+	    modal.style.display = "block";
+	    modalImg.src = this.src;
+	    captionText.innerHTML = this.alt;
+	});
+}
+
+var btn_close = document.getElementsByClassName("close")[0];
+btn_close.onclick = function(){
+    modal.style.display = "none";
+}
+
+
+
+</script>
+</body>
+</html>

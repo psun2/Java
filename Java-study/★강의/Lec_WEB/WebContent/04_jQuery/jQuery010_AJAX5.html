@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>네이버실검 jQuery</title>
+<style>
+table, th, td {
+	border : 1px solid black;
+	border-collapse: collapse;
+}
+table {width: 100%; margin-bottom: 20px;}
+
+th, td {padding: 5px; text-align: center;}
+
+th { background-color: lavender;}
+
+#wrap {
+		width: 100%;
+		color: #4a4a4a;
+}
+        
+#contentW {
+	width: 90%;
+	min-width: 470px;
+	margin: 0 auto;
+}
+
+#selectWrap { margin-bottom: 20px;}
+
+#time {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+</style>
+</head>
+<!-- 김예솔 -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+// ※ VSC+LiveServer+크롬 에서 동작한다.
+// serialize() 를 해보자.
+
+
+$(document).ready(function(){		
+	
+	var url = "https://apis.naver.com/mobile_main/srchrank/srchrank?frm=main&";
+
+	$("#getBtn").click(setUp);
+	$("select").click(setUp);
+	
+	function setUp(){
+
+		var qry = $("form#frm").serialize();
+
+		$.ajax({
+			url: url + qry,
+			type: "GET",
+			cache: false,
+			success: function(data, status){
+				if(status == "success") parseJSON(data);
+			},
+			error: function(xhr, status, error){
+				// 실패
+				alert("에러발생");
+			}
+		});
+	}
+	
+	function parseJSON(jsonObj){
+
+		var data = jsonObj.data;
+		var dataLen = data.length;
+		var res = "<span id=\"time\">" + jsonObj.ts + "</span><br><br>";
+		
+		for(i = 0; i < dataLen; i++){
+			res += "<b>" + data[i].rank + " > </b>"
+				+ data[i].keyword + "<br>"
+		}
+
+		$("#result").html(res);
+	}
+
+});
+
+</script>
+<body>
+	<div id="wrap">
+		<div id="contentW">
+			<div id="selectWrap">
+
+				<h2>네이버 실검</h2>
+				
+				<form id="frm">
+					<table>
+						<tr>
+							<th>연령</th>
+							<th>이슈별모아보기</th>
+							<th>이벤트,할인</th>
+							<th>시사</th>
+							<th>엔터</th>
+							<th>스포츠</th>
+						</tr>
+						<tr id="select">
+							<td><select name="ag">
+								<option value="all" selected>전체연령</option>
+								<option value="10s">10대</option>
+								<option value="20s">20대</option>
+								<option value="30s">30대</option>
+								<option value="40s">40대</option>
+								<option value="50s">50대</option>
+							</select></td>
+							<td><select name="gr">
+								<option value="0" selected>1</option>
+								<option value="1">2</option>
+								<option value="2">3</option>
+								<option value="3">4</option>
+								<option value="4">5</option>
+							</select></td>
+							<td><select name="ma">
+								<option value="-2" selected>1</option>
+								<option value="-1">2</option>
+								<option value="0">3</option>
+								<option value="1">4</option>
+								<option value="2">5</option>
+							</select></td>
+							<td><select name="si">
+								<option value="-2" selected>1</option>
+								<option value="-1">2</option>
+								<option value="0">3</option>
+								<option value="1">4</option>
+								<option value="2">5</option>
+							</select></td>
+							<td><select name="en">
+								<option value="-2" selected>1</option>
+								<option value="-1">2</option>
+								<option value="0">3</option>
+								<option value="1">4</option>
+								<option value="2">5</option>
+							</select></td>
+							<td><select name="sp">
+								<option value="-2" selected>1</option>
+								<option value="-1">2</option>
+								<option value="00">3</option>
+								<option value="01">4</option>
+								<option value="02">5</option>
+							</select></td>
+						</tr>
+					</table>
+				
+				</form>
+				<button id="getBtn">가져오기</button>
+			</div>
+
+			<div id="result"></div>
+		</div>
+	</div>
+	
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

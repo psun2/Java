@@ -1,0 +1,62 @@
+package com.lec.sts18_security.security;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+		
+		System.out.println("[로그인 성공!]");
+		
+		// Authentiaction 객체를 이용해서 사용자가 가진 모든 권한을 문자열로 확인 가능
+		List<String> roleNames = new ArrayList<>();
+		authentication.getAuthorities().forEach(authority -> {
+			roleNames.add(authority.getAuthority());
+		});
+		
+		System.out.println("ROLES NAMES: " + roleNames);
+		
+		// 로그인한 사용자가 ROLE_ADMIN 권한을 가졌으면  /sample/admin 으로 이동
+		if(roleNames.contains("ROLE_ADMIN")) {
+			response.sendRedirect(request.getContextPath() + "/sample/admin");
+			return;
+		}
+		
+		// ROLE_MEMBER 권한을 가졌으면 /sample/member 로 이동
+		if(roleNames.contains("ROLE_MEMBER")) {
+			response.sendRedirect(request.getContextPath() + "/sample/member");
+			return;
+		}
+		
+		// 둘다 아니면  걍 / 로 이동
+		response.sendRedirect(request.getContextPath());
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

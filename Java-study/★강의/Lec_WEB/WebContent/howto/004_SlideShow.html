@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Slide Show</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="CSS/004_SlideShow.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="slideshow-container">
+
+	<div class="mySlides fade">
+	  <div class="numbertext">1 / 4</div>
+	  <img src="../img/img_nature_wide.jpg" style="width:100%">
+	  <div class="text">Caption Text</div>
+	</div>
+	
+	<div class="mySlides fade">
+	  <div class="numbertext">2 / 4</div>
+	  <img src="../img/img_fjords_wide.jpg">
+	  <div class="text">Caption Two</div>
+	</div>
+	
+	<div class="mySlides fade">
+	  <div class="numbertext">3 / 4</div>
+	  <img src="../img/img_mountains_wide.jpg">
+	  <div class="text">Caption Three</div>
+	</div>
+	
+	<div class="mySlides fade">
+	  <div class="numbertext">4 / 4</div>
+	  <img src="../img/img_lights_wide.jpg">
+	  <div class="text">Caption Three</div>
+	</div>
+	
+	<a class="prev" onclick="moveSlides(-1)">&#10094;</a>
+	<a class="next" onclick="moveSlides(1)">&#10095;</a>
+
+</div>
+<br>
+
+<div class="dot-container">
+  <span class="dot" onclick="currentSlide(0)"></span> 
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span> 
+</div>
+
+<script>
+
+var slideIndex = 0;  // 현재 슬라이드
+showSlides(slideIndex);   // 페이지 로딩후 첫 슬라이드 보여주기
+
+// n칸씩 슬라이드 이동
+function moveSlides(n){
+	showSlides(slideIndex += n)
+}
+
+// n번째 슬라이드로 이동 
+function currentSlide(n){
+	showSlides(slideIndex = n)
+}
+
+// n번째  슬라이드 보여주기
+function showSlides(n){
+	var i;
+	var slides = document.getElementsByClassName("mySlides");
+	var dots = document.getElementsByClassName("dot");
+
+	if(n >= slides.length) {slideIndex = 0}
+	if(n < 0) { slideIndex = slides.length - 1}
+
+	// 일단 기존의 이미지들을 싹 지움
+	for(i = 0; i < slides.length; i++){
+		slides[i].style.display = "none";
+	}
+
+	// 일단 기조의 dot 들도 원위치 
+	for(i = 0; i < dots.length; i++){
+		dots[i].className = dots[i].className.replace(" active", "");
+	}
+
+	// 해당 페이지의 이미지만 보이게 하기
+	slides[slideIndex].style.display = "block"
+
+	// 해당 페이지의 dot 만 highlight 시키기
+	dots[slideIndex].className += " active"
+
+
+}
+
+
+
+
+</script>
+
+</body>
+</html> 

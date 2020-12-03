@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>DOM - Node</title>
+<style>
+div { padding: 3px; }
+p { background-color: cyan;}
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px;
+}
+td{
+	background-color: orange;
+}
+
+span, input{
+	display:inline-block; 
+	width:200px;
+}
+
+</style>
+</head>
+<!-- 
+
+	node 를 생성할수 있다.!
+	생성된 노드를 원하는 node 에 붙일수 있다.!
+	
+	document.createElement()
+	document.createTextNode()
+	
+	E.appendChild(A) : 
+		A를 E의 마지막 child 로 append 된다.
+	E.insertBefore(A, B) : 
+		E 의 child 중에  B 앞에 A를 child 로 insert 한다.
+	E.removeChild(A) :
+		E 의 child 중에 A 를 제거한다.
+ -->
+ 
+ <!-- 
+ 	attribute 를 세팅할수도 있다
+ 	E.setAttribute("attribute 이름", "attribute 값");
+ 	
+ 	attribute 를 제거
+ 	E.removeAttribute("attribute 이름");
+ 	
+ 	attribute 값 리턴
+ 	E.getAttribute("attribute 이름");  
+ 	
+ 	attribute 를 갖고 있는지 여부, true/false 리턴
+ 	E.hasAttribute("attribute 이름");   
+  -->
+
+<body>
+
+<div id="div1" style="background-color: yellow">
+	div1입니다
+	<p id="p1">p1 입니다</p>
+	<p id="p2">p2 입니다</p>
+</div>
+
+<script>
+var para;
+var node;
+var parent, child;
+var element = document.getElementById("div1");
+
+// 단계별로 확인해보자
+
+// appendChild()
+para = document.createElement("p");  // <p> element node 생성
+node = document.createTextNode("appendChild() 로 추가");
+para.appendChild(node);
+
+element.appendChild(para);
+
+// insertBefore()
+para = document.createElement("p");
+node = document.createTextNode("insertBefore()로 추가");
+para.appendChild(node);
+
+child = document.getElementById("p1");
+element.insertBefore(para, child);
+
+// removeChild()
+parent = document.getElementById("div1");
+child = document.getElementById("p2");
+parent.removeChild(child);
+
+</script>
+
+
+<div>
+<table id="table1">
+<tr>
+	<th>이름</th>
+	<th>아이디</th>
+</tr>
+<tr>
+	<td><!-- this 는 그 element다 -->
+	<span onclick="doChange(this)">
+	홍길동
+	</span>
+	</td>
+	<td>
+	<span onclick="doChange(this)">
+	Mr.Hong
+	</span>
+	</td>
+</tr>
+</table>
+</div>
+
+<script>
+// document.getElementById("table1").
+// 	setAttribute('style', 'border: 4px solid red');
+
+//document.getElementById("table1").style.border = "4px solid red";
+
+document.getElementById("table1").style.setProperty('border', '4px solid red');
+
+</script>
+
+<script>
+
+function doChange(e){
+	var nodeName = e.nodeName.toUpperCase();
+	var parent = e.parentNode;
+
+	if(nodeName == "SPAN"){
+		// 기존 e 가 <span> 이었다면 <input> 으로 바꾸기
+		var txt = e.innerHTML.trim();
+		parent.removeChild(e);
+		var node = document.createElement("input");
+		node.value = txt;
+		node.addEventListener("focusout", function(){
+			doChange(this);
+		});
+
+		node.addEventListener("keyup", function(){
+			doEnter(this);
+		});
+
+
+		parent.appendChild(node);
+		node.focus();
+	} else if(nodeName == "INPUT"){
+		// e 가ㅣ <input> 이었으면 <span> 으로 바꾸기
+		var txt = e.value.trim();
+
+		parent.removeChild(e);
+		var node = document.createElement("span");
+		var txtNode = document.createTextNode(txt);
+		node.appendChild(txtNode);
+		
+		node.addEventListener("click", function(){
+			doChange(this);
+		});
+
+		parent.appendChild(node);
+	}
+}
+
+function doEnter(e){
+	if(event.keyCode == 13){
+		doChange(e);
+	}
+}
+
+</script>
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

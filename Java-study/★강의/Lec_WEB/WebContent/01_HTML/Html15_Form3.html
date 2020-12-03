@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Form3</title>
+</head>
+<body>
+<h3>여러가지 Input Type</h3>
+<form action="https://www.w3schools.com/action_page.php">
+
+<!-- hidden -->
+<input type='hidden' name='data1' value='alpha'>
+<input type='hidden' name='data2' value='beta'>
+
+<!-- text -->
+First name:<br>
+<input type="text" name="firstname">
+<br>
+Last name:<br>
+<input type="text" name="name">
+<br>
+
+<br><hr>
+
+<!-- 필수요소인 경우 required ,placeholder : 입력 힌트 -->
+Id:<br>
+<input type="text" name="id" required placeholder="id 를 입력하세요">
+<br><hr>
+
+<!-- disabled, readonly -->
+별명: <br>
+<input type="text" name="nick" value="건드리면 안되는 값" disabled>
+<br>
+취미: <br>
+<input type="text" name="hobby" value="읽기전용" readonly>
+
+<br><hr>
+
+<!-- number -->
+나이:<br>
+<input type="number" name="age">
+<br><hr>
+
+<!--  password -->
+User password:<br>
+<input type="password" name="psw">
+<br><hr>
+
+<!-- radio -->
+<input type="radio" name="gender" value="male">남성<br>
+<input type="radio" name="gender" value="female" checked>여성<br>
+<input type="radio" name="gender" value="pet">동물<br>
+<br><hr>
+
+
+<!-- checkbox -->
+<br><hr>
+<input type="checkbox" name="vehicle1" value="Bike">자전거
+<br>
+<input type="checkbox" name="vehicle2" value="Car">자동차
+<br>
+<br>
+
+<!-- button -->
+<!--  <button> 도 있고 <input type="button" 도 있다 -->
+<input type="button" name="btn" onclick="alert('hello world')" value="Click Me!">
+<br><hr>
+
+<!-- reset -->
+<input type="reset" value="초기화">
+
+<!-- submit -->
+<input type="submit" value="제출">
+
+<hr>
+<!-- form 안의 button 은 type=button 이 명시 안되면 submit 동작을 하니 주의! -->
+<button type="button">버튼이당</button>
+
+</form>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

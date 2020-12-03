@@ -1,0 +1,41 @@
+
+* {box-sizing: border-box;}
+
+body {margin: 0;}
+.column img{width: 100%;}
+.header {text-align: center; padding: 32px;}
+
+.row {
+    /* content 에 관계없이 
+    flex item 들을 동일한 length 로 맞춘다*/
+
+    display: flex;
+    
+    /* flex item 들을 wrap */
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 25%;
+    padding: 0 4px;
+    max-width: 25%;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+@media (max-width: 800px){
+    .column {
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 600px){
+    .column {
+        flex: 100%;
+        max-width: 100%;
+    }
+}

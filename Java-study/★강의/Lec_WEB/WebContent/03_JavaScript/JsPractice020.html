@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>JS연습:단어첫단어로 문장만들기</title>
+</head>
+
+<!-- BY 김예솔 -->
+<body>
+    <h3>makeString<br />영어 문장을 입력하면<br />각 단어 첫 단어로 구성된 문장 만들기</h3>
+    영어문장입력:<input type="text" id="txt" size="60">
+    <br>
+    <input type="button" value="결과" onclick="document.getElementById('result').innerHTML = makeString(document.getElementById('txt').value)">    <!-- 이런식으로 매개변수(argument) 넘겨줄수 있다-->
+    <h3 id="result"></h3>
+</body>
+
+<script>
+
+     var makeString = function(text) {
+        
+        var words = text.trim().split(" ");
+
+        var result = "";
+
+
+        for(var i = 0; i < words.length; i++){
+
+            result += words[i].charAt(0);
+        }
+
+        return result;
+    }
+
+</script>
+
+</html>
+
+

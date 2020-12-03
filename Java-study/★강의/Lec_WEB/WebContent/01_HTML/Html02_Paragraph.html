@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<!-- HTML의 주석(Comment) -->
+	<!-- 
+		블럭 형태의 주석	
+		- 한줄 주석 없슴.
+	 -->
+	 
+<!-- <head> : 
+	브라우저에 직접적으로 보여지진 않지만
+	'웹문서'에 대한 부가적인 정보나 설정값.
+  	'브라우저'에서 다루어야 할 내용 포함.-->
+	 
+<head>
+	<meta charset="UTF-8">
+		<!-- 한글 글자 깨질때 확인하기
+		1. 문서 저장 인코딩은 ?
+		2. meta charset 설정 인코딩은?
+		3. 브라우저 인코딩은 ?		
+		 -->
+		 
+
+	<title>Paragraph</title>
+</head>
+
+<!-- <body>:
+실제 브라우저 화면에 보여지는 내용 -->
+<body>
+	<p>p태그는 문단을 나타내는 태그</p>
+	<p> 문단과 문단 사이는 줄바꿈 발생 </p>
+	
+	<!-- Lorem Ipsum  로렘 입숨
+		출판등에서 디자인이나 레이아웃을 보기위한 샘플용 텍스트.  특별한 의미는 없으나, 
+		어느정도 분량의 텍스트로 글을 생성해주기 위해 필요.
+		https://www.lipsum.com/
+	-->
+	
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mi vel arcu posuere egestas. Integer non elit quis purus porta aliquam a volutpat massa. Cras aliquet consequat velit eu venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut bibendum nulla in turpis dapibus, eget vehicula arcu dictum. Fusce ex velit, mollis vitae ex at, venenatis mattis lectus. Morbi consectetur neque id tellus ultricies semper. Maecenas sed nisi molestie, dictum nisl quis, dictum sapien. Praesent facilisis eros velit, ac egestas nulla elementum imperdiet. Donec imperdiet luctus ex at varius. Aenean ex elit, porttitor vel sapien sit amet, ultricies hendrerit dolor. Donec congue auctor vehicula. Ut sit amet aliquet ipsum, quis facilisis elit. Morbi vitae pretium mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec justo ante, fringilla id quam eu, maximus mollis ante.</p>	
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mi vel arcu posuere egestas. Integer non elit quis purus porta aliquam a volutpat massa. Cras aliquet consequat velit eu venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut bibendum nulla in turpis dapibus, eget vehicula arcu dictum. Fusce ex velit, mollis vitae ex at, venenatis mattis lectus. Morbi consectetur neque id tellus ultricies semper. Maecenas sed nisi molestie, dictum nisl quis, dictum sapien. Praesent facilisis eros velit, ac egestas nulla elementum imperdiet. Donec imperdiet luctus ex at varius. Aenean ex elit, porttitor vel sapien sit amet, ultricies hendrerit dolor. Donec congue auctor vehicula. Ut sit amet aliquet ipsum, quis facilisis elit. Morbi vitae pretium mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec justo ante, fringilla id quam eu, maximus mollis ante.</p>	
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mi vel arcu posuere egestas. Integer non elit quis purus porta aliquam a volutpat massa. Cras aliquet consequat velit eu venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut bibendum nulla in turpis dapibus, eget vehicula arcu dictum. Fusce ex velit, mollis vitae ex at, venenatis mattis lectus. Morbi consectetur neque id tellus ultricies semper. Maecenas sed nisi molestie, dictum nisl quis, dictum sapien. Praesent facilisis eros velit, ac egestas nulla elementum imperdiet. Donec imperdiet luctus ex at varius. Aenean ex elit, porttitor vel sapien sit amet, ultricies hendrerit dolor. Donec congue auctor vehicula. Ut sit amet aliquet ipsum, quis facilisis elit. Morbi vitae pretium mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec justo ante, fringilla id quam eu, maximus mollis ante.</p>	
+	<p>문단과 문단 사이간격,  그리고 문단내의 줄간격이 다름을 확인 가능. </p>
+	<p>브라우저의 크기 (좌우)를 줄여가면서 확인해보세요</p>
+	<p>HTML 문서 내에서 P태그 줄바꿈 안해도 결과는 같습니다 </p>
+
+	<p>html 안에서 아무리 ENTER 를 쳐도,
+	아무리 space(공백)을                             입력해도
+	1개 이상 한칸 띄기로 밖에 
+	반영안됨 
+	</p>
+
+	<!-- <br> 태그 (break) 를 사용하면 브라우저에서 강제 줄바꿈 됨 
+		<br> 은 단독으로 사용되는 태그
+		
+		칸 띄우기를 여러칸 하려면 &nbsp; 라는 입력합니다  (non-break space)	
+	-->
+
+	<p>html 안에서 아무리 ENTER 를 쳐도,<br>
+	아무리 space(공백)을&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입력해도<br>
+	1개 이상 한칸 띄기로 밖에 <br>
+	반영안됨 
+	</p>
+
+		<!-- Entity(엔티티):
+			HTML 코드는 < ~~ > 형식의 태그들로 구성되어 있다 보니
+			< 와 > 등을 나타낼때는 특수한 방법을 사용해야 한다.
+			바로 & 로 시작 하는 엔티티(Entity) 라 불리우는 것들입니다 
+			
+			HTML 에는 수~많은 엔티티가 존재하지만.  다음6개는 일단 필수적으로 암기합시다
+			
+				non-breaking space	&nbsp;
+			<	less than			&lt;	
+			>	greater than		&gt;	
+			&	ampersand			&amp;	
+			"	double quotation mark	&quot;
+			'	single quotation mark (apostrophe)	&apos;
+		 -->
+
+		<hr>
+		<p>Entity</p>
+		<p>
+			&lt;&gt;&amp;&quot;&apos;
+		</p>
+		
+
+
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+</html>

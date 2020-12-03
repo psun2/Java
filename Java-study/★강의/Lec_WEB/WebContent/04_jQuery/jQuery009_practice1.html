@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>jQuery DOM연습</title>
+<style>
+div { padding: 3px; }
+p { background-color: cyan;}
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px;
+}
+td{
+	background-color: orange;
+}
+
+span, input{
+	display:inline-block; 
+	width:200px;
+}
+.hide{
+	display: none;
+}
+
+</style>
+</head>
+
+<!-- by 김연섭 -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	$('#name').click(function(){		
+		$('#ip-name').val($("#name").html());
+		$("#name").addClass("hide");
+		$("#ip-name").removeClass("hide");
+		$("#ip-name").focus();
+
+		$("#ip-name").focusout(function(){
+			$('#name').html($('#ip-name').val());
+
+			$("#ip-name").addClass("hide");
+			$("#name").removeClass("hide");
+		});
+		$('#ip-name').keyup(function(){
+			if(event.keyCode == 13){
+				$('#ip-name').focusout();
+			}
+		});
+	});
+
+	$('#id').click(function(){
+		$('#ip-id').val($("#id").html());
+		$("#id").addClass("hide");
+		$("#ip-id").removeClass("hide");
+		$("#ip-id").focus();
+
+		$("#ip-id").focusout(function(){
+			$('#id').html($('#ip-id').val());
+
+			$("#id").removeClass("hide");
+			$("#ip-id").addClass("hide");
+		});	
+		$('#ip-id').keyup(function(){
+			if(event.keyCode == 13){
+				$('#ip-id').focusout();
+			}
+		});
+	});
+	
+
+});
+
+</script>
+
+<body>
+
+<div>
+<table id="table1">
+<tr>
+	<th>이름</th>
+	<th>아이디</th>
+</tr>
+<tr>
+	<td>
+	<span id = "name">홍길동</span>
+	<input type="text" class="hide" name = "name" id = "ip-name">
+	</td>
+	<td>
+	<span id = "id">Mr.Hong</span>
+	<input type="text" class="hide" name = "id" id="ip-id">
+	</td>
+</tr>
+</table>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Responsive Top Navigation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+	margin:0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  color: #f2f2f2;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 14px 16px;
+  display: block;
+  float: left;
+  text-align: center;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/* 600px 이하에서 스타일 */
+@media screen and (max-width: 600px){
+  /* 첫번째 a 외에는 전부 안보이게 하기 */
+  .topnav a:not(:first-child) { display: none;}
+
+  /* 오늘쪽 햄버거 아이콘은 나타나게 하기 */
+  .topnav a.icon {
+    display: block;
+    float: right;
+  }
+
+  /* 아이콘 클릭하면 responsive 클래스 추가됨 
+  다음 스타일 적용한다. */
+
+  .topnav.responsive {position: relative;}
+
+  .topnav.responsive .icon {
+    position: absolute; 
+    right: 0;
+    top: 0;
+  }
+
+  .topnav.responsive a {
+    display: block;
+    float: none;
+    text-align: left;
+  }
+
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="topnav" id="myTopnav">
+  <a href="#home" class="active">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+  	<i class="fa fa-bars"></i>
+  </a>
+  <!-- void(0) 는 undefined 를 리턴함 .  href 가 동작하지 않게 하기 위함.   href="#" 과 동일 -->
+</div>
+
+<div style="padding-left:16px">
+  <h2>Responsive Topnav Example</h2>
+  <p>사이즈를 늘렸다 줄였다 해보자</p>
+</div>
+
+<script>
+function myFunction() {
+	// responsive 클래스를 토글 시킴
+  var x = document.getElementById("myTopnav");
+
+  // element.className  <-- element 의 class 값 가져옴
+  if(x.className === "topnav"){
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+	
+  // $("#myTopnav").toggleClass("responsive")
+	
+}
+</script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

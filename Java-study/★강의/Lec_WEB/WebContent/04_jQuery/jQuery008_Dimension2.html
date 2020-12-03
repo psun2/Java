@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Dimension</title>
+<style>
+#div1{
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+
+#circle{
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;  /* 원으로 만든다 */
+	display: none;
+	background-color: tomato;
+	margin: 0;
+	padding: 0;
+}
+</style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	// 클릭시 좌표 알아내기
+	$(document).click(function(event){
+		//alert(event.pageX + " " + event.pageY);
+
+		var txt = event.pageX + " " + event.pageY;
+
+		$("#div1").css({
+			"left" : event.pageX,
+			"top" : event.pageY
+		})
+
+		//$("#div1").text(txt);
+
+		$("#circle").css({
+			"left" : event.pageX - ($("#circle").outerWidth(true) / 2),
+			"top" : event.pageY - ($("#circle").outerHeight(true) / 2)
+		})
+
+		//$("#circle").fadeIn(2000).fadeOut(2000);
+		
+		$("#circle").stop(true).fadeIn(100, function(){
+			$("#circle").fadeOut(500);
+		});
+
+	})
+	
+});
+
+
+</script>
+<body>
+<h1>화면을 클릭해보세요</h1>
+<div id="div1"></div>
+<div id="circle"></div>
+</body>
+</html>

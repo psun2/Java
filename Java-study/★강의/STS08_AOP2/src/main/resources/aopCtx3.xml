@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- 공통기능 클래스를 빈 으로 등록 -->
+	<bean id="logger" class="com.lec.spring.beans.Logger"/>
+
+	<bean name="service21" class="com.lec.spring.aop02.MyService21"/>
+	<bean name="service22" class="com.lec.spring.aop02.MyService22"/>
+
+	<bean name="serviceEx31" class="com.lec.spring.aop03.MyServiceEx31"/>
+	<bean name="serviceEx32" class="com.lec.spring.aop03.MyServiceEx32"/>
+
+	<aop:config>
+		<aop:pointcut expression="within(com.lec.spring.aop03.*)" id="pc1"/>
+		<aop:pointcut expression="within(com.lec.spring.aop02.*)" id="pc2"/>
+		<aop:pointcut expression="execution(* com.lec.spring.aop*.My*.*Action(..))" id="pc3"/>
+		<aop:pointcut expression="execution(* com.lec.spring.*3.My*.do*(..))" id="pc4"/>
+		<aop:pointcut 
+			expression="within(com.lec.spring.aop03.*) and within(com.lec.spring.aop02.*)" id="pc5"/>
+		
+		<!-- xml 설정에선  and, or, not 이 허용됨. -->
+		
+		<aop:aspect id="logAspect3" ref="logger">
+			<!-- pointcut-ref 대신 직접 pointcut 기술가능 -->
+			<aop:before method="logAdvice" pointcut-ref="pc5"/>
+			
+			<!-- <aop:after method="logOut" pointcut="within(com.lec.spring.aop03.*)" /> -->
+			
+		</aop:aspect>
+		
+		
+	</aop:config>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
