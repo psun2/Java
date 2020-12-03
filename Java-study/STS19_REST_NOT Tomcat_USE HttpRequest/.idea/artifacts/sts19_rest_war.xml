@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sts19_rest:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>sts19_rest</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="sts19_rest-1.0.0-BUILD-SNAPSHOT.war">
+      <element id="artifact" artifact-name="sts19_rest:war exploded" />
+    </root>
+  </artifact>
+</component>

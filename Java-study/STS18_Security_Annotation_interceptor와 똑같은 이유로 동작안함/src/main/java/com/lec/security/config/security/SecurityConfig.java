@@ -15,7 +15,9 @@ import com.lec.security.config.security.handler.LoginFailHandler;
 import com.lec.security.config.security.handler.LoginSuccessHandler;
 
 @EnableWebSecurity
-@Configuration
+// @Configuration // 스프링 부트는 @Configuration 설정을 안해도 
+// @EnableWebSecurity 있고, Bean 생성 또한 없기때문에
+// 지금 이 예제에서는 굳이 사용 하지 않아도 무방합니다.
 public class SecurityConfig extends WebSecurityConfigurerAdapter { // 출처 :
 																	// https://velog.io/@jayjay28/2019-09-04-1109-%EC%9E%91%EC%84%B1%EB%90%A8
 

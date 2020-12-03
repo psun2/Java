@@ -105,7 +105,7 @@
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
 				
-			<Context docBase="STS18_Security_Annotation_interceptor와 똑같은 이유로 동작안함" path="/security" reloadable="true" source="org.eclipse.jst.jee.server:STS18_Security_Annotation_interceptor와 똑같은 이유로 동작안함"/></Host>
+			<Context docBase="STS18_Security_Sring_Request_Body_Token" path="/security" reloadable="true" source="org.eclipse.jst.jee.server:STS18_Security_Sring_Request_Body_Token"/></Host>
 		</Engine>
 	</Service>
 </Server><!-- <Context docBase="JSP17_ConnectionPool" path="/JSP17_ConnectionPool" 
