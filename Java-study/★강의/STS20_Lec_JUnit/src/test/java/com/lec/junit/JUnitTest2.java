@@ -1,5 +1,7 @@
 package com.lec.junit;
 
+import static org.assertj.core.api.Assertions.fail;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,6 +30,12 @@ class JUnitTest2 {
 	@Test
 	void create1() {
 		System.out.println("create1");
+		hahaha();
+	}
+	
+	void hahaha() {
+		System.out.println("hahaha");
+		fail("asdff");
 	}
 
 	@Test
