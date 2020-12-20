@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- servlet-context 보다 먼저 실행될때 커스텀한 빈 또는 spring 외의 다른 빈을 만든다면 -->
+    <!-- 컴포넌트 스캔을 해줘야 빈이 등록 됩니다. -->
+    <!-- 예를들어 login success 빈은 기존의 스프링 빈을 상속 받기 때문에 scan이 필요 없었을 수 있습니다. -->
+    <context:component-scan base-package="com.lec.security"/>
+
+	<bean id="Request_method_'POST'_not_supported" class="com.lec.security.handler.CustomSuccessHandler"/>
+	
+	<bean id="daoService" class="com.lec.security.service.DAOService"/>
+
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <bean id="customDetailsService" class="com.lec.security.config.CustomUserDetailsService"/>
+    <!--
+    <bean id="customUserDetails" class="com.lec.security.config.CustomUserDetails"/>
+     -->
+     
+     <!-- RememberMeTokenRepository 사용할 서비스 -->
+     <bean id="tokenService" class="com.lec.security.service.TokenService"/>
+     
+     <!-- RememberMeTokenRepository (커스터마이징 토큰) -->
+     <bean id="rememberMeTokenRepository" class="com.lec.security.config.RememberMeTokenRepository"/>
+
+    <security:http>
+
+    	<security:intercept-url pattern="/login" access="permitAll"/>
+    	<security:intercept-url pattern="/logout" access="permitAll"/>
+
+        <security:form-login
+                login-page="/auth/login"
+                authentication-success-handler-ref="Request_method_'POST'_not_supported"
+                login-processing-url="/login"
+                />
+
+        <security:logout delete-cookies="JSESSIONID,remember-me" invalidate-session="true" logout-url="/logoutProcess" logout-success-url="/auth/login"/>
+
+        <!-- https://www.baeldung.com/spring-security-remember-me (공식문서) -->
+        <!-- 보시다시피 rememberMe () 메소드를 사용하는 기본 구성 은 매우 간단하지만 추가 옵션을 통해 매우 유연합니다. -->
+        <!-- 여기서 키 는 중요합니다. 전체 애플리케이션에 대한 개인 값 비밀이며 토큰의 내용을 생성 할 때 사용됩니다. -->
+        <!-- 또한 토큰이 유효한 시간은 기본 2 주에서 tokenValiditySeconds ()를 사용하여 하루  로 구성 할 수 있습니다 . -->
+        <!-- 1,209,600 : 60 * 60 * 24 * 14 = 1,209,600(2주) -->
+        <!-- 86400 : 60 * 60 * 24  = 86,400(하루) -->
+
+        <!-- remember-me-parameter: View 에서 보내주는 정보의 이름 즉, getParameter("rememberMe") 입니다. -->
+        
+        <!-- authentication-success-handler-ref="Request_method_'POST'_not_supported" -->
+        <!-- key="uniqueAndSecret" : 리맴버미 인증을 위해 발행되는 토큰을 구별하는 키 이름을 지정 -->
+        
+        <!--   	data-source-ref="dataSource" -->
+        <security:remember-me
+                key="uniqueAndSecret" 
+                token-validity-seconds="86400"
+           		authentication-success-handler-ref="Request_method_'POST'_not_supported"
+                remember-me-parameter="rememberMe"
+                token-repository-ref="rememberMeTokenRepository"
+                user-service-ref="customDetailsService"       
+        />
+
+    </security:http>
+
+    <!--
+        <security:jdbc-user-service data-source-ref="dataSource" id="userService"
+                                    users-by-username-query="SELECT ID as loginId, PASSWORD as loginPwd, ENABLED FROM user WHERE ID=?"
+                                    authorities-by-username-query="SELECT ID as loginID, AUTHORITY FROM user WHERE ID=?"
+        />
+    -->
+
+
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="customDetailsService">
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+</beans>

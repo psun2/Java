@@ -47,7 +47,7 @@ Connector 태그로 감싸져 있는 설정을 아래와 같이 수정합니다.
 
 ```
 URIEncoding="UTF-8"
-parseBodyMethod="POST,PUT,DELETE"
+parseBodyMethods="POST,PUT,DELETE"
 ```
 
 더 받고싶은 메소드가 있다면... 뒤에 계속 추가 하면됩니다.

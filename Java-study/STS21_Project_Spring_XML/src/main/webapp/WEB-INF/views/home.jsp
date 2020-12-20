@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf_parameterName" name="_csrf_parameterName" content="${_csrf.parameterName}"/>
+    <meta id="_csrf_token" name="_csrf_token" content="${_csrf.token}"/>
+    <meta id="_csrf_headerName" name="_csrf_headerName" content="${_csrf.headerName}"/>
+    <meta id="messageType" name="messageType" content="${messageType}"/>
+    <meta id="messageContent" name="messageContent" content="${messageContent}"/>
+    <meta id="user" name="user" content="${pageContext.request.userPrincipal.name}"/>
+    <meta id="sessionUser" name="sessionUser" content="${user}"/>
+    <title>Home</title>
+</head>
+<body>
+
+<h1>
+    Hello world!
+</h1>
+
+<P> The time on the server is ${serverTime}. </P>
+</body>
+</html>

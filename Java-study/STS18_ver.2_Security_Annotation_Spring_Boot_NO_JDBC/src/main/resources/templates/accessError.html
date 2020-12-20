@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$Title$</title>
+</head>
+<body>
+<div th:if="${_csrf.parameterName != null && _csrf.token != null && _csrf.headerName != null} ">
+    <div th:text="${_csrf.parameterName}"></div>
+    <div th:text="${_csrf.token}"></div>
+    <div th:text="${_csrf.headerName}"></div>
+</div>
+<h1>접근 권한이 없습니다.</h1>
+</body>
+</html>

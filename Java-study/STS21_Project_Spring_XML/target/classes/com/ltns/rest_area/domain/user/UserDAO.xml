@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltns.rest_area.domain.user.UserDAO">
+
+    <!--findAll -->
+    <select id="selectAll"
+            resultType="com.ltns.rest_area.domain.user.UserDTO">
+	    SELECT * FROM userMember
+	</select>
+
+    <!--findByUsername-->
+    <!--
+    <select id="selectByString"
+        parameterType="com.ltns.rest_area.domain.user.UserDTO"
+        resultType="com.ltns.rest_area.domain.user.UserDTO">
+        SELECT * FROM userMember WHERE um_username = #{um_username}
+    </select>
+        -->
+
+    <!--findByUid -->
+    <!--
+    <select id="selectByObject"
+        parameterType="com.ltns.rest_area.domain.user.UserDTO"
+        resultType="com.ltns.rest_area.domain.user.UserDTO">
+        SELECT * FROM userMember WHERE um_uid = #{um_uid}
+    </select>
+    -->
+
+    <!--findByNickname -->
+    <!--
+    <select id="findByNickname"
+        parameterType="com.ltns.rest_area.domain.user.UserDTO"
+        resultType="com.ltns.rest_area.domain.user.UserDTO">
+        SELECT * FROM userMember WHERE um_nickname = #{um_nickname}
+    </select>
+    -->
+
+
+    <!-- 유저고유값, 유저아이디, 닉네임 을 반영한 select 동적 쿼리  -->
+    <select id="selectByObject"
+            parameterType="com.ltns.rest_area.domain.user.UserDTO"
+            resultType="com.ltns.rest_area.domain.user.UserDTO">
+        SELECT * FROM userMember
+        WHERE
+        <choose>
+            <when test="um_uid != null and um_uid != ''">
+                um_uid = #{um_uid}
+            </when>
+            <when test="um_username != null and um_username != ''">
+                um_username = #{um_username}
+            </when>
+            <otherwise>
+                um_nickname = #{um_nickname}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- insertUser -->
+    <insert id="insertByObject" parameterType="com.ltns.rest_area.domain.user.UserDTO"
+            useGeneratedKeys="true" keyColumn="um_uid" keyProperty="um_uid">
+		INSERT INTO userMember (um_uid, um_username, um_password, um_nickname)
+    	VALUES (SEQ_USERMEMBER_UM_UID.NEXTVAL, #{um_username}, #{um_password}, #{um_nickname})
+	</insert>
+
+    <!-- update password -->
+    <!--
+    <update id="updateByObject" parameterType="com.ltns.rest_area.domain.user.UserDTO" flushCache="true">
+		UPDATE usermember SET um_password = #{um_password} WHERE um_username = #{um_username}
+	</update>
+    -->
+
+    <!-- update nickname -->
+    <!--
+    <update id="updateByDTO" parameterType="com.ltns.rest_area.domain.user.UserDTO" flushCache="true">
+	    UPDATE usermember SET um_nickname = #{um_nickname} WHERE um_username = #{um_username}
+	</update>
+    -->
+
+    <!-- update nickname and password -->
+    <!--
+    <update id="updateByDTO" parameterType="com.ltns.rest_area.domain.user.UserDTO" flushCache="true">
+	    UPDATE usermember
+	    SET um_nickname = #{um_nickname}, um_password = #{um_password}
+	    WHERE um_username = #{um_username}
+	</update>
+    -->
+
+    <!-- delete user -->
+    <delete id="deleteByObject" parameterType="com.ltns.rest_area.domain.user.UserDTO" flushCache="true">
+	    DELETE FROM userMember WHERE um_username = #{um_username}
+	</delete>
+
+
+    <!-- nickname password 을 반영한 update 동적 쿼리  -->
+    <update id="updateByObject" parameterType="com.ltns.rest_area.domain.user.UserDTO" flushCache="true">
+        UPDATE userMember SET
+        <choose>
+            <when test="um_nickname != null and um_nickname != '' and um_password == null or um_password == ''">
+                um_nickname = #{um_nickname}
+            </when>
+            <when test="um_password != null and um_password != '' and um_nickname == null or um_nickname == ''">
+                um_password = #{um_password}
+            </when>
+            <otherwise>
+                um_nickname = #{um_nickname}, um_password = #{um_password}
+            </otherwise>
+        </choose>
+        WHERE um_username = #{um_username}
+    </update>
+
+</mapper>

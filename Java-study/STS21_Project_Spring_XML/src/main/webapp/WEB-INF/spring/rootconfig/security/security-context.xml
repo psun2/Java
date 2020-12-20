@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- http://www.springframework.org/schema/security/spring-security-5.3.xsd -->
+    <!-- 버전 때문에 error 버전을 빼줄수 있도록합니다. -->
+    <!-- http://www.springframework.org/schema/security/spring-security.xsd -->
+    <!-- ??? 버전있어도 동작 잘 하는데요 ? -->
+
+    <!-- // 인증 (Authentication : 자신을 증명)
+    // 내가 (스스로) 자신을 증명말 만한 자료를 제시 하는 것.
+    // 인가 (Authorizatoin : 권한부여)
+    // 남에 의해서 ‘자격’ 이 부여된것.
+    -->
+
+    <!-- 권한접근 에러 handler -->
+    <bean id="securityDeniedHandler" class="com.ltns.rest_area.security.handler.SecurityDeniedHandler"/>
+
+    <!-- 로그인 성공 handler -->
+    <bean id="loginSuccessHandler" class="com.ltns.rest_area.security.handler.LoginSuccessHandler"/>
+
+    <!-- 로그인 실패 handler -->
+    <bean id="loginFailureHandler" class="com.ltns.rest_area.security.handler.LoginFailureHandler"/>
+
+    <!-- password encoder bean -->
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <security:http>
+
+        <!-- 권한 접근 오류 핸들러 설정 -->
+        <security:access-denied-handler ref="securityDeniedHandler"/>
+
+        <!-- interccptor 할 url 설정 -->
+        <!-- interceptor 기본 규칙: auth/** 들어오는것은 기본적으로 permitAll 로 기본규칙이 설정되어 있습니다. -->
+        <security:intercept-url pattern="/*" access="permitAll"/>
+
+        <!--
+        <security:intercept-url pattern="/auth/**" access="permitAll"/>
+        <security:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        -->
+
+        <!-- 로그인 설정 -->
+        <security:form-login login-page="/auth/user/login" login-processing-url="/loginProcess"
+                             authentication-success-handler-ref="loginSuccessHandler"
+                             authentication-failure-handler-ref="loginFailureHandler"/>
+
+        <!-- 로그 아웃 설정 -->
+        <!--        <security:logout logout-url="" logout-success-url="" invalidate-session="true"/>-->
+
+
+    </security:http>
+
+    <!-- AuthenticatoinManager 빈 권한 설정 -->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query="SELECT username, password, enabled FROM userView WHERE username = ?"
+                                        authorities-by-username-query="SELECT username, authority FROM userView WHERE username = ?"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+</beans>

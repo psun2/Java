@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf_parameterName" name="_csrf_parameterName" th:content="${_csrf.parameterName}"/>
+    <meta id="_csrf_token" name="_csrf_token" th:content="${_csrf.token}"/>
+    <meta id="_csrf_headerName" name="_csrf_headerName" th:content="${_csrf.headerName}"/>
+    <meta id="messageType" name="messageType" th:content="${messageType}"/>
+    <meta id="messageContent" name="messageContent" th:content="${messageContent}"/>
+    <meta id="user" name="user" th:content="${#authentication.principal}"/>
+    <meta id="user2" name="user2" th:content="${#authentication.getName()}"/>
+    <title>admin</title>
+</head>
+<body>
+
+<h1>Hello admin!</h1>
+
+<div th:if="${#authentication.getName() != null}">
+    <form th:action="@{/logoutProcess}" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <button type="submit">LOGOUT</button>
+    </form>
+</div>
+
+<br/>
+
+<a href="#" onclick="document.getElementById('logout-form').submit();">Sign out</a>
+<form id="logout-form" th:action="@{/logoutProcess}" method="POST">
+    <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+</form>
+
+</body>
+</html>

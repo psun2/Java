@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltns.rest_area.domain.user.AuthDAO">
+
+    <!-- 권한 생성 -->
+    <insert id="insertByObject" flushCache="true"
+            parameterType="long">
+            INSERT INTO auth(um_uid) VALUES (#{uid})
+    </insert>
+
+    <!-- 권한 추가 설정 -->
+    <insert id="insertByDTO"
+            parameterType="com.ltns.rest_area.domain.user.UserAuthDTO"
+            flushCache="true">
+        INSERT INTO auth VALUES (#{addAuthority}, #{uid})
+    </insert>
+
+    <!-- 권한 삭제 (회원 탈퇴시 모든 권한 삭제) -->
+    <delete id="deleteByObject" flushCache="true"
+            parameterType="long">
+        DELETE FROM auth WHERE um_uid = #{uid}
+    </delete>
+
+    <!-- 권한 삭제: 어떠한 유저의 어떠한 권한을 삭제할 것인가? -->
+    <delete id="deleteByUserAuth"
+            parameterType="com.ltns.rest_area.domain.user.UserAuthDTO"
+            flushCache="true">
+        DELETE FROM auth
+        WHERE um_uid=#{uid}
+        AND authority=#{authority}
+    </delete>
+
+    <!-- 권한 수정 -->
+    <update id="updateByObject"
+            parameterType="com.ltns.rest_area.domain.user.UserAuthDTO"
+            flushCache="true">
+        UPDATE auth
+        SET authority = #{nextAuthority}
+        WHERE um_uid = #{uid}
+        AND authority = #{prevAuthority}
+    </update>
+
+    <!-- 전체 권한 findAll (userView) -->
+    <select id="selectAll"
+            resultType="com.ltns.rest_area.domain.user.UserAuthDTO">
+        SELECT
+            u.um_uid AS "uid",
+            u.um_username AS username,
+            u.um_enabled AS enabled,
+            u.um_nickname AS nickname,
+            u.um_password AS password,
+            u.um_regdate AS regdate,
+            a.authority
+        FROM userMember u JOIN auth a
+        ON u.um_uid = a.um_uid
+    </select>
+
+    <!-- 권한 find (userView)-->
+    <select id="selectByString"
+            parameterType="string"
+            resultType="com.ltns.rest_area.domain.user.UserAuthDTO">
+        SELECT
+            u.um_uid AS "uid",
+            u.um_username AS username,
+            u.um_enabled AS enabled,
+            u.um_nickname AS nickname,
+            u.um_password AS password,
+            u.um_regdate AS regdate,
+            a.authority
+        FROM userMember u JOIN auth a
+        ON u.um_uid = a.um_uid
+        WHERE um_username = #{username}
+    </select>
+
+    <!-- 권한 find uid (auth table) -->
+    <select id="selectByObject"
+            parameterType="long"
+            resultType="com.ltns.rest_area.domain.user.AuthDTO">
+        SELECT * FROM auth WHERE um_uid=#{uid}
+    </select>
+
+</mapper>

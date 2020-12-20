@@ -1,18 +1,12 @@
 package com.lec.spring.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 
-@Aspect
 public class UserAspect {
 
-    @Pointcut("within(com.lec.repository.user.*)")
     public void pointcut1() {
     }
 
-    @Around("pointcut1()")
     public Object aroundAdviceTimeChek(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
 

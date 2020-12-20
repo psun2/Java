@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="_csrf_parameterName" th:name="_csrf_parameterName" th:content="${_csrf.parameterName}"/>
+    <meta id="_csrf_token" th:name="_csrf_token" th:content="${_csrf.token}"/>
+    <meta id="_csrf_headerName" th:name="_csrf_headerName" th:content="${_csrf.headerName}"/>
+    <meta id="messageType" th:name="messageType" th:content="${session.messageType}"/>
+    <meta id="messageContent" th:name="messageContent" th:content="${session.messageContent}"/>
+    <meta id="user" th:name="user" th:content="${#authentication.getName()}"/>
+    <!--    pageContext.request.userPrincipal.name-->
+    <meta id="sessionUser" th:name="sessionUser" th:content="${session.user}"/>
+    <title>회원 가입</title>
+</head>
+<body>
+<form method="post" th:action="@{/loginProcess}">
+    <input type="text" id="username" name="username" value="admin"/>
+    <input type="password" id="password" name="password" value="0000"/>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="submit" value="전송"/>
+</form>
+</body>
+</html>

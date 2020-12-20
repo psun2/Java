@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.security.domain.TokenDAO">
+
+<insert id="createNewToken"
+	flushCache="true"
+	parameterType="com.lec.security.domain.TokenVO">
+	INSERT 
+	INTO custom_persistent_logins 
+	VALUES (#{username}, #{series}, #{tokenValue}, SYSDATE)
+</insert>
+
+<update id="updateToken"
+	flushCache="true">
+	UPDATE 
+		custom_persistent_logins
+	SET 
+		series = #{series},
+		tokenValue = #{tokenValue},
+		lastUsed = SYSDATE
+	WHERE series = #{series}
+</update>
+
+<select id="getTokenForSeries" resultType="com.lec.security.domain.TokenVO">
+	SELECT
+		username, series, tokenValue, lastUsed
+	FROM
+		custom_persistent_logins
+	WHERE 
+		series = #{seriesId}
+</select>
+
+<delete id="removeUserTokens"
+	flushCache="true">
+	DELETE 
+	FROM 
+		custom_persistent_logins
+	WHERE
+		 username = #{username}
+</delete>
+
+</mapper>

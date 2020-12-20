@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- config 설정의 종류는 2가지 입니다. -->
+
+    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <!-- 모든 서블릿과 필터가 공유하는 루트 스프링 컨테이너의 정의 -->
+    <!-- <param-name>contextConfigLocation</param-name> -->
+
+    <!-- Processes application requests -->
+    <!-- 애플리케이션 요청 처리 -->
+    <!-- <servlet-name>appServlet</servlet-name> -->
+
+    <!-- aop 의 설정은 appServlet 설정으로 들어가야 정상 작동을 합니다 -->
+
+    <context:component-scan base-package="com.ltns.rest_area"/>
+
+    <!-- AOP는 servlet 딴에서 작동해야 작동됩니다. -->
+    <!-- 공통기능으로 쓸 클래스를 bean 으로 등록 -->
+    <bean depends-on="sqlSessionTemplate" id="userDB" class="com.ltns.rest_area.aop.user.UserDBTimeCheckAspect"/>
+
+    <!-- AOP 설정 -->
+    <aop:config>
+        <!-- Aspect 생성 -->
+        <aop:aspect id="dbTime" ref="userDB">
+            <!-- pointcut 생성 -->
+            <aop:pointcut id="userPc"
+                          expression="execution(* com.ltns.rest_area.domain.user.*DAO.*(..))"/>
+            <!-- around 생성 -->
+            <aop:around pointcut-ref="userPc" method="aroundAdvice"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 자동으로 @Aspect 어노테이션이 있는 클래스를 찾음 -->
+    <!--    <aop:aspectj-autoproxy/>-->
+
+    <!-- 프록시 타겟을 클래스로 고정함 (Cglib만 사용하도록 함) -->
+    <!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+</beans>

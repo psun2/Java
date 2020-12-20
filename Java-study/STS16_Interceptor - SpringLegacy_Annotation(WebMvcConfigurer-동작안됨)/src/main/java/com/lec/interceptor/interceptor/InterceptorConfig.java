@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan
+// @ComponentScan
 public class InterceptorConfig implements WebMvcConfigurer { // - 동작안됨 ㅠㅠ
 // WebMvcConfgiurer의 구현으로 인해 DispatcherServlet을 간편하게 커스텀할 수 있으므로, 스프링 부트 없이 스프링 부트를 사용하는 방법이라고 불리는 것이다.
 

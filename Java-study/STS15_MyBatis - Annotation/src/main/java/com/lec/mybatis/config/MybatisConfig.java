@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.lec.generatedkey.domain")
+@MapperScan("com.lec.mybatis.domain")
 public class MybatisConfig {
 
     @Value("${db.driverClassName}") // 외부 설정 파일이 있을경우 값을 autowired 하는 어노테이션
@@ -66,6 +66,8 @@ public class MybatisConfig {
         return sqlSessionFactoryBean;
     }
 
+    // spring 엔진에서는 session을 반환 안해주면 error
+    // 하지만 boot 엔진에서는 MapperScan 으로만 session 반환 이 됩니다.
     @Bean
     public SqlSession sqlSession() {
         // MapperFactoryBean<BoardDAO> boardDAOMapperFactoryBean = new MapperFactoryBean<>(BoardDAO.class); // 한개의 설정파일만 가능

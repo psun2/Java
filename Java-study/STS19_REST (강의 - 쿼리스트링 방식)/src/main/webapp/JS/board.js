@@ -309,6 +309,7 @@ function chkWrite(){
 
 // check 된 uid 의 게시글들만 삭제하기
 function chkDelete(){
+	console.log($("#frmList").serialize());
     var uids = [];  // check 된 uid 들을 담을 배열
 
     $("#list tbody input[name=uid]").each(function(){

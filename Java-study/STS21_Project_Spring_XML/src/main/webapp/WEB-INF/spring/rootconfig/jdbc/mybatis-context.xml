@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 마이바티스 한글 : http://www.mybatis.org/mybatis-3/ko/ -->
+    <!-- 마이바티스 스프링 설정 : http://www.mybatis.org/spring/ko/sample.html -->
+    <!-- 마이바티스 매퍼XML 설정 : http://www.mybatis.org/mybatis-3/ko/sqlmap-xml.html -->
+    <!-- 마이바티스 매퍼설정: http://www.mybatis.org/mybatis-3/ko/configuration.html -->
+
+    <!-- SqlSessionFactoryBean 객체생성(핵심 객체) -->
+    <bean name="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="mapperLocations" value="classpath:com/ltns/rest_area/domain/**/*.xml"/>
+    <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- SqlSessionTemplate 생성 -->
+    <!-- SqlSessionFactoryBean 을 의존 -->
+    <bean name="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+        <!--    생성자의 0번째 index에 sqlSessionFactory 주입    -->
+    </bean>
+</beans>
